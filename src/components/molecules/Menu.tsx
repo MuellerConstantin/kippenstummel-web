@@ -16,7 +16,7 @@ import {
 import { dropdownItemStyles } from "@/components/atoms/ListBox";
 import { Popover, PopoverProps } from "@/components/atoms/Popover";
 
-interface MenuProps<T> extends AriaMenuProps<T> {
+export interface MenuProps<T> extends AriaMenuProps<T> {
   placement?: PopoverProps["placement"];
 }
 

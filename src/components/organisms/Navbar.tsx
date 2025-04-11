@@ -13,9 +13,9 @@ import { Popover } from "@/components/atoms/Popover";
 import { useAppSelector, useAppDispatch } from "@/store";
 import themeSlice from "@/store/slices/theme";
 
-interface NavbarProps<T> {}
+export interface NavbarProps {}
 
-export function Navbar<T extends object>(props: NavbarProps<T>) {
+export function Navbar(props: NavbarProps) {
   const navigation = useMemo(() => {
     return [
       { name: "Home", href: "/" },
@@ -80,11 +80,9 @@ export function Navbar<T extends object>(props: NavbarProps<T>) {
   );
 }
 
-interface NavbarOptionsMenuProps<T> {}
+interface NavbarOptionsMenuProps {}
 
-export function NavbarOptionsMenu<T extends object>(
-  props: NavbarOptionsMenuProps<T>,
-) {
+export function NavbarOptionsMenu(props: NavbarOptionsMenuProps) {
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector((state) => state.theme.darkMode);
 
