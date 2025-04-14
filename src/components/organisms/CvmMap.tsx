@@ -47,7 +47,7 @@ export function CvmMap() {
     string | null
   >(
     !!bottomLeft && !!topRight
-      ? `/cvm/within?bottomLeftLon=${bottomLeft?.[1]}&bottomLeftLat=${bottomLeft?.[0]}&topRightLon=${topRight?.[1]}&topRightLat=${topRight?.[0]}`
+      ? `/cvm/within?bottomLeft=${bottomLeft?.[0]},${bottomLeft?.[1]}&topRight=${topRight?.[0]},${topRight?.[1]}`
       : null,
     (url) => api.get(url).then((res) => res.data),
     { keepPreviousData: true },
