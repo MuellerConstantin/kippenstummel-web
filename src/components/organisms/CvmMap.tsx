@@ -10,6 +10,7 @@ export function CvmMap() {
   const api = useApi();
 
   const [map, setMap] = useState<LeafletMap | null>(null);
+  const [zoom, setZoom] = useState<number>();
   const [bottomLeft, setBottomLeft] = useState<[number, number]>();
   const [topRight, setTopRight] = useState<[number, number]>();
 
@@ -22,6 +23,7 @@ export function CvmMap() {
         mapBounds.getSouthWest().lng,
       ]);
       setTopRight([mapBounds.getNorthEast().lat, mapBounds.getNorthEast().lng]);
+      setZoom(map.getZoom());
     }
   }, [map]);
 
@@ -31,6 +33,7 @@ export function CvmMap() {
 
     setBottomLeft([mapBounds.getSouthWest().lat, mapBounds.getSouthWest().lng]);
     setTopRight([mapBounds.getNorthEast().lat, mapBounds.getNorthEast().lng]);
+    setZoom(map.getZoom());
   }, []);
 
   const onMoveEnd = useCallback((event: LeafletEvent) => {
@@ -39,15 +42,25 @@ export function CvmMap() {
 
     setBottomLeft([mapBounds.getSouthWest().lat, mapBounds.getSouthWest().lng]);
     setTopRight([mapBounds.getNorthEast().lat, mapBounds.getNorthEast().lng]);
+    setZoom(map.getZoom());
   }, []);
 
   const { data } = useSWR<
-    { id: string; longitude: number; latitude: number }[],
+    (
+      | { id: string; longitude: number; latitude: number }
+      | {
+          id: string;
+          cluster: true;
+          longitude: number;
+          latitude: number;
+          count: number;
+        }
+    )[],
     any,
     string | null
   >(
-    !!bottomLeft && !!topRight
-      ? `/cvm/within?bottomLeft=${bottomLeft?.[0]},${bottomLeft?.[1]}&topRight=${topRight?.[0]},${topRight?.[1]}`
+    !!bottomLeft && !!topRight && !!zoom
+      ? `/cvm/within?bottomLeft=${bottomLeft?.[0]},${bottomLeft?.[1]}&topRight=${topRight?.[0]},${topRight?.[1]}&zoom=${zoom}`
       : null,
     (url) => api.get(url).then((res) => res.data),
     { keepPreviousData: true },
@@ -60,12 +73,22 @@ export function CvmMap() {
       tileLayerAttribution='&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       center={[49.006889, 8.403653]}
       zoom={14}
+      minZoom={8}
       onMoveEnd={onMoveEnd}
       onZoomEnd={onZoomEnd}
-      markers={data?.map((cvm) => ({
-        position: [cvm.latitude, cvm.longitude],
-        id: cvm.id,
-      }))}
+      markers={data
+        ?.filter((item) => !("cluster" in item))
+        .map((cvm) => ({
+          position: [cvm.latitude, cvm.longitude],
+          id: cvm.id,
+        }))}
+      clusters={data
+        ?.filter((item) => "cluster" in item)
+        .map((cvm) => ({
+          position: [cvm.latitude, cvm.longitude],
+          id: cvm.id,
+          count: cvm.count,
+        }))}
     />
   );
 }
