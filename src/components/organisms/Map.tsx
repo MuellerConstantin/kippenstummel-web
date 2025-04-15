@@ -31,6 +31,7 @@ function MapEventHandler(params: MapEventHandlerProps) {
 }
 
 export interface MapProps {
+  children?: React.ReactNode;
   ref?: React.Ref<Leaflet.Map>;
   tileLayerUrl: string;
   tileLayerAttribution: string;
@@ -100,6 +101,7 @@ export function Map(props: MapProps) {
             }
           />
         ))}
+        {props.children}
       </DynamicMap>
     </div>
   );

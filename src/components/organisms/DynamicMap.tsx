@@ -6,15 +6,13 @@ import { LocateControl } from "leaflet.locatecontrol";
 import "leaflet/dist/leaflet.css";
 import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
 
-interface MapPluginsProps {}
-
-function MapPlugins(props: MapPluginsProps) {
+function LocateControlPlugin() {
   const map = useMap();
 
   useEffect(() => {
     if (map) {
       const locateControl = new LocateControl({
-        position: "bottomright",
+        position: "topleft",
       });
 
       map.addControl(locateControl);
@@ -48,7 +46,7 @@ export function DynamicMap(props: DynamicMapProps) {
   return (
     <MapContainer ref={ref} className="h-full w-full grow" {...rest}>
       {props.children}
-      <MapPlugins />
+      <LocateControlPlugin />
     </MapContainer>
   );
 }
