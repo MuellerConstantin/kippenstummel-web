@@ -3,6 +3,15 @@ import Leaflet from "leaflet";
 import { Marker } from "react-leaflet";
 import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
 
+function formatNumberShort(n: number): string {
+  if (n < 1000) return n.toString();
+  if (n < 1_000_000) return (n / 1000).toFixed(n < 10_000 ? 1 : 0) + "K";
+  if (n < 1_000_000_000) return (n / 1_000_000).toFixed(1) + "M";
+  if (n < 1_000_000_000_000) return (n / 1_000_000_000).toFixed(1) + "B";
+
+  return (n / 1_000_000_000).toFixed(1) + "B";
+}
+
 interface ClusterMarkerProps {
   count: number;
   position: [number, number];
@@ -13,11 +22,11 @@ export function ClusterMarker(props: ClusterMarkerProps) {
     let outerClasses = "";
 
     if (props.count < 10) {
-      outerClasses = "bg-[rgba(181,226,140,0.6)]";
+      outerClasses = "bg-green-300 opacity-80";
     } else if (props.count < 100) {
-      outerClasses = "bg-[rgba(241,211,87,0.6)]";
+      outerClasses = "bg-amber-300 opacity-80";
     } else {
-      outerClasses = "bg-[rgba(253,156,115,0.6)]";
+      outerClasses = "bg-orange-300 opacity-80";
     }
 
     return outerClasses;
@@ -27,11 +36,11 @@ export function ClusterMarker(props: ClusterMarkerProps) {
     let innerClasses = "";
 
     if (props.count < 10) {
-      innerClasses = "bg-[rgba(110,204,57,0.6)]";
+      innerClasses = "bg-green-400";
     } else if (props.count < 100) {
-      innerClasses = "bg-[rgba(240,194,12,0.6)]";
+      innerClasses = "bg-amber-400";
     } else {
-      innerClasses = "bg-[rgba(241,128,23,0.6)]";
+      innerClasses = "bg-orange-400";
     }
 
     return innerClasses;
@@ -48,7 +57,7 @@ export function ClusterMarker(props: ClusterMarkerProps) {
             <div
               className={`${innerClasses} h-[30px] w-[30px] rounded-full text-center font-sans text-[12px] leading-[30px]`}
             >
-              <span>{props.count}</span>
+              <span>{formatNumberShort(props.count)}</span>
             </div>
           </div>
         ),
