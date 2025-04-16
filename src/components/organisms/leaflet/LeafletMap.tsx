@@ -6,8 +6,6 @@ import Leaflet from "leaflet";
 import { TileLayer, useMapEvents, Marker, useMap } from "react-leaflet";
 import { LocateControl } from "leaflet.locatecontrol";
 
-import styles from "./LeafletMap.module.css";
-
 import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
 
 function LocateControlPlugin() {
@@ -65,15 +63,6 @@ export interface LeafletMapProps {
   minZoom?: number;
   maxZoom?: number;
   className?: string;
-  markers?: {
-    position: [number, number];
-    id: string;
-  }[];
-  clusters?: {
-    position: [number, number];
-    id: string;
-    count: number;
-  }[];
   onReady?: (map: Leaflet.Map) => void;
   onZoomStart?: (event: Leaflet.LeafletEvent) => void;
   onZoomEnd?: (event: Leaflet.LeafletEvent) => void;
@@ -92,8 +81,6 @@ export function LeafletMap(props: LeafletMapProps) {
     zoom,
     minZoom,
     maxZoom,
-    markers,
-    clusters,
   } = props;
 
   useEffect(() => {
@@ -119,22 +106,6 @@ export function LeafletMap(props: LeafletMapProps) {
           onMoveStart={props.onMoveStart}
           onMoveEnd={props.onMoveEnd}
         />
-        {markers?.map((marker) => (
-          <Marker key={marker.id} position={marker.position} />
-        ))}
-        {clusters?.map((marker) => (
-          <Marker
-            key={marker.id}
-            position={marker.position}
-            icon={
-              new Leaflet.DivIcon({
-                html: `<div><span>${marker.count}</span></div>`,
-                className: `${styles["marker-cluster"]} ${styles[`marker-cluster-${marker.count < 10 ? "small" : marker.count < 100 ? "medium" : "large"}`]}`,
-                iconSize: Leaflet.point(40, 40),
-              })
-            }
-          />
-        ))}
         {props.children}
       </LeafletMapContainer>
     </div>

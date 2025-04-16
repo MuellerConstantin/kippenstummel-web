@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import useSWR from "swr";
 import Leaflet from "leaflet";
 import useApi from "@/hooks/useApi";
 import { LeafletMap } from "@/components/organisms/leaflet/LeafletMap";
+import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
+import { LocationMarker } from "@/components/molecules/map/LocationMarker";
 
-export function CvmMap() {
+export function Map() {
   const api = useApi();
 
   const [zoom, setZoom] = useState<number>();
@@ -60,6 +62,16 @@ export function CvmMap() {
     { keepPreviousData: true },
   );
 
+  const markers = useMemo(
+    () => data?.filter((item) => !("cluster" in item)),
+    [data],
+  );
+
+  const clusters = useMemo(
+    () => data?.filter((item) => "cluster" in item),
+    [data],
+  );
+
   return (
     <LeafletMap
       tileLayerUrl="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -70,19 +82,20 @@ export function CvmMap() {
       onReady={onReady}
       onMoveEnd={onMoveEnd}
       onZoomEnd={onZoomEnd}
-      markers={data
-        ?.filter((item) => !("cluster" in item))
-        .map((cvm) => ({
-          position: [cvm.latitude, cvm.longitude],
-          id: cvm.id,
-        }))}
-      clusters={data
-        ?.filter((item) => "cluster" in item)
-        .map((cvm) => ({
-          position: [cvm.latitude, cvm.longitude],
-          id: cvm.id,
-          count: cvm.count,
-        }))}
-    />
+    >
+      {markers?.map((marker) => (
+        <LocationMarker
+          key={marker.id}
+          position={[marker.latitude, marker.longitude]}
+        />
+      ))}
+      {clusters?.map((marker) => (
+        <ClusterMarker
+          key={marker.id}
+          position={[marker.latitude, marker.longitude]}
+          count={marker.count}
+        />
+      ))}
+    </LeafletMap>
   );
 }
