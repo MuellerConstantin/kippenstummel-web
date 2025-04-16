@@ -1,4 +1,4 @@
-import { CvmMap } from "@/components/organisms/CvmMap";
+import { CvmMap } from "@/components/organisms/cvm/CvmMap";
 
 export default function Map() {
   return (

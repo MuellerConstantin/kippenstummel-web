@@ -1,34 +1,19 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
-import { LeafletEvent, Map as LeafletMap } from "leaflet";
+import { useState, useCallback } from "react";
 import useSWR from "swr";
+import Leaflet from "leaflet";
 import useApi from "@/hooks/useApi";
-import { Map as MapComponent } from "@/components/organisms/Map";
+import { LeafletMap } from "@/components/organisms/leaflet/LeafletMap";
 
 export function CvmMap() {
   const api = useApi();
 
-  const [map, setMap] = useState<LeafletMap | null>(null);
   const [zoom, setZoom] = useState<number>();
   const [bottomLeft, setBottomLeft] = useState<[number, number]>();
   const [topRight, setTopRight] = useState<[number, number]>();
 
-  useEffect(() => {
-    if (map) {
-      const mapBounds = map.getBounds();
-
-      setBottomLeft([
-        mapBounds.getSouthWest().lat,
-        mapBounds.getSouthWest().lng,
-      ]);
-      setTopRight([mapBounds.getNorthEast().lat, mapBounds.getNorthEast().lng]);
-      setZoom(map.getZoom());
-    }
-  }, [map]);
-
-  const onZoomEnd = useCallback((event: LeafletEvent) => {
-    const map = event.target as LeafletMap;
+  const onReady = useCallback((map: Leaflet.Map) => {
     const mapBounds = map.getBounds();
 
     setBottomLeft([mapBounds.getSouthWest().lat, mapBounds.getSouthWest().lng]);
@@ -36,8 +21,17 @@ export function CvmMap() {
     setZoom(map.getZoom());
   }, []);
 
-  const onMoveEnd = useCallback((event: LeafletEvent) => {
-    const map = event.target as LeafletMap;
+  const onZoomEnd = useCallback((event: Leaflet.LeafletEvent) => {
+    const map = event.target as Leaflet.Map;
+    const mapBounds = map.getBounds();
+
+    setBottomLeft([mapBounds.getSouthWest().lat, mapBounds.getSouthWest().lng]);
+    setTopRight([mapBounds.getNorthEast().lat, mapBounds.getNorthEast().lng]);
+    setZoom(map.getZoom());
+  }, []);
+
+  const onMoveEnd = useCallback((event: Leaflet.LeafletEvent) => {
+    const map = event.target as Leaflet.Map;
     const mapBounds = map.getBounds();
 
     setBottomLeft([mapBounds.getSouthWest().lat, mapBounds.getSouthWest().lng]);
@@ -67,13 +61,13 @@ export function CvmMap() {
   );
 
   return (
-    <MapComponent
-      ref={setMap}
+    <LeafletMap
       tileLayerUrl="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       tileLayerAttribution='&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       center={[49.006889, 8.403653]}
       zoom={14}
       minZoom={8}
+      onReady={onReady}
       onMoveEnd={onMoveEnd}
       onZoomEnd={onZoomEnd}
       markers={data

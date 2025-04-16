@@ -1,25 +1,51 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { TileLayer, useMapEvents, Marker } from "react-leaflet";
-import Leaflet, { LeafletEvent } from "leaflet";
-import React from "react";
+import Leaflet from "leaflet";
+import { TileLayer, useMapEvents, Marker, useMap } from "react-leaflet";
+import { LocateControl } from "leaflet.locatecontrol";
 
-import styles from "./Map.module.css";
+import styles from "./LeafletMap.module.css";
 
-const DynamicMap = dynamic(
-  () => import("./DynamicMap").then((m) => m.DynamicMap),
+import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
+
+function LocateControlPlugin() {
+  const map = useMap();
+
+  useEffect(() => {
+    if (map) {
+      const locateControl = new LocateControl({
+        position: "topleft",
+      });
+
+      map.addControl(locateControl);
+
+      return () => {
+        map.removeControl(locateControl);
+      };
+    }
+  }, [map]);
+
+  return null;
+}
+
+const LeafletMapContainer = dynamic(
+  () =>
+    import("./LeafletMapContainer").then(
+      (module) => module.LeafletMapContainer,
+    ),
   { ssr: false },
 );
 
-interface MapEventHandlerProps {
-  onZoomStart?: (event: LeafletEvent) => void;
-  onZoomEnd?: (event: LeafletEvent) => void;
-  onMoveStart?: (event: LeafletEvent) => void;
-  onMoveEnd?: (event: LeafletEvent) => void;
+interface LeafletMapEventHandlerProps {
+  onZoomStart?: (event: Leaflet.LeafletEvent) => void;
+  onZoomEnd?: (event: Leaflet.LeafletEvent) => void;
+  onMoveStart?: (event: Leaflet.LeafletEvent) => void;
+  onMoveEnd?: (event: Leaflet.LeafletEvent) => void;
 }
 
-function MapEventHandler(params: MapEventHandlerProps) {
+function LeafletMapEventHandler(params: LeafletMapEventHandlerProps) {
   useMapEvents({
     zoomstart: (event) => params.onZoomStart?.(event),
     zoomend: (event) => params.onZoomEnd?.(event),
@@ -30,9 +56,8 @@ function MapEventHandler(params: MapEventHandlerProps) {
   return null;
 }
 
-export interface MapProps {
+export interface LeafletMapProps {
   children?: React.ReactNode;
-  ref?: React.Ref<Leaflet.Map>;
   tileLayerUrl: string;
   tileLayerAttribution: string;
   center?: [number, number];
@@ -49,15 +74,17 @@ export interface MapProps {
     id: string;
     count: number;
   }[];
-  onZoomStart?: (event: LeafletEvent) => void;
-  onZoomEnd?: (event: LeafletEvent) => void;
-  onMoveStart?: (event: LeafletEvent) => void;
-  onMoveEnd?: (event: LeafletEvent) => void;
+  onReady?: (map: Leaflet.Map) => void;
+  onZoomStart?: (event: Leaflet.LeafletEvent) => void;
+  onZoomEnd?: (event: Leaflet.LeafletEvent) => void;
+  onMoveStart?: (event: Leaflet.LeafletEvent) => void;
+  onMoveEnd?: (event: Leaflet.LeafletEvent) => void;
 }
 
-export function Map(props: MapProps) {
+export function LeafletMap(props: LeafletMapProps) {
+  const [map, setMap] = useState<Leaflet.Map | null>(null);
+
   const {
-    ref,
     className,
     tileLayerUrl,
     tileLayerAttribution,
@@ -69,17 +96,24 @@ export function Map(props: MapProps) {
     clusters,
   } = props;
 
+  useEffect(() => {
+    if (map) {
+      props.onReady?.(map);
+    }
+  }, [map]);
+
   return (
     <div className={`relative flex h-full w-full ${className}`}>
-      <DynamicMap
-        ref={ref}
+      <LeafletMapContainer
+        ref={setMap}
         center={center}
         zoom={zoom}
         minZoom={minZoom}
         maxZoom={maxZoom}
       >
         <TileLayer attribution={tileLayerAttribution} url={tileLayerUrl} />
-        <MapEventHandler
+        <LocateControlPlugin />
+        <LeafletMapEventHandler
           onZoomStart={props.onZoomStart}
           onZoomEnd={props.onZoomEnd}
           onMoveStart={props.onMoveStart}
@@ -102,7 +136,7 @@ export function Map(props: MapProps) {
           />
         ))}
         {props.children}
-      </DynamicMap>
+      </LeafletMapContainer>
     </div>
   );
 }
