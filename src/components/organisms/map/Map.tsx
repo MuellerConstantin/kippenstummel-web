@@ -8,9 +8,11 @@ import { LeafletMap } from "@/components/organisms/leaflet/LeafletMap";
 import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
 import { LocationMarker } from "@/components/molecules/map/LocationMarker";
 import { LocateControlPlugin } from "./LocateControl";
+import { useNotifications } from "@/contexts/NotificationProvider";
 
 export function Map() {
   const api = useApi();
+  const { enqueue } = useNotifications();
 
   const [zoom, setZoom] = useState<number>();
   const [bottomLeft, setBottomLeft] = useState<[number, number]>();
@@ -83,6 +85,13 @@ export function Map() {
       onReady={onReady}
       onMoveEnd={onMoveEnd}
       onZoomEnd={onZoomEnd}
+      onLocationError={() =>
+        enqueue({
+          title: "Location Error",
+          description: "The location determination failed.",
+          variant: "error",
+        })
+      }
     >
       <LocateControlPlugin position="topleft" />
       {markers?.map((marker) => (

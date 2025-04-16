@@ -18,6 +18,8 @@ interface LeafletMapEventHandlerProps {
   onZoomEnd?: (event: Leaflet.LeafletEvent) => void;
   onMoveStart?: (event: Leaflet.LeafletEvent) => void;
   onMoveEnd?: (event: Leaflet.LeafletEvent) => void;
+  onLocationFound?: (event: Leaflet.LeafletEvent) => void;
+  onLocationError?: (event: Leaflet.LeafletEvent) => void;
 }
 
 function LeafletMapEventHandler(params: LeafletMapEventHandlerProps) {
@@ -26,6 +28,8 @@ function LeafletMapEventHandler(params: LeafletMapEventHandlerProps) {
     zoomend: (event) => params.onZoomEnd?.(event),
     movestart: (event) => params.onMoveStart?.(event),
     moveend: (event) => params.onMoveEnd?.(event),
+    locationfound: (event) => params.onLocationFound?.(event),
+    locationerror: (event) => params.onLocationError?.(event),
   });
 
   return null;
@@ -45,6 +49,8 @@ export interface LeafletMapProps {
   onZoomEnd?: (event: Leaflet.LeafletEvent) => void;
   onMoveStart?: (event: Leaflet.LeafletEvent) => void;
   onMoveEnd?: (event: Leaflet.LeafletEvent) => void;
+  onLocationFound?: (event: Leaflet.LeafletEvent) => void;
+  onLocationError?: (event: Leaflet.LeafletEvent) => void;
 }
 
 export function LeafletMap(props: LeafletMapProps) {
@@ -81,6 +87,8 @@ export function LeafletMap(props: LeafletMapProps) {
           onZoomEnd={props.onZoomEnd}
           onMoveStart={props.onMoveStart}
           onMoveEnd={props.onMoveEnd}
+          onLocationFound={props.onLocationFound}
+          onLocationError={props.onLocationError}
         />
         {props.children}
       </LeafletMapContainer>

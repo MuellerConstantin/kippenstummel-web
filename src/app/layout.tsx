@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import { StoreProvider } from "@/store";
+import { NotificationProvider } from "@/contexts/NotificationProvider";
+import { NotificationView } from "@/components/organisms/NotificationView";
 
 import "./globals.css";
 
@@ -25,7 +27,12 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
       </head>
       <body className={`${lato.variable} bg-white dark:bg-slate-800`}>
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          <NotificationProvider>
+            {children}
+            <NotificationView />
+          </NotificationProvider>
+        </StoreProvider>
       </body>
     </html>
   );
