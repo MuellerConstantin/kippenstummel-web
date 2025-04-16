@@ -52,7 +52,7 @@ export function ClusterMarker(props: ClusterMarkerProps) {
             </div>
           </div>
         ),
-        anchor: Leaflet.point(20, 20),
+        anchor: Leaflet.point(30, 30),
       })}
     />
   );

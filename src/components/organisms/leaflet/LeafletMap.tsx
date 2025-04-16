@@ -4,29 +4,6 @@ import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Leaflet from "leaflet";
 import { TileLayer, useMapEvents, Marker, useMap } from "react-leaflet";
-import { LocateControl } from "leaflet.locatecontrol";
-
-import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
-
-function LocateControlPlugin() {
-  const map = useMap();
-
-  useEffect(() => {
-    if (map) {
-      const locateControl = new LocateControl({
-        position: "topleft",
-      });
-
-      map.addControl(locateControl);
-
-      return () => {
-        map.removeControl(locateControl);
-      };
-    }
-  }, [map]);
-
-  return null;
-}
 
 const LeafletMapContainer = dynamic(
   () =>
@@ -99,7 +76,6 @@ export function LeafletMap(props: LeafletMapProps) {
         maxZoom={maxZoom}
       >
         <TileLayer attribution={tileLayerAttribution} url={tileLayerUrl} />
-        <LocateControlPlugin />
         <LeafletMapEventHandler
           onZoomStart={props.onZoomStart}
           onZoomEnd={props.onZoomEnd}

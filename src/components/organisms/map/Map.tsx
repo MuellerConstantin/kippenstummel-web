@@ -7,6 +7,7 @@ import useApi from "@/hooks/useApi";
 import { LeafletMap } from "@/components/organisms/leaflet/LeafletMap";
 import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
 import { LocationMarker } from "@/components/molecules/map/LocationMarker";
+import { LocateControlPlugin } from "./LocateControl";
 
 export function Map() {
   const api = useApi();
@@ -83,6 +84,7 @@ export function Map() {
       onMoveEnd={onMoveEnd}
       onZoomEnd={onZoomEnd}
     >
+      <LocateControlPlugin position="topleft" />
       {markers?.map((marker) => (
         <LocationMarker
           key={marker.id}
