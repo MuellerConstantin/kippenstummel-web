@@ -2,19 +2,28 @@ import { useCallback, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { useMap } from "react-leaflet";
 import Leaflet from "leaflet";
-import { LocateFixed, LoaderCircle } from "lucide-react";
+import { MapPinPlus, LoaderCircle } from "lucide-react";
+import { on } from "events";
 
-interface LocateControlComponentProps {
+interface ReportCvmControlComponentProps {
   map: Leaflet.Map;
+  onReport?: (position: Leaflet.LatLng) => void;
 }
 
-export function LocateControlComponent(props: LocateControlComponentProps) {
+export function ReportCvmControlComponent(
+  props: ReportCvmControlComponentProps,
+) {
+  const [reporting, setReporting] = useState(false);
   const [locating, setLocating] = useState(false);
+  const [locatedPosition, setLocatedPosition] = useState<Leaflet.LatLng | null>(
+    null,
+  );
 
   useEffect(() => {
     if (props.map) {
       props.map.on("locationfound", (event) => {
         setLocating(false);
+        setLocatedPosition(event.latlng);
       });
 
       props.map.on("locationerror", (event) => {
@@ -26,33 +35,44 @@ export function LocateControlComponent(props: LocateControlComponentProps) {
 
   const onClick = useCallback(() => {
     setLocating(true);
+    setReporting(true);
     props.map.locate();
   }, [props.map]);
 
+  useEffect(() => {
+    if (reporting && !locating && locatedPosition) {
+      setReporting(false);
+      setLocatedPosition(null);
+      props.onReport?.(locatedPosition);
+    }
+  }, [locatedPosition, reporting, locating, props.onReport]);
+
   return (
     <a
-      className="leaflet-bar-part leaflet-bar-part-single cursor-pointer"
+      className="leaflet-bar-part leaflet-bar-part-single !h-[45px] !w-[45px] cursor-pointer"
       onClick={onClick}
     >
       <div className="flex h-full w-full items-center justify-center">
         {locating ? (
-          <LoaderCircle className="h-5 w-5 animate-spin" />
+          <LoaderCircle className="h-7 w-7 animate-spin" />
         ) : (
-          <LocateFixed className="h-5 w-5" />
+          <MapPinPlus className="h-7 w-7" />
         )}
       </div>
     </a>
   );
 }
 
-interface LocateControlProps extends Leaflet.ControlOptions {}
+interface ReportCvmControlProps extends Leaflet.ControlOptions {
+  onReport?: (position: Leaflet.LatLng) => void;
+}
 
-export class LocateControl extends Leaflet.Control {
-  private _options: LocateControlProps;
+export class ReportCvmControl extends Leaflet.Control {
+  private _options: ReportCvmControlProps;
   private _container?: HTMLElement;
   private _root?: ReactDOM.Root;
 
-  constructor(options: LocateControlProps) {
+  constructor(options: ReportCvmControlProps) {
     super(options);
     this._options = options;
   }
@@ -65,7 +85,9 @@ export class LocateControl extends Leaflet.Control {
     Leaflet.DomEvent.disableClickPropagation(this._container);
 
     this._root = ReactDOM.createRoot(this._container);
-    this._root.render(<LocateControlComponent map={map} />);
+    this._root.render(
+      <ReportCvmControlComponent map={map} onReport={this._options.onReport} />,
+    );
 
     return this._container;
   }
@@ -83,14 +105,16 @@ export class LocateControl extends Leaflet.Control {
   }
 }
 
-interface LocateControlPluginProps extends Leaflet.ControlOptions {}
+interface ReportCvmControlPluginProps extends Leaflet.ControlOptions {
+  onReport?: (position: Leaflet.LatLng) => void;
+}
 
-export function LocateControlPlugin(props: LocateControlPluginProps) {
+export function ReportCvmControlPlugin(props: ReportCvmControlPluginProps) {
   const map = useMap();
 
   useEffect(() => {
     if (map) {
-      const control = new LocateControl(props);
+      const control = new ReportCvmControl(props);
       map.addControl(control);
 
       return () => {
