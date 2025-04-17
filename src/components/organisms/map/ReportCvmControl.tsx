@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import { useMap } from "react-leaflet";
 import Leaflet from "leaflet";
 import { MapPinPlus, LoaderCircle } from "lucide-react";
-import { on } from "events";
 
 interface ReportCvmControlComponentProps {
   map: Leaflet.Map;

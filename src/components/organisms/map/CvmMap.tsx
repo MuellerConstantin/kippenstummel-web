@@ -4,18 +4,26 @@ import { useState, useCallback, useMemo, useEffect } from "react";
 import useSWR from "swr";
 import Leaflet from "leaflet";
 import useApi from "@/hooks/useApi";
+import { DialogTrigger } from "react-aria-components";
 import { LeafletMap } from "@/components/organisms/leaflet/LeafletMap";
 import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
 import { LocationMarker } from "@/components/molecules/map/LocationMarker";
 import { LocateMarker } from "@/components/molecules/map/LocateMarker";
+import { Modal } from "@/components/atoms/Modal";
 import { LocateControlPlugin } from "./LocateControl";
 import { ReportCvmControlPlugin } from "./ReportCvmControl";
 import { useNotifications } from "@/contexts/NotificationProvider";
+import { ConfirmCvmReportDialog } from "./ConfirmCvmReportDialog";
 
-export function Map() {
+export interface CvmMapProps {
+  onReport?: (position: Leaflet.LatLng) => void;
+}
+
+export function CvmMap(props: CvmMapProps) {
   const api = useApi();
   const { enqueue } = useNotifications();
 
+  const [showReportConfirmDialog, setShowReportConfirmDialog] = useState(false);
   const [map, setMap] = useState<Leaflet.Map | null>(null);
   const [zoom, setZoom] = useState<number>();
   const [bottomLeft, setBottomLeft] = useState<[number, number]>();
@@ -115,7 +123,18 @@ export function Map() {
       onLocationError={onLocationError}
     >
       <LocateControlPlugin position="topleft" />
-      <ReportCvmControlPlugin position="bottomright" />
+      <ReportCvmControlPlugin
+        position="bottomright"
+        onReport={() => setShowReportConfirmDialog(true)}
+      />
+      <DialogTrigger
+        isOpen={showReportConfirmDialog}
+        onOpenChange={setShowReportConfirmDialog}
+      >
+        <Modal>
+          <ConfirmCvmReportDialog />
+        </Modal>
+      </DialogTrigger>
       {markers?.map((marker) => (
         <LocationMarker
           key={marker.id}
