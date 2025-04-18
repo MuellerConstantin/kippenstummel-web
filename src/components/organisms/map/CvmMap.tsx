@@ -132,7 +132,9 @@ export function CvmMap(props: CvmMapProps) {
         onOpenChange={setShowReportConfirmDialog}
       >
         <Modal>
-          <ConfirmCvmReportDialog />
+          <ConfirmCvmReportDialog
+            onConfirm={() => props.onReport?.(locatedPosition!)}
+          />
         </Modal>
       </DialogTrigger>
       {markers?.map((marker) => (

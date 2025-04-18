@@ -16,16 +16,18 @@ import {
 import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
 import themeSlice from "@/store/slices/theme";
+import identSlice from "./slices/ident";
 
 const persistConfig = {
   key: "kippenstummel",
   version: 1,
   storage,
-  whitelist: ["theme"],
+  whitelist: ["theme", "ident"],
 };
 
 export const rootReducer = combineReducers({
   theme: themeSlice.reducer,
+  ident: identSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
