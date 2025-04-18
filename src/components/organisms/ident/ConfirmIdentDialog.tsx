@@ -1,6 +1,7 @@
-import React, { use, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
 import { DialogProps, Heading } from "react-aria-components";
+import { chain } from "react-aria";
 import { Dialog } from "@/components/atoms/Dialog";
 import { Button } from "@/components/atoms/Button";
 import { Link } from "@/components/atoms/Link";
@@ -12,7 +13,9 @@ import identSlice from "@/store/slices/ident";
 import { solveChallenge } from "@/api/pow";
 import { getFingerprint } from "@/api/fingerprint";
 
-interface ConfirmIdentDialogProps extends Omit<DialogProps, "children"> {}
+interface ConfirmIdentDialogProps extends Omit<DialogProps, "children"> {
+  onConfirm?: () => void;
+}
 
 export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
   const dispatch = useAppDispatch();
@@ -67,7 +70,7 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
         });
 
         dispatch(identSlice.actions.setToken(res.data.token));
-        close();
+        chain(close, props.onConfirm)();
       } catch (err) {
         setSubmitError("Unexpected error occurred. Please try again.");
       } finally {
