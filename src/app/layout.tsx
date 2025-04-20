@@ -3,6 +3,7 @@ import { Lato } from "next/font/google";
 import { StoreProvider } from "@/store";
 import { NotificationProvider } from "@/contexts/NotificationProvider";
 import { NotificationView } from "@/components/organisms/NotificationView";
+import { RefreshIdentInterceptor } from "@/components/organisms/ident/RefreshIdentInterceptor";
 
 import "./globals.css";
 
@@ -29,8 +30,10 @@ export default function RootLayout({
       <body className={`${lato.variable} bg-white dark:bg-slate-800`}>
         <StoreProvider>
           <NotificationProvider>
-            {children}
-            <NotificationView />
+            <RefreshIdentInterceptor>
+              {children}
+              <NotificationView />
+            </RefreshIdentInterceptor>
           </NotificationProvider>
         </StoreProvider>
       </body>
