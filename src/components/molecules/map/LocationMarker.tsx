@@ -1,5 +1,5 @@
 import Leaflet from "leaflet";
-import { Marker } from "react-leaflet";
+import { Marker, Popup } from "react-leaflet";
 import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
 import { MapPin } from "lucide-react";
 
@@ -19,6 +19,16 @@ export function LocationMarker(props: ClusterMarkerProps) {
         ),
         anchor: Leaflet.point(20, 20),
       })}
-    />
+    >
+      <Popup>
+        <div className="space-y-1">
+          <div className="text-md font-semibold">Location</div>
+          <div className="text-xs">
+            {props.position[0].toFixed(7)} / {props.position[1].toFixed(7)}{" "}
+            (lat/lng)
+          </div>
+        </div>
+      </Popup>
+    </Marker>
   );
 }
