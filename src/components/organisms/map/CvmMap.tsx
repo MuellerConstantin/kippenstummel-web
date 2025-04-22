@@ -129,6 +129,7 @@ export function CvmMap(props: CvmMapProps) {
       center={[49.006889, 8.403653]}
       zoom={14}
       minZoom={8}
+      maxZoom={17}
       onReady={onReady}
       onMoveEnd={onMoveEnd}
       onZoomEnd={onZoomEnd}

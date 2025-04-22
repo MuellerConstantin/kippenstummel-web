@@ -48,13 +48,11 @@ export function LocateControlComponent(props: LocateControlComponentProps) {
 interface LocateControlProps extends Leaflet.ControlOptions {}
 
 export class LocateControl extends Leaflet.Control {
-  private _options: LocateControlProps;
   private _container?: HTMLElement;
   private _root?: ReactDOM.Root;
 
   constructor(options: LocateControlProps) {
     super(options);
-    this._options = options;
   }
 
   onAdd(map: Leaflet.Map): HTMLElement {

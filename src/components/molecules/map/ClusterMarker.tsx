@@ -1,6 +1,6 @@
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 import Leaflet from "leaflet";
-import { Marker } from "react-leaflet";
+import { Marker, useMap } from "react-leaflet";
 import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
 
 function formatNumberShort(n: number): string {
@@ -18,6 +18,8 @@ interface ClusterMarkerProps {
 }
 
 export function ClusterMarker(props: ClusterMarkerProps) {
+  const map = useMap();
+
   const outerClasses = useMemo(() => {
     let outerClasses = "";
 
@@ -46,6 +48,12 @@ export function ClusterMarker(props: ClusterMarkerProps) {
     return innerClasses;
   }, [props.count]);
 
+  const handleClick = useCallback(() => {
+    const bounds = Leaflet.latLngBounds([props.position]);
+
+    map.flyTo(Leaflet.latLng(props.position), map.getBoundsZoom(bounds));
+  }, [map]);
+
   return (
     <Marker
       position={Leaflet.latLng(props.position[0], props.position[1])}
@@ -63,6 +71,7 @@ export function ClusterMarker(props: ClusterMarkerProps) {
         ),
         anchor: Leaflet.point(30, 30),
       })}
+      eventHandlers={{ click: handleClick }}
     />
   );
 }
