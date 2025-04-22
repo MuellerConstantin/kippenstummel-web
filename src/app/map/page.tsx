@@ -17,59 +17,77 @@ export default function Map() {
         longitude: position.lng,
       });
     } catch (err: any) {
-      enqueue({
-        title: "Report Failed",
-        description: "There was an error submitting your report.",
-        variant: "error",
-      });
+      enqueue(
+        {
+          title: "Report Failed",
+          description: "There was an error submitting your report.",
+          variant: "error",
+        },
+        { timeout: 5000 },
+      );
       return;
     }
 
-    enqueue({
-      title: "Reported",
-      description: "Your report has been sent. Thanks for your help!",
-      variant: "success",
-    });
+    enqueue(
+      {
+        title: "Reported",
+        description: "Your report has been sent. Thanks for your help!",
+        variant: "success",
+      },
+      { timeout: 5000 },
+    );
   }, []);
 
   const onUpvote = useCallback(async (id: string) => {
     try {
       await api.post(`/cvm/${id}`);
     } catch (err: any) {
-      enqueue({
-        title: "Vote Failed",
-        description:
-          "There was an error voting this cigarette vending machine.",
-        variant: "error",
-      });
+      enqueue(
+        {
+          title: "Vote Failed",
+          description:
+            "There was an error voting this cigarette vending machine.",
+          variant: "error",
+        },
+        { timeout: 5000 },
+      );
       return;
     }
 
-    enqueue({
-      title: "Voted",
-      description: "Thanks for your help!",
-      variant: "success",
-    });
+    enqueue(
+      {
+        title: "Voted",
+        description: "Thanks for your help!",
+        variant: "success",
+      },
+      { timeout: 5000 },
+    );
   }, []);
 
   const onDownvote = useCallback(async (id: string) => {
     try {
       await api.delete(`/cvm/${id}`);
     } catch (err: any) {
-      enqueue({
-        title: "Vote Failed",
-        description:
-          "There was an error voting this cigarette vending machine.",
-        variant: "error",
-      });
+      enqueue(
+        {
+          title: "Vote Failed",
+          description:
+            "There was an error voting this cigarette vending machine.",
+          variant: "error",
+        },
+        { timeout: 5000 },
+      );
       return;
     }
 
-    enqueue({
-      title: "Voted",
-      description: "Thanks for your help!",
-      variant: "success",
-    });
+    enqueue(
+      {
+        title: "Voted",
+        description: "Thanks for your help!",
+        variant: "success",
+      },
+      { timeout: 5000 },
+    );
   }, []);
 
   return (

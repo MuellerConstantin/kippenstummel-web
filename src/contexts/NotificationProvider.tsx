@@ -11,14 +11,17 @@ export interface Notification {
 
 const notificationContext = createContext<{
   queue: ToastQueue;
-  enqueue: (notification: Notification) => void;
+  enqueue: (notification: Notification, options?: { timeout: number }) => void;
 } | null>(null);
 
 export function NotificationProvider({ children }: any) {
   const queue = useMemo(() => new ToastQueue(), []);
 
-  const enqueue = (notification: Notification) => {
-    queue.add(notification);
+  const enqueue = (
+    notification: Notification,
+    options?: { timeout: number },
+  ) => {
+    queue.add(notification, options);
   };
 
   return (
