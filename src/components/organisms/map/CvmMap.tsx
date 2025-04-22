@@ -17,6 +17,8 @@ import { ConfirmCvmReportDialog } from "./ConfirmCvmReportDialog";
 
 export interface CvmMapProps {
   onReport?: (position: Leaflet.LatLng) => void;
+  onUpvote?: (id: string) => void;
+  onDownvote?: (id: string) => void;
 }
 
 export function CvmMap(props: CvmMapProps) {
@@ -156,6 +158,8 @@ export function CvmMap(props: CvmMapProps) {
           key={marker.id}
           position={[marker.latitude, marker.longitude]}
           score={marker.score}
+          onUpvote={() => props.onUpvote?.(marker.id)}
+          onDownvote={() => props.onDownvote?.(marker.id)}
         />
       ))}
       {clusters?.map((marker) => (

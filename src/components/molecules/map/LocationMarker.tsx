@@ -7,6 +7,8 @@ import { Link } from "@/components/atoms/Link";
 interface ClusterMarkerProps {
   position: [number, number];
   score: number;
+  onUpvote?: () => void;
+  onDownvote?: () => void;
 }
 
 export function LocationMarker(props: ClusterMarkerProps) {
@@ -25,11 +27,17 @@ export function LocationMarker(props: ClusterMarkerProps) {
       <Popup>
         <div className="flex items-center gap-4">
           <div className="flex flex-col items-center">
-            <button className="cursor-pointer text-slate-600 hover:text-slate-800">
+            <button
+              className="cursor-pointer text-slate-600 hover:text-slate-800"
+              onClick={props.onUpvote}
+            >
               <ChevronUp className="h-8 w-8" />
             </button>
             <div className="text-lg font-semibold">{props.score}</div>
-            <button className="cursor-pointer text-slate-600 hover:text-slate-800">
+            <button
+              className="cursor-pointer text-slate-600 hover:text-slate-800"
+              onClick={props.onDownvote}
+            >
               <ChevronDown className="h-8 w-8" />
             </button>
           </div>
@@ -43,7 +51,14 @@ export function LocationMarker(props: ClusterMarkerProps) {
                 {props.position[0].toFixed(7)} / {props.position[1].toFixed(7)}{" "}
                 (lat/lng)
               </div>
-              <button className="cursor-pointer text-slate-600 hover:text-slate-800">
+              <button
+                className="cursor-pointer text-slate-600 hover:text-slate-800"
+                onClick={() =>
+                  navigator.clipboard.writeText(
+                    `${props.position[0]},${props.position[1]}`,
+                  )
+                }
+              >
                 <Copy className="h-4 w-4" />
               </button>
             </div>
