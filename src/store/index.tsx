@@ -18,17 +18,20 @@ import storage from "redux-persist/lib/storage";
 import { injectStore } from "@/api";
 import themeSlice from "@/store/slices/theme";
 import identSlice from "./slices/ident";
+import privacySlice from "./slices/privacy";
+import { CookieBanner } from "@/components/organisms/CookieBanner";
 
 const persistConfig = {
   key: "kippenstummel",
   version: 1,
   storage,
-  whitelist: ["theme", "ident"],
+  whitelist: ["theme", "ident", "privacy"],
 };
 
 export const rootReducer = combineReducers({
   theme: themeSlice.reducer,
   ident: identSlice.reducer,
+  privacy: privacySlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -45,6 +48,8 @@ export const makeStore = () => {
   });
 
   const persistor = persistStore(store);
+
+  persistor.pause();
 
   return [store, persistor] as const;
 };
@@ -75,6 +80,33 @@ function ThemeSwitcher({
   return children;
 }
 
+export default function PrivacyCompliantPersistGate({
+  children,
+  persistor,
+  loading,
+}: Readonly<{
+  children: React.ReactNode;
+  persistor: ReturnType<typeof persistStore>;
+  loading: React.ReactNode;
+}>) {
+  const cookiesAllowed = useAppSelector(
+    (state) => state.privacy.cookiesAllowed,
+  );
+
+  useEffect(() => {
+    if (cookiesAllowed) {
+      persistor.persist();
+    }
+  }, [cookiesAllowed, persistor]);
+
+  return (
+    <PersistGate persistor={persistor} loading={loading}>
+      {children}
+      <CookieBanner onConsent={() => persistor.persist()} />
+    </PersistGate>
+  );
+}
+
 export function StoreProvider({
   children,
 }: Readonly<{
@@ -89,9 +121,12 @@ export function StoreProvider({
 
   return (
     <Provider store={storeRef.current[0]}>
-      <PersistGate loading={null} persistor={storeRef.current[1]}>
+      <PrivacyCompliantPersistGate
+        loading={null}
+        persistor={storeRef.current[1]}
+      >
         <ThemeSwitcher>{children}</ThemeSwitcher>
-      </PersistGate>
+      </PrivacyCompliantPersistGate>
     </Provider>
   );
 }
