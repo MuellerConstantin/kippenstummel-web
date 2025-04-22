@@ -21,7 +21,7 @@ api.interceptors.request.use((config) => {
   const state = store.getState();
 
   if (state.ident.token) {
-    config.headers.Authorization = `Bearer ${state.ident.token}`;
+    config.headers["x-ident"] = state.ident.token;
   }
 
   return config;
