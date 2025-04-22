@@ -74,7 +74,7 @@ export function CvmMap(props: CvmMapProps) {
 
   const { data } = useSWR<
     (
-      | { id: string; longitude: number; latitude: number }
+      | { id: string; longitude: number; latitude: number; score: number }
       | {
           id: string;
           cluster: true;
@@ -94,12 +94,25 @@ export function CvmMap(props: CvmMapProps) {
   );
 
   const markers = useMemo(
-    () => data?.filter((item) => !("cluster" in item)),
+    () =>
+      data?.filter((item) => !("cluster" in item)) as {
+        id: string;
+        longitude: number;
+        latitude: number;
+        score: number;
+      }[],
     [data],
   );
 
   const clusters = useMemo(
-    () => data?.filter((item) => "cluster" in item),
+    () =>
+      data?.filter((item) => "cluster" in item) as {
+        id: string;
+        cluster: true;
+        longitude: number;
+        latitude: number;
+        count: number;
+      }[],
     [data],
   );
 
@@ -141,6 +154,7 @@ export function CvmMap(props: CvmMapProps) {
         <LocationMarker
           key={marker.id}
           position={[marker.latitude, marker.longitude]}
+          score={marker.score}
         />
       ))}
       {clusters?.map((marker) => (
