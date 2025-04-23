@@ -6,8 +6,9 @@ export interface FooterProps {}
 export function Footer(props: FooterProps) {
   const navigation = useMemo(() => {
     return [
-      { name: "Home", href: "/" },
-      { name: "Map", href: "/map" },
+      { name: "Terms of Service", href: "/terms-of-service" },
+      { name: "Privacy Policy", href: "/privacy-policy" },
+      { name: "Imprint", href: "/imprint" },
     ];
   }, []);
 

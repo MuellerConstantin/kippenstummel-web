@@ -102,7 +102,7 @@ export default function PrivacyCompliantPersistGate({
   return (
     <PersistGate persistor={persistor} loading={loading}>
       {children}
-      <CookieBanner onConsent={() => persistor.persist()} />
+      <CookieBanner />
     </PersistGate>
   );
 }

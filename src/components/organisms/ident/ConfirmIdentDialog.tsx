@@ -132,7 +132,7 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
             <div className="text-xs">
               By confirming, you agree to our{" "}
               <Link href="/terms-of-service">Terms of Service</Link> and{" "}
-              <Link href="/privacy">Privacy Policy</Link>.
+              <Link href="/privacy-policy">Privacy Policy</Link>.
             </div>
           </div>
         </>
