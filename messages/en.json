@@ -14,6 +14,12 @@
   "TermsOfServicePage": {
     "title": "Kippenstummel | Terms of Service"
   },
+  "NotFoundPage": {
+    "title": "Kippenstummel | Page not found",
+    "headline": "Page not found",
+    "description": "Sorry, we can't find that page. You'll find lots to explore on the home page.",
+    "backToHomepage": "Back to home"
+  },
   "Navbar": {
     "home": "Home",
     "map": "Map",

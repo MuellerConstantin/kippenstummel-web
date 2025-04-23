@@ -14,6 +14,12 @@
   "TermsOfServicePage": {
     "title": "Kippenstummel | Nutzungsbedingungen"
   },
+  "NotFoundPage": {
+    "title": "Kippenstummel | Seite nicht gefunden",
+    "headline": "Seite nicht gefunden",
+    "description": "Die Seite, die du suchst, konnte nicht gefunden werden.",
+    "backToHomepage": "Zurück zur Startseite"
+  },
   "Navbar": {
     "home": "Startseite",
     "map": "Karte",
