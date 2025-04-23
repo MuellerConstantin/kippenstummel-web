@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { AxiosResponse } from "axios";
 import { DialogProps, Heading } from "react-aria-components";
 import { chain } from "react-aria";
@@ -18,6 +19,7 @@ interface ConfirmIdentDialogProps extends Omit<DialogProps, "children"> {
 }
 
 export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
+  const t = useTranslations("ConfirmIdentDialog");
   const dispatch = useAppDispatch();
   const api = useApi();
 
@@ -47,11 +49,11 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
       setCaptcha(captchaRes.data);
       setPow(powRes.headers["x-pow"]);
     } catch (err) {
-      setError("Unexpected error occurred. Please try again.");
+      setError(t("error"));
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   const onSubmit = useCallback(
     async (close: () => void) => {
@@ -72,12 +74,12 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
         dispatch(identSlice.actions.setToken(res.data.token));
         chain(close, props.onConfirm)();
       } catch (err) {
-        setSubmitError("Unexpected error occurred. Please try again.");
+        setSubmitError(t("error"));
       } finally {
         setSubmitting(false);
       }
     },
-    [captchaSolution, captcha, pow],
+    [captchaSolution, captcha, pow, t],
   );
 
   useEffect(() => {
@@ -92,13 +94,10 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
             slot="title"
             className="my-0 text-xl leading-6 font-semibold"
           >
-            Confirm your Identity
+            {t("title")}
           </Heading>
           <div className="mt-4 flex flex-col gap-4">
-            <div>
-              To help keep our platform secure, we need to verify that you're a
-              real person. Please complete the CAPTCHA below.
-            </div>
+            <div>{t("description")}</div>
             <div className="flex justify-center">
               {loading ? (
                 <div>
@@ -107,12 +106,12 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
               ) : error || submitError ? (
                 <span className="text-red-500">{error || submitError}</span>
               ) : (
-                <img src={captcha?.content} alt="CAPTCHA" className="w-[80%]" />
+                <img src={captcha?.content} alt="Captcha" className="w-[80%]" />
               )}
             </div>
             <div className="flex flex-col gap-4">
               <TextField
-                placeholder="Enter CAPTCHA"
+                placeholder={t("captchaPlaceholder")}
                 value={captchaSolution}
                 onChange={setCaptchaSolution}
                 isDisabled={loading || submitting}
@@ -125,14 +124,15 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
                 }
               >
                 <div className="flex justify-center">
-                  {submitting ? <Spinner /> : "Confirm"}
+                  {submitting ? <Spinner /> : t("confirm")}
                 </div>
               </Button>
             </div>
             <div className="text-xs">
-              By confirming, you agree to our{" "}
-              <Link href="/terms-of-service">Terms of Service</Link> and{" "}
-              <Link href="/privacy-policy">Privacy Policy</Link>.
+              {t.rich("disclaimer", {
+                tos: (chunks) => <Link href="/terms-of-service">{chunks}</Link>,
+                pp: (chunks) => <Link href="/privacy-policy">{chunks}</Link>,
+              })}
             </div>
           </div>
         </>

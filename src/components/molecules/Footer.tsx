@@ -1,16 +1,19 @@
 import React, { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/components/atoms/Link";
 
 export interface FooterProps {}
 
 export function Footer(props: FooterProps) {
+  const t = useTranslations("Footer");
+
   const navigation = useMemo(() => {
     return [
-      { name: "Terms of Service", href: "/terms-of-service" },
-      { name: "Privacy Policy", href: "/privacy-policy" },
-      { name: "Imprint", href: "/imprint" },
+      { name: t("termsOfService"), href: "/terms-of-service" },
+      { name: t("privacyPolicy"), href: "/privacy-policy" },
+      { name: t("imprint"), href: "/imprint" },
     ];
-  }, []);
+  }, [t]);
 
   return (
     <div className="border-t border-slate-200 bg-slate-50 text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
@@ -23,7 +26,7 @@ export function Footer(props: FooterProps) {
             </Link>
             .
           </span>
-          <span>All Rights Reserved.</span>
+          <span>{t("allRightsReserved")}</span>
         </span>
         <ul className="mt-3 flex flex-wrap items-center space-x-4 text-sm font-medium sm:mt-0">
           {navigation.map((item) => (

@@ -1,0 +1,81 @@
+{
+  "HomePage": {
+    "title": "Kippenstummel | Startseite"
+  },
+  "MapPage": {
+    "title": "Kippenstummel | Karte"
+  },
+  "ImprintPage": {
+    "title": "Kippenstummel | Impressum"
+  },
+  "PrivacyPolicyPage": {
+    "title": "Kippenstummel | Datenschutzerklärung"
+  },
+  "TermsOfServicePage": {
+    "title": "Kippenstummel | Nutzungsbedingungen"
+  },
+  "Navbar": {
+    "home": "Startseite",
+    "map": "Karte",
+    "darkMode": "Dunkler Modus"
+  },
+  "Footer": {
+    "imprint": "Impressum",
+    "privacyPolicy": "Datenschutzerklärung",
+    "termsOfService": "Nutzungsbedingungen",
+    "allRightsReserved": "Alle Rechte vorbehalten."
+  },
+  "CookieBanner": {
+    "title": "Wir verwenden Cookies!",
+    "description": "Diese Website verwendet Cookies oder ähnliche Technologien, um wesentliche Funktionen zu implementieren und Ihr Browser-Erlebnis zu verbessern. Darüber hinaus integrieren wir Dienste von Drittanbietern, die ebenfalls Cookies oder ähnliche Technologien verwenden können. Um fortzufahren, benötigen wir Ihre Zustimmung. Einige Funktionen funktionieren ohne Cookies möglicherweise nicht ordnungsgemäß. Weitere Informationen finden Sie in unserer <link>Datenschutzerklärung</link>.",
+    "accept": "Cookies akzeptieren",
+    "decline": "Cookies ablehnen"
+  },
+  "ConfirmIdentDialog": {
+    "title": "Identität bestätigen",
+    "description": "Um unsere Plattform sicher zu halten, musst du deine Identität bestätigen. Bitte fülle das CAPTCHA unten aus.",
+    "captchaPlaceholder": "CAPTCHA eingeben",
+    "confirm": "Bestätigen",
+    "disclaimer": "Durch die Bestätigung akzeptierst du unsere <tos>Nutzungsbedingungen</tos> und unsere <pp>Datenschutzerklärung</pp>.",
+    "error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut."
+  },
+  "ConfirmCvmReportDialog": {
+    "title": "Zigarettenautomat melden",
+    "description": "Bist du sicher, dass du einen Zigarettenautomaten an deiner aktuellen Position melden willst?",
+    "confirm": "Bestätigen",
+    "cancel": "Abbrechen",
+    "disclaimer": "Durch die Bestätigung akzeptierst du unsere <tos>Nutzungsbedingungen</tos> und unsere <pp>Datenschutzerklärung</pp>."
+  },
+  "CvmOptInMap": {
+    "title": "Bitte akzeptiere die <tos>Nutzungsbedingungen</tos> und die <pp>Datenschutzerklärung</pp>, um fortzufahren.",
+    "description": "Die Dienste dieser Website nutzen eine Reihe von Funktionen, die Ihre Zustimmung erfordern. Dazu gehören das Laden von Kachelebenen von Drittanbietern für Kartenvisualisierungen, die Verwendung von Cookies oder ähnlichen Technologien sowie das Device-Fingerprinting. Darüber hinaus kann es für einzelne Funktionen erforderlich sein, den aktuellen Standort des Nutzers abzufragen.",
+    "accept": "Akzeptieren & Fortfahren"
+  },
+  "LocationMarker": {
+    "title": "Zigarettenautomat",
+    "location": "Standort",
+    "openInGoogleMaps": "In Google Maps öffnen"
+  },
+  "Notifications": {
+    "cvmReported": {
+      "title": "Meldung gesendet",
+      "description": "Deine Meldung wurde gesendet. Vielen Dank!"
+    },
+    "cvmReportFailed": {
+      "title": "Meldung fehlgeschlagen",
+      "description": "Es gab einen Fehler beim Senden deiner Meldung."
+    },
+    "cvmVoted": {
+      "title": "Abgestimmt",
+      "description": "Vielen Dank!"
+    },
+    "cvmVoteFailed": {
+      "title": "Abstimmung fehlgeschlagen",
+      "description": "Es gab einen Fehler beim Senden deiner Abstimmung."
+    },
+    "locationDeterminationFailed": {
+      "title": "Standortbestimmung fehlgeschlagen",
+      "description": "Es gab einen Fehler beim Bestimmen deines Standorts."
+    }
+  }
+}

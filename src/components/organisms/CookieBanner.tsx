@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { useAppSelector, useAppDispatch } from "@/store";
 import { Button } from "@/components/atoms/Button";
 import { Link } from "@/components/atoms/Link";
@@ -9,6 +10,7 @@ import privacySlice from "@/store/slices/privacy";
 interface CookieBannerProps {}
 
 export function CookieBanner(props: CookieBannerProps) {
+  const t = useTranslations("CookieBanner");
   const dispatch = useAppDispatch();
 
   const cookiesAllowed = useAppSelector(
@@ -22,7 +24,7 @@ export function CookieBanner(props: CookieBannerProps) {
     setOpen(false);
   };
 
-  const denyCookies = () => {
+  const declineCookies = () => {
     setOpen(false);
   };
 
@@ -39,26 +41,22 @@ export function CookieBanner(props: CookieBannerProps) {
       <div className="fixed right-0 bottom-0 z-[1000] p-4">
         <div className="w-full max-w-md overflow-hidden rounded-2xl bg-slate-50 p-6 text-left align-middle text-slate-800 shadow-xl dark:bg-slate-700 dark:text-white">
           <div className="space-y-4">
-            <h2 className="text-xl font-bold">We use cookies!</h2>
+            <h2 className="text-xl font-bold">{t("title")}</h2>
             <p className="text-sm">
-              This website uses cookies or similar technologies, to implement
-              essential features and to enhance your browsing experience.
-              Additionally, we integrate third-party services that may also use
-              cookies or similar technologies. We need your consent to proceed.
-              Some features may not work properly without cookies. For more
-              information, see our{" "}
-              <Link href="/privacy-policy">Privacy Policy</Link>.
+              {t.rich("description", {
+                link: (chunks) => <Link href="/privacy-policy">{chunks}</Link>,
+              })}
             </p>
             <Button variant="primary" className="w-full" onPress={allowCookies}>
-              Allow Cookies
+              {t("accept")}
             </Button>
             <div className="flex justify-center">
               <button
                 type="button"
                 className="text-xs hover:underline"
-                onClick={denyCookies}
+                onClick={declineCookies}
               >
-                Deny Cookies
+                {t("decline")}
               </button>
             </div>
           </div>

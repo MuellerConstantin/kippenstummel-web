@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import useSWR from "swr";
 import Leaflet from "leaflet";
+import { useTranslations } from "next-intl";
 import useApi from "@/hooks/useApi";
 import { DialogTrigger } from "react-aria-components";
 import { LeafletMap } from "@/components/organisms/leaflet/LeafletMap";
@@ -22,6 +23,7 @@ export interface CvmMapProps {
 }
 
 export function CvmMap(props: CvmMapProps) {
+  const t = useTranslations();
   const api = useApi();
   const { enqueue } = useNotifications();
 
@@ -68,8 +70,8 @@ export function CvmMap(props: CvmMapProps) {
 
   const onLocationError = useCallback((event: Leaflet.LeafletEvent) => {
     enqueue({
-      title: "Location Error",
-      description: "The location determination failed.",
+      title: t("Notifications.locationDeterminationFailed.title"),
+      description: t("Notifications.locationDeterminationFailed.description"),
       variant: "error",
     });
   }, []);

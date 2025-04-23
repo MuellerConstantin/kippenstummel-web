@@ -1,5 +1,6 @@
 import Leaflet from "leaflet";
 import { Marker, Popup } from "react-leaflet";
+import { useTranslations } from "next-intl";
 import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
 import { MapPin, ChevronUp, ChevronDown, Copy } from "lucide-react";
 import { Link } from "@/components/atoms/Link";
@@ -12,6 +13,8 @@ interface ClusterMarkerProps {
 }
 
 export function LocationMarker(props: ClusterMarkerProps) {
+  const t = useTranslations("LocationMarker");
+
   return (
     <Marker
       position={Leaflet.latLng(props.position[0], props.position[1])}
@@ -42,10 +45,8 @@ export function LocationMarker(props: ClusterMarkerProps) {
             </button>
           </div>
           <div className="space-y-1">
-            <div className="text-base font-semibold">
-              Cigarette Vending Machine
-            </div>
-            <div className="text-sm font-semibold">Location</div>
+            <div className="text-base font-semibold">{t("title")}</div>
+            <div className="text-sm font-semibold">{t("location")}</div>
             <div className="flex items-center gap-2">
               <div className="text-xs">
                 {props.position[0].toFixed(7)} / {props.position[1].toFixed(7)}{" "}
@@ -66,7 +67,7 @@ export function LocationMarker(props: ClusterMarkerProps) {
               href={`https://www.google.com.sa/maps/search/${props.position[0]},${props.position[1]}`}
               target="_blank"
             >
-              Open in Google Maps
+              {t("openInGoogleMaps")}
             </Link>
           </div>
         </div>

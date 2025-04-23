@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { useAppSelector, useAppDispatch } from "@/store";
 import { CvmMapProps, CvmMap } from "./CvmMap";
 import { Button } from "@/components/atoms/Button";
@@ -7,6 +8,7 @@ import privacySlice from "@/store/slices/privacy";
 export interface CvmOptInMap extends CvmMapProps {}
 
 export function CvmOptInMap(props: CvmOptInMap) {
+  const t = useTranslations("CvmOptInMap");
   const dispatch = useAppDispatch();
 
   const mapOptInAllowed = useAppSelector(
@@ -25,19 +27,15 @@ export function CvmOptInMap(props: CvmOptInMap) {
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/30 backdrop-blur-sm">
           <div className="flex flex-col items-center justify-center gap-4 p-4">
             <div className="max-w-sm text-center text-slate-500">
-              Please accept the{" "}
-              <Link href="/privacy-policy">Privacy Policy</Link> and{" "}
-              <Link href="/terms-of-service">Terms of Service</Link> to continue
-              and use our services.
+              {t.rich("title", {
+                tos: (chunks) => <Link href="/terms-of-service">{chunks}</Link>,
+                pp: (chunks) => <Link href="/privacy-policy">{chunks}</Link>,
+              })}
             </div>
             <div className="max-w-sm text-center text-xs text-slate-400">
-              The services of this website use a number of features that require
-              your consent. These include loading third-party tile layers for
-              map visualizations, the use of cookies or similar technologies,
-              and device fingerprinting. Furthermore, it may be necessary to
-              query the user's current location for individual features.
+              {t("description")}
             </div>
-            <Button onPress={allowOptIn}>Accept & Continue</Button>
+            <Button onPress={allowOptIn}>{t("accept")}</Button>
           </div>
         </div>
       </div>

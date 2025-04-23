@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo } from "react";
 import NextLink from "next/link";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { Menu as MenuIcon, EllipsisVertical } from "lucide-react";
 import { MenuTrigger } from "react-aria-components";
 import { Button } from "@/components/atoms/Button";
@@ -16,12 +17,14 @@ import themeSlice from "@/store/slices/theme";
 export interface NavbarProps {}
 
 export function Navbar(props: NavbarProps) {
+  const t = useTranslations("Navbar");
+
   const navigation = useMemo(() => {
     return [
-      { name: "Home", href: "/" },
-      { name: "Map", href: "/map" },
+      { name: t("home"), href: "/" },
+      { name: t("map"), href: "/map" },
     ];
-  }, []);
+  }, [t]);
 
   return (
     <nav className="relative border-b border-slate-200 bg-slate-50 text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
@@ -83,6 +86,8 @@ export function Navbar(props: NavbarProps) {
 interface NavbarOptionsMenuProps {}
 
 export function NavbarOptionsMenu(props: NavbarOptionsMenuProps) {
+  const t = useTranslations("Navbar");
+
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector((state) => state.theme.darkMode);
 
@@ -94,7 +99,7 @@ export function NavbarOptionsMenu(props: NavbarOptionsMenuProps) {
           dispatch(themeSlice.actions.setDarkMode(newDarkMode))
         }
       >
-        Dark Mode
+        {t("darkMode")}
       </Switch>
     </Popover>
   );

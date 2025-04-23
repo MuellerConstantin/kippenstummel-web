@@ -1,0 +1,81 @@
+{
+  "HomePage": {
+    "title": "Kippenstummel | Home"
+  },
+  "MapPage": {
+    "title": "Kippenstummel | Map"
+  },
+  "ImprintPage": {
+    "title": "Kippenstummel | Imprint"
+  },
+  "PrivacyPolicyPage": {
+    "title": "Kippenstummel | Privacy Policy"
+  },
+  "TermsOfServicePage": {
+    "title": "Kippenstummel | Terms of Service"
+  },
+  "Navbar": {
+    "home": "Home",
+    "map": "Map",
+    "darkMode": "Dark Mode"
+  },
+  "Footer": {
+    "imprint": "Imprint",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "allRightsReserved": "All rights reserved."
+  },
+  "CookieBanner": {
+    "title": "We use cookies!",
+    "description": "This website uses cookies or similar technologies, to implement essential features and to enhance your browsing experience. Additionally, we integrate third-party services that may also use cookies or similar technologies. We need your consent to proceed. Some features may not work properly without cookies. For more information, see our <link>Privacy Policy</link>.",
+    "accept": "Accept cookies",
+    "decline": "Decline cookies"
+  },
+  "ConfirmIdentDialog": {
+    "title": "Confirm Identity",
+    "description": "To help keep our platform secure, we need to verify that you're a real person. Please complete the CAPTCHA below.",
+    "captchaPlaceholder": "Enter CAPTCHA",
+    "confirm": "Confirm",
+    "disclaimer": "By confirming, you agree to our <tos>Terms of Service</tos> and <pp>Privacy Policy</pp>.",
+    "error": "Unexpected error occurred. Please try again."
+  },
+  "ConfirmCvmReportDialog": {
+    "title": "Report Cigarette Vending Machine",
+    "description": "Are you sure you want to report a cigarette vending machine at your current location?",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "disclaimer": "By confirming, you agree to our <tos>Terms of Service</tos> and <pp>Privacy Policy</pp>."
+  },
+  "CvmOptInMap": {
+    "title": "Please accept the <tos>Terms of Service</tos> and <pp>Privacy Policy</pp> to continue.",
+    "description": "The services of this website use a number of features that require your consent. These include loading third-party tile layers for map visualizations, the use of cookies or similar technologies, and device fingerprinting. Furthermore, it may be necessary to query the user's current location for individual features.",
+    "accept": "Accept & Continue"
+  },
+  "LocationMarker": {
+    "title": "Cigarette Vending Machine",
+    "location": "Location",
+    "openInGoogleMaps": "Open in Google Maps"
+  },
+  "Notifications": {
+    "cvmReported": {
+      "title": "Reported",
+      "description": "Your report has been sent. Thanks for your help!"
+    },
+    "cvmReportFailed": {
+      "title": "Report Failed",
+      "description": "There was an error submitting your report."
+    },
+    "cvmVoted": {
+      "title": "Voted",
+      "description": "Thanks for your vote!"
+    },
+    "cvmVoteFailed": {
+      "title": "Vote Failed",
+      "description": "There was an error submitting your vote."
+    },
+    "locationDeterminationFailed": {
+      "title": "Location Determination Failed",
+      "description": "There was an error determining your location."
+    }
+  }
+}

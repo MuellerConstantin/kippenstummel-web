@@ -1,7 +1,10 @@
+import React from "react";
 import type { Preview } from "@storybook/react";
 import { withThemeByClassName } from "@storybook/addon-themes";
+import { NextIntlClientProvider } from "next-intl";
+import defaultMessages from "../messages/en.json";
 
-import "@/app/globals.css";
+import "@/app/[locale]/globals.css";
 
 const preview: Preview = {
   parameters: {
@@ -20,6 +23,11 @@ const preview: Preview = {
       },
       defaultTheme: "light",
     }),
+    (Story) => (
+      <NextIntlClientProvider locale="en" messages={defaultMessages}>
+        <Story />
+      </NextIntlClientProvider>
+    ),
   ],
 };
 
