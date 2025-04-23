@@ -373,3 +373,6 @@ fabric.properties
 
 # Storybook
 *storybook.log
+
+# Certificates
+certificates
