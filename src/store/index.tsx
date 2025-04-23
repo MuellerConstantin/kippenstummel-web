@@ -96,6 +96,7 @@ export default function PrivacyCompliantPersistGate({
   useEffect(() => {
     if (cookiesAllowed) {
       persistor.persist();
+      persistor.flush();
     }
   }, [cookiesAllowed, persistor]);
 

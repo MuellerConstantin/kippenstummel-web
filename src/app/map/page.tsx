@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 import Leaflet from "leaflet";
-import { CvmMap } from "@/components/organisms/map/CvmMap";
+import { CvmOptInMap } from "@/components/organisms/map/CvmOptInMap";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import useApi from "@/hooks/useApi";
 
@@ -92,7 +92,11 @@ export default function Map() {
 
   return (
     <div className="flex h-0 grow flex-col">
-      <CvmMap onReport={onReport} onUpvote={onUpvote} onDownvote={onDownvote} />
+      <CvmOptInMap
+        onReport={onReport}
+        onUpvote={onUpvote}
+        onDownvote={onDownvote}
+      />
     </div>
   );
 }

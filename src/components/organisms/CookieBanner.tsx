@@ -29,6 +29,8 @@ export function CookieBanner(props: CookieBannerProps) {
   useEffect(() => {
     if (!cookiesAllowed) {
       setOpen(true);
+    } else {
+      setOpen(false);
     }
   }, [cookiesAllowed]);
 
