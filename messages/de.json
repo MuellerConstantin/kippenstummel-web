@@ -82,7 +82,11 @@
   "Navbar": {
     "home": "Startseite",
     "map": "Karte",
-    "darkMode": "Dunkler Modus"
+    "darkMode": "Dunkler Modus",
+    "languages": {
+      "de": "Deutsch",
+      "en": "Englisch"
+    }
   },
   "Footer": {
     "imprint": "Impressum",

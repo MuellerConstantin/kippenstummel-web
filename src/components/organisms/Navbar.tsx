@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import NextLink from "next/link";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
-import { Menu as MenuIcon, EllipsisVertical } from "lucide-react";
+import { useParams } from "next/navigation";
+import { useTranslations, useLocale } from "next-intl";
+import { Menu as MenuIcon, EllipsisVertical, Languages } from "lucide-react";
 import { MenuTrigger } from "react-aria-components";
 import { Button } from "@/components/atoms/Button";
 import { Link } from "@/components/atoms/Link";
@@ -13,6 +14,7 @@ import { Menu, MenuItem } from "@/components/molecules/Menu";
 import { Popover } from "@/components/atoms/Popover";
 import { useAppSelector, useAppDispatch } from "@/store";
 import themeSlice from "@/store/slices/theme";
+import { useRouter, usePathname } from "@/i18n/navigation";
 
 export interface NavbarProps {}
 
@@ -28,7 +30,7 @@ export function Navbar(props: NavbarProps) {
 
   return (
     <nav className="relative border-b border-slate-200 bg-slate-50 text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
-      <div className="flex items-center justify-between space-x-10 p-4">
+      <div className="relative flex items-center justify-between space-x-10 p-4">
         <div className="md:hidden">
           <MenuTrigger>
             <Button variant="icon">
@@ -47,20 +49,22 @@ export function Navbar(props: NavbarProps) {
             </Menu>
           </MenuTrigger>
         </div>
-        <NextLink href="/">
-          <div className="flex w-fit items-center justify-center md:space-x-4">
-            <Image
-              src="/images/logo.svg"
-              width={42}
-              height={32}
-              className="h-6 -rotate-16 sm:h-9"
-              alt="Kippenstummel"
-            />
-            <span className="hidden self-center text-xl font-semibold whitespace-nowrap md:block dark:text-white">
-              Kippenstummel
-            </span>
-          </div>
-        </NextLink>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:static md:top-auto md:left-auto md:translate-x-0 md:translate-y-0">
+          <NextLink href="/">
+            <div className="flex w-fit items-center justify-center md:space-x-4">
+              <Image
+                src="/images/logo.svg"
+                width={42}
+                height={32}
+                className="h-6 -rotate-16 sm:h-9"
+                alt="Kippenstummel"
+              />
+              <span className="hidden self-center text-xl font-semibold whitespace-nowrap md:block dark:text-white">
+                Kippenstummel
+              </span>
+            </div>
+          </NextLink>
+        </div>
         <div className="flex items-center space-x-4">
           <div className="hidden space-x-4 md:flex">
             {navigation.map((item) => (
@@ -69,7 +73,13 @@ export function Navbar(props: NavbarProps) {
               </Link>
             ))}
           </div>
-          <div className="self-end">
+          <div className="flex self-end">
+            <MenuTrigger>
+              <Button variant="icon">
+                <Languages className="h-6 w-6" />
+              </Button>
+              <NavbarLanguagesMenu />
+            </MenuTrigger>
             <MenuTrigger>
               <Button variant="icon">
                 <EllipsisVertical className="h-6 w-6" />
@@ -102,5 +112,41 @@ export function NavbarOptionsMenu(props: NavbarOptionsMenuProps) {
         {t("darkMode")}
       </Switch>
     </Popover>
+  );
+}
+
+interface NavbarLanguagesMenuProps {}
+
+export function NavbarLanguagesMenu(props: NavbarLanguagesMenuProps) {
+  const t = useTranslations("Navbar");
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+  const params = useParams();
+
+  const onLocaleChange = useCallback(
+    (newLocale: string) => {
+      router.replace(
+        {
+          pathname,
+          query: { ...params, locale: newLocale },
+        },
+        { locale: newLocale },
+      );
+    },
+    [pathname, params, router],
+  );
+
+  return (
+    <Menu
+      selectionMode="single"
+      selectedKeys={[`locale-${locale}`]}
+      onSelectionChange={(key) =>
+        onLocaleChange([...(key as Set<string>)][0].split("-")[1])
+      }
+    >
+      <MenuItem id={`locale-en`}>{t("languages.en")}</MenuItem>
+      <MenuItem id={`locale-de`}>{t("languages.de")}</MenuItem>
+    </Menu>
   );
 }
