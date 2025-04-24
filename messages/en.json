@@ -1,6 +1,65 @@
 {
   "HomePage": {
-    "title": "Kippenstummel | Home"
+    "title": "Kippenstummel | Home",
+    "slogan": "Zu einer Kippe habe ma noch nie nein gsait!",
+    "cta": "Find a cigarette vending machine now!",
+    "features": {
+      "slogan": "Find the nearest cigarette vending machine near you",
+      "title": "The cigarette vending machine map of your choice",
+      "description": "With our services, you can find the nearest cigarette vending machine quickly and easily. Determine your current location, display options, and get started. Community-supported, by smokers for smokers.",
+      "items": {
+        "simple": {
+          "title": "Simple & free",
+          "description": "Our services are completely free and easy to use. No registration required."
+        },
+        "current": {
+          "title": "Current & comprehensive",
+          "description": "Our services are committed to providing the most up-to-date information. The data is regularly updated and checked for accuracy."
+        },
+        "community": {
+          "title": "Self-regulating",
+          "description": "Our services are community-driven. Location information is kept up-to-date and verified by the community."
+        },
+        "device": {
+          "title": "Device independent",
+          "description": "Our services are available on any device. No app required."
+        }
+      }
+    },
+    "banner": {
+      "title": "Smoking can be fatal! Problems with smoking?",
+      "description": "Help and advice is available, for example, from the Bundesinstitut für Öffentliche Gesundheit: <link1>www.rauchfrei-info.de</link1> or by phone at <link2>0800 8 31 31 31</link2> (free of charge and anonymously)."
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "description": "Your question wasn't answered or you have suggestions for improvement? Reach out to our developers directly via <link>email</link>.",
+      "items": {
+        "1": {
+          "question": "What is Kippenstummel?",
+          "answer": "Kippenstummel is a service that helps smokers quickly and easily find nearby cigarette vending machines. Users can report, rate, and look up vending machine locations."
+        },
+        "2": {
+          "question": "Where does the location data come from?",
+          "answer": "Kippenstummel relies on community self-regulation. Most vending machine locations are entered and maintained by the community itself. The data is regularly updated and checked for accuracy. Additionally, our database is supplemented with public data from third-party sources."
+        },
+        "3": {
+          "question": "Is Kippenstummel free?",
+          "answer": "Yes, Kippenstummel is free. You don't need to provide payment information or register to use it."
+        },
+        "4": {
+          "question": "Is there an age limit for the use of Kippenstummel?",
+          "answer": "Yes, the use of Kippenstummel is only permitted for persons 18 years of age and older. In Germany, the consumption of tobacco products is only permitted by law for adults - this regulation also applies to the use of our application."
+        },
+        "5": {
+          "question": "Does Kippenstummel sell tobacco products itself?",
+          "answer": "No. Kippenstummel does not sell or advertise tobacco products. The platform serves solely to provide neutral information about publicly accessible cigarette vending machine locations."
+        },
+        "6": {
+          "question": "Do you want to quit smoking?",
+          "answer": "Always a good decision. If you need help or have questions, the <link1>Bundesinstitut für Öffentliche Gesundheit</link1> and the <link2>Deutsche Hauptstelle für Suchtfragen</link2> offer free counseling."
+        }
+      }
+    }
   },
   "MapPage": {
     "title": "Kippenstummel | Map"
