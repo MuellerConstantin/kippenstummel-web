@@ -1,6 +1,9 @@
 {
   "HomePage": {
-    "title": "Kippenstummel | Home",
+    "meta": {
+      "title": "Kippenstummel | Homepage",
+      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+    },
     "slogan": "Zu einer Kippe habe ma noch nie nein gsait!",
     "cta": "Find a cigarette vending machine now!",
     "features": {
@@ -62,10 +65,16 @@
     }
   },
   "MapPage": {
-    "title": "Kippenstummel | Map"
+    "meta": {
+      "title": "Kippenstummel | Map",
+      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+    }
   },
   "ImprintPage": {
-    "title": "Kippenstummel | Imprint",
+    "meta": {
+      "title": "Kippenstummel | Imprint",
+      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+    },
     "headline": "Impressum",
     "declaration": "Angaben gemäß § 5 TMG",
     "contact": "Kontakt",
@@ -80,7 +89,10 @@
     }
   },
   "PrivacyPolicyPage": {
-    "title": "Kippenstummel | Privacy Policy",
+    "meta": {
+      "title": "Kippenstummel | Privacy Policy",
+      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+    },
     "headline": "Datenschutzerklärung",
     "disclaimer": "For reasons of legal certainty, the legal information regarding the data privacy policy is only available in German. Unfortunately, we are currently unable to provide versions in other languages. We apologize for the inconvenience.",
     "generic": {
@@ -178,7 +190,10 @@
     }
   },
   "TermsOfServicePage": {
-    "title": "Kippenstummel | Terms of Service",
+    "meta": {
+      "title": "Kippenstummel | Terms of Service",
+      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+    },
     "headline": "Nutzungsbedingungen",
     "disclaimer": "For reasons of legal certainty, the legal information regarding the terms of service is only available in German. Unfortunately, we are currently unable to provide versions in other languages. We apologize for the inconvenience.",
     "scope": {
@@ -223,7 +238,10 @@
     }
   },
   "NotFoundPage": {
-    "title": "Kippenstummel | Page not found",
+    "meta": {
+      "title": "Kippenstummel | Page not found",
+      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+    },
     "headline": "Page not found",
     "description": "Sorry, we can't find that page. You'll find lots to explore on the home page.",
     "backToHomepage": "Back to home"

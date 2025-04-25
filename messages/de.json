@@ -1,6 +1,9 @@
 {
   "HomePage": {
-    "title": "Kippenstummel | Startseite",
+    "meta": {
+      "title": "Kippenstummel | Startseite",
+      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+    },
     "slogan": "Zu einer Kippe habe ma noch nie nein gsait!",
     "cta": "Jetzt Zigarettenautomat finden!",
     "features": {
@@ -62,10 +65,16 @@
     }
   },
   "MapPage": {
-    "title": "Kippenstummel | Karte"
+    "meta": {
+      "title": "Kippenstummel | Karte",
+      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+    }
   },
   "ImprintPage": {
-    "title": "Kippenstummel | Impressum",
+    "meta": {
+      "title": "Kippenstummel | Impressum",
+      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+    },
     "headline": "Impressum",
     "declaration": "Angaben gemäß § 5 TMG",
     "contact": "Kontakt",
@@ -80,7 +89,10 @@
     }
   },
   "PrivacyPolicyPage": {
-    "title": "Kippenstummel | Datenschutzerklärung",
+    "meta": {
+      "title": "Kippenstummel | Datenschutzerklärung",
+      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+    },
     "headline": "Datenschutzerklärung",
     "disclaimer": "Aus Gründen der Rechtssicherheit liegt die rechtliche Auskunft bezüglich der Datenschutzerklärung nur in deutscher Fassung vor. Es ist uns derzeit leider nicht möglich Varianten in anderen Sprachen zur Verfügung zu stellen. Wir bitten um Entschuldigung.",
     "generic": {
@@ -178,7 +190,10 @@
     }
   },
   "TermsOfServicePage": {
-    "title": "Kippenstummel | Nutzungsbedingungen",
+    "meta": {
+      "title": "Kippenstummel | Nutzungsbedingungen",
+      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+    },
     "headline": "Nutzungsbedingungen",
     "disclaimer": "Aus Gründen der Rechtssicherheit liegt die rechtliche Auskunft bezüglich der Nutzungsbedingungen nur in deutscher Fassung vor. Es ist uns derzeit leider nicht möglich Varianten in anderen Sprachen zur Verfügung zu stellen. Wir bitten um Entschuldigung.",
     "scope": {
@@ -223,7 +238,10 @@
     }
   },
   "NotFoundPage": {
-    "title": "Kippenstummel | Seite nicht gefunden",
+    "meta": {
+      "title": "Kippenstummel | Seite nicht gefunden",
+      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+    },
     "headline": "Seite nicht gefunden",
     "description": "Die Seite, die du suchst, konnte nicht gefunden werden.",
     "backToHomepage": "Zurück zur Startseite"

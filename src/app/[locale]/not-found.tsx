@@ -11,7 +11,10 @@ export default function NotFound() {
   const router = useRouter();
 
   useEffect(() => {
-    document.title = t("title");
+    document.title = t("meta.title");
+    document
+      .querySelector("meta[name='description']")
+      ?.setAttribute("content", t("meta.description"));
   }, [t]);
 
   return (
