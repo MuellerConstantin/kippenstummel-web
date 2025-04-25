@@ -1,22 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { clear } from "console";
 
 interface IdentState {
   token: string | null;
+  identity: string | null;
 }
 
 const initialState: IdentState = {
   token: null,
+  identity: null,
 };
 
 const identSlice = createSlice({
   name: "ident",
   initialState,
   reducers: {
-    setToken: (state, action: PayloadAction<string>) => {
-      state.token = action.payload;
+    setIdentity: (
+      state,
+      action: PayloadAction<{ identity: string; token: string }>,
+    ) => {
+      state.token = action.payload.token;
+      state.identity = action.payload.identity;
     },
-    clearToken: (state) => {
+    clearIdentity: (state) => {
       state.token = null;
+      state.identity = null;
     },
   },
 });

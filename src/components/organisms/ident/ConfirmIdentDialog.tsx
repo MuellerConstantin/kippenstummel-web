@@ -12,7 +12,7 @@ import useApi from "@/hooks/useApi";
 import { useAppDispatch } from "@/store";
 import identSlice from "@/store/slices/ident";
 import { solveChallenge } from "@/api/pow";
-import { getFingerprint } from "@/api/fingerprint";
+import { getFingerprintData } from "@/api/fingerprint";
 
 interface ConfirmIdentDialogProps extends Omit<DialogProps, "children"> {
   onConfirm?: () => void;
@@ -62,7 +62,7 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
 
       try {
         const powSolution = await solveChallenge(pow!);
-        const fingerprint = await getFingerprint();
+        const fingerprint = await getFingerprintData();
 
         const res = await api.post("/ident", fingerprint, {
           headers: {
@@ -71,7 +71,12 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
           },
         });
 
-        dispatch(identSlice.actions.setToken(res.data.token));
+        dispatch(
+          identSlice.actions.setIdentity({
+            identity: res.data.identity,
+            token: res.data.token,
+          }),
+        );
         chain(close, props.onConfirm)();
       } catch (err) {
         setSubmitError(t("error"));
