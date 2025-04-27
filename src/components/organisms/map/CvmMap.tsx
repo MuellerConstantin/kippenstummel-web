@@ -164,9 +164,9 @@ export function CvmMap(props: CvmMapProps) {
           onDownvote={() => props.onDownvote?.(marker.id)}
         />
       ))}
-      {clusters?.map((marker) => (
+      {clusters?.map((marker, index) => (
         <ClusterMarker
-          key={marker.id}
+          key={index}
           position={[marker.latitude, marker.longitude]}
           count={marker.count}
         />
