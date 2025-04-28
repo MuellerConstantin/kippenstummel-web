@@ -19,7 +19,7 @@ export default function Map() {
           latitude: position.lat,
           longitude: position.lng,
         });
-      } catch (err: any) {
+      } catch {
         enqueue(
           {
             title: t("Notifications.cvmReportedFailed.title"),
@@ -40,14 +40,14 @@ export default function Map() {
         { timeout: 5000 },
       );
     },
-    [t],
+    [t, api, enqueue],
   );
 
   const onUpvote = useCallback(
     async (id: string) => {
       try {
         await api.post(`/cvm/${id}`);
-      } catch (err: any) {
+      } catch {
         enqueue(
           {
             title: t("Notifications.cvmVoteFailed.title"),
@@ -68,14 +68,14 @@ export default function Map() {
         { timeout: 5000 },
       );
     },
-    [t],
+    [t, api, enqueue],
   );
 
   const onDownvote = useCallback(
     async (id: string) => {
       try {
         await api.delete(`/cvm/${id}`);
-      } catch (err: any) {
+      } catch {
         enqueue(
           {
             title: t("Notifications.cvmVoteFailed.title"),
@@ -96,7 +96,7 @@ export default function Map() {
         { timeout: 5000 },
       );
     },
-    [t],
+    [t, api, enqueue],
   );
 
   return (

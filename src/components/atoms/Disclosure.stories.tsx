@@ -1,4 +1,4 @@
-import type { Meta } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 import React from "react";
 import {
   Disclosure,
@@ -16,7 +16,7 @@ const meta: Meta<typeof Disclosure> = {
 
 export default meta;
 
-export const Default = (args: any) => (
+export const Default: StoryFn<typeof Disclosure> = (args) => (
   <Disclosure {...args}>
     <DisclosureHeader>Files</DisclosureHeader>
     <DisclosurePanel>Files content</DisclosurePanel>

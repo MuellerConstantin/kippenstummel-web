@@ -68,13 +68,13 @@ export function CvmMap(props: CvmMapProps) {
     setLocatedPosition((event as Leaflet.LocationEvent).latlng);
   }, []);
 
-  const onLocationError = useCallback((event: Leaflet.LeafletEvent) => {
+  const onLocationError = useCallback(() => {
     enqueue({
       title: t("Notifications.locationDeterminationFailed.title"),
       description: t("Notifications.locationDeterminationFailed.description"),
       variant: "error",
     });
-  }, []);
+  }, [enqueue, t]);
 
   const { data } = useSWR<
     (
@@ -87,7 +87,7 @@ export function CvmMap(props: CvmMapProps) {
           count: number;
         }
     )[],
-    any,
+    unknown,
     string | null
   >(
     !!bottomLeft && !!topRight && !!zoom

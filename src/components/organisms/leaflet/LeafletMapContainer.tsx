@@ -23,7 +23,7 @@ export function LeafletMapContainer(props: LeafletMapContainerProps) {
 
   return (
     <MapContainer ref={ref} className="h-full w-full grow" {...rest}>
-      {props.children}
+      {children}
     </MapContainer>
   );
 }

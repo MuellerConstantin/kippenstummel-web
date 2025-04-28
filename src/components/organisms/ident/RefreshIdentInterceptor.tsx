@@ -17,8 +17,8 @@ export function RefreshIdentInterceptor({
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [pendingQueue, setPendingQueue] = useState<
     {
-      resolve: (value: any) => void;
-      reject: (reason?: any) => void;
+      resolve: (value: unknown) => void;
+      reject: (reason?: unknown) => void;
       request: AxiosRequestConfig;
     }[]
   >([]);
@@ -68,7 +68,7 @@ export function RefreshIdentInterceptor({
     return () => {
       api.interceptors.response.eject(responseInterceptor);
     };
-  }, [isRefreshing]);
+  }, [isRefreshing, api]);
 
   const onConfirm = useCallback(async () => {
     pendingQueue.forEach(({ resolve, request }) => {
@@ -77,7 +77,7 @@ export function RefreshIdentInterceptor({
 
     setPendingQueue([]);
     setIsRefreshing(false);
-  }, [pendingQueue]);
+  }, [pendingQueue, api]);
 
   return (
     <>

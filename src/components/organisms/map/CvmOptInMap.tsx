@@ -5,6 +5,7 @@ import { Button } from "@/components/atoms/Button";
 import { Link } from "@/components/atoms/Link";
 import privacySlice from "@/store/slices/privacy";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface CvmOptInMap extends CvmMapProps {}
 
 export function CvmOptInMap(props: CvmOptInMap) {

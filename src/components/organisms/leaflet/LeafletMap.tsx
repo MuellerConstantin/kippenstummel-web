@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Leaflet from "leaflet";
-import { TileLayer, useMapEvents, Marker, useMap } from "react-leaflet";
+import { TileLayer, useMapEvents } from "react-leaflet";
 
 const LeafletMapContainer = dynamic(
   () =>
@@ -64,13 +64,14 @@ export function LeafletMap(props: LeafletMapProps) {
     zoom,
     minZoom,
     maxZoom,
+    onReady,
   } = props;
 
   useEffect(() => {
     if (map) {
-      props.onReady?.(map);
+      onReady?.(map);
     }
-  }, [map]);
+  }, [map, onReady]);
 
   return (
     <div className={`relative flex h-full w-full ${className}`}>

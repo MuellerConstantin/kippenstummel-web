@@ -5,14 +5,14 @@ export interface SpinnerProps {
 }
 
 export function Spinner(props: SpinnerProps) {
-  let { progressBarProps } = useProgressBar({ isIndeterminate: true });
+  const { progressBarProps } = useProgressBar({ isIndeterminate: true });
 
-  let center = 16;
-  let strokeWidth = 4;
-  let r = 16 - strokeWidth;
-  let c = 2 * r * Math.PI;
-  let percentage = 0.25;
-  let offset = c - percentage * c;
+  const center = 16;
+  const strokeWidth = 4;
+  const r = 16 - strokeWidth;
+  const c = 2 * r * Math.PI;
+  const percentage = 0.25;
+  const offset = c - percentage * c;
 
   return (
     <svg

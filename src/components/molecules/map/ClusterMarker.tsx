@@ -52,7 +52,7 @@ export function ClusterMarker(props: ClusterMarkerProps) {
     const bounds = Leaflet.latLngBounds([props.position]);
 
     map.flyTo(Leaflet.latLng(props.position), map.getBoundsZoom(bounds));
-  }, [map]);
+  }, [map, props.position]);
 
   return (
     <Marker

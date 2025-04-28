@@ -13,7 +13,7 @@ export function LocateControlComponent(props: LocateControlComponentProps) {
 
   useEffect(() => {
     if (props.map) {
-      props.map.on("locationfound", (event) => {
+      props.map.on("locationfound", () => {
         setLocating(false);
       });
 
@@ -45,6 +45,7 @@ export function LocateControlComponent(props: LocateControlComponentProps) {
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface LocateControlProps extends Leaflet.ControlOptions {}
 
 export class LocateControl extends Leaflet.Control {
@@ -68,7 +69,7 @@ export class LocateControl extends Leaflet.Control {
     return this._container;
   }
 
-  onRemove(map: Leaflet.Map): void {
+  onRemove(): void {
     if (this._root) {
       setTimeout(() => {
         this._root?.unmount();
@@ -81,6 +82,7 @@ export class LocateControl extends Leaflet.Control {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface LocateControlPluginProps extends Leaflet.ControlOptions {}
 
 export function LocateControlPlugin(props: LocateControlPluginProps) {
@@ -95,6 +97,7 @@ export function LocateControlPlugin(props: LocateControlPluginProps) {
         map.removeControl(control);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map]);
 
   return null;

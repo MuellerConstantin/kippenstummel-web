@@ -55,7 +55,7 @@ export interface DisclosureProps extends AriaDisclosureProps {
 }
 
 export function Disclosure({ children, ...props }: DisclosureProps) {
-  let isInGroup = useContext(DisclosureGroupStateContext) !== null;
+  const isInGroup = useContext(DisclosureGroupStateContext) !== null;
   return (
     <AriaDisclosure
       {...props}
@@ -73,8 +73,8 @@ export interface DisclosureHeaderProps {
 }
 
 export function DisclosureHeader({ children }: DisclosureHeaderProps) {
-  let { isExpanded } = useContext(DisclosureStateContext)!;
-  let isInGroup = useContext(DisclosureGroupStateContext) !== null;
+  const { isExpanded } = useContext(DisclosureStateContext)!;
+  const isInGroup = useContext(DisclosureGroupStateContext) !== null;
   return (
     <Heading className="text-lg font-semibold">
       <Button

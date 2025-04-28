@@ -14,7 +14,11 @@ const notificationContext = createContext<{
   enqueue: (notification: Notification, options?: { timeout: number }) => void;
 } | null>(null);
 
-export function NotificationProvider({ children }: any) {
+export function NotificationProvider({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   const queue = useMemo(() => new ToastQueue(), []);
 
   const enqueue = (

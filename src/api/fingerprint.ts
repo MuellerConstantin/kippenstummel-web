@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 interface FingerprintData {
   userAgent: string;
   language: string;

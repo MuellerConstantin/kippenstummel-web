@@ -2,9 +2,7 @@ import React, { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/components/atoms/Link";
 
-export interface FooterProps {}
-
-export function Footer(props: FooterProps) {
+export function Footer() {
   const t = useTranslations("Footer");
 
   const navigation = useMemo(() => {

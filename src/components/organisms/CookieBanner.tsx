@@ -7,9 +7,7 @@ import { Button } from "@/components/atoms/Button";
 import { Link } from "@/components/atoms/Link";
 import privacySlice from "@/store/slices/privacy";
 
-interface CookieBannerProps {}
-
-export function CookieBanner(props: CookieBannerProps) {
+export function CookieBanner() {
   const t = useTranslations("CookieBanner");
   const dispatch = useAppDispatch();
 

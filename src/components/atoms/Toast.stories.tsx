@@ -1,10 +1,11 @@
+import type { Meta, StoryObj } from "@storybook/react";
 import { ToastRegion, ToastQueue } from "@/components/atoms/Toast";
 import { Button } from "@/components/atoms/Button";
 
 let index = 0;
 const queue = new ToastQueue();
 
-export default {
+const meta: Meta = {
   title: "Atoms/Toast",
   parameters: {
     layout: "centered",
@@ -21,9 +22,11 @@ export default {
   },
 };
 
-export const Default = {
+export default meta;
+
+export const Default: StoryObj = {
   args: {},
-  render: (args: any) => (
+  render: () => (
     <>
       <ToastRegion queue={queue} />
       <div className="flex flex-wrap gap-2">

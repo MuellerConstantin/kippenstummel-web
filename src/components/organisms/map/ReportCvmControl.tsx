@@ -44,7 +44,7 @@ export function ReportCvmControlComponent(
       setLocatedPosition(null);
       props.onReport?.(locatedPosition);
     }
-  }, [locatedPosition, reporting, locating, props.onReport]);
+  }, [locatedPosition, reporting, locating, props.onReport, props]);
 
   return (
     <a
@@ -91,7 +91,7 @@ export class ReportCvmControl extends Leaflet.Control {
     return this._container;
   }
 
-  onRemove(map: Leaflet.Map): void {
+  onRemove(): void {
     if (this._root) {
       setTimeout(() => {
         this._root?.unmount();
@@ -120,7 +120,7 @@ export function ReportCvmControlPlugin(props: ReportCvmControlPluginProps) {
         map.removeControl(control);
       };
     }
-  }, [map]);
+  }, [map, props]);
 
   return null;
 }

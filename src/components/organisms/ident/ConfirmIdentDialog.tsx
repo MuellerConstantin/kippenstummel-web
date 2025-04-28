@@ -40,7 +40,7 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
 
     try {
       const captchaRes = await api.get<
-        any,
+        unknown,
         AxiosResponse<{ id: string; content: string }>
       >("/captcha");
 
@@ -48,12 +48,12 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
 
       setCaptcha(captchaRes.data);
       setPow(powRes.headers["x-pow"]);
-    } catch (err) {
+    } catch {
       setError(t("error"));
     } finally {
       setLoading(false);
     }
-  }, [t]);
+  }, [t, api]);
 
   const onSubmit = useCallback(
     async (close: () => void) => {
@@ -78,13 +78,13 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
           }),
         );
         chain(close, props.onConfirm)();
-      } catch (err) {
+      } catch {
         setSubmitError(t("error"));
       } finally {
         setSubmitting(false);
       }
     },
-    [captchaSolution, captcha, pow, t],
+    [captchaSolution, captcha, pow, t, api, dispatch, props.onConfirm],
   );
 
   useEffect(() => {

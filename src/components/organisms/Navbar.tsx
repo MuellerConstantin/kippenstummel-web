@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import NextLink from "next/link";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -16,9 +16,7 @@ import { useAppSelector, useAppDispatch } from "@/store";
 import themeSlice from "@/store/slices/theme";
 import { useRouter, usePathname } from "@/i18n/navigation";
 
-export interface NavbarProps {}
-
-export function Navbar(props: NavbarProps) {
+export function Navbar() {
   const t = useTranslations("Navbar");
 
   const navigation = useMemo(() => {
@@ -93,9 +91,7 @@ export function Navbar(props: NavbarProps) {
   );
 }
 
-interface NavbarOptionsMenuProps {}
-
-export function NavbarOptionsMenu(props: NavbarOptionsMenuProps) {
+export function NavbarOptionsMenu() {
   const t = useTranslations("Navbar");
 
   const dispatch = useAppDispatch();
@@ -115,9 +111,7 @@ export function NavbarOptionsMenu(props: NavbarOptionsMenuProps) {
   );
 }
 
-interface NavbarLanguagesMenuProps {}
-
-export function NavbarLanguagesMenu(props: NavbarLanguagesMenuProps) {
+export function NavbarLanguagesMenu() {
   const t = useTranslations("Navbar");
   const locale = useLocale();
   const router = useRouter();
