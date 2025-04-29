@@ -4,7 +4,6 @@ import { StackTemplate } from "@/components/templates/StackTemplate";
 
 type Props = {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

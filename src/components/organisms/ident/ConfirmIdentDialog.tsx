@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { AxiosResponse } from "axios";
 import { DialogProps, Heading } from "react-aria-components";
@@ -111,7 +112,18 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
               ) : error || submitError ? (
                 <span className="text-red-500">{error || submitError}</span>
               ) : (
-                <img src={captcha?.content} alt="Captcha" className="w-[80%]" />
+                <>
+                  {captcha && (
+                    <div className="relative h-32 w-[80%]">
+                      <Image
+                        src={captcha?.content || ""}
+                        alt="Captcha"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                  )}
+                </>
               )}
             </div>
             <div className="flex flex-col gap-4">
