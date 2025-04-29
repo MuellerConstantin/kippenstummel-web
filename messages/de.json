@@ -60,6 +60,10 @@
         "6": {
           "question": "Du willst mit dem Rauchen aufhören?",
           "answer": "Immer eine gute Entscheidung. Solltest du Hilfe benötigen oder Fragen haben, bieten das <link1>Bundesinstitut für Öffentliche Gesundheit</link1> und die <link2>Deutsche Hauptstelle für Suchtfragen</link2> kostenlose Beratung an."
+        },
+        "7": {
+          "question": "Warum wird ein gemeldeter Standort oder ein Bewertung nicht angezeigt?",
+          "answer": "Gemeldete Standorte oder Bewertungen werden systemintern zunächst validiert was einige Zeit in Anspruch nehmen kann. Daher sind Meldungen unter Umständen nicht sofort sichtbar. Darüber hinaus kann es auch sein, das eine Meldung vom System nicht akzeptiert wird und daher nicht bemerkbar wird."
         }
       }
     }

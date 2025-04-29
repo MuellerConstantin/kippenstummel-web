@@ -180,6 +180,10 @@ export default function Home() {
                 })}
               </DisclosurePanel>
             </Disclosure>
+            <Disclosure>
+              <DisclosureHeader>{t("faq.items.7.question")}</DisclosureHeader>
+              <DisclosurePanel>{t("faq.items.7.answer")}</DisclosurePanel>
+            </Disclosure>
           </div>
         </section>
       </div>

@@ -60,6 +60,10 @@
         "6": {
           "question": "Do you want to quit smoking?",
           "answer": "Always a good decision. If you need help or have questions, the <link1>Bundesinstitut für Öffentliche Gesundheit</link1> and the <link2>Deutsche Hauptstelle für Suchtfragen</link2> offer free counseling."
+        },
+        "7": {
+          "question": "Why is a reported location or rating not shown?",
+          "answer": "Reported locations or reviews are first validated within the system, which can take some time. Therefore, reports may not be visible immediately. Furthermore, a report may not be accepted by the system and therefore not be noticeable."
         }
       }
     }
