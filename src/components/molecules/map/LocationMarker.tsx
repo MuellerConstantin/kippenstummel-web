@@ -1,9 +1,11 @@
+import { useCallback, useState } from "react";
 import Leaflet from "leaflet";
-import { Marker, Popup } from "react-leaflet";
+import { Marker, Popup, useMap } from "react-leaflet";
 import { useTranslations } from "next-intl";
 import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
 import { MapPin, ChevronUp, ChevronDown, Copy } from "lucide-react";
 import { Link } from "@/components/atoms/Link";
+import { Spinner } from "@/components/atoms/Spinner";
 
 interface ClusterMarkerProps {
   position: [number, number];
@@ -13,7 +15,53 @@ interface ClusterMarkerProps {
 }
 
 export function LocationMarker(props: ClusterMarkerProps) {
+  const map = useMap();
   const t = useTranslations("LocationMarker");
+  const { onUpvote, onDownvote } = props;
+
+  const [locating, setLocating] = useState<"up" | "down" | false>(false);
+
+  const onUpvoteRequest = useCallback(() => {
+    const onLocationFound = () => {
+      onUpvote?.();
+      map.off("locationfound", onLocationFound);
+      map.off("locationerror", onLocationError);
+      setLocating(false);
+    };
+
+    const onLocationError = () => {
+      map.off("locationfound", onLocationFound);
+      map.off("locationerror", onLocationError);
+      setLocating(false);
+    };
+
+    map.once("locationfound", onLocationFound);
+    map.once("locationerror", onLocationError);
+
+    setLocating("up");
+    map.locate();
+  }, [onUpvote, map]);
+
+  const onDownvoteRequest = useCallback(() => {
+    const onLocationFound = () => {
+      onDownvote?.();
+      map.off("locationfound", onLocationFound);
+      map.off("locationerror", onLocationError);
+      setLocating(false);
+    };
+
+    const onLocationError = () => {
+      map.off("locationfound", onLocationFound);
+      map.off("locationerror", onLocationError);
+      setLocating(false);
+    };
+
+    map.once("locationfound", onLocationFound);
+    map.once("locationerror", onLocationError);
+
+    setLocating("down");
+    map.locate({ setView: false });
+  }, [onDownvote, map]);
 
   return (
     <Marker
@@ -27,21 +75,30 @@ export function LocationMarker(props: ClusterMarkerProps) {
         anchor: Leaflet.point(20, 20),
       })}
     >
-      <Popup>
+      <Popup autoClose={false}>
         <div className="flex items-center gap-4">
           <div className="flex flex-col items-center">
             <button
-              className="cursor-pointer text-slate-600 hover:text-slate-800"
-              onClick={props.onUpvote}
+              className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed"
+              onClick={onUpvoteRequest}
+              disabled={locating !== false}
             >
-              <ChevronUp className="h-8 w-8" />
+              {locating === "up" ? (
+                <Spinner />
+              ) : (
+                <ChevronUp className="h-8 w-8" />
+              )}
             </button>
             <div className="text-lg font-semibold">{props.score}</div>
             <button
               className="cursor-pointer text-slate-600 hover:text-slate-800"
-              onClick={props.onDownvote}
+              onClick={onDownvoteRequest}
             >
-              <ChevronDown className="h-8 w-8" />
+              {locating === "down" ? (
+                <Spinner />
+              ) : (
+                <ChevronDown className="h-8 w-8" />
+              )}
             </button>
           </div>
           <div className="space-y-1">
@@ -53,7 +110,8 @@ export function LocationMarker(props: ClusterMarkerProps) {
                 (lat/lng)
               </div>
               <button
-                className="cursor-pointer text-slate-600 hover:text-slate-800"
+                className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed"
+                disabled={locating !== false}
                 onClick={() =>
                   navigator.clipboard.writeText(
                     `${props.position[0]},${props.position[1]}`,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo } from "react";
 import useSWR from "swr";
 import Leaflet from "leaflet";
 import { useTranslations } from "next-intl";
@@ -28,7 +28,7 @@ export function CvmMap(props: CvmMapProps) {
   const { enqueue } = useNotifications();
 
   const [showReportConfirmDialog, setShowReportConfirmDialog] = useState(false);
-  const [map, setMap] = useState<Leaflet.Map | null>(null);
+  const [, setMap] = useState<Leaflet.Map | null>(null);
   const [zoom, setZoom] = useState<number>();
   const [bottomLeft, setBottomLeft] = useState<[number, number]>();
   const [topRight, setTopRight] = useState<[number, number]>();
@@ -119,12 +119,6 @@ export function CvmMap(props: CvmMapProps) {
       }[],
     [data],
   );
-
-  useEffect(() => {
-    if (locatedPosition) {
-      map?.flyTo(locatedPosition);
-    }
-  }, [map, locatedPosition]);
 
   return (
     <LeafletMap

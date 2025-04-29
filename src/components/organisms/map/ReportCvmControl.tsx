@@ -35,7 +35,7 @@ export function ReportCvmControlComponent(
   const onClick = useCallback(() => {
     setLocating(true);
     setReporting(true);
-    props.map.locate();
+    props.map.locate({ setView: true, maxZoom: 15 });
   }, [props.map]);
 
   useEffect(() => {

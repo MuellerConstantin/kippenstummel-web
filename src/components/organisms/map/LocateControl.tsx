@@ -26,7 +26,7 @@ export function LocateControlComponent(props: LocateControlComponentProps) {
 
   const onClick = useCallback(() => {
     setLocating(true);
-    props.map.locate();
+    props.map.locate({ setView: true, maxZoom: 15 });
   }, [props.map]);
 
   return (
