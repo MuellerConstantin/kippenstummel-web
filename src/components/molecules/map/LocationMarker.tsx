@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState } from "react";
 import Leaflet from "leaflet";
 import { Marker, Popup, useMap } from "react-leaflet";
 import { useTranslations } from "next-intl";
@@ -6,6 +6,7 @@ import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
 import { MapPin, ChevronUp, ChevronDown, Copy } from "lucide-react";
 import { Link } from "@/components/atoms/Link";
 import { Spinner } from "@/components/atoms/Spinner";
+import useLocate from "@/hooks/useLocate";
 
 interface LocationMarkerPopupProps {
   position: [number, number];
@@ -15,76 +16,32 @@ interface LocationMarkerPopupProps {
 }
 
 function LocationMarkerPopup(props: LocationMarkerPopupProps) {
-  const map = useMap();
   const t = useTranslations("LocationMarker");
+  const map = useMap();
+  const locate = useLocate(map);
   const { onUpvote, onDownvote } = props;
 
   const [voting, setVoting] = useState<"up" | "down" | false>(false);
-  const [locating, setLocating] = useState(false);
-  const [locatedPosition, setLocatedPosition] = useState<Leaflet.LatLng | null>(
-    null,
-  );
 
   const onUpvoteRequest = useCallback(() => {
-    const onLocationFound = (event: Leaflet.LocationEvent) => {
-      setLocatedPosition(event.latlng);
-      map.off("locationfound", onLocationFound);
-      map.off("locationerror", onLocationError);
-      setLocating(false);
-      setVoting(false);
-    };
-
-    const onLocationError = () => {
-      map.off("locationfound", onLocationFound);
-      map.off("locationerror", onLocationError);
-      setLocating(false);
-      setVoting(false);
-    };
-
-    map.once("locationfound", onLocationFound);
-    map.once("locationerror", onLocationError);
-
-    setLocating(true);
     setVoting("up");
-    map.locate();
-  }, [map]);
+
+    locate({ setView: false, maxZoom: 15 })
+      .then((position) => onUpvote?.(position))
+      .finally(() => {
+        setVoting(false);
+      });
+  }, [locate, onUpvote]);
 
   const onDownvoteRequest = useCallback(() => {
-    const onLocationFound = (event: Leaflet.LocationEvent) => {
-      setLocatedPosition(event.latlng);
-      map.off("locationfound", onLocationFound);
-      map.off("locationerror", onLocationError);
-      setLocating(false);
-      setVoting(false);
-    };
-
-    const onLocationError = () => {
-      map.off("locationfound", onLocationFound);
-      map.off("locationerror", onLocationError);
-      setLocating(false);
-      setVoting(false);
-    };
-
-    map.once("locationfound", onLocationFound);
-    map.once("locationerror", onLocationError);
-
-    setLocating(true);
     setVoting("down");
-    map.locate({ setView: false });
-  }, [map]);
 
-  useEffect(() => {
-    if (voting && !locating && locatedPosition) {
-      setVoting(false);
-      setLocatedPosition(null);
-
-      if (voting === "up") {
-        onUpvote?.(locatedPosition);
-      } else if (voting === "down") {
-        onDownvote?.(locatedPosition);
-      }
-    }
-  }, [locatedPosition, voting, locating, onUpvote, onDownvote]);
+    locate({ setView: false, maxZoom: 15 })
+      .then((position) => onDownvote?.(position))
+      .finally(() => {
+        setVoting(false);
+      });
+  }, [locate, onDownvote]);
 
   return (
     <Popup autoClose={false}>
@@ -120,7 +77,7 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
             </div>
             <button
               className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed"
-              disabled={locating !== false}
+              disabled={voting !== false}
               onClick={() =>
                 navigator.clipboard.writeText(
                   `${props.position[0]},${props.position[1]}`,

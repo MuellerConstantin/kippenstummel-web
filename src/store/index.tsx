@@ -19,6 +19,7 @@ import { injectStore } from "@/api";
 import themeSlice from "@/store/slices/theme";
 import identSlice from "./slices/ident";
 import privacySlice from "./slices/privacy";
+import locationSlice from "./slices/location";
 import { CookieBanner } from "@/components/organisms/CookieBanner";
 
 const persistConfig = {
@@ -32,6 +33,7 @@ export const rootReducer = combineReducers({
   theme: themeSlice.reducer,
   ident: identSlice.reducer,
   privacy: privacySlice.reducer,
+  location: locationSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

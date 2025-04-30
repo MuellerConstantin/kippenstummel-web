@@ -15,6 +15,8 @@ import { LocateControlPlugin } from "./LocateControl";
 import { ReportCvmControlPlugin } from "./ReportCvmControl";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import { ConfirmCvmReportDialog } from "./ConfirmCvmReportDialog";
+import { useAppDispatch, useAppSelector } from "@/store";
+import locationSlice from "@/store/slices/location";
 
 export interface CvmMapProps {
   onReport?: (position: Leaflet.LatLng) => void;
@@ -25,20 +27,16 @@ export interface CvmMapProps {
 export function CvmMap(props: CvmMapProps) {
   const t = useTranslations();
   const api = useApi();
+  const dispatch = useAppDispatch();
   const { enqueue } = useNotifications();
 
+  const location = useAppSelector((state) => state.location.location);
   const [showReportConfirmDialog, setShowReportConfirmDialog] = useState(false);
-  const [, setMap] = useState<Leaflet.Map | null>(null);
   const [zoom, setZoom] = useState<number>();
   const [bottomLeft, setBottomLeft] = useState<[number, number]>();
   const [topRight, setTopRight] = useState<[number, number]>();
-  const [locatedPosition, setLocatedPosition] = useState<
-    Leaflet.LatLng | undefined
-  >(undefined);
 
   const onReady = useCallback((map: Leaflet.Map) => {
-    setMap(map);
-
     const mapBounds = map.getBounds();
 
     setBottomLeft([mapBounds.getSouthWest().lat, mapBounds.getSouthWest().lng]);
@@ -64,9 +62,19 @@ export function CvmMap(props: CvmMapProps) {
     setZoom(map.getZoom());
   }, []);
 
-  const onLocationFound = useCallback((event: Leaflet.LeafletEvent) => {
-    setLocatedPosition((event as Leaflet.LocationEvent).latlng);
-  }, []);
+  const onLocationFound = useCallback(
+    (event: Leaflet.LeafletEvent) => {
+      const position = (event as Leaflet.LocationEvent).latlng;
+
+      dispatch(
+        locationSlice.actions.setLocation({
+          lat: position.lat,
+          lng: position.lng,
+        }),
+      );
+    },
+    [dispatch],
+  );
 
   const onLocationError = useCallback(() => {
     enqueue({
@@ -145,7 +153,9 @@ export function CvmMap(props: CvmMapProps) {
       >
         <Modal>
           <ConfirmCvmReportDialog
-            onConfirm={() => props.onReport?.(locatedPosition!)}
+            onConfirm={() =>
+              props.onReport?.(new Leaflet.LatLng(location!.lat, location!.lng))
+            }
           />
         </Modal>
       </DialogTrigger>
@@ -169,9 +179,7 @@ export function CvmMap(props: CvmMapProps) {
           count={marker.count}
         />
       ))}
-      {locatedPosition && (
-        <LocateMarker position={[locatedPosition.lat, locatedPosition.lng]} />
-      )}
+      {location && <LocateMarker position={[location.lat, location.lng]} />}
     </LeafletMap>
   );
 }

@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { useMap } from "react-leaflet";
 import Leaflet from "leaflet";
 import { MapPinPlus, LoaderCircle } from "lucide-react";
+import useLocate from "@/hooks/useLocate";
 
 interface ReportCvmControlComponentProps {
   map: Leaflet.Map;
@@ -12,39 +13,20 @@ interface ReportCvmControlComponentProps {
 export function ReportCvmControlComponent(
   props: ReportCvmControlComponentProps,
 ) {
+  const { map, onReport } = props;
+  const locate = useLocate(map);
+
   const [reporting, setReporting] = useState(false);
-  const [locating, setLocating] = useState(false);
-  const [locatedPosition, setLocatedPosition] = useState<Leaflet.LatLng | null>(
-    null,
-  );
-
-  useEffect(() => {
-    if (props.map) {
-      props.map.on("locationfound", (event) => {
-        setLocating(false);
-        setLocatedPosition(event.latlng);
-      });
-
-      props.map.on("locationerror", (event) => {
-        setLocating(false);
-        console.error(`Location error: ${event.message}`, event);
-      });
-    }
-  }, [props.map]);
 
   const onClick = useCallback(() => {
-    setLocating(true);
     setReporting(true);
-    props.map.locate({ setView: true, maxZoom: 15 });
-  }, [props.map]);
 
-  useEffect(() => {
-    if (reporting && !locating && locatedPosition) {
-      setReporting(false);
-      setLocatedPosition(null);
-      props.onReport?.(locatedPosition);
-    }
-  }, [locatedPosition, reporting, locating, props.onReport, props]);
+    locate({ setView: true, maxZoom: 15 })
+      .then((position) => onReport?.(position))
+      .finally(() => {
+        setReporting(false);
+      });
+  }, [locate, onReport]);
 
   return (
     <a
@@ -52,7 +34,7 @@ export function ReportCvmControlComponent(
       onClick={onClick}
     >
       <div className="flex h-full w-full items-center justify-center">
-        {locating ? (
+        {reporting ? (
           <LoaderCircle className="h-7 w-7 animate-spin" />
         ) : (
           <MapPinPlus className="h-7 w-7" />

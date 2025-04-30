@@ -3,31 +3,25 @@ import ReactDOM from "react-dom/client";
 import { useMap } from "react-leaflet";
 import Leaflet from "leaflet";
 import { LocateFixed, LoaderCircle } from "lucide-react";
+import useLocate from "@/hooks/useLocate";
 
 interface LocateControlComponentProps {
   map: Leaflet.Map;
 }
 
 export function LocateControlComponent(props: LocateControlComponentProps) {
+  const { map } = props;
+  const locate = useLocate(map);
+
   const [locating, setLocating] = useState(false);
-
-  useEffect(() => {
-    if (props.map) {
-      props.map.on("locationfound", () => {
-        setLocating(false);
-      });
-
-      props.map.on("locationerror", (event) => {
-        setLocating(false);
-        console.error(`Location error: ${event.message}`, event);
-      });
-    }
-  }, [props.map]);
 
   const onClick = useCallback(() => {
     setLocating(true);
-    props.map.locate({ setView: true, maxZoom: 15 });
-  }, [props.map]);
+
+    locate({ setView: true, maxZoom: 15 }).finally(() => {
+      setLocating(false);
+    });
+  }, [locate]);
 
   return (
     <a
