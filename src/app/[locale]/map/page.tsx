@@ -15,7 +15,7 @@ export default function Map() {
   const onReport = useCallback(
     async (position: Leaflet.LatLng) => {
       try {
-        await api.post("/cvm", {
+        await api.post("/cvms", {
           latitude: position.lat,
           longitude: position.lng,
         });
@@ -44,10 +44,15 @@ export default function Map() {
   );
 
   const onUpvote = useCallback(
-    async (id: string) => {
+    async (id: string, position: Leaflet.LatLng) => {
       try {
-        await api.post(`/cvm/${id}`);
-      } catch {
+        await api.post(`/cvms/${id}/upvote`, {
+          latitude: position.lat,
+          longitude: position.lng,
+        });
+      } catch (err) {
+        console.error(err);
+
         enqueue(
           {
             title: t("Notifications.cvmVoteFailed.title"),
@@ -72,10 +77,15 @@ export default function Map() {
   );
 
   const onDownvote = useCallback(
-    async (id: string) => {
+    async (id: string, position: Leaflet.LatLng) => {
       try {
-        await api.delete(`/cvm/${id}`);
-      } catch {
+        await api.post(`/cvms/${id}/downvote`, {
+          latitude: position.lat,
+          longitude: position.lng,
+        });
+      } catch (err) {
+        console.error(err);
+
         enqueue(
           {
             title: t("Notifications.cvmVoteFailed.title"),

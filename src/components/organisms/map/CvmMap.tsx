@@ -18,8 +18,8 @@ import { ConfirmCvmReportDialog } from "./ConfirmCvmReportDialog";
 
 export interface CvmMapProps {
   onReport?: (position: Leaflet.LatLng) => void;
-  onUpvote?: (id: string) => void;
-  onDownvote?: (id: string) => void;
+  onUpvote?: (id: string, position: Leaflet.LatLng) => void;
+  onDownvote?: (id: string, position: Leaflet.LatLng) => void;
 }
 
 export function CvmMap(props: CvmMapProps) {
@@ -91,7 +91,7 @@ export function CvmMap(props: CvmMapProps) {
     string | null
   >(
     !!bottomLeft && !!topRight && !!zoom
-      ? `/cvm/within?bottomLeft=${bottomLeft?.[0]},${bottomLeft?.[1]}&topRight=${topRight?.[0]},${topRight?.[1]}&zoom=${zoom}`
+      ? `/cvms?bottomLeft=${bottomLeft?.[0]},${bottomLeft?.[1]}&topRight=${topRight?.[0]},${topRight?.[1]}&zoom=${zoom}`
       : null,
     (url) => api.get(url).then((res) => res.data),
     { keepPreviousData: true },
@@ -154,8 +154,12 @@ export function CvmMap(props: CvmMapProps) {
           key={marker.id}
           position={[marker.latitude, marker.longitude]}
           score={marker.score}
-          onUpvote={() => props.onUpvote?.(marker.id)}
-          onDownvote={() => props.onDownvote?.(marker.id)}
+          onUpvote={(voterPosition) =>
+            props.onUpvote?.(marker.id, voterPosition)
+          }
+          onDownvote={(voterPosition) =>
+            props.onDownvote?.(marker.id, voterPosition)
+          }
         />
       ))}
       {clusters?.map((marker, index) => (
