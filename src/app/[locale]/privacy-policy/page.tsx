@@ -104,14 +104,6 @@ export default function PrivacyPolicy() {
           })}
         </p>
         <h3 className="text-xl font-bold">
-          {t("dataCollection.fingerprinting.title")}
-        </h3>
-        <p>
-          {t.rich("dataCollection.fingerprinting.description", {
-            br: () => <br />,
-          })}
-        </p>
-        <h3 className="text-xl font-bold">
           {t("dataCollection.location.title")}
         </h3>
         <p>

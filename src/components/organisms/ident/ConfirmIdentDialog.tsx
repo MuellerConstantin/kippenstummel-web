@@ -10,10 +10,9 @@ import { Link } from "@/components/atoms/Link";
 import { TextField } from "@/components/atoms/TextField";
 import { Spinner } from "@/components/atoms/Spinner";
 import useApi from "@/hooks/useApi";
-import { useAppDispatch } from "@/store";
+import { useAppDispatch, useAppSelector } from "@/store";
 import identSlice from "@/store/slices/ident";
 import { solveChallenge } from "@/api/pow";
-import { getFingerprintData } from "@/api/fingerprint";
 
 interface ConfirmIdentDialogProps extends Omit<DialogProps, "children"> {
   onConfirm?: () => void;
@@ -23,6 +22,8 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
   const t = useTranslations("ConfirmIdentDialog");
   const dispatch = useAppDispatch();
   const api = useApi();
+
+  const identity = useAppSelector((state) => state.ident.identity);
 
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -63,14 +64,17 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
 
       try {
         const powSolution = await solveChallenge(pow!);
-        const fingerprint = await getFingerprintData();
 
-        const res = await api.post("/ident", fingerprint, {
-          headers: {
-            "x-captcha": `${captcha!.id}:${captchaSolution}`,
-            "x-pow": `${pow}:${powSolution}`,
+        const res = await api.post(
+          "/ident",
+          { identity },
+          {
+            headers: {
+              "x-captcha": `${captcha!.id}:${captchaSolution}`,
+              "x-pow": `${pow}:${powSolution}`,
+            },
           },
-        });
+        );
 
         dispatch(
           identSlice.actions.setIdentity({
@@ -85,7 +89,16 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
         setSubmitting(false);
       }
     },
-    [captchaSolution, captcha, pow, t, api, dispatch, props.onConfirm],
+    [
+      captchaSolution,
+      captcha,
+      pow,
+      t,
+      api,
+      dispatch,
+      props.onConfirm,
+      identity,
+    ],
   );
 
   useEffect(() => {
