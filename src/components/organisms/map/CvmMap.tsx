@@ -13,6 +13,8 @@ import { LocateMarker } from "@/components/molecules/map/LocateMarker";
 import { Modal } from "@/components/atoms/Modal";
 import { LocateControlPlugin } from "./LocateControl";
 import { ReportCvmControlPlugin } from "./ReportCvmControl";
+import { HelpControlPlugin } from "./HelpControl";
+import { HelpDialog } from "./HelpDialog";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import { ConfirmCvmReportDialog } from "./ConfirmCvmReportDialog";
 import { useAppDispatch, useAppSelector } from "@/store";
@@ -30,8 +32,10 @@ export function CvmMap(props: CvmMapProps) {
   const dispatch = useAppDispatch();
   const { enqueue } = useNotifications();
 
-  const location = useAppSelector((state) => state.location.location);
   const [showReportConfirmDialog, setShowReportConfirmDialog] = useState(false);
+  const [showHelpDialog, setShowHelpDialog] = useState(false);
+
+  const location = useAppSelector((state) => state.location.location);
   const [zoom, setZoom] = useState<number>();
   const [bottomLeft, setBottomLeft] = useState<[number, number]>();
   const [topRight, setTopRight] = useState<[number, number]>();
@@ -134,8 +138,8 @@ export function CvmMap(props: CvmMapProps) {
       tileLayerAttribution='&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       center={[49.006889, 8.403653]}
       zoom={14}
-      minZoom={8}
-      maxZoom={17}
+      minZoom={12}
+      maxZoom={18}
       onReady={onReady}
       onMoveEnd={onMoveEnd}
       onZoomEnd={onZoomEnd}
@@ -147,6 +151,15 @@ export function CvmMap(props: CvmMapProps) {
         position="bottomright"
         onReport={() => setShowReportConfirmDialog(true)}
       />
+      <HelpControlPlugin
+        position="topleft"
+        onClick={() => setShowHelpDialog(true)}
+      />
+      <DialogTrigger isOpen={showHelpDialog} onOpenChange={setShowHelpDialog}>
+        <Modal className="max-w-2xl">
+          <HelpDialog />
+        </Modal>
+      </DialogTrigger>
       <DialogTrigger
         isOpen={showReportConfirmDialog}
         onOpenChange={setShowReportConfirmDialog}

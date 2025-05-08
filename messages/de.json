@@ -313,5 +313,19 @@
       "title": "Standortbestimmung fehlgeschlagen",
       "description": "Es gab einen Fehler beim Bestimmen deines Standorts."
     }
+  },
+  "HelpDialog": {
+    "title": "Hilfe",
+    "headlines": {
+      "general": "Allgemeines",
+      "report": "Automaten melden",
+      "vote": "Automaten bewerten"
+    },
+    "description": {
+      "general": "Die Karte vor dir zeigt dir die Standorte der Zigarettenautomaten an. Je nach Zoom-Stufe werden die Automaten aus Gründen der Übersicht in Clustern zusammengefasst. Bei höherer Zoom-Stufe werden die Standorte dann einzeln angezeigt. Durch Anwählen eines einzelnen Zigarattenautomaten erscheint dessen Menü mit weitere Informationen.<br></br><br></br>Jeder Zigarettenautomat verfügt über einen Score, welcher von -5 bis 5 gehen kann. Der Score wird aus den Bewertungen der Benutzer errechnet. Ein negativer Score bedeutet, das Benutzer vermehrt Probleme mit dem Automaten hatten, der Standort könnte falsch oder der Automat defekt sein. Ein positiver Score bedeutete mehrere Benutzer scheinen den Automaten erfolgreich genutzt zu haben.",
+      "report": "Du kannst auch selber ganz einfach die Standorte noch nicht erfasster Automaten melden. Hierfür findest du rechts unten die entsprechende Schaltfläche. Folge einfach den Anweisungen. Bitte überprüfe zuvor, ob der Automat an deiner aktuellen Position nicht vielleicht schon erfasst wurde.",
+      "vote": "Die Standorte von Automaten werden via Schwarmintelligenz verifiziert. Du kannst für Automaten positiv abstimmen, welche funktionstüchtig tatsächlich an der ansprechenden Stelle standen oder auch negativ abstimmen für fehlende oder nicht funktionierende Automaten. Abstimmen kannst du über das Menü der einzelnen Automaten.<br></br><br></br>Bitte bewerte nur, ob ein Automat vor Ort vorhanden ist und funktioniert.<br></br><br></br>👍 Upvote: Automat ist vorhanden und funktioniert.<br></br>👎 Downvote: Automat fehlt oder ist defekt.<br></br><br></br>Bitte keine Bewertungen aus anderen Gründen (z.B. keine Kartenzahlung, schwer erreichbar, unpassender Standort)."
+    },
+    "close": "Schließen"
   }
 }

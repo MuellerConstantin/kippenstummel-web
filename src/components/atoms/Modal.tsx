@@ -3,6 +3,7 @@ import {
   ModalOverlay,
   ModalOverlayProps,
   Modal as RACModal,
+  composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
@@ -19,7 +20,7 @@ const overlayStyles = tv({
 });
 
 const modalStyles = tv({
-  base: "w-full max-w-md max-h-full h-fit rounded-2xl bg-white dark:bg-slate-800/70 dark:backdrop-blur-2xl dark:backdrop-saturate-200 forced-colors:bg-[Canvas] text-left align-middle text-slate-700 dark:text-slate-300 shadow-2xl bg-clip-padding border border-black/10 dark:border-white/10",
+  base: "w-full max-w-md max-h-full overflow-scroll h-fit rounded-2xl bg-white dark:bg-slate-800/70 dark:backdrop-blur-2xl dark:backdrop-saturate-200 forced-colors:bg-[Canvas] text-left align-middle text-slate-700 dark:text-slate-300 shadow-2xl bg-clip-padding border border-black/10 dark:border-white/10",
   variants: {
     isEntering: {
       true: "animate-in zoom-in-105 ease-out duration-200",
@@ -33,7 +34,14 @@ const modalStyles = tv({
 export function Modal(props: ModalOverlayProps) {
   return (
     <ModalOverlay {...props} className={overlayStyles}>
-      <RACModal {...props} className={modalStyles} />
+      <RACModal
+        {...props}
+        className={composeRenderProps(
+          props.className,
+          (className, renderProps) =>
+            modalStyles({ ...renderProps, className }),
+        )}
+      />
     </ModalOverlay>
   );
 }
