@@ -3,10 +3,47 @@ import Leaflet from "leaflet";
 import { Marker, Popup, useMap } from "react-leaflet";
 import { useTranslations } from "next-intl";
 import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
-import { MapPin, ChevronUp, ChevronDown, Copy } from "lucide-react";
+import {
+  MapPin,
+  ChevronUp,
+  ChevronDown,
+  Equal,
+  Copy,
+  Check,
+} from "lucide-react";
 import { Link } from "@/components/atoms/Link";
 import { Spinner } from "@/components/atoms/Spinner";
 import useLocate from "@/hooks/useLocate";
+
+interface CopyButtonProps {
+  text: string;
+  disabled?: boolean;
+}
+
+function CopyButton(props: CopyButtonProps) {
+  const [copied, setCopied] = useState(false);
+
+  const handleClick = useCallback(() => {
+    navigator.clipboard.writeText(props.text);
+    setCopied(true);
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 1000);
+  }, [props.text]);
+
+  return (
+    <button
+      className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed"
+      disabled={props.disabled}
+      onClick={handleClick}
+    >
+      <div className="transition-all duration-300 ease-in-out">
+        {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+      </div>
+    </button>
+  );
+}
 
 interface LocationMarkerPopupProps {
   position: [number, number];
@@ -44,7 +81,20 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
   }, [locate, onDownvote]);
 
   return (
-    <Popup autoClose={false}>
+    <Popup autoClose={false} className="relative">
+      {props.score == 0 ? (
+        <div className="absolute -top-2 -left-2 flex h-6 w-6 items-center justify-center rounded-full bg-slate-500">
+          <Equal className="h-4 w-4 text-white" />
+        </div>
+      ) : props.score > 0 ? (
+        <div className="absolute -top-2 -left-2 flex h-6 w-6 items-center justify-center rounded-full bg-green-600">
+          <ChevronUp className="h-4 w-4 text-white" />
+        </div>
+      ) : (
+        <div className="absolute -top-2 -left-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500">
+          <ChevronDown className="h-4 w-4 text-white" />
+        </div>
+      )}
       <div className="flex items-center gap-4">
         <div className="flex flex-col items-center">
           <button
@@ -75,17 +125,10 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
               {props.position[0].toFixed(7)} / {props.position[1].toFixed(7)}{" "}
               (lat/lng)
             </div>
-            <button
-              className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed"
+            <CopyButton
+              text={`${props.position[0]},${props.position[1]}`}
               disabled={voting !== false}
-              onClick={() =>
-                navigator.clipboard.writeText(
-                  `${props.position[0]},${props.position[1]}`,
-                )
-              }
-            >
-              <Copy className="h-4 w-4" />
-            </button>
+            />
           </div>
           <Link
             href={`https://www.google.com.sa/maps/search/${props.position[0]},${props.position[1]}`}
@@ -112,7 +155,20 @@ export function LocationMarker(props: LocationMarkerProps) {
       position={Leaflet.latLng(props.position[0], props.position[1])}
       icon={LeafletDivIcon({
         source: (
-          <div className="z-[50] h-fit w-fit">
+          <div className="relative z-[50] h-fit w-fit">
+            {props.score == 0 ? (
+              <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-slate-500">
+                <Equal className="h-2.5 w-2.5 text-white" />
+              </div>
+            ) : props.score > 0 ? (
+              <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-green-600">
+                <ChevronUp className="h-2.5 w-2.5 text-white" />
+              </div>
+            ) : (
+              <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-500">
+                <ChevronDown className="h-2.5 w-2.5 text-white" />
+              </div>
+            )}
             <MapPin className="h-8 w-8 fill-green-600 text-white" />
           </div>
         ),

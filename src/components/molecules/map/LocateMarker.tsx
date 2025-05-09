@@ -12,7 +12,10 @@ export function LocateMarker(props: LocateMarkerProps) {
       position={Leaflet.latLng(props.position[0], props.position[1])}
       icon={LeafletDivIcon({
         source: (
-          <div className="!z-[2000] h-[20px] w-[20px] rounded-full border-2 border-white bg-blue-500" />
+          <div className="relative !z-[2000] flex h-[20px] w-[20px]">
+            <div className="absolute inline-flex h-full w-full animate-[ping_1.5s_linear_infinite] rounded-full bg-blue-400 opacity-75" />
+            <div className="relative inline-flex h-full w-full rounded-full border-2 border-white bg-blue-500" />
+          </div>
         ),
         anchor: Leaflet.point(20, 20),
         className: "!z-[2000]",

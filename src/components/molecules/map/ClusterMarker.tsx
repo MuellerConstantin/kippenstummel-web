@@ -24,11 +24,11 @@ export function ClusterMarker(props: ClusterMarkerProps) {
     let outerClasses = "";
 
     if (props.count < 10) {
-      outerClasses = "bg-green-300 opacity-80";
+      outerClasses = "bg-green-500 opacity-80";
     } else if (props.count < 100) {
-      outerClasses = "bg-amber-300 opacity-80";
+      outerClasses = "bg-amber-500 opacity-80";
     } else {
-      outerClasses = "bg-orange-300 opacity-80";
+      outerClasses = "bg-orange-500 opacity-80";
     }
 
     return outerClasses;
@@ -38,11 +38,11 @@ export function ClusterMarker(props: ClusterMarkerProps) {
     let innerClasses = "";
 
     if (props.count < 10) {
-      innerClasses = "bg-green-400";
+      innerClasses = "bg-slate-300 text-slate-800";
     } else if (props.count < 100) {
-      innerClasses = "bg-amber-400";
+      innerClasses = "bg-slate-300 text-slate-800";
     } else {
-      innerClasses = "bg-orange-400";
+      innerClasses = "bg-slate-300 text-slate-800";
     }
 
     return innerClasses;
@@ -60,7 +60,7 @@ export function ClusterMarker(props: ClusterMarkerProps) {
       icon={LeafletDivIcon({
         source: (
           <div
-            className={`${outerClasses} box-border h-fit w-fit rounded-[20px] p-[5px]`}
+            className={`${outerClasses} box-border h-fit w-fit rounded-[20px] p-[3px]`}
           >
             <div
               className={`${innerClasses} h-[30px] w-[30px] rounded-full text-center font-sans text-[12px] leading-[30px]`}
