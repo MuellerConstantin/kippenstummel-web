@@ -6,6 +6,7 @@ import Leaflet from "leaflet";
 import { CvmOptInMap } from "@/components/organisms/map/CvmOptInMap";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import useApi from "@/hooks/useApi";
+import { AxiosError } from "axios";
 
 export default function Map() {
   const t = useTranslations();
@@ -51,6 +52,23 @@ export default function Map() {
           longitude: position.lng,
         });
       } catch (err) {
+        if (err instanceof AxiosError) {
+          if (
+            err.response?.status === 403 &&
+            err.response.data.code === "OUT_OF_REACH_ERROR"
+          ) {
+            enqueue(
+              {
+                title: t("Notifications.cvmOutOfReach.title"),
+                description: t("Notifications.cvmOutOfReach.description"),
+                variant: "info",
+              },
+              { timeout: 5000 },
+            );
+            return;
+          }
+        }
+
         console.error(err);
 
         enqueue(
@@ -84,6 +102,23 @@ export default function Map() {
           longitude: position.lng,
         });
       } catch (err) {
+        if (err instanceof AxiosError) {
+          if (
+            err.response?.status === 403 &&
+            err.response.data.code === "OUT_OF_REACH_ERROR"
+          ) {
+            enqueue(
+              {
+                title: t("Notifications.cvmOutOfReach.title"),
+                description: t("Notifications.cvmOutOfReach.description"),
+                variant: "info",
+              },
+              { timeout: 5000 },
+            );
+            return;
+          }
+        }
+
         console.error(err);
 
         enqueue(

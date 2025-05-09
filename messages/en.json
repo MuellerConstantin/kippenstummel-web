@@ -312,6 +312,10 @@
     "locationDeterminationFailed": {
       "title": "Location Determination Failed",
       "description": "There was an error determining your location."
+    },
+    "cvmOutOfReach": {
+      "title": "Interaction not possible",
+      "description": "The location is too far away from you."
     }
   },
   "HelpDialog": {
@@ -323,7 +327,7 @@
     },
     "description": {
       "general": "The map in front of you shows the locations of the cigarette vending machines. Depending on the zoom level, the machines are grouped together for clarity. At higher zoom levels, the locations are displayed individually. Selecting an individual cigarette vending machine will open its menu with further information.<br></br><br></br>Each cigarette vending machine has a score, which can range from -5 to 5. The score is calculated from user ratings. A negative score means that users have had frequent problems with the machine; the location may be incorrect, or the machine may be defective. A positive score means that several users appear to have used the machine successfully.",
-      "report": "You can also easily report the locations of unregistered CVMs yourself. You'll find the corresponding button in the bottom right corner. Simply follow the instructions. Please check first to see if the CVM has already been registered at your current location.",
+      "report": "You can also easily register the locations of new CVMs yourself. You'll find the corresponding button in the bottom right corner. Simply follow the instructions. Please check first to see if the CVM has already been registered at your current location.",
       "vote": "The locations of vending machines are verified using swarm intelligence. You can vote positively for vending machines that were actually in the right place and were working, or negatively for missing or non-functioning machines. You can vote via the menu for each vending machine.<br></br><br></br>Please only rate whether a vending machine is present and working on site.<br></br><br></br>👍 Upvote: Machine is present and working.<br></br>👎 Downvote: Machine is missing or broken.<br></br><br></br>Please do not rate for other reasons (e.g., no card payments, difficult to reach, unsuitable location)."
     },
     "close": "Close"

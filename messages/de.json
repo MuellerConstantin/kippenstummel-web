@@ -312,6 +312,10 @@
     "locationDeterminationFailed": {
       "title": "Standortbestimmung fehlgeschlagen",
       "description": "Es gab einen Fehler beim Bestimmen deines Standorts."
+    },
+    "cvmOutOfReach": {
+      "title": "Interaktion nicht möglich",
+      "description": "Der Standort befindet sich zu weit weg von dir."
     }
   },
   "HelpDialog": {
