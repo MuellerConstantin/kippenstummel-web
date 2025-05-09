@@ -49,9 +49,9 @@ export function ClusterMarker(props: ClusterMarkerProps) {
   }, [props.count]);
 
   const handleClick = useCallback(() => {
-    const bounds = Leaflet.latLngBounds([props.position]);
+    const newZoom = Math.min(map.getZoom() + 1, map.getMaxZoom());
 
-    map.flyTo(Leaflet.latLng(props.position), map.getBoundsZoom(bounds));
+    map.flyTo(Leaflet.latLng(props.position), newZoom);
   }, [map, props.position]);
 
   return (
