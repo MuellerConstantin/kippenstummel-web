@@ -104,7 +104,9 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
           >
             {voting === "up" ? <Spinner /> : <ChevronUp className="h-8 w-8" />}
           </button>
-          <div className="text-lg font-semibold">{props.score}</div>
+          <div className="text-lg font-semibold">
+            {(props.score / 100).toFixed(1)}
+          </div>
           <button
             className="cursor-pointer text-slate-600 hover:text-slate-800"
             onClick={onDownvoteRequest}
