@@ -82,17 +82,17 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
 
   return (
     <Popup autoClose={false} className="relative">
-      {props.score == 0 ? (
-        <div className="absolute -top-2 -left-2 flex h-6 w-6 items-center justify-center rounded-full bg-slate-500">
-          <Equal className="h-4 w-4 text-white" />
+      {props.score < -99 ? (
+        <div className="absolute -top-2 -left-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500">
+          <ChevronDown className="h-4 w-4 text-white" />
         </div>
-      ) : props.score > 0 ? (
+      ) : props.score > 99 ? (
         <div className="absolute -top-2 -left-2 flex h-6 w-6 items-center justify-center rounded-full bg-green-600">
           <ChevronUp className="h-4 w-4 text-white" />
         </div>
       ) : (
-        <div className="absolute -top-2 -left-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500">
-          <ChevronDown className="h-4 w-4 text-white" />
+        <div className="absolute -top-2 -left-2 flex h-6 w-6 items-center justify-center rounded-full bg-slate-500">
+          <Equal className="h-4 w-4 text-white" />
         </div>
       )}
       <div className="flex items-center gap-4">
@@ -158,17 +158,17 @@ export function LocationMarker(props: LocationMarkerProps) {
       icon={LeafletDivIcon({
         source: (
           <div className="relative z-[50] h-fit w-fit">
-            {props.score == 0 ? (
-              <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-slate-500">
-                <Equal className="h-2.5 w-2.5 text-white" />
+            {props.score < -99 ? (
+              <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-500">
+                <ChevronDown className="h-2.5 w-2.5 text-white" />
               </div>
-            ) : props.score > 0 ? (
+            ) : props.score > 99 ? (
               <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-green-600">
                 <ChevronUp className="h-2.5 w-2.5 text-white" />
               </div>
             ) : (
-              <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-500">
-                <ChevronDown className="h-2.5 w-2.5 text-white" />
+              <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-slate-500">
+                <Equal className="h-2.5 w-2.5 text-white" />
               </div>
             )}
             <MapPin className="h-8 w-8 fill-green-600 text-white" />
