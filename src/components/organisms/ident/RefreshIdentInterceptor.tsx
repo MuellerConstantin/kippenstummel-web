@@ -32,7 +32,8 @@ export function RefreshIdentInterceptor({
 
         if (
           err.response?.status === 401 &&
-          err.response.data?.code === "INVALID_IDENT_TOKEN_ERROR" &&
+          (err.response.data?.code === "INVALID_IDENT_TOKEN_ERROR" ||
+            err.response.data?.code === "UNKNOWN_IDENTITY_ERROR") &&
           !originalRequest._retry
         ) {
           originalRequest._retry = true;
