@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, memo } from "react";
 import ReactDOM from "react-dom/client";
 import { useMap } from "react-leaflet";
 import Leaflet from "leaflet";
@@ -70,7 +70,9 @@ interface HelpControlPluginProps extends Leaflet.ControlOptions {
   onClick?: () => void;
 }
 
-export function HelpControlPlugin(props: HelpControlPluginProps) {
+export const HelpControlPlugin = memo(function HelpControlPlugin(
+  props: HelpControlPluginProps,
+) {
   const map = useMap();
 
   useEffect(() => {
@@ -85,4 +87,4 @@ export function HelpControlPlugin(props: HelpControlPluginProps) {
   }, [map, props]);
 
   return null;
-}
+});

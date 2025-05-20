@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, memo } from "react";
 import ReactDOM from "react-dom/client";
 import { useMap } from "react-leaflet";
 import Leaflet from "leaflet";
@@ -90,7 +90,9 @@ interface ReportCvmControlPluginProps extends Leaflet.ControlOptions {
   onReport?: (position: Leaflet.LatLng) => void;
 }
 
-export function ReportCvmControlPlugin(props: ReportCvmControlPluginProps) {
+export const ReportCvmControlPlugin = memo(function ReportCvmControlPlugin(
+  props: ReportCvmControlPluginProps,
+) {
   const map = useMap();
 
   useEffect(() => {
@@ -105,4 +107,4 @@ export function ReportCvmControlPlugin(props: ReportCvmControlPluginProps) {
   }, [map, props]);
 
   return null;
-}
+});

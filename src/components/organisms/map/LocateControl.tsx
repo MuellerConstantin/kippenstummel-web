@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, memo } from "react";
 import ReactDOM from "react-dom/client";
 import { useMap } from "react-leaflet";
 import Leaflet from "leaflet";
@@ -79,7 +79,9 @@ export class LocateControl extends Leaflet.Control {
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface LocateControlPluginProps extends Leaflet.ControlOptions {}
 
-export function LocateControlPlugin(props: LocateControlPluginProps) {
+export const LocateControlPlugin = memo(function LocateControlPlugin(
+  props: LocateControlPluginProps,
+) {
   const map = useMap();
 
   useEffect(() => {
@@ -91,8 +93,7 @@ export function LocateControlPlugin(props: LocateControlPluginProps) {
         map.removeControl(control);
       };
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [map]);
+  }, [map, props]);
 
   return null;
-}
+});

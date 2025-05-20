@@ -19,7 +19,7 @@ interface LeafletMapEventHandlerProps {
   onMoveStart?: (event: Leaflet.LeafletEvent) => void;
   onMoveEnd?: (event: Leaflet.LeafletEvent) => void;
   onLocationFound?: (event: Leaflet.LeafletEvent) => void;
-  onLocationError?: (event: Leaflet.LeafletEvent) => void;
+  onLocationError?: (event: Leaflet.ErrorEvent) => void;
 }
 
 function LeafletMapEventHandler(params: LeafletMapEventHandlerProps) {
@@ -50,7 +50,7 @@ export interface LeafletMapProps {
   onMoveStart?: (event: Leaflet.LeafletEvent) => void;
   onMoveEnd?: (event: Leaflet.LeafletEvent) => void;
   onLocationFound?: (event: Leaflet.LeafletEvent) => void;
-  onLocationError?: (event: Leaflet.LeafletEvent) => void;
+  onLocationError?: (event: Leaflet.ErrorEvent) => void;
 }
 
 export function LeafletMap(props: LeafletMapProps) {
@@ -81,7 +81,7 @@ export function LeafletMap(props: LeafletMapProps) {
         zoom={zoom}
         minZoom={minZoom}
         maxZoom={maxZoom}
-        closePopupOnClick={false}
+        closePopupOnClick={true}
       >
         <TileLayer attribution={tileLayerAttribution} url={tileLayerUrl} />
         <LeafletMapEventHandler

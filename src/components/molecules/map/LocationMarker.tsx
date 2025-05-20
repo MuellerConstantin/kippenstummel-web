@@ -81,7 +81,7 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
   }, [locate, onDownvote]);
 
   return (
-    <Popup autoClose={false} className="relative">
+    <Popup autoClose={true} closeOnClick={false} className="relative">
       {props.score < -99 ? (
         <div className="absolute -top-2 -left-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500">
           <ChevronDown className="h-4 w-4 text-white" />
@@ -100,6 +100,7 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
           <button
             className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed"
             onClick={onUpvoteRequest}
+            onMouseDown={(e) => e.stopPropagation()}
             disabled={voting !== false}
           >
             {voting === "up" ? <Spinner /> : <ChevronUp className="h-8 w-8" />}
@@ -110,6 +111,7 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
           <button
             className="cursor-pointer text-slate-600 hover:text-slate-800"
             onClick={onDownvoteRequest}
+            onMouseDown={(e) => e.stopPropagation()}
             disabled={voting !== false}
           >
             {voting === "down" ? (

@@ -132,6 +132,14 @@ export function CvmMap(props: CvmMapProps) {
     [data],
   );
 
+  const onHelp = useCallback(() => {
+    setShowHelpDialog(true);
+  }, [setShowHelpDialog]);
+
+  const onReport = useCallback(() => {
+    setShowReportConfirmDialog(true);
+  }, [setShowReportConfirmDialog]);
+
   return (
     <LeafletMap
       tileLayerUrl="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -147,14 +155,8 @@ export function CvmMap(props: CvmMapProps) {
       onLocationError={onLocationError}
     >
       <LocateControlPlugin position="topleft" />
-      <ReportCvmControlPlugin
-        position="bottomright"
-        onReport={() => setShowReportConfirmDialog(true)}
-      />
-      <HelpControlPlugin
-        position="topleft"
-        onClick={() => setShowHelpDialog(true)}
-      />
+      <ReportCvmControlPlugin position="bottomright" onReport={onReport} />
+      <HelpControlPlugin position="topleft" onClick={onHelp} />
       <DialogTrigger isOpen={showHelpDialog} onOpenChange={setShowHelpDialog}>
         <Modal className="max-w-2xl">
           <HelpDialog />
