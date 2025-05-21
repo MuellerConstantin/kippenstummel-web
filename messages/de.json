@@ -310,8 +310,22 @@
       "description": "Es gab einen Fehler beim Senden deiner Abstimmung."
     },
     "locationDeterminationFailed": {
-      "title": "Standortbestimmung fehlgeschlagen",
-      "description": "Es gab einen Fehler beim Bestimmen deines Standorts."
+      "permissionDenied": {
+        "title": "Standortzugriff verweigert",
+        "description": "Die Standortfreigabe wurde blockiert. Bitte erlaube den Zugriff auf deinen Standort."
+      },
+      "timeout": {
+        "title": "Zeitüberschreitung Standortabfrage",
+        "description": "Die Standortbestimmung hat zu lange gedauert. Bitte versuche es erneut."
+      },
+      "unavailable": {
+        "title": "Standort nicht verfügbar",
+        "description": "Dein Standort konnte nicht ermittelt werden. Versuche es später erneut oder überprüfe deine Verbindung."
+      },
+      "default": {
+        "title": "Standortbestimmung fehlgeschlagen",
+        "description": "Es gab einen Fehler beim Bestimmen deines Standorts."
+      }
     },
     "cvmOutOfReach": {
       "title": "Interaktion nicht möglich",

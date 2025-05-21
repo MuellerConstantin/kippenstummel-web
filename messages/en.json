@@ -310,8 +310,22 @@
       "description": "There was an error submitting your vote."
     },
     "locationDeterminationFailed": {
-      "title": "Location Determination Failed",
-      "description": "There was an error determining your location."
+      "permissionDenied": {
+        "title": "Location Access Denied",
+        "description": "Location access was blocked. Please allow location access in your browser settings."
+      },
+      "timeout": {
+        "title": "Location Access Timeout",
+        "description": "Location request took too long. Please try again."
+      },
+      "unavailable": {
+        "title": "Location Unavailable",
+        "description": "Your location couldn't be determined. Please try again later or check your connection."
+      },
+      "default": {
+        "title": "Standortbestimmung fehlgeschlagen",
+        "description": "Es gab einen Fehler beim Bestimmen deines Standorts."
+      }
     },
     "cvmOutOfReach": {
       "title": "Interaction not possible",

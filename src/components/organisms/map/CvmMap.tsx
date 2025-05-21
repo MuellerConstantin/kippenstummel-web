@@ -80,13 +80,54 @@ export function CvmMap(props: CvmMapProps) {
     [dispatch],
   );
 
-  const onLocationError = useCallback(() => {
-    enqueue({
-      title: t("Notifications.locationDeterminationFailed.title"),
-      description: t("Notifications.locationDeterminationFailed.description"),
-      variant: "error",
-    });
-  }, [enqueue, t]);
+  const onLocationError = useCallback(
+    (event: Leaflet.ErrorEvent) => {
+      let title = "";
+      let description = "";
+
+      const PERMISSION_DENIED = 1;
+      const POSITION_UNAVAILABLE = 2;
+      const TIMEOUT = 3;
+
+      switch (event.code) {
+        case PERMISSION_DENIED:
+          title = t(
+            "Notifications.locationDeterminationFailed.permissionDenied.title",
+          );
+          description = t(
+            "Notifications.locationDeterminationFailed.permissionDenied.description",
+          );
+          break;
+        case POSITION_UNAVAILABLE:
+          title = t(
+            "Notifications.locationDeterminationFailed.unavailable.title",
+          );
+          description = t(
+            "Notifications.locationDeterminationFailed.unavailable.description",
+          );
+          break;
+        case TIMEOUT:
+          title = t("Notifications.locationDeterminationFailed.timeout.title");
+          description = t(
+            "Notifications.locationDeterminationFailed.timeout.description",
+          );
+          break;
+        default:
+          title = t("Notifications.locationDeterminationFailed.default.title");
+          description = t(
+            "Notifications.locationDeterminationFailed.default.description",
+          );
+          break;
+      }
+
+      enqueue({
+        title,
+        description,
+        variant: "error",
+      });
+    },
+    [enqueue, t],
+  );
 
   const { data } = useSWR<
     (
