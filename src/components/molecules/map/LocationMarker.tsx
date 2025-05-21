@@ -98,7 +98,7 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
       <div className="flex items-center gap-4">
         <div className="flex flex-col items-center">
           <button
-            className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed"
+            className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
             onClick={onUpvoteRequest}
             onMouseDown={(e) => e.stopPropagation()}
             disabled={voting !== false}
@@ -109,7 +109,7 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
             {(props.score / 100).toFixed(1)}
           </div>
           <button
-            className="cursor-pointer text-slate-600 hover:text-slate-800"
+            className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
             onClick={onDownvoteRequest}
             onMouseDown={(e) => e.stopPropagation()}
             disabled={voting !== false}
