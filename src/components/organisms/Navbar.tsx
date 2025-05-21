@@ -13,7 +13,7 @@ import { Switch } from "@/components/atoms/Switch";
 import { Menu, MenuItem } from "@/components/molecules/Menu";
 import { Popover } from "@/components/atoms/Popover";
 import { useAppSelector, useAppDispatch } from "@/store";
-import themeSlice from "@/store/slices/theme";
+import usabilitySlice from "@/store/slices/usability";
 import { useRouter, usePathname } from "@/i18n/navigation";
 
 export function Navbar() {
@@ -95,14 +95,14 @@ export function NavbarOptionsMenu() {
   const t = useTranslations("Navbar");
 
   const dispatch = useAppDispatch();
-  const darkMode = useAppSelector((state) => state.theme.darkMode);
+  const darkMode = useAppSelector((state) => state.usability.darkMode);
 
   return (
     <Popover className="entering:animate-in entering:fade-in entering:placement-bottom:slide-in-from-top-1 entering:placement-top:slide-in-from-bottom-1 exiting:animate-out exiting:fade-out exiting:placement-bottom:slide-out-to-top-1 exiting:placement-top:slide-out-to-bottom-1 fill-mode-forwards origin-top-left overflow-auto rounded-lg bg-white p-2 shadow-lg ring-1 ring-black/10 outline-hidden dark:bg-slate-950 dark:ring-white/15">
       <Switch
         isSelected={darkMode}
         onChange={(newDarkMode) =>
-          dispatch(themeSlice.actions.setDarkMode(newDarkMode))
+          dispatch(usabilitySlice.actions.setDarkMode(newDarkMode))
         }
       >
         {t("darkMode")}

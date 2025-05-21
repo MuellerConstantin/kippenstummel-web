@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface ThemeState {
+interface PrivacyState {
   cookiesAllowed: boolean | null;
   mapOptInAllowed: boolean | null;
 }
 
-const initialState: ThemeState = {
+const initialState: PrivacyState = {
   cookiesAllowed: null,
   mapOptInAllowed: null,
 };

@@ -16,7 +16,7 @@ import {
 import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
 import { injectStore } from "@/api";
-import themeSlice from "@/store/slices/theme";
+import usabilitySlice from "@/store/slices/usability";
 import identSlice from "./slices/ident";
 import privacySlice from "./slices/privacy";
 import locationSlice from "./slices/location";
@@ -26,11 +26,11 @@ const persistConfig = {
   key: "kippenstummel",
   version: 1,
   storage,
-  whitelist: ["theme", "ident", "privacy"],
+  whitelist: ["usability", "ident", "privacy"],
 };
 
 export const rootReducer = combineReducers({
-  theme: themeSlice.reducer,
+  usability: usabilitySlice.reducer,
   ident: identSlice.reducer,
   privacy: privacySlice.reducer,
   location: locationSlice.reducer,
@@ -69,7 +69,7 @@ function ThemeSwitcher({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const darkMode = useAppSelector((state) => state.theme.darkMode);
+  const darkMode = useAppSelector((state) => state.usability.darkMode);
 
   useEffect(() => {
     if (darkMode) {

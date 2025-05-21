@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface ThemeState {
+interface UsabilityState {
   darkMode: boolean;
   recurringUser: boolean;
 }
 
-const initialState: ThemeState = {
+const initialState: UsabilityState = {
   darkMode: false,
   recurringUser: false,
 };
 
-const themeSlice = createSlice({
-  name: "theme",
+const usabilitySlice = createSlice({
+  name: "usability",
   initialState,
   reducers: {
     toggleMode: (state) => {
@@ -26,4 +26,4 @@ const themeSlice = createSlice({
   },
 });
 
-export default themeSlice;
+export default usabilitySlice;
