@@ -21,7 +21,7 @@ export function Navbar() {
 
   const navigation = useMemo(() => {
     return [
-      { name: t("home"), href: "/" },
+      { name: t("home"), href: "/home" },
       { name: t("map"), href: "/map" },
     ];
   }, [t]);
@@ -48,7 +48,7 @@ export function Navbar() {
           </MenuTrigger>
         </div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:static md:top-auto md:left-auto md:translate-x-0 md:translate-y-0">
-          <NextLink href="/">
+          <NextLink href="/home">
             <div className="flex w-fit items-center justify-center md:space-x-4">
               <Image
                 src="/images/logo.svg"

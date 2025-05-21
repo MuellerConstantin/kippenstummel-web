@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ThemeState {
   darkMode: boolean;
+  recurringUser: boolean;
 }
 
 const initialState: ThemeState = {
   darkMode: false,
+  recurringUser: false,
 };
 
 const themeSlice = createSlice({
@@ -17,6 +19,9 @@ const themeSlice = createSlice({
     },
     setDarkMode: (state, action: PayloadAction<boolean>) => {
       state.darkMode = action.payload;
+    },
+    setRecurringUser: (state, action: PayloadAction<boolean>) => {
+      state.recurringUser = action.payload;
     },
   },
 });

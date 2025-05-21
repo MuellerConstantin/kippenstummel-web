@@ -4,6 +4,7 @@ import { CvmMapProps, CvmMap } from "./CvmMap";
 import { Button } from "@/components/atoms/Button";
 import { Link } from "@/components/atoms/Link";
 import privacySlice from "@/store/slices/privacy";
+import themeSlice from "@/store/slices/theme";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface CvmOptInMap extends CvmMapProps {}
@@ -19,6 +20,7 @@ export function CvmOptInMap(props: CvmOptInMap) {
   const allowOptIn = () => {
     dispatch(privacySlice.actions.setMapOptInAllowed(true));
     dispatch(privacySlice.actions.setCookiesAllowed(true));
+    dispatch(themeSlice.actions.setRecurringUser(true));
   };
 
   if (!mapOptInAllowed) {
