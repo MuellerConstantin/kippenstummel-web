@@ -5,7 +5,13 @@
       "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
     },
     "slogan": "Zu einer Kippe habe ma noch nie nein gsait!",
-    "cta": "Jetzt Zigarettenautomat finden!",
+    "cta": {
+      "gettingStarted": "Jetzt Zigarettenautomat finden!",
+      "install": {
+        "or": "oder",
+        "button": "App installieren"
+      }
+    },
     "features": {
       "slogan": "Finden den nächsten Zigarettenautomaten in deiner Nähe",
       "title": "Die Zigarettenautomatenkarte deiner Wahl",

@@ -9,6 +9,7 @@ import { NotificationView } from "@/components/organisms/NotificationView";
 import { RefreshIdentInterceptor } from "@/components/organisms/ident/RefreshIdentInterceptor";
 
 import "./globals.css";
+import { PWAInstallProvider } from "@/contexts/PWAInstallProvider";
 
 const lato = Lato({
   variable: "--font-lato",
@@ -57,10 +58,12 @@ export default async function RootLayout({
         <NextIntlClientProvider>
           <StoreProvider>
             <NotificationProvider>
-              <RefreshIdentInterceptor>
-                {children}
-                <NotificationView />
-              </RefreshIdentInterceptor>
+              <PWAInstallProvider>
+                <RefreshIdentInterceptor>
+                  {children}
+                  <NotificationView />
+                </RefreshIdentInterceptor>
+              </PWAInstallProvider>
             </NotificationProvider>
           </StoreProvider>
         </NextIntlClientProvider>
