@@ -19,7 +19,7 @@ import {
 import { Link } from "@/components/atoms/Link";
 import { usePWAInstallPrompt } from "@/contexts/PWAInstallProvider";
 
-export function InstallAppButton() {
+function InstallAppButton() {
   const t = useTranslations("HomePage");
   const { isInstallable, promptInstall } = usePWAInstallPrompt();
 
@@ -101,48 +101,96 @@ export default function Home() {
 
   return (
     <div>
-      <div className="relative w-full overflow-hidden py-20">
+      <div className="relative w-full overflow-hidden pt-20 pb-32">
         <div className="absolute inset-0 z-0 bg-[url(/images/preview.png)] bg-cover" />
         <div className="absolute inset-0 z-10 bg-white/30 backdrop-blur-sm" />
-        <div className="relative z-20 flex flex-col items-center justify-center gap-8 p-4">
-          <div className="space-y-2">
-            <div className="flex flex-col items-center gap-2 text-center text-slate-600 md:flex-row md:gap-8">
-              <div className="relative h-20 w-20 -rotate-16">
-                <Image
-                  src="/images/logo.svg"
-                  alt="Logo"
-                  fill
-                  objectFit="contain"
-                />
+        <div className="relative z-20 flex flex-col gap-12 lg:flex-row lg:justify-center">
+          <div className="flex flex-col items-center justify-center gap-8 p-4">
+            <div className="space-y-2">
+              <div className="flex flex-col items-center gap-2 text-center text-slate-600 md:flex-row md:gap-8">
+                <div className="relative h-20 w-20 -rotate-16">
+                  <Image
+                    src="/images/logo.svg"
+                    alt="Logo"
+                    fill
+                    objectFit="contain"
+                  />
+                </div>
+                <div className="text-4xl font-bold md:text-6xl">
+                  Kippenstummel
+                </div>
               </div>
-              <div className="text-4xl font-bold md:text-6xl">
-                Kippenstummel
+              <div className="text-center text-xl text-slate-500 md:text-2xl">
+                &ldquo;{t("slogan")}&rdquo;
               </div>
             </div>
-            <div className="text-center text-xl text-slate-500 md:text-2xl">
-              &ldquo;{t("slogan")}&rdquo;
+            <div>
+              <Button
+                onPress={() => router.push("/map")}
+                className="p-3 font-bold"
+              >
+                {t("cta.gettingStarted")}
+              </Button>
+            </div>
+            {isInstallable && (
+              <div className="flex flex-col items-center gap-8">
+                <div className="flex items-center justify-center gap-4">
+                  <div className="w-16 flex-1 border-t border-slate-600"></div>
+                  <span className="text-sm text-gray-600 uppercase">
+                    {t("cta.install.or")}
+                  </span>
+                  <div className="w-16 flex-1 border-t border-gray-600"></div>
+                </div>
+                <InstallAppButton />
+              </div>
+            )}
+          </div>
+          <div className="flex justify-center pr-[5rem]">
+            <div className="relative">
+              <div className="w-[10rem]">
+                <figure className="mx-auto aspect-[0.4614] w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
+                  <div className="relative h-full w-full overflow-hidden rounded-lg bg-gray-800 p-0.5 shadow-[0_1rem_2rem_-1rem_rgb(45_55_75_/_20%),_0_1rem_2rem_-1rem_rgb(45_55_75_/_30%)] dark:bg-neutral-600 dark:shadow-[0_1rem_2rem_-1rem_rgb(0_0_0_/_20%),_0_1rem_2rem_-1rem_rgb(0_0_0_/_30%)]">
+                    <div className="h-full w-full overflow-hidden rounded-md bg-white dark:bg-slate-500">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        className="h-full w-full object-cover dark:hidden"
+                        src="/images/mockup/home-light.png"
+                        alt="Mockup"
+                      />
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        className="hidden h-full w-full object-cover dark:block"
+                        src="/images/mockup/home-dark.png"
+                        alt="Mockup"
+                      />
+                    </div>
+                  </div>
+                </figure>
+              </div>
+              <div className="absolute top-1/6 left-1/2">
+                <div className="w-[10rem]">
+                  <figure className="mx-auto aspect-[0.4614] w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
+                    <div className="relative h-full w-full overflow-hidden rounded-lg bg-gray-800 p-0.5 shadow-[0_1rem_2rem_-1rem_rgb(45_55_75_/_20%),_0_1rem_2rem_-1rem_rgb(45_55_75_/_30%)] dark:bg-neutral-600 dark:shadow-[0_1rem_2rem_-1rem_rgb(0_0_0_/_20%),_0_1rem_2rem_-1rem_rgb(0_0_0_/_30%)]">
+                      <div className="h-full w-full overflow-hidden rounded-md bg-white dark:bg-slate-500">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          className="h-full w-full object-cover dark:hidden"
+                          src="/images/mockup/map-light.png"
+                          alt="Mockup"
+                        />
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          className="hidden h-full w-full object-cover dark:block"
+                          src="/images/mockup/map-dark.png"
+                          alt="Mockup"
+                        />
+                      </div>
+                    </div>
+                  </figure>
+                </div>
+              </div>
             </div>
           </div>
-          <div>
-            <Button
-              onPress={() => router.push("/map")}
-              className="p-3 font-bold"
-            >
-              {t("cta.gettingStarted")}
-            </Button>
-          </div>
-          {isInstallable && (
-            <div className="flex flex-col items-center gap-8">
-              <div className="flex items-center justify-center gap-4">
-                <div className="w-16 flex-1 border-t border-slate-600"></div>
-                <span className="text-sm text-gray-600 uppercase">
-                  {t("cta.install.or")}
-                </span>
-                <div className="w-16 flex-1 border-t border-gray-600"></div>
-              </div>
-              <InstallAppButton />
-            </div>
-          )}
         </div>
       </div>
       <div className="mx-auto my-8 flex max-w-[80rem] flex-col items-center gap-16 p-4">
