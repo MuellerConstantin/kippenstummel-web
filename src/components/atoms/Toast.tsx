@@ -56,7 +56,7 @@ export function ToastRegion({ queue }: ToastRegionProps) {
   return (
     <AriaToastRegion
       queue={queue}
-      className="absolute right-0 bottom-0 flex max-w-full flex-col items-end justify-end gap-4 overflow-hidden p-4"
+      className="absolute top-0 right-0 flex max-w-full flex-col items-end justify-end gap-4 overflow-hidden p-4"
     >
       {({ toast: t }) => (
         <AriaToast toast={t} className={toast({ variant: t.content.variant })}>
