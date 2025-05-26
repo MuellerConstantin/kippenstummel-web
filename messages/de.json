@@ -256,6 +256,9 @@
     "home": "Startseite",
     "map": "Karte",
     "darkMode": "Dunkler Modus",
+    "options": {
+      "identity": "Identität"
+    },
     "languages": {
       "de": "Deutsch",
       "en": "Englisch"
@@ -350,6 +353,12 @@
       "report": "Du kannst auch selber ganz einfach die Standorte noch nicht erfasster Automaten melden. Hierfür findest du rechts unten die entsprechende Schaltfläche. Folge einfach den Anweisungen. Bitte überprüfe zuvor, ob der Automat an deiner aktuellen Position nicht vielleicht schon erfasst wurde.",
       "vote": "Die Standorte von Automaten werden via Schwarmintelligenz verifiziert. Du kannst für Automaten positiv abstimmen, welche funktionstüchtig tatsächlich an der ansprechenden Stelle standen oder auch negativ abstimmen für fehlende oder nicht funktionierende Automaten. Abstimmen kannst du über das Menü der einzelnen Automaten.<br></br><br></br>Bitte bewerte nur, ob ein Automat vor Ort vorhanden ist und funktioniert.<br></br><br></br>👍 Upvote: Automat ist vorhanden und funktioniert.<br></br>👎 Downvote: Automat fehlt oder ist defekt.<br></br><br></br>Bitte keine Bewertungen aus anderen Gründen (z.B. keine Kartenzahlung, schwer erreichbar, unpassender Standort)."
     },
+    "close": "Schließen"
+  },
+  "IdentityDialog": {
+    "title": "Identität",
+    "uniqueId": "Eindeutige ID",
+    "info": "Hierbei handelt es sich um deine persönliche Identität, welche der Authentifzierung dient und mit all deinen Interaktionen verknüpft wird. Behandle sie vertraulich. Für weitere Informationen siehe unsere <link1>Nutzungsbedingungen</link1> und die <link2>Datenschutzerklärung</link2>.",
     "close": "Schließen"
   }
 }

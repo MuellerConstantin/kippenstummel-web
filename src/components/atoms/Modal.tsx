@@ -13,7 +13,7 @@ export function Modal(
   const isBottom = props.placement === "bottom";
 
   const overlayStyles = tv({
-    base: "fixed top-0 left-0 w-full h-full isolate z-[2000] bg-black/[15%] p-4 backdrop-blur-none",
+    base: "fixed top-0 left-0 w-full h-full isolate z-[500000] bg-black/[15%] p-4 backdrop-blur-none",
     variants: {
       isEntering: {
         true: "animate-in fade-in duration-200 ease-out",
