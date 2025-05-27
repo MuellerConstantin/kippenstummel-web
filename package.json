@@ -1,7 +1,13 @@
 {
   "name": "@kippenstummel/web",
   "version": "0.1.0",
+  "description": "End user interface for Kippenstummel.",
+  "author": {
+    "name": "Constantin Müller",
+    "email": "info@mueller-constantin.de"
+  },
   "private": true,
+  "license": "AGPL-3.0-only",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
