@@ -52,6 +52,26 @@ async function proxyRequest(
   const cleanPath = path?.join("/") || "";
   const targetUrl = new URL(`${backendUrl}/${cleanPath}`);
 
+  /**
+   * Prevent exposure of Kippenstummel's internal management API. These
+   * endpoints are not meant for public consumption.
+   */
+
+  if (cleanPath.startsWith("kmc")) {
+    return new Response(
+      JSON.stringify({
+        code: "BFF_PROXY_BLOCKED",
+        timestamp: new Date().toISOString(),
+        path: targetUrl.pathname,
+        message: "This path is excluded from proxying.",
+      }),
+      {
+        status: 403,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+  }
+
   req.nextUrl.searchParams.forEach((value, key) => {
     targetUrl.searchParams.append(key, value);
   });
