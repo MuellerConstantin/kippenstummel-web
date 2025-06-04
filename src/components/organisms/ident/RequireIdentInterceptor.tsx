@@ -4,10 +4,10 @@ import { useEffect, useState, useCallback } from "react";
 import { AxiosRequestConfig } from "axios";
 import { DialogTrigger } from "react-aria-components";
 import { Modal } from "@/components/atoms/Modal";
-import { ConfirmIdentDialog } from "@/components/organisms/ident/ConfirmIdentDialog";
+import { RequestIdentDialog } from "@/components/organisms/ident/RequestIdentDialog";
 import useApi from "@/hooks/useApi";
 
-export function RefreshIdentInterceptor({
+export function RequireIdentInterceptor({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -85,7 +85,7 @@ export function RefreshIdentInterceptor({
       {children}
       <DialogTrigger isOpen={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <Modal>
-          <ConfirmIdentDialog onConfirm={onConfirm} />
+          <RequestIdentDialog onConfirm={onConfirm} />
         </Modal>
       </DialogTrigger>
     </>

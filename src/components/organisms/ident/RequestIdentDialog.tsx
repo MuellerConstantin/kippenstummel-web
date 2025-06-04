@@ -10,20 +10,18 @@ import { Link } from "@/components/atoms/Link";
 import { TextField } from "@/components/atoms/TextField";
 import { Spinner } from "@/components/atoms/Spinner";
 import useApi from "@/hooks/useApi";
-import { useAppDispatch, useAppSelector } from "@/store";
+import { useAppDispatch } from "@/store";
 import identSlice from "@/store/slices/ident";
 import { solveChallenge } from "@/api/pow";
 
-interface ConfirmIdentDialogProps extends Omit<DialogProps, "children"> {
+interface RequestIdentDialogProps extends Omit<DialogProps, "children"> {
   onConfirm?: () => void;
 }
 
-export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
-  const t = useTranslations("ConfirmIdentDialog");
+export function RequestIdentDialog(props: RequestIdentDialogProps) {
+  const t = useTranslations("RequestIdentDialog");
   const dispatch = useAppDispatch();
   const api = useApi();
-
-  const identity = useAppSelector((state) => state.ident.identity);
 
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -65,9 +63,8 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
       try {
         const powSolution = await solveChallenge(pow!);
 
-        const res = await api.post(
+        const identityRes = await api.get<{ identity: string; secret: string }>(
           "/ident",
-          { identity },
           {
             headers: {
               "x-captcha": `${captcha!.id}:${captchaSolution}`,
@@ -78,10 +75,21 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
 
         dispatch(
           identSlice.actions.setIdentity({
-            identity: res.data.identity,
-            token: res.data.token,
+            identity: identityRes.data.identity,
+            secret: identityRes.data.secret,
           }),
         );
+
+        const tokenRes = await api.post<{ identity: string; token: string }>(
+          "/ident",
+          {
+            identity: identityRes.data.identity,
+            secret: identityRes.data.secret,
+          },
+        );
+
+        dispatch(identSlice.actions.setToken(tokenRes.data.token));
+
         chain(close, props.onConfirm)();
       } catch {
         setSubmitError(t("error"));
@@ -89,16 +97,7 @@ export function ConfirmIdentDialog(props: ConfirmIdentDialogProps) {
         setSubmitting(false);
       }
     },
-    [
-      captchaSolution,
-      captcha,
-      pow,
-      t,
-      api,
-      dispatch,
-      props.onConfirm,
-      identity,
-    ],
+    [captchaSolution, captcha, pow, t, api, dispatch, props.onConfirm],
   );
 
   useEffect(() => {

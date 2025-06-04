@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface IdentState {
   token: string | null;
   identity: string | null;
+  secret: string | null;
 }
 
 const initialState: IdentState = {
   token: null,
   identity: null,
+  secret: null,
 };
 
 const identSlice = createSlice({
@@ -16,14 +18,18 @@ const identSlice = createSlice({
   reducers: {
     setIdentity: (
       state,
-      action: PayloadAction<{ identity: string; token: string }>,
+      action: PayloadAction<{ identity: string; secret: string }>,
     ) => {
-      state.token = action.payload.token;
+      state.secret = action.payload.secret;
       state.identity = action.payload.identity;
+    },
+    setToken: (state, action: PayloadAction<string>) => {
+      state.token = action.payload;
     },
     clearIdentity: (state) => {
       state.token = null;
       state.identity = null;
+      state.secret = null;
     },
   },
 });

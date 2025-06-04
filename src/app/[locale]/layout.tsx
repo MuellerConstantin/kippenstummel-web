@@ -6,7 +6,7 @@ import { routing } from "@/i18n/routing";
 import { StoreProvider } from "@/store";
 import { NotificationProvider } from "@/contexts/NotificationProvider";
 import { NotificationView } from "@/components/organisms/NotificationView";
-import { RefreshIdentInterceptor } from "@/components/organisms/ident/RefreshIdentInterceptor";
+import { RequireIdentInterceptor } from "@/components/organisms/ident/RequireIdentInterceptor";
 
 import "./globals.css";
 import { PWAInstallProvider } from "@/contexts/PWAInstallProvider";
@@ -59,10 +59,10 @@ export default async function RootLayout({
           <StoreProvider>
             <NotificationProvider>
               <PWAInstallProvider>
-                <RefreshIdentInterceptor>
+                <RequireIdentInterceptor>
                   {children}
                   <NotificationView />
-                </RefreshIdentInterceptor>
+                </RequireIdentInterceptor>
               </PWAInstallProvider>
             </NotificationProvider>
           </StoreProvider>

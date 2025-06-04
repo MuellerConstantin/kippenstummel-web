@@ -276,7 +276,7 @@
     "accept": "Cookies akzeptieren",
     "decline": "Cookies ablehnen"
   },
-  "ConfirmIdentDialog": {
+  "RequestIdentDialog": {
     "title": "Identität bestätigen",
     "description": "Um unsere Plattform sicher zu halten, musst du deine Identität bestätigen. Bitte fülle das CAPTCHA unten aus.",
     "captchaPlaceholder": "CAPTCHA eingeben",
