@@ -94,6 +94,7 @@ export function RequestIdentDialog(props: RequestIdentDialogProps) {
         chain(close, props.onConfirm)();
       } catch {
         setSubmitError(t("error"));
+        dispatch(identSlice.actions.clearIdentity());
       } finally {
         setSubmitting(false);
       }
