@@ -61,9 +61,9 @@ api.interceptors.response.use(
       if (
         response.status === 401 &&
         response.data?.code === "INVALID_IDENT_TOKEN_ERROR" &&
-        !config._retry
+        !config._retryRefresh
       ) {
-        config._retry = true;
+        config._retryRefresh = true;
         const state = store.getState();
 
         if (state.ident.identity && state.ident.secret) {

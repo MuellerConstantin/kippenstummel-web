@@ -70,6 +70,10 @@
         "7": {
           "question": "Warum wird ein gemeldeter Standort oder eine Bewertung nicht angezeigt?",
           "answer": "Gemeldete Standorte oder Bewertungen werden systemintern zunächst validiert was einige Zeit in Anspruch nehmen kann. Daher sind Meldungen unter Umständen nicht sofort sichtbar. Darüber hinaus kann es auch sein, das eine Meldung vom System nicht akzeptiert wird und daher nicht bemerkbar wird."
+        },
+        "8": {
+          "question": "Was ist meine persönliche Identität?",
+          "answer": "Grundsätzlich wollen wir Kippenstummel anonym anbieten. Trotzdem müssen bestimmt Interaktionen einem Benutzer zugeordnet werden können. Daher wird dir anstelle eines Benutzerkontos eine anonyme aber personalisierte Identität ausgestellt. Mit dieser werden all deine Interaktionen und Errungenschaften verknüpft. Die ermittelte Vertrauenswürdigkeit deiner Identität regelt außerdem wie viel Einfluss deine Interaktionen haben. Verlierst du Zugriff auf deine Geräte ist deine Identität, falls zuvor nicht übertragen oder gesichert, unwideruflich verloren."
         }
       }
     }
@@ -256,8 +260,10 @@
     "home": "Startseite",
     "map": "Karte",
     "darkMode": "Dunkler Modus",
+    "no-identity": "Noch keine Identität? Jetzt anlegen!",
     "options": {
-      "identity": "Identität"
+      "identity": "Meine Identität",
+      "new-identity": "Identität anlegen"
     },
     "languages": {
       "de": "Deutsch",
@@ -277,10 +283,11 @@
     "decline": "Cookies ablehnen"
   },
   "RequestIdentDialog": {
-    "title": "Identität bestätigen",
-    "description": "Um unsere Plattform sicher zu halten, musst du deine Identität bestätigen. Bitte fülle das CAPTCHA unten aus.",
+    "title": "Identität anlegen",
+    "description": "Um unsere Plattform sicher zu halten, ist für das aktive Mitwirken eine registrierte Identität erforderlich. Diese wird anonym und individuell je Benutzer ausgestellt. Mit deiner Identität sind deine Interaktionen, Errungenschaften und deine persönliche Einstellungen verknüpft. Bitte fülle das CAPTCHA unten aus um fortzufahren und deine Persönliche Identität zu erstellen.",
     "captchaPlaceholder": "CAPTCHA eingeben",
     "confirm": "Bestätigen",
+    "cancel": "Abbrechen",
     "disclaimer": "Durch die Bestätigung akzeptierst du unsere <tos>Nutzungsbedingungen</tos> und unsere <pp>Datenschutzerklärung</pp>.",
     "error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut."
   },
@@ -339,6 +346,10 @@
     "cvmOutOfReach": {
       "title": "Interaktion nicht möglich",
       "description": "Der Standort befindet sich zu weit weg von dir."
+    },
+    "canceledIdentityCreation": {
+      "title": "Identitätserstellung abgebrochen",
+      "description": "Die Identitätserstellung wurde abgebrochen. Ohne Identität kann die Aktion nicht ausgeführt werden."
     }
   },
   "HelpDialog": {

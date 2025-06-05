@@ -70,6 +70,10 @@
         "7": {
           "question": "Why is a reported location or rating not shown?",
           "answer": "Reported locations or reviews are first validated within the system, which can take some time. Therefore, reports may not be visible immediately. Furthermore, a report may not be accepted by the system and therefore not be noticeable."
+        },
+        "8": {
+          "question": "What is my personal identity?",
+          "answer": "Fundamentally, we want to offer Kippenstummel anonymously. However, certain interactions must be attributable to a user. Therefore, instead of a user account, you will be issued an anonymous but personalized identity. All your interactions and achievements will be linked to this identity. The trustworthiness of your identity also determines the influence your interactions have. If you lose access to your devices, your identity will be irretrievably lost unless previously transferred or secured."
         }
       }
     }
@@ -256,8 +260,10 @@
     "home": "Home",
     "map": "Map",
     "darkMode": "Dark Mode",
+    "no-identity": "No identity? Create one now!",
     "options": {
-      "identity": "Identity"
+      "identity": "My identity",
+      "new-identity": "Create identity"
     },
     "languages": {
       "de": "German",
@@ -277,10 +283,11 @@
     "decline": "Decline cookies"
   },
   "RequestIdentDialog": {
-    "title": "Confirm Identity",
-    "description": "To help keep our platform secure, we need to verify that you're a real person. Please complete the CAPTCHA below.",
+    "title": "Create Identity",
+    "description": "To keep our platform secure, a registered identity is required for active participation. This identity is issued anonymously and individually for each user. Your interactions, achievements, and personal preferences are linked to your identity. Please complete the CAPTCHA below to proceed and create your Personal Identity.",
     "captchaPlaceholder": "Enter CAPTCHA",
     "confirm": "Confirm",
+    "cancel": "Cancel",
     "disclaimer": "By confirming, you agree to our <tos>Terms of Service</tos> and <pp>Privacy Policy</pp>.",
     "error": "Unexpected error occurred. Please try again."
   },
@@ -339,6 +346,10 @@
     "cvmOutOfReach": {
       "title": "Interaction not possible",
       "description": "The location is too far away from you."
+    },
+    "canceledIdentityCreation": {
+      "title": "Identity creation canceled",
+      "description": "Identity creation was canceled. Without an identity, you won't be able to participate."
     }
   },
   "HelpDialog": {

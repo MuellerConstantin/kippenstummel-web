@@ -12,6 +12,7 @@ import {
   Check,
   Copy,
   IdCard,
+  Signature,
 } from "lucide-react";
 import { DialogTrigger, MenuTrigger } from "react-aria-components";
 import { Button } from "@/components/atoms/Button";
@@ -26,6 +27,7 @@ import { IdentityDialog } from "./IdentityDialog";
 import { useAppSelector, useAppDispatch } from "@/store";
 import usabilitySlice from "@/store/slices/usability";
 import { useRouter, usePathname } from "@/i18n/navigation";
+import { RequestIdentDialog } from "./ident/RequestIdentDialog";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
@@ -133,16 +135,41 @@ export function NavbarUnauthenticatedOptionsMenu() {
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector((state) => state.usability.darkMode);
 
+  const [showNewIdentityDialog, setShowNewIdentityDialog] = useState(false);
+
   return (
     <Popover className="entering:animate-in entering:fade-in entering:placement-bottom:slide-in-from-top-1 entering:placement-top:slide-in-from-bottom-1 exiting:animate-out exiting:fade-out exiting:placement-bottom:slide-out-to-top-1 exiting:placement-top:slide-out-to-bottom-1 fill-mode-forwards origin-top-left overflow-auto rounded-lg bg-white p-2 shadow-lg ring-1 ring-black/10 outline-hidden dark:bg-slate-950 dark:ring-white/15">
-      <Switch
-        isSelected={darkMode}
-        onChange={(newDarkMode) =>
-          dispatch(usabilitySlice.actions.setDarkMode(newDarkMode))
-        }
-      >
-        {t("darkMode")}
-      </Switch>
+      <div className="flex w-[15rem] flex-col gap-4 overflow-hidden p-2">
+        <div className="flex gap-4 overflow-hidden">
+          <Switch
+            isSelected={darkMode}
+            onChange={(newDarkMode) =>
+              dispatch(usabilitySlice.actions.setDarkMode(newDarkMode))
+            }
+          >
+            Dark Mode
+          </Switch>
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="text-xs">{t("no-identity")}</div>
+          <ListBox>
+            <ListBoxItem onAction={() => setShowNewIdentityDialog(true)}>
+              <div className="flex w-full items-center gap-2">
+                <Signature className="h-4 w-4" />
+                <span>{t("options.new-identity")}</span>
+              </div>
+            </ListBoxItem>
+          </ListBox>
+          <DialogTrigger
+            isOpen={showNewIdentityDialog}
+            onOpenChange={setShowNewIdentityDialog}
+          >
+            <Modal>
+              <RequestIdentDialog />
+            </Modal>
+          </DialogTrigger>
+        </div>
+      </div>
     </Popover>
   );
 }

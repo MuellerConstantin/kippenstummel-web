@@ -16,6 +16,7 @@ import { solveChallenge } from "@/api/pow";
 
 interface RequestIdentDialogProps extends Omit<DialogProps, "children"> {
   onConfirm?: () => void;
+  onCancel?: () => void;
 }
 
 export function RequestIdentDialog(props: RequestIdentDialogProps) {
@@ -115,7 +116,7 @@ export function RequestIdentDialog(props: RequestIdentDialogProps) {
             {t("title")}
           </Heading>
           <div className="mt-4 flex flex-col gap-4">
-            <div>{t("description")}</div>
+            <div className="text-sm">{t("description")}</div>
             <div className="flex justify-center">
               {loading ? (
                 <div>
@@ -162,6 +163,15 @@ export function RequestIdentDialog(props: RequestIdentDialogProps) {
                 tos: (chunks) => <Link href="/terms-of-service">{chunks}</Link>,
                 pp: (chunks) => <Link href="/privacy-policy">{chunks}</Link>,
               })}
+            </div>
+            <div className="flex justify-center">
+              <Link
+                onPress={chain(close, props.onCancel)}
+                variant="secondary"
+                className="!cursor-pointer !text-xs"
+              >
+                {t("cancel")}
+              </Link>
             </div>
           </div>
         </>

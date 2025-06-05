@@ -6,6 +6,8 @@ import { DialogTrigger } from "react-aria-components";
 import { Modal } from "@/components/atoms/Modal";
 import { RequestIdentDialog } from "@/components/organisms/ident/RequestIdentDialog";
 import useApi from "@/hooks/useApi";
+import { useNotifications } from "@/contexts/NotificationProvider";
+import { useTranslations } from "next-intl";
 
 export function RequireIdentInterceptor({
   children,
@@ -13,6 +15,8 @@ export function RequireIdentInterceptor({
   children: React.ReactNode;
 }>) {
   const api = useApi();
+  const { enqueue } = useNotifications();
+  const t = useTranslations();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [pendingQueue, setPendingQueue] = useState<
@@ -34,9 +38,9 @@ export function RequireIdentInterceptor({
           err.response?.status === 401 &&
           (err.response.data?.code === "INVALID_IDENT_TOKEN_ERROR" ||
             err.response.data?.code === "UNKNOWN_IDENTITY_ERROR") &&
-          !originalRequest._retry
+          !originalRequest._retryRequire
         ) {
-          originalRequest._retry = true;
+          originalRequest._retryRequire = true;
 
           if (isRefreshing) {
             return new Promise((resolve, reject) => {
@@ -80,12 +84,30 @@ export function RequireIdentInterceptor({
     setIsRefreshing(false);
   }, [pendingQueue, api]);
 
+  const onCancel = useCallback(() => {
+    pendingQueue.forEach(({ reject }) => {
+      reject();
+    });
+
+    setPendingQueue([]);
+    setIsRefreshing(false);
+
+    enqueue(
+      {
+        title: t("Notifications.canceledIdentityCreation.title"),
+        description: t("Notifications.canceledIdentityCreation.description"),
+        variant: "error",
+      },
+      { timeout: 5000 },
+    );
+  }, [pendingQueue, enqueue, t]);
+
   return (
     <>
       {children}
       <DialogTrigger isOpen={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <Modal>
-          <RequestIdentDialog onConfirm={onConfirm} />
+          <RequestIdentDialog onConfirm={onConfirm} onCancel={onCancel} />
         </Modal>
       </DialogTrigger>
     </>
