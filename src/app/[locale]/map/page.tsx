@@ -16,7 +16,7 @@ export default function Map() {
   const { enqueue } = useNotifications();
 
   const searchParams = useSearchParams();
-  const selected = searchParams.get("selected");
+  const shared = searchParams.get("shared");
 
   const { data, error } = useSWR<
     {
@@ -28,9 +28,9 @@ export default function Map() {
     unknown,
     string | null
   >(
-    selected ? `/cvms/${selected}` : null,
+    shared ? `/cvms/${shared}` : null,
     (url) => api.get(url).then((res) => res.data),
-    { shouldRetryOnError: false },
+    { shouldRetryOnError: false, revalidateOnFocus: false },
   );
 
   const onReport = useCallback(

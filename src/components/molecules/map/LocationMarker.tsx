@@ -185,7 +185,7 @@ function LocationMarkerDialog(props: LocationMarkerDialogProps) {
                     className="block cursor-pointer text-sm"
                     onPress={() =>
                       navigator.clipboard.writeText(
-                        `${window.location.protocol}//${window.location.host}/map?selected=${props.id}`,
+                        `${window.location.protocol}//${window.location.host}/map?shared=${props.id}`,
                       )
                     }
                   >
@@ -304,7 +304,7 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
               className="block cursor-pointer text-sm"
               onPress={() =>
                 navigator.clipboard.writeText(
-                  `${window.location.protocol}//${window.location.host}/map?selected=${props.id}`,
+                  `${window.location.protocol}//${window.location.host}/map?shared=${props.id}`,
                 )
               }
             >
