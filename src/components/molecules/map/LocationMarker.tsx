@@ -67,6 +67,7 @@ function CopyButton(props: CopyButtonProps) {
 }
 
 interface LocationMarkerDialogProps {
+  id: string;
   position: [number, number];
   score: number;
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
@@ -164,25 +165,40 @@ function LocationMarkerDialog(props: LocationMarkerDialogProps) {
                   )}
                 </button>
               </div>
-              <div className="space-y-1">
-                <div className="text-sm font-semibold">{t("location")}</div>
-                <div className="flex items-center gap-2">
-                  <div className="text-xs">
-                    {props.position[0].toFixed(7)} /{" "}
-                    {props.position[1].toFixed(7)} (lat/lng)
+              <div className="flex flex-col gap-2">
+                <div className="space-y-1">
+                  <div className="text-sm font-semibold">{t("location")}</div>
+                  <div className="flex items-center gap-2">
+                    <div className="text-xs">
+                      {props.position[0].toFixed(7)} /{" "}
+                      {props.position[1].toFixed(7)} (lat/lng)
+                    </div>
+                    <CopyButton
+                      text={`${props.position[0]},${props.position[1]}`}
+                      disabled={voting !== false}
+                    />
                   </div>
-                  <CopyButton
-                    text={`${props.position[0]},${props.position[1]}`}
-                    disabled={voting !== false}
-                  />
                 </div>
-                <Link
-                  href={`https://www.google.com.sa/maps/search/${props.position[0]},${props.position[1]}`}
-                  target="_blank"
-                  className="text-sm"
-                >
-                  {t("openInGoogleMaps")}
-                </Link>
+                <div className="flex flex-col gap-1">
+                  <div className="text-sm font-semibold">{t("share")}</div>
+                  <Link
+                    className="block cursor-pointer text-sm"
+                    onPress={() =>
+                      navigator.clipboard.writeText(
+                        `${window.location.protocol}//${window.location.host}/map?selected=${props.id}`,
+                      )
+                    }
+                  >
+                    {t("copyLink")}
+                  </Link>
+                  <Link
+                    href={`https://www.google.com.sa/maps/search/${props.position[0]},${props.position[1]}`}
+                    target="_blank"
+                    className="block text-sm"
+                  >
+                    {t("openInGoogleMaps")}
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -193,6 +209,7 @@ function LocationMarkerDialog(props: LocationMarkerDialogProps) {
 }
 
 interface LocationMarkerPopupProps {
+  id: string;
   position: [number, number];
   score: number;
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
@@ -281,13 +298,26 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
               disabled={voting !== false}
             />
           </div>
-          <Link
-            href={`https://www.google.com.sa/maps/search/${props.position[0]},${props.position[1]}`}
-            target="_blank"
-            className="text-sm"
-          >
-            {t("openInGoogleMaps")}
-          </Link>
+          <div className="flex flex-col gap-1">
+            <div className="text-sm font-semibold">{t("share")}</div>
+            <Link
+              className="block cursor-pointer text-sm"
+              onPress={() =>
+                navigator.clipboard.writeText(
+                  `${window.location.protocol}//${window.location.host}/map?selected=${props.id}`,
+                )
+              }
+            >
+              {t("copyLink")}
+            </Link>
+            <Link
+              href={`https://www.google.com.sa/maps/search/${props.position[0]},${props.position[1]}`}
+              target="_blank"
+              className="block text-sm"
+            >
+              {t("openInGoogleMaps")}
+            </Link>
+          </div>
         </div>
       </div>
     </Popup>
@@ -295,10 +325,12 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
 }
 
 interface LocationMarkerProps {
+  id: string;
   position: [number, number];
   score: number;
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
   onDownvote?: (voterPosition: Leaflet.LatLng) => void;
+  selected: boolean;
 }
 
 export function LocationMarker(props: LocationMarkerProps) {
@@ -312,7 +344,7 @@ export function LocationMarker(props: LocationMarkerProps) {
         icon={LeafletDivIcon({
           source: (
             <div
-              className={`relative z-[50] h-fit w-fit ${showDialog ? "animate-bounce" : ""}`}
+              className={`relative z-[50] h-fit w-fit ${showDialog || props.selected ? "animate-bounce" : ""}`}
             >
               {props.score < -99 ? (
                 <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-500">

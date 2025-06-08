@@ -6,8 +6,14 @@ import { Link } from "@/components/atoms/Link";
 import privacySlice from "@/store/slices/privacy";
 import usabilitySlice from "@/store/slices/usability";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface CvmOptInMap extends CvmMapProps {}
+export interface CvmOptInMap extends CvmMapProps {
+  selectedCvm?: {
+    id: string;
+    longitude: number;
+    latitude: number;
+    score: number;
+  } | null;
+}
 
 export function CvmOptInMap(props: CvmOptInMap) {
   const t = useTranslations("CvmOptInMap");

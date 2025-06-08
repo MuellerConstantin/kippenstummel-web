@@ -306,6 +306,8 @@
   "LocationMarker": {
     "title": "Cigarette Vending Machine",
     "location": "Location",
+    "share": "Share",
+    "copyLink": "Copy Link",
     "openInGoogleMaps": "Open in Google Maps"
   },
   "Notifications": {
@@ -350,6 +352,10 @@
     "canceledIdentityCreation": {
       "title": "Identity creation canceled",
       "description": "Identity creation was canceled. Without an identity, you won't be able to participate."
+    },
+    "sharedNotFound": {
+      "title": "Shared Vending Machine not found",
+      "description": "The shared vending machine could not be found."
     }
   },
   "HelpDialog": {

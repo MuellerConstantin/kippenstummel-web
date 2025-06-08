@@ -1,17 +1,37 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import Leaflet from "leaflet";
 import { CvmOptInMap } from "@/components/organisms/map/CvmOptInMap";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import useApi from "@/hooks/useApi";
 import { AxiosError } from "axios";
+import useSWR from "swr";
 
 export default function Map() {
   const t = useTranslations();
   const api = useApi();
   const { enqueue } = useNotifications();
+
+  const searchParams = useSearchParams();
+  const selected = searchParams.get("selected");
+
+  const { data, error } = useSWR<
+    {
+      id: string;
+      latitude: number;
+      longitude: number;
+      score: number;
+    },
+    unknown,
+    string | null
+  >(
+    selected ? `/cvms/${selected}` : null,
+    (url) => api.get(url).then((res) => res.data),
+    { shouldRetryOnError: false },
+  );
 
   const onReport = useCallback(
     async (position: Leaflet.LatLng) => {
@@ -144,12 +164,26 @@ export default function Map() {
     [t, api, enqueue],
   );
 
+  useEffect(() => {
+    if (error) {
+      enqueue(
+        {
+          title: t("Notifications.sharedNotFound.title"),
+          description: t("Notifications.sharedNotFound.description"),
+          variant: "error",
+        },
+        { timeout: 5000 },
+      );
+    }
+  }, [error, enqueue, t]);
+
   return (
     <div className="flex h-0 grow flex-col">
       <CvmOptInMap
         onReport={onReport}
         onUpvote={onUpvote}
         onDownvote={onDownvote}
+        selectedCvm={data}
       />
     </div>
   );

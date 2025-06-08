@@ -306,6 +306,8 @@
   "LocationMarker": {
     "title": "Zigarettenautomat",
     "location": "Standort",
+    "share": "Teilen",
+    "copyLink": "Link kopieren",
     "openInGoogleMaps": "In Google Maps öffnen"
   },
   "Notifications": {
@@ -350,6 +352,10 @@
     "canceledIdentityCreation": {
       "title": "Identitätserstellung abgebrochen",
       "description": "Die Identitätserstellung wurde abgebrochen. Ohne Identität kann die Aktion nicht ausgeführt werden."
+    },
+    "sharedNotFound": {
+      "title": "Geteilter Automat nicht gefunden",
+      "description": "Der geteilte Automat konnte nicht gefunden werden."
     }
   },
   "HelpDialog": {
