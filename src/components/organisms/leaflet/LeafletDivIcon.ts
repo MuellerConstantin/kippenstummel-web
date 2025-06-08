@@ -4,15 +4,17 @@ import { renderToString } from "react-dom/server";
 
 interface divIconValues {
   source: ReactNode;
-  anchor: PointExpression;
+  anchor?: PointExpression;
+  size?: PointExpression;
   className?: string;
 }
 
-const LeafletDivIcon = ({ source, anchor, className }: divIconValues) =>
+const LeafletDivIcon = ({ source, anchor, className, size }: divIconValues) =>
   Leaflet?.divIcon({
     html: renderToString(source),
     iconAnchor: anchor,
     className: `hidden ${className}`,
+    iconSize: size,
   });
 
 export default LeafletDivIcon;
