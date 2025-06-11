@@ -150,32 +150,27 @@ function LocationMarkerDialog(props: LocationMarkerDialogProps) {
                   )}
                 </button>
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex grow flex-col gap-2">
                 <div className="space-y-1">
                   <div className="text-sm font-semibold">{t("location")}</div>
-                  <div className="flex items-center gap-2">
-                    <div className="text-xs">
-                      {props.position[0].toFixed(7)} /{" "}
-                      {props.position[1].toFixed(7)} (lat/lng)
-                    </div>
-                    <CopyButton
-                      text={`${props.position[0]},${props.position[1]}`}
-                      disabled={voting !== false}
-                    />
+                  <div className="text-xs">
+                    {props.position[0].toFixed(7)} /{" "}
+                    {props.position[1].toFixed(7)} (lat/lng)
                   </div>
                 </div>
                 <div className="flex flex-col gap-1">
                   <div className="text-sm font-semibold">{t("share")}</div>
-                  <Link
-                    className="block cursor-pointer text-sm"
-                    onPress={() =>
-                      navigator.clipboard.writeText(
-                        `${window.location.protocol}//${window.location.host}/map?shared=${props.id}`,
-                      )
-                    }
-                  >
-                    {t("copyLink")}
-                  </Link>
+                  <div className="flex items-center gap-2">
+                    <input
+                      readOnly
+                      value={`${window.location.protocol}//${window.location.host}/map?shared=${props.id}`}
+                      className="min-w-0 flex-1 rounded-md border-2 border-gray-300 bg-white px-1 py-0.5 text-xs text-gray-800 outline outline-0 focus:border-green-600 disabled:text-gray-200 dark:border-slate-500 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-slate-300 dark:disabled:text-slate-600"
+                    />
+                    <CopyButton
+                      text={`${window.location.protocol}//${window.location.host}/map?shared=${props.id}`}
+                      disabled={voting !== false}
+                    />
+                  </div>
                   <Link
                     href={`https://www.google.com.sa/maps/search/${props.position[0]},${props.position[1]}`}
                     target="_blank"
@@ -286,30 +281,25 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
             )}
           </button>
         </div>
-        <div className="space-y-1">
+        <div className="grow space-y-1">
           <div className="text-sm font-semibold">{t("location")}</div>
-          <div className="flex items-center gap-2">
-            <div className="text-xs">
-              {props.position[0].toFixed(7)} / {props.position[1].toFixed(7)}{" "}
-              (lat/lng)
-            </div>
-            <CopyButton
-              text={`${props.position[0]},${props.position[1]}`}
-              disabled={voting !== false}
-            />
+          <div className="text-xs">
+            {props.position[0].toFixed(7)} / {props.position[1].toFixed(7)}{" "}
+            (lat/lng)
           </div>
-          <div className="flex flex-col gap-1">
+          <div className="flex w-full flex-col gap-1">
             <div className="text-sm font-semibold">{t("share")}</div>
-            <Link
-              className="block cursor-pointer text-sm"
-              onPress={() =>
-                navigator.clipboard.writeText(
-                  `${window.location.protocol}//${window.location.host}/map?shared=${props.id}`,
-                )
-              }
-            >
-              {t("copyLink")}
-            </Link>
+            <div className="flex items-center gap-2">
+              <input
+                readOnly
+                value={`${window.location.protocol}//${window.location.host}/map?shared=${props.id}`}
+                className="min-w-0 flex-1 rounded-md border-2 border-gray-300 bg-white px-1 py-0.5 text-xs text-gray-800 outline outline-0 focus:border-green-600 disabled:text-gray-200 dark:border-slate-500 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-slate-300 dark:disabled:text-slate-600"
+              />
+              <CopyButton
+                text={`${window.location.protocol}//${window.location.host}/map?shared=${props.id}`}
+                disabled={voting !== false}
+              />
+            </div>
             <Link
               href={`https://www.google.com.sa/maps/search/${props.position[0]},${props.position[1]}`}
               target="_blank"
