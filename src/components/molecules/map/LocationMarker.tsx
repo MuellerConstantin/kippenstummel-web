@@ -233,6 +233,7 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
     <Popup
       autoClose={true}
       closeOnClick={false}
+      closeButton={false}
       className="relative"
       offset={Leaflet.point(0, -15)}
     >
@@ -249,6 +250,16 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
           <Equal className="h-4 w-4 text-white" />
         </div>
       )}
+      <div className="flex w-full items-center justify-between gap-2">
+        <div className="flex items-center gap-2 overflow-hidden">
+          <div className="text-base font-semibold">{t("title")}</div>
+        </div>
+        <div>
+          <Button variant="icon" onPress={() => map.closePopup()}>
+            <X className="h-5 w-5" />
+          </Button>
+        </div>
+      </div>
       <div className="flex items-center gap-4">
         <div className="flex flex-col items-center">
           <button
@@ -276,7 +287,6 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
           </button>
         </div>
         <div className="space-y-1">
-          <div className="text-base font-semibold">{t("title")}</div>
           <div className="text-sm font-semibold">{t("location")}</div>
           <div className="flex items-center gap-2">
             <div className="text-xs">
