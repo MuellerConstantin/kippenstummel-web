@@ -93,11 +93,11 @@ function LocationMarkerDialog(props: LocationMarkerDialogProps) {
         <>
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 overflow-hidden">
-              {props.score < -99 ? (
+              {props.score < -100 ? (
                 <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-500">
                   <ChevronDown className="h-4 w-4 text-white" />
                 </div>
-              ) : props.score > 99 ? (
+              ) : props.score > 100 ? (
                 <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-600">
                   <ChevronUp className="h-4 w-4 text-white" />
                 </div>
@@ -232,11 +232,11 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
       className="relative"
       offset={Leaflet.point(0, -15)}
     >
-      {props.score < -99 ? (
+      {props.score < -100 ? (
         <div className="absolute -top-2 -left-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500">
           <ChevronDown className="h-4 w-4 text-white" />
         </div>
-      ) : props.score > 99 ? (
+      ) : props.score > 100 ? (
         <div className="absolute -top-2 -left-2 flex h-6 w-6 items-center justify-center rounded-full bg-green-600">
           <ChevronUp className="h-4 w-4 text-white" />
         </div>
