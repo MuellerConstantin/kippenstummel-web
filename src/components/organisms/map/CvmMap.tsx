@@ -12,13 +12,12 @@ import { LocationMarker } from "@/components/molecules/map/LocationMarker";
 import { LocateMarker } from "@/components/molecules/map/LocateMarker";
 import { Modal } from "@/components/atoms/Modal";
 import { LocateControlPlugin } from "./LocateControl";
-import { ReportCvmControlPlugin } from "./ReportCvmControl";
-import { HelpControlPlugin } from "./HelpControl";
 import { HelpDialog } from "./HelpDialog";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import { ConfirmCvmReportDialog } from "./ConfirmCvmReportDialog";
 import { useAppDispatch, useAppSelector } from "@/store";
 import locationSlice from "@/store/slices/location";
+import { BottomNavigation } from "./BottomNavigation";
 
 export interface CvmMapProps {
   onReport?: (position: Leaflet.LatLng) => void;
@@ -214,8 +213,6 @@ export function CvmMap(props: CvmMapProps) {
       onLocationError={onLocationError}
     >
       <LocateControlPlugin position="topleft" />
-      <ReportCvmControlPlugin position="bottomright" onReport={onReport} />
-      <HelpControlPlugin position="topleft" onClick={onHelp} />
       <DialogTrigger isOpen={showHelpDialog} onOpenChange={setShowHelpDialog}>
         <Modal className="max-w-2xl">
           <HelpDialog />
@@ -256,6 +253,7 @@ export function CvmMap(props: CvmMapProps) {
         />
       ))}
       {location && <LocateMarker position={[location.lat, location.lng]} />}
+      <BottomNavigation map={map!} onHelp={onHelp} onRegister={onReport} />
     </LeafletMap>
   );
 }

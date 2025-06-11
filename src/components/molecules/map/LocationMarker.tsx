@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import Leaflet from "leaflet";
 import { Marker, Popup, useMap } from "react-leaflet";
 import { useTranslations } from "next-intl";
@@ -19,22 +19,7 @@ import { Modal } from "@/components/atoms/Modal";
 import { Dialog } from "@/components/atoms/Dialog";
 import { Heading } from "react-aria-components";
 import { Button } from "@/components/atoms/Button";
-
-function useIsMobileView() {
-  const [isMobileView, setIsMobileView] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 1024px)");
-
-    const updateMatch = () => setIsMobileView(!mediaQuery.matches);
-    updateMatch();
-
-    mediaQuery.addEventListener("change", updateMatch);
-    return () => mediaQuery.removeEventListener("change", updateMatch);
-  }, []);
-
-  return isMobileView;
-}
+import useIsMobile from "@/hooks/useIsMobile";
 
 interface CopyButtonProps {
   text: string;
@@ -339,7 +324,7 @@ interface LocationMarkerProps {
 }
 
 export function LocationMarker(props: LocationMarkerProps) {
-  const isMobileView = useIsMobileView();
+  const isMobile = useIsMobile();
   const [showDialog, setShowDialog] = useState(false);
 
   return (
@@ -372,13 +357,13 @@ export function LocationMarker(props: LocationMarkerProps) {
         })}
         eventHandlers={{
           click: () => {
-            if (isMobileView) {
+            if (isMobile) {
               setShowDialog(true);
             }
           },
         }}
       >
-        {!isMobileView && <LocationMarkerPopup {...props} />}
+        {!isMobile && <LocationMarkerPopup {...props} />}
       </Marker>
       <Modal
         isOpen={showDialog}

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, memo } from "react";
 import ReactDOM from "react-dom/client";
 import { useMap } from "react-leaflet";
 import Leaflet from "leaflet";
-import { LocateFixed, LoaderCircle } from "lucide-react";
+import { Navigation, LoaderCircle } from "lucide-react";
 import useLocate from "@/hooks/useLocate";
 
 interface LocateControlComponentProps {
@@ -32,7 +32,7 @@ export function LocateControlComponent(props: LocateControlComponentProps) {
         {locating ? (
           <LoaderCircle className="h-5 w-5 animate-spin" />
         ) : (
-          <LocateFixed className="h-5 w-5" />
+          <Navigation className="h-5 w-5" />
         )}
       </div>
     </a>
