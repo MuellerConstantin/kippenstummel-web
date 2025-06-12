@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface UsabilityState {
   darkMode: boolean;
   recurringUser: boolean;
+  mapVariant: "all" | "trusted" | "approved";
 }
 
 const initialState: UsabilityState = {
   darkMode: false,
   recurringUser: false,
+  mapVariant: "all",
 };
 
 const usabilitySlice = createSlice({
@@ -22,6 +24,12 @@ const usabilitySlice = createSlice({
     },
     setRecurringUser: (state, action: PayloadAction<boolean>) => {
       state.recurringUser = action.payload;
+    },
+    setMapVariant: (
+      state,
+      action: PayloadAction<"all" | "trusted" | "approved">,
+    ) => {
+      state.mapVariant = action.payload;
     },
   },
 });

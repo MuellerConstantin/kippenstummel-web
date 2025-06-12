@@ -377,6 +377,18 @@
     },
     "close": "Close"
   },
+  "FilterDialog": {
+    "title": "Filter",
+    "close": "Close",
+    "variant": {
+      "label": "Variant",
+      "options": {
+        "all": "All",
+        "approved": "Verified",
+        "trusted": "Trustworthy"
+      }
+    }
+  },
   "IdentityDialog": {
     "title": "Identity",
     "uniqueId": "Unique ID",

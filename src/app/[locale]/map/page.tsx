@@ -33,7 +33,7 @@ export default function Map() {
     { shouldRetryOnError: false, revalidateOnFocus: false },
   );
 
-  const onReport = useCallback(
+  const onRegister = useCallback(
     async (position: Leaflet.LatLng) => {
       try {
         await api.post("/cvms", {
@@ -180,7 +180,7 @@ export default function Map() {
   return (
     <div className="flex h-0 grow flex-col">
       <CvmOptInMap
-        onReport={onReport}
+        onRegister={onRegister}
         onUpvote={onUpvote}
         onDownvote={onDownvote}
         selectedCvm={data}

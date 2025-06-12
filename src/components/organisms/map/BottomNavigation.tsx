@@ -12,11 +12,11 @@ interface BottomNavigationProps {
   map: Leaflet.Map;
   onRegister?: (position: Leaflet.LatLng) => void;
   onHelp?: () => void;
-  onSettings?: () => void;
+  onFilter?: () => void;
 }
 
 export function BottomNavigation(props: BottomNavigationProps) {
-  const { map, onRegister, onHelp, onSettings } = props;
+  const { map, onRegister, onHelp, onFilter } = props;
   const locate = useLocate(map);
 
   const [registeringCvm, setRegisteringCvm] = useState<boolean>(false);
@@ -56,7 +56,7 @@ export function BottomNavigation(props: BottomNavigationProps) {
         </div>
         <button
           type="button"
-          onClick={() => onSettings?.()}
+          onClick={() => onFilter?.()}
           className="group inline-flex cursor-pointer flex-col items-center justify-center rounded-r-md px-5 hover:bg-slate-50 dark:hover:bg-slate-800"
         >
           <SlidersVertical className="h-6 w-6" />

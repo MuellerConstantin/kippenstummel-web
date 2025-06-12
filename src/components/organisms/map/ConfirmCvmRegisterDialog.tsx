@@ -6,11 +6,11 @@ import { Dialog } from "@/components/atoms/Dialog";
 import { Button } from "@/components/atoms/Button";
 import { Link } from "@/components/atoms/Link";
 
-interface ConfirmCvmReportDialogProps extends Omit<DialogProps, "children"> {
+interface ConfirmCvmRegisterDialogProps extends Omit<DialogProps, "children"> {
   onConfirm?: () => void;
 }
 
-export function ConfirmCvmReportDialog(props: ConfirmCvmReportDialogProps) {
+export function ConfirmCvmRegisterDialog(props: ConfirmCvmRegisterDialogProps) {
   const t = useTranslations("ConfirmCvmReportDialog");
 
   return (

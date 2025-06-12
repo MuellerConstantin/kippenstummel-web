@@ -14,13 +14,14 @@ import { Modal } from "@/components/atoms/Modal";
 import { LocateControlPlugin } from "./LocateControl";
 import { HelpDialog } from "./HelpDialog";
 import { useNotifications } from "@/contexts/NotificationProvider";
-import { ConfirmCvmReportDialog } from "./ConfirmCvmReportDialog";
+import { ConfirmCvmRegisterDialog } from "./ConfirmCvmRegisterDialog";
 import { useAppDispatch, useAppSelector } from "@/store";
 import locationSlice from "@/store/slices/location";
 import { BottomNavigation } from "./BottomNavigation";
+import { FilterDialog } from "./FilterDialog";
 
 export interface CvmMapProps {
-  onReport?: (position: Leaflet.LatLng) => void;
+  onRegister?: (position: Leaflet.LatLng) => void;
   onUpvote?: (id: string, position: Leaflet.LatLng) => void;
   onDownvote?: (id: string, position: Leaflet.LatLng) => void;
   selectedCvm?: {
@@ -37,11 +38,15 @@ export function CvmMap(props: CvmMapProps) {
   const dispatch = useAppDispatch();
   const { enqueue } = useNotifications();
 
-  const [showReportConfirmDialog, setShowReportConfirmDialog] = useState(false);
+  const location = useAppSelector((state) => state.location.location);
+  const mapVariant = useAppSelector((state) => state.usability.mapVariant);
+
+  const [showRegisterConfirmDialog, setShowRegisterConfirmDialog] =
+    useState(false);
   const [showHelpDialog, setShowHelpDialog] = useState(false);
+  const [showFilterDialog, setShowFilterDialog] = useState(false);
 
   const [map, setMap] = useState<Leaflet.Map | null>(null);
-  const location = useAppSelector((state) => state.location.location);
   const [zoom, setZoom] = useState<number>();
   const [bottomLeft, setBottomLeft] = useState<[number, number]>();
   const [topRight, setTopRight] = useState<[number, number]>();
@@ -151,8 +156,8 @@ export function CvmMap(props: CvmMapProps) {
     unknown,
     string | null
   >(
-    !!bottomLeft && !!topRight && !!zoom
-      ? `/cvms?bottomLeft=${bottomLeft?.[0]},${bottomLeft?.[1]}&topRight=${topRight?.[0]},${topRight?.[1]}&zoom=${zoom}`
+    !!bottomLeft && !!topRight && !!zoom && !!mapVariant
+      ? `/cvms?bottomLeft=${bottomLeft?.[0]},${bottomLeft?.[1]}&topRight=${topRight?.[0]},${topRight?.[1]}&zoom=${zoom}&variant=${mapVariant}`
       : null,
     (url) => api.get(url).then((res) => res.data),
     { keepPreviousData: true },
@@ -185,9 +190,13 @@ export function CvmMap(props: CvmMapProps) {
     setShowHelpDialog(true);
   }, [setShowHelpDialog]);
 
-  const onReport = useCallback(() => {
-    setShowReportConfirmDialog(true);
-  }, [setShowReportConfirmDialog]);
+  const onFilter = useCallback(() => {
+    setShowFilterDialog(true);
+  }, [setShowFilterDialog]);
+
+  const onRegister = useCallback(() => {
+    setShowRegisterConfirmDialog(true);
+  }, [setShowRegisterConfirmDialog]);
 
   useEffect(() => {
     if (props.selectedCvm) {
@@ -219,13 +228,23 @@ export function CvmMap(props: CvmMapProps) {
         </Modal>
       </DialogTrigger>
       <DialogTrigger
-        isOpen={showReportConfirmDialog}
-        onOpenChange={setShowReportConfirmDialog}
+        isOpen={showFilterDialog}
+        onOpenChange={setShowFilterDialog}
       >
         <Modal>
-          <ConfirmCvmReportDialog
+          <FilterDialog />
+        </Modal>
+      </DialogTrigger>
+      <DialogTrigger
+        isOpen={showRegisterConfirmDialog}
+        onOpenChange={setShowRegisterConfirmDialog}
+      >
+        <Modal>
+          <ConfirmCvmRegisterDialog
             onConfirm={() =>
-              props.onReport?.(new Leaflet.LatLng(location!.lat, location!.lng))
+              props.onRegister?.(
+                new Leaflet.LatLng(location!.lat, location!.lng),
+              )
             }
           />
         </Modal>
@@ -253,7 +272,12 @@ export function CvmMap(props: CvmMapProps) {
         />
       ))}
       {location && <LocateMarker position={[location.lat, location.lng]} />}
-      <BottomNavigation map={map!} onHelp={onHelp} onRegister={onReport} />
+      <BottomNavigation
+        map={map!}
+        onHelp={onHelp}
+        onFilter={onFilter}
+        onRegister={onRegister}
+      />
     </LeafletMap>
   );
 }
