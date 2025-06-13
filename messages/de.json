@@ -358,6 +358,9 @@
       "description": "Der geteilte Automat konnte nicht gefunden werden."
     }
   },
+  "Validation": {
+    "required": "Dieses Feld ist erforderlich."
+  },
   "HelpDialog": {
     "title": "Hilfe",
     "headlines": {
@@ -391,8 +394,19 @@
   },
   "IdentityDialog": {
     "title": "Identität",
-    "uniqueId": "Eindeutige ID",
-    "info": "Hierbei handelt es sich um deine persönliche Identität, welche der Authentifzierung dient und mit all deinen Interaktionen verknüpft wird. Behandle sie vertraulich. Für weitere Informationen siehe unsere <link1>Nutzungsbedingungen</link1> und die <link2>Datenschutzerklärung</link2>.",
-    "close": "Schließen"
+    "uniqueId": "Öffentliche ID",
+    "close": "Schließen",
+    "transfer": {
+      "spoiler": "Identität übertragen",
+      "description": "Deine Identität ist gerätegebunden. Um dieselbe Identität auf mehreren Geräten oder bei einem Gerätewechsel weiter nutzen zu können, besteht die Möglichkeit deine Identität zu übertragen. Die Übertragung und Mehrfachnutzug muss unter Einhaltung unserer <link>Nutzungsbedingungen</link> erfolgen.",
+      "form": {
+        "description": "Deine Identität wird verschlüsselt übertragen. Hierfür muss ein Transportpasswort gewählt werden, welches auf dem Zielgerät erneut eingegeben werden muss.",
+        "transportPassword": "Transportpasswort",
+        "error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
+        "submit": "Jetzt übertragen"
+      },
+      "share": "Mit anderen Geräten teilen",
+      "disclaimer": "Hierbei handelt es sich um deine persönliche Identität, welche der Authentifzierung dient und mit all deinen Interaktionen verknüpft wird. Behandle sie vertraulich und gebe sie nicht an Dritte weiter."
+    }
   }
 }

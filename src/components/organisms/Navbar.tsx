@@ -23,7 +23,7 @@ import { Popover } from "@/components/atoms/Popover";
 import { IdentIcon } from "@/components/atoms/IdentIcon";
 import { ListBox, ListBoxItem } from "@/components/atoms/ListBox";
 import { Modal } from "@/components/atoms/Modal";
-import { IdentityDialog } from "./IdentityDialog";
+import { IdentityDialog } from "./ident/IdentityDialog";
 import { useAppSelector, useAppDispatch } from "@/store";
 import usabilitySlice from "@/store/slices/usability";
 import { useRouter, usePathname } from "@/i18n/navigation";
