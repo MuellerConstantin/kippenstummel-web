@@ -43,8 +43,8 @@ export default function Map() {
       } catch {
         enqueue(
           {
-            title: t("Notifications.cvmReportedFailed.title"),
-            description: t("Notifications.cvmReportedFailed.description"),
+            title: t("Notifications.cvmRegisterFailed.title"),
+            description: t("Notifications.cvmRegisterFailed.description"),
             variant: "error",
           },
           { timeout: 5000 },
@@ -54,8 +54,8 @@ export default function Map() {
 
       enqueue(
         {
-          title: t("Notifications.cvmReported.title"),
-          description: t("Notifications.cvmReported.description"),
+          title: t("Notifications.cvmRegistered.title"),
+          description: t("Notifications.cvmRegistered.description"),
           variant: "success",
         },
         { timeout: 5000 },

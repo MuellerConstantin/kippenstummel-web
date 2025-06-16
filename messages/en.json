@@ -311,11 +311,11 @@
     "openInGoogleMaps": "Open in Google Maps"
   },
   "Notifications": {
-    "cvmReported": {
+    "cvmRegistered": {
       "title": "Reported",
       "description": "Your report has been sent. Thanks for your help!"
     },
-    "cvmReportFailed": {
+    "cvmRegisterFailed": {
       "title": "Report Failed",
       "description": "There was an error submitting your report."
     },
