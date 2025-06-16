@@ -256,6 +256,22 @@
     "description": "Sorry, we can't find that page. You'll find lots to explore on the home page.",
     "backToHomepage": "Back to home"
   },
+  "TransferPage": {
+    "meta": {
+      "title": "Kippenstummel | Transfer identity",
+      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+    },
+    "headline": "Transfer identity",
+    "descriptionEmpty": "You are about to transfer an identity to this device. If you want to cancel the process, click <link>here</link>. Do you want to continue?<br></br><br></br>For your security, the information being transmitted has been encrypted. You will need the transport password to complete the transfer.",
+    "descriptionExisting": "You are about to transfer an identity to this device. If you want to cancel the process, click <link>here</link>. <highlight>Warning:</highlight> An identity is already stored on this device. Do you want to overwrite the existing identity and proceed irrevocably?<br></br><br></br>For your security, the information being transmitted has been encrypted. You will need the transport password to complete the transfer.",
+    "form": {
+      "transportPassword": "Transport password",
+      "submit": "Transfer now",
+      "cancel": "Cancel"
+    },
+    "error": "An unexpected error occurred. Please try again.",
+    "wrongPassword": "The transport password you entered is incorrect. Please try again."
+  },
   "Navbar": {
     "home": "Home",
     "map": "Map",
@@ -341,9 +357,13 @@
         "description": "Your location couldn't be determined. Please try again later or check your connection."
       },
       "default": {
-        "title": "Standortbestimmung fehlgeschlagen",
-        "description": "Es gab einen Fehler beim Bestimmen deines Standorts."
+        "title": "Location determination failed",
+        "description": "There was an error determining your location."
       }
+    },
+    "identityTransfered": {
+      "title": "Identity transfered",
+      "description": "Your identity has been transferred successfully."
     },
     "cvmOutOfReach": {
       "title": "Interaction not possible",

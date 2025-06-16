@@ -69,7 +69,7 @@ function TransferIdentitySection() {
   const [error, setError] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
-  const onTransport = useCallback(
+  const onTransfer = useCallback(
     async ({ password }: { password: string }) => {
       setIsLoading(true);
       setError(null);
@@ -110,7 +110,7 @@ function TransferIdentitySection() {
             <Formik<{ password: string }>
               initialValues={{ password: "" }}
               validationSchema={schema}
-              onSubmit={(values) => onTransport(values)}
+              onSubmit={(values) => onTransfer(values)}
             >
               {(props) => (
                 <Form onSubmit={props.handleSubmit} validationBehavior="aria">

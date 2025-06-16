@@ -256,6 +256,22 @@
     "description": "Die Seite, die du suchst, konnte nicht gefunden werden.",
     "backToHomepage": "Zurück zur Startseite"
   },
+  "TransferPage": {
+    "meta": {
+      "title": "Kippenstummel | Identität übertragen",
+      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+    },
+    "headline": "Identität übertragen",
+    "descriptionEmpty": "Du bist im Begriff eine Identität auf dieses Gerät zu übertragen. Falls du den Vorgang abbrechen willst, klicke <link>hier</link>. Möchtest du fortfahren?<br></br><br></br>Zu deiner Sicherheit wurden die zu übertragenden Informationen verschlüsselt. Du benötigst das Transportpasswort um die Übertragung abzuschließen.",
+    "descriptionExisting": "Du bist im Begriff eine Identität auf dieses Gerät zu übertragen. Falls du den Vorgang abbrechen willst, klicke <link>hier</link>. <highlight>Achtung:</highlight> Auf diesem Gerät ist bereits eine Identität hinterlegt. Möchtest du die existierende Identität überschreiben und unwiderruflich fortfahren?<br></br><br></br>Zu deiner Sicherheit wurden die zu übertragenden Informationen verschlüsselt. Du benötigst das Transportpasswort um die Übertragung abzuschließen.",
+    "form": {
+      "transportPassword": "Transportpasswort",
+      "submit": "Jetzt übertragen",
+      "cancel": "Abbrechen"
+    },
+    "error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
+    "wrongPassword": "Das Transportpasswort ist falsch. Bitte versuche es erneut."
+  },
   "Navbar": {
     "home": "Startseite",
     "map": "Karte",
@@ -344,6 +360,10 @@
         "title": "Standortbestimmung fehlgeschlagen",
         "description": "Es gab einen Fehler beim Bestimmen deines Standorts."
       }
+    },
+    "identityTransfered": {
+      "title": "Identität übertragen",
+      "description": "Deine Identität wurde erfolgreich übertragen."
     },
     "cvmOutOfReach": {
       "title": "Interaktion nicht möglich",

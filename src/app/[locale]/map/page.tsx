@@ -89,8 +89,6 @@ export default function Map() {
           }
         }
 
-        console.error(err);
-
         enqueue(
           {
             title: t("Notifications.cvmVoteFailed.title"),
