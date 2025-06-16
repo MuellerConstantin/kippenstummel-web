@@ -14,7 +14,7 @@ function formatNumberShort(n: number): string {
 
 interface ClusterMarkerProps {
   count: number;
-  position: [number, number];
+  position: Leaflet.LatLng;
 }
 
 export function ClusterMarker(props: ClusterMarkerProps) {
@@ -56,7 +56,7 @@ export function ClusterMarker(props: ClusterMarkerProps) {
 
   return (
     <Marker
-      position={Leaflet.latLng(props.position[0], props.position[1])}
+      position={Leaflet.latLng(props.position)}
       icon={LeafletDivIcon({
         source: (
           <div

@@ -3,13 +3,13 @@ import { Marker } from "react-leaflet";
 import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
 
 interface LocateMarkerProps {
-  position: [number, number];
+  position: Leaflet.LatLng;
 }
 
 export function LocateMarker(props: LocateMarkerProps) {
   return (
     <Marker
-      position={Leaflet.latLng(props.position[0], props.position[1])}
+      position={Leaflet.latLng(props.position.lat, props.position.lng)}
       icon={LeafletDivIcon({
         source: (
           <div className="relative !z-[2000] flex h-[20px] w-[20px]">
@@ -17,7 +17,8 @@ export function LocateMarker(props: LocateMarkerProps) {
             <div className="relative inline-flex h-full w-full rounded-full border-2 border-white bg-blue-500" />
           </div>
         ),
-        anchor: Leaflet.point(20, 20),
+        size: Leaflet.point(20, 20),
+        anchor: Leaflet.point(10, 10),
         className: "!z-[2000]",
       })}
     />

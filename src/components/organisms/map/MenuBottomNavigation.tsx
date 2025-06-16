@@ -8,14 +8,14 @@ import {
 import Leaflet from "leaflet";
 import useLocate from "@/hooks/useLocate";
 
-interface BottomNavigationProps {
+interface MenuBottomNavigationProps {
   map: Leaflet.Map;
   onRegister?: (position: Leaflet.LatLng) => void;
   onHelp?: () => void;
   onFilter?: () => void;
 }
 
-export function BottomNavigation(props: BottomNavigationProps) {
+export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
   const { map, onRegister, onHelp, onFilter } = props;
   const locate = useLocate(map);
 
@@ -24,7 +24,7 @@ export function BottomNavigation(props: BottomNavigationProps) {
   const onRegisterCvm = useCallback(() => {
     setRegisteringCvm(true);
 
-    locate({ setView: true, maxZoom: 15 })
+    locate({ setView: true, maxZoom: 18 })
       .then((position) => onRegister?.(position))
       .finally(() => {
         setRegisteringCvm(false);
@@ -48,7 +48,7 @@ export function BottomNavigation(props: BottomNavigationProps) {
             className="group inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-green-600 font-medium hover:bg-green-700 focus:ring-4 focus:ring-green-300 focus:outline-none dark:focus:ring-green-800"
           >
             {registeringCvm ? (
-              <LoaderCircle className="h-5 w-5 animate-spin" />
+              <LoaderCircle className="h-5 w-5 animate-spin text-white" />
             ) : (
               <MapPinPlus className="h-5 w-5 text-white" />
             )}

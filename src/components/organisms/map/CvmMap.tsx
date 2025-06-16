@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import useSWR from "swr";
 import Leaflet from "leaflet";
+import { Circle } from "react-leaflet";
 import { useTranslations } from "next-intl";
 import useApi from "@/hooks/useApi";
 import { DialogTrigger } from "react-aria-components";
@@ -14,11 +15,12 @@ import { Modal } from "@/components/atoms/Modal";
 import { LocateControlPlugin } from "./LocateControl";
 import { HelpDialog } from "./HelpDialog";
 import { useNotifications } from "@/contexts/NotificationProvider";
-import { ConfirmCvmRegisterDialog } from "./ConfirmCvmRegisterDialog";
 import { useAppDispatch, useAppSelector } from "@/store";
 import locationSlice from "@/store/slices/location";
-import { BottomNavigation } from "./BottomNavigation";
+import { MenuBottomNavigation } from "./MenuBottomNavigation";
 import { FilterDialog } from "./FilterDialog";
+import { RegisterLocationMarker } from "@/components/molecules/map/RegisterLocationMarker";
+import { ConfirmRegisterBottomNavigation } from "./ConfirmRegisterBottomNavigation";
 
 export interface CvmMapProps {
   onRegister?: (position: Leaflet.LatLng) => void;
@@ -41,10 +43,11 @@ export function CvmMap(props: CvmMapProps) {
   const location = useAppSelector((state) => state.location.location);
   const mapVariant = useAppSelector((state) => state.usability.mapVariant);
 
-  const [showRegisterConfirmDialog, setShowRegisterConfirmDialog] =
-    useState(false);
   const [showHelpDialog, setShowHelpDialog] = useState(false);
   const [showFilterDialog, setShowFilterDialog] = useState(false);
+
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [registerPosition, setRegisterPosition] = useState<Leaflet.LatLng>();
 
   const [map, setMap] = useState<Leaflet.Map | null>(null);
   const [zoom, setZoom] = useState<number>();
@@ -194,9 +197,13 @@ export function CvmMap(props: CvmMapProps) {
     setShowFilterDialog(true);
   }, [setShowFilterDialog]);
 
-  const onRegister = useCallback(() => {
-    setShowRegisterConfirmDialog(true);
-  }, [setShowRegisterConfirmDialog]);
+  const onRegister = useCallback(
+    (position: Leaflet.LatLng) => {
+      setIsRegistering(true);
+      setRegisterPosition(position);
+    },
+    [setIsRegistering, setRegisterPosition],
+  );
 
   useEffect(() => {
     if (props.selectedCvm) {
@@ -222,62 +229,82 @@ export function CvmMap(props: CvmMapProps) {
       onLocationError={onLocationError}
     >
       <LocateControlPlugin position="topleft" />
-      <DialogTrigger isOpen={showHelpDialog} onOpenChange={setShowHelpDialog}>
-        <Modal className="max-w-2xl">
-          <HelpDialog />
-        </Modal>
-      </DialogTrigger>
-      <DialogTrigger
-        isOpen={showFilterDialog}
-        onOpenChange={setShowFilterDialog}
-      >
-        <Modal>
-          <FilterDialog />
-        </Modal>
-      </DialogTrigger>
-      <DialogTrigger
-        isOpen={showRegisterConfirmDialog}
-        onOpenChange={setShowRegisterConfirmDialog}
-      >
-        <Modal>
-          <ConfirmCvmRegisterDialog
-            onConfirm={() =>
-              props.onRegister?.(
-                new Leaflet.LatLng(location!.lat, location!.lng),
-              )
-            }
+      {isRegistering ? (
+        <>
+          <RegisterLocationMarker
+            reference={{
+              position: [location!.lat, location!.lng],
+              maxDistance: 25,
+            }}
+            position={[registerPosition!.lat, registerPosition!.lng]}
+            onAdapt={setRegisterPosition}
           />
-        </Modal>
-      </DialogTrigger>
-      {markers?.map((marker) => (
-        <LocationMarker
-          key={marker.id}
-          id={marker.id}
-          position={[marker.latitude, marker.longitude]}
-          score={marker.score}
-          onUpvote={(voterPosition) =>
-            props.onUpvote?.(marker.id, voterPosition)
-          }
-          onDownvote={(voterPosition) =>
-            props.onDownvote?.(marker.id, voterPosition)
-          }
-          selected={marker.id === props.selectedCvm?.id}
+          <Circle
+            radius={25}
+            center={[location!.lat, location!.lng]}
+            pathOptions={{ color: "#16a34a", fillColor: "#16a34a" }}
+          />
+          <ConfirmRegisterBottomNavigation
+            onCancel={() => setIsRegistering(false)}
+            onConfirm={() => {
+              props.onRegister?.(registerPosition!);
+              setIsRegistering(false);
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <DialogTrigger
+            isOpen={showHelpDialog}
+            onOpenChange={setShowHelpDialog}
+          >
+            <Modal className="max-w-2xl">
+              <HelpDialog />
+            </Modal>
+          </DialogTrigger>
+          <DialogTrigger
+            isOpen={showFilterDialog}
+            onOpenChange={setShowFilterDialog}
+          >
+            <Modal>
+              <FilterDialog />
+            </Modal>
+          </DialogTrigger>
+          {markers?.map((marker) => (
+            <LocationMarker
+              key={marker.id}
+              id={marker.id}
+              position={new Leaflet.LatLng(marker.latitude, marker.longitude)}
+              score={marker.score}
+              onUpvote={(voterPosition) =>
+                props.onUpvote?.(marker.id, voterPosition)
+              }
+              onDownvote={(voterPosition) =>
+                props.onDownvote?.(marker.id, voterPosition)
+              }
+              selected={marker.id === props.selectedCvm?.id}
+            />
+          ))}
+          {clusters?.map((marker, index) => (
+            <ClusterMarker
+              key={index}
+              position={new Leaflet.LatLng(marker.latitude, marker.longitude)}
+              count={marker.count}
+            />
+          ))}
+          <MenuBottomNavigation
+            map={map!}
+            onHelp={onHelp}
+            onFilter={onFilter}
+            onRegister={onRegister}
+          />
+        </>
+      )}
+      {location && (
+        <LocateMarker
+          position={new Leaflet.LatLng(location.lat, location.lng)}
         />
-      ))}
-      {clusters?.map((marker, index) => (
-        <ClusterMarker
-          key={index}
-          position={[marker.latitude, marker.longitude]}
-          count={marker.count}
-        />
-      ))}
-      {location && <LocateMarker position={[location.lat, location.lng]} />}
-      <BottomNavigation
-        map={map!}
-        onHelp={onHelp}
-        onFilter={onFilter}
-        onRegister={onRegister}
-      />
+      )}
     </LeafletMap>
   );
 }

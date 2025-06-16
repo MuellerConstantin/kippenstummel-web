@@ -53,7 +53,7 @@ function CopyButton(props: CopyButtonProps) {
 
 interface LocationMarkerDialogProps {
   id: string;
-  position: [number, number];
+  position: Leaflet.LatLng;
   score: number;
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
   onDownvote?: (voterPosition: Leaflet.LatLng) => void;
@@ -154,8 +154,8 @@ function LocationMarkerDialog(props: LocationMarkerDialogProps) {
                 <div className="space-y-1">
                   <div className="text-sm font-semibold">{t("location")}</div>
                   <div className="text-xs">
-                    {props.position[0].toFixed(7)} /{" "}
-                    {props.position[1].toFixed(7)} (lat/lng)
+                    {props.position.lat.toFixed(7)} /{" "}
+                    {props.position.lng.toFixed(7)} (lat/lng)
                   </div>
                 </div>
                 <div className="flex flex-col gap-1">
@@ -172,7 +172,7 @@ function LocationMarkerDialog(props: LocationMarkerDialogProps) {
                     />
                   </div>
                   <Link
-                    href={`https://www.google.com.sa/maps/search/${props.position[0]},${props.position[1]}`}
+                    href={`https://www.google.com.sa/maps/search/${props.position.lat},${props.position.lng}`}
                     target="_blank"
                     className="block text-sm"
                   >
@@ -190,7 +190,7 @@ function LocationMarkerDialog(props: LocationMarkerDialogProps) {
 
 interface LocationMarkerPopupProps {
   id: string;
-  position: [number, number];
+  position: Leaflet.LatLng;
   score: number;
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
   onDownvote?: (voterPosition: Leaflet.LatLng) => void;
@@ -284,7 +284,7 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
         <div className="grow space-y-1">
           <div className="text-sm font-semibold">{t("location")}</div>
           <div className="text-xs">
-            {props.position[0].toFixed(7)} / {props.position[1].toFixed(7)}{" "}
+            {props.position.lat.toFixed(7)} / {props.position.lng.toFixed(7)}{" "}
             (lat/lng)
           </div>
           <div className="flex w-full flex-col gap-1">
@@ -301,7 +301,7 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
               />
             </div>
             <Link
-              href={`https://www.google.com.sa/maps/search/${props.position[0]},${props.position[1]}`}
+              href={`https://www.google.com.sa/maps/search/${props.position.lat},${props.position.lng}`}
               target="_blank"
               className="block text-sm"
             >
@@ -316,7 +316,7 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
 
 interface LocationMarkerProps {
   id: string;
-  position: [number, number];
+  position: Leaflet.LatLng;
   score: number;
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
   onDownvote?: (voterPosition: Leaflet.LatLng) => void;
@@ -330,7 +330,7 @@ export function LocationMarker(props: LocationMarkerProps) {
   return (
     <>
       <Marker
-        position={Leaflet.latLng(props.position[0], props.position[1])}
+        position={props.position}
         icon={LeafletDivIcon({
           source: (
             <div
