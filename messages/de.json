@@ -305,7 +305,8 @@
     "confirm": "Bestätigen",
     "cancel": "Abbrechen",
     "disclaimer": "Durch die Bestätigung akzeptierst du unsere <tos>Nutzungsbedingungen</tos> und unsere <pp>Datenschutzerklärung</pp>.",
-    "error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut."
+    "error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
+    "wrongSolution": "Das CAPTCHA, das du eingegeben hast, ist falsch. Bitte versuche es erneut."
   },
   "ConfirmCvmReportDialog": {
     "title": "Zigarettenautomat melden",

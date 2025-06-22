@@ -305,7 +305,8 @@
     "confirm": "Confirm",
     "cancel": "Cancel",
     "disclaimer": "By confirming, you agree to our <tos>Terms of Service</tos> and <pp>Privacy Policy</pp>.",
-    "error": "Unexpected error occurred. Please try again."
+    "error": "Unexpected error occurred. Please try again.",
+    "wrongSolution": "The CAPTCHA you entered is incorrect. Please try again."
   },
   "ConfirmCvmReportDialog": {
     "title": "Report Cigarette Vending Machine",

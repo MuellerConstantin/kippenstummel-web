@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { DialogProps, Heading } from "react-aria-components";
 import { chain } from "react-aria";
 import { Dialog } from "@/components/atoms/Dialog";
@@ -29,13 +29,12 @@ export function RequestIdentDialog(props: RequestIdentDialogProps) {
   const [captcha, setCaptcha] = useState<
     { id: string; content: string } | undefined
   >(undefined);
-  const [pow, setPow] = useState<string | undefined>();
 
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [captchaSolution, setCaptchaSolution] = useState<string>("");
 
-  const fetchCaptchaAndPow = useCallback(async () => {
+  const fetchCaptcha = useCallback(async () => {
     setError(null);
     setLoading(true);
 
@@ -45,10 +44,7 @@ export function RequestIdentDialog(props: RequestIdentDialogProps) {
         AxiosResponse<{ id: string; content: string }>
       >("/captcha");
 
-      const powRes = await api.get("/pow");
-
       setCaptcha(captchaRes.data);
-      setPow(powRes.headers["x-pow"]);
     } catch {
       setError(t("error"));
     } finally {
@@ -62,7 +58,10 @@ export function RequestIdentDialog(props: RequestIdentDialogProps) {
       setSubmitting(true);
 
       try {
-        const powSolution = await solveChallenge(pow!);
+        const powRes = await api.get("/pow");
+        const pow = powRes.headers["x-pow"];
+
+        const powSolution = await solveChallenge(pow);
 
         const identityRes = await api.get<{ identity: string; secret: string }>(
           "/ident",
@@ -92,19 +91,31 @@ export function RequestIdentDialog(props: RequestIdentDialogProps) {
         dispatch(identSlice.actions.setToken(tokenRes.data.token));
 
         chain(close, props.onConfirm)();
-      } catch {
-        setSubmitError(t("error"));
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          if (
+            err.response?.status === 403 &&
+            err.response.data.code === "INVALID_CAPTCHA_STAMP_ERROR"
+          ) {
+            setSubmitError(t("wrongSolution"));
+          } else {
+            setSubmitError(t("error"));
+          }
+        } else {
+          setSubmitError(t("error"));
+        }
+
         dispatch(identSlice.actions.clearIdentity());
       } finally {
         setSubmitting(false);
       }
     },
-    [captchaSolution, captcha, pow, t, api, dispatch, props.onConfirm],
+    [captchaSolution, captcha, t, api, dispatch, props.onConfirm],
   );
 
   useEffect(() => {
-    fetchCaptchaAndPow();
-  }, [fetchCaptchaAndPow]);
+    fetchCaptcha();
+  }, [fetchCaptcha]);
 
   return (
     <Dialog {...props}>
@@ -123,10 +134,10 @@ export function RequestIdentDialog(props: RequestIdentDialogProps) {
                 <div>
                   <Spinner size={32} />
                 </div>
-              ) : error || submitError ? (
+              ) : error ? (
                 <span className="text-red-500">{error || submitError}</span>
               ) : (
-                <>
+                <div className="flex w-full flex-col items-center gap-2">
                   {captcha && (
                     <div className="relative h-32 w-[80%]">
                       <Image
@@ -137,7 +148,10 @@ export function RequestIdentDialog(props: RequestIdentDialogProps) {
                       />
                     </div>
                   )}
-                </>
+                  {submitError && (
+                    <span className="text-red-500">{error || submitError}</span>
+                  )}
+                </div>
               )}
             </div>
             <div className="flex flex-col gap-4">
