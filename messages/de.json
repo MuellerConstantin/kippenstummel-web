@@ -417,6 +417,14 @@
     "title": "Identität",
     "uniqueId": "Öffentliche ID",
     "close": "Schließen",
+    "authentication": {
+      "spoiler": "Meine Anmeldeinformationen",
+      "description": "Deine Anmeldeinformationen bestehen aus einer öffentlichen ID (UUID) und einem geheimen Secret. Diese Daten werden lokal in deinem Browser gespeichert und ermöglichen die anonyme Nutzung der Anwendung. <b>Bitte beachte:</b> Das Secret ist vertraulich und darf nicht an Dritte weitergegeben werden, da damit auf deine Daten zugegriffen werden kann.",
+      "form": {
+        "id": "ID",
+        "secret": "Secret"
+      }
+    },
     "transfer": {
       "spoiler": "Identität übertragen",
       "description": "Deine Identität ist gerätegebunden. Um dieselbe Identität auf mehreren Geräten oder bei einem Gerätewechsel weiter nutzen zu können, besteht die Möglichkeit deine Identität zu übertragen. Die Übertragung und Mehrfachnutzug muss unter Einhaltung unserer <link>Nutzungsbedingungen</link> erfolgen.",

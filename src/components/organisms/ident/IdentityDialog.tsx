@@ -14,6 +14,8 @@ import {
   ChevronUp,
   Copy,
   TriangleAlert,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import { Link } from "@/components/atoms/Link";
 import { TextField } from "@/components/atoms/TextField";
@@ -24,6 +26,7 @@ import useApi from "@/hooks/useApi";
 
 interface CopyButtonProps {
   text: string;
+  className?: string;
   disabled?: boolean;
 }
 
@@ -40,15 +43,66 @@ function CopyButton(props: CopyButtonProps) {
   }, [props.text]);
 
   return (
-    <button
-      className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed"
-      disabled={props.disabled}
-      onClick={handleClick}
-    >
+    <Button variant="icon" onPress={handleClick} className={props.className}>
       <div className="transition-all duration-300 ease-in-out">
-        {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+        {copied ? <Check className="h-5 w-5" /> : <Copy className="h-4 w-4" />}
       </div>
-    </button>
+    </Button>
+  );
+}
+
+function MyAuthenticationDataSection() {
+  const t = useTranslations("IdentityDialog.authentication");
+
+  const [showSecret, setShowSecret] = useState(false);
+
+  const identity = useAppSelector((state) => state.ident.identity);
+  const secret = useAppSelector((state) => state.ident.secret);
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="text-sm">
+        {t.rich("description", {
+          b: (chunks) => <span className="font-semibold">{chunks}</span>,
+        })}
+      </div>
+      <div className="flex flex-col gap-2">
+        <div className="flex items-end gap-1">
+          <TextField
+            label={t("form.id")}
+            className="grow"
+            value={identity || ""}
+            isReadOnly
+          />
+          <CopyButton
+            text={identity || ""}
+            disabled={!identity}
+            className="h-9"
+          />
+        </div>
+        <div className="flex items-end gap-1">
+          <TextField
+            label={t("form.secret")}
+            className="grow"
+            value={secret || ""}
+            type={showSecret ? "text" : "password"}
+            isReadOnly
+          />
+          <Button
+            variant="icon"
+            className="h-9"
+            onPress={() => setShowSecret(!showSecret)}
+          >
+            {showSecret ? (
+              <EyeOff className="h-5 w-5" />
+            ) : (
+              <Eye className="h-5 w-5" />
+            )}
+          </Button>
+          <CopyButton text={secret || ""} disabled={!secret} className="h-9" />
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -180,7 +234,9 @@ export function IdentityDialog(props: IdentityDialogProps) {
 
   const identity = useAppSelector((state) => state.ident.identity);
 
-  const [showMore, setShowMore] = useState(false);
+  const [showTransferSection, setShowTransferSection] = useState(false);
+  const [showAuthenticationDataSection, setShowAuthenticationDataSection] =
+    useState(false);
 
   return (
     <Dialog {...props}>
@@ -205,10 +261,33 @@ export function IdentityDialog(props: IdentityDialogProps) {
             </div>
             <div className="flex w-full flex-col gap-3">
               <button
-                className="cursor-pointer text-sm text-green-600 hover:underline"
-                onClick={() => setShowMore(!showMore)}
+                className="w-fit cursor-pointer text-sm text-green-600 hover:underline"
+                onClick={() =>
+                  setShowAuthenticationDataSection(
+                    !showAuthenticationDataSection,
+                  )
+                }
               >
-                {showMore ? (
+                {showAuthenticationDataSection ? (
+                  <div className="flex items-center gap-1">
+                    {t("authentication.spoiler")}{" "}
+                    <ChevronUp className="h-4 w-4" />
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1">
+                    {t("authentication.spoiler")}{" "}
+                    <ChevronDown className="h-4 w-4" />
+                  </div>
+                )}
+              </button>
+              {showAuthenticationDataSection && <MyAuthenticationDataSection />}
+            </div>
+            <div className="flex w-full flex-col gap-3">
+              <button
+                className="w-fit cursor-pointer text-sm text-green-600 hover:underline"
+                onClick={() => setShowTransferSection(!showTransferSection)}
+              >
+                {showTransferSection ? (
                   <div className="flex items-center gap-1">
                     {t("transfer.spoiler")} <ChevronUp className="h-4 w-4" />
                   </div>
@@ -218,7 +297,7 @@ export function IdentityDialog(props: IdentityDialogProps) {
                   </div>
                 )}
               </button>
-              {showMore && <TransferIdentitySection />}
+              {showTransferSection && <TransferIdentitySection />}
             </div>
             <div className="flex w-full justify-start gap-4">
               <Button onPress={close} className="w-full">
