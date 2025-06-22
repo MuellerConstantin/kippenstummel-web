@@ -17,6 +17,7 @@ import { HelpDialog } from "./HelpDialog";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import { useAppDispatch, useAppSelector } from "@/store";
 import locationSlice from "@/store/slices/location";
+import usabilitySlice from "@/store/slices/usability";
 import { MenuBottomNavigation } from "./MenuBottomNavigation";
 import { FilterDialog } from "./FilterDialog";
 import { RegisterLocationMarker } from "@/components/molecules/map/RegisterLocationMarker";
@@ -42,6 +43,7 @@ export function CvmMap(props: CvmMapProps) {
 
   const location = useAppSelector((state) => state.location.location);
   const mapVariant = useAppSelector((state) => state.usability.mapVariant);
+  const mapView = useAppSelector((state) => state.usability.mapView);
 
   const [showHelpDialog, setShowHelpDialog] = useState(false);
   const [showFilterDialog, setShowFilterDialog] = useState(false);
@@ -64,23 +66,49 @@ export function CvmMap(props: CvmMapProps) {
     setMap(map);
   }, []);
 
-  const onZoomEnd = useCallback((event: Leaflet.LeafletEvent) => {
-    const map = event.target as Leaflet.Map;
-    const mapBounds = map.getBounds();
+  const onZoomEnd = useCallback(
+    (event: Leaflet.LeafletEvent) => {
+      const map = event.target as Leaflet.Map;
+      const mapBounds = map.getBounds();
 
-    setBottomLeft([mapBounds.getSouthWest().lat, mapBounds.getSouthWest().lng]);
-    setTopRight([mapBounds.getNorthEast().lat, mapBounds.getNorthEast().lng]);
-    setZoom(map.getZoom());
-  }, []);
+      setBottomLeft([
+        mapBounds.getSouthWest().lat,
+        mapBounds.getSouthWest().lng,
+      ]);
+      setTopRight([mapBounds.getNorthEast().lat, mapBounds.getNorthEast().lng]);
+      setZoom(map.getZoom());
 
-  const onMoveEnd = useCallback((event: Leaflet.LeafletEvent) => {
-    const map = event.target as Leaflet.Map;
-    const mapBounds = map.getBounds();
+      dispatch(
+        usabilitySlice.actions.setMapView({
+          center: [mapBounds.getCenter().lat, mapBounds.getCenter().lng],
+          zoom: map.getZoom(),
+        }),
+      );
+    },
+    [dispatch],
+  );
 
-    setBottomLeft([mapBounds.getSouthWest().lat, mapBounds.getSouthWest().lng]);
-    setTopRight([mapBounds.getNorthEast().lat, mapBounds.getNorthEast().lng]);
-    setZoom(map.getZoom());
-  }, []);
+  const onMoveEnd = useCallback(
+    (event: Leaflet.LeafletEvent) => {
+      const map = event.target as Leaflet.Map;
+      const mapBounds = map.getBounds();
+
+      setBottomLeft([
+        mapBounds.getSouthWest().lat,
+        mapBounds.getSouthWest().lng,
+      ]);
+      setTopRight([mapBounds.getNorthEast().lat, mapBounds.getNorthEast().lng]);
+      setZoom(map.getZoom());
+
+      dispatch(
+        usabilitySlice.actions.setMapView({
+          center: [mapBounds.getCenter().lat, mapBounds.getCenter().lng],
+          zoom: map.getZoom(),
+        }),
+      );
+    },
+    [dispatch],
+  );
 
   const onLocationFound = useCallback(
     (event: Leaflet.LeafletEvent) => {
@@ -214,12 +242,16 @@ export function CvmMap(props: CvmMapProps) {
     }
   }, [props.selectedCvm, map]);
 
+  if (!mapView) {
+    return null;
+  }
+
   return (
     <LeafletMap
       tileLayerUrl="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       tileLayerAttribution='&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      center={[49.006889, 8.403653]}
-      zoom={14}
+      center={mapView.center}
+      zoom={mapView.zoom}
       minZoom={12}
       maxZoom={18}
       onReady={onReady}
