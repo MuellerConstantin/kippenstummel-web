@@ -174,7 +174,7 @@ export default function Map() {
   }, [error, enqueue, t]);
 
   return (
-    <div className="flex h-0 grow flex-col">
+    <div className="flex grow flex-col">
       <CvmOptInMap
         onRegister={onRegister}
         onUpvote={onUpvote}

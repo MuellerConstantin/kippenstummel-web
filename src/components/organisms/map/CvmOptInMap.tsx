@@ -31,10 +31,10 @@ export function CvmOptInMap(props: CvmOptInMap) {
 
   if (!mapOptInAllowed) {
     return (
-      <div className="relative h-full w-full overflow-hidden">
+      <div className="relative flex h-full grow overflow-auto py-12">
         <div className="absolute inset-0 z-0 bg-[url(/images/preview.png)] bg-cover" />
         <div className="absolute inset-0 z-10 bg-white/30 backdrop-blur-sm" />
-        <div className="relative z-20 flex h-full flex-col items-center justify-center gap-12 lg:flex-row">
+        <div className="relative z-20 flex grow flex-col items-center justify-center gap-12 lg:flex-row">
           <div className="flex flex-col items-center justify-center gap-4 p-4">
             <div className="max-w-sm text-center text-slate-500">
               {t.rich("title", {
@@ -54,5 +54,9 @@ export function CvmOptInMap(props: CvmOptInMap) {
     );
   }
 
-  return <CvmMap {...props} />;
+  return (
+    <div className="relative flex h-0 grow flex-col overflow-auto">
+      <CvmMap {...props} />
+    </div>
+  );
 }
