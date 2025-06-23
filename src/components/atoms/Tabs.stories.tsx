@@ -3,6 +3,7 @@ import React from "react";
 import { Tab, TabList, TabPanel, Tabs } from "./Tabs";
 
 const meta: Meta<typeof Tabs> = {
+  title: "Atoms/Tabs",
   component: Tabs,
   parameters: {
     layout: "centered",

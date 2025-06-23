@@ -428,6 +428,13 @@
       "form": {
         "id": "ID",
         "secret": "Secret"
+      },
+      "reset": {
+        "spoiler": "Anmeldeinformationen zurücksetzen",
+        "description": "Hier kannst du deine Anmeldeinformationen zurücksetzen. Deine Anmeldedaten werden unwiderruflich von deinem Gerät bzw. Browser entfernt. Solltest du deine Identität zuvor nicht auf ein anderes Gerät übertragen haben, geht dein Zugriff auf deine Identität unwiderruflich verloren.",
+        "disclaimer": "Diese Option löscht deine Identität nicht vollständig sondern entzieht diesem Gerät lediglich den Zugriff. Deine Identität bleibt gemäß der <link1>Nutzungsbedingungen</link1> und <link2>Datenschutzerklärung</link2> weiter bestehen. Für eine vollständige Löschung im Sinne des Art. 17 DSGVO, wende dich bitte an den Support und setze deine Anmeldeinformationen <b>keinesfalls</b> zurück.",
+        "confirm": "Ich habe den Hinweis gelesen und verstanden.",
+        "submit": "Jetzt zurücksetzen"
       }
     },
     "transfer": {

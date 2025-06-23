@@ -429,6 +429,13 @@
       "form": {
         "id": "ID",
         "secret": "Secret"
+      },
+      "reset": {
+        "spoiler": "Reset authentication credentials",
+        "description": "Here you can reset your login information. Your login data will be irrevocably removed from your device or browser. If you have not previously transferred your identity to another device, your access to your identity will be irrevocably lost.",
+        "disclaimer": "This option does not completely delete your identity, but merely revokes access from this device. Your identity will remain in place in accordance with the <link1>Terms of Use</link1> and <link2>Privacy Policy</link2>. For complete deletion within the meaning of Art. 17 GDPR, please contact support and <b>do not</b> reset your login information under any circumstances.",
+        "confirm": "I have read and understood the notice.",
+        "submit": "Reset now"
       }
     },
     "transfer": {

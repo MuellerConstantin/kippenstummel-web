@@ -7,8 +7,17 @@ import QRCode from "react-qr-code";
 import { Dialog } from "@/components/atoms/Dialog";
 import { Button } from "@/components/atoms/Button";
 import { IdentIcon } from "@/components/atoms/IdentIcon";
-import { useAppSelector } from "@/store";
-import { Check, Copy, TriangleAlert, Eye, EyeOff } from "lucide-react";
+import { Checkbox } from "@/components/atoms/Checkbox";
+import { useAppDispatch, useAppSelector } from "@/store";
+import {
+  Check,
+  Copy,
+  TriangleAlert,
+  Eye,
+  EyeOff,
+  ChevronUp,
+  ChevronDown,
+} from "lucide-react";
 import { Link } from "@/components/atoms/Link";
 import { TextField } from "@/components/atoms/TextField";
 import { Form } from "@/components/atoms/Form";
@@ -16,6 +25,7 @@ import { Spinner } from "@/components/atoms/Spinner";
 import { encryptWithPassword } from "@/lib";
 import useApi from "@/hooks/useApi";
 import { Tab, TabList, TabPanel, Tabs } from "@/components/atoms/Tabs";
+import identSlice from "@/store/slices/ident";
 
 interface CopyButtonProps {
   text: string;
@@ -44,56 +54,129 @@ function CopyButton(props: CopyButtonProps) {
   );
 }
 
-function MyAuthenticationDataSection() {
+interface MyAuthenticationDataSectionProps {
+  close: () => void;
+}
+
+function MyAuthenticationDataSection(props: MyAuthenticationDataSectionProps) {
+  const { close } = props;
+
   const t = useTranslations("IdentityDialog.authentication");
+  const dispatch = useAppDispatch();
 
   const [showSecret, setShowSecret] = useState(false);
+  const [showResetSection, setShowResetSection] = useState(false);
+  const [resetConfirmed, setResetConfirmed] = useState(false);
 
   const identity = useAppSelector((state) => state.ident.identity);
   const secret = useAppSelector((state) => state.ident.secret);
 
+  const onReset = useCallback(() => {
+    dispatch(identSlice.actions.clearIdentity());
+    close();
+  }, [dispatch, close]);
+
   return (
     <div className="flex flex-col gap-4">
-      <div className="text-sm">
-        {t.rich("description", {
-          b: (chunks) => <span className="font-semibold">{chunks}</span>,
-        })}
+      <div className="flex flex-col gap-4">
+        <div className="text-sm">
+          {t.rich("description", {
+            b: (chunks) => <span className="font-semibold">{chunks}</span>,
+          })}
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-end gap-1">
+            <TextField
+              label={t("form.id")}
+              className="grow"
+              value={identity || ""}
+              isReadOnly
+            />
+            <CopyButton
+              text={identity || ""}
+              disabled={!identity}
+              className="h-9"
+            />
+          </div>
+          <div className="flex items-end gap-1">
+            <TextField
+              label={t("form.secret")}
+              className="grow"
+              value={secret || ""}
+              type={showSecret ? "text" : "password"}
+              isReadOnly
+            />
+            <Button
+              variant="icon"
+              className="h-9"
+              onPress={() => setShowSecret(!showSecret)}
+            >
+              {showSecret ? (
+                <EyeOff className="h-5 w-5" />
+              ) : (
+                <Eye className="h-5 w-5" />
+              )}
+            </Button>
+            <CopyButton
+              text={secret || ""}
+              disabled={!secret}
+              className="h-9"
+            />
+          </div>
+        </div>
       </div>
-      <div className="flex flex-col gap-2">
-        <div className="flex items-end gap-1">
-          <TextField
-            label={t("form.id")}
-            className="grow"
-            value={identity || ""}
-            isReadOnly
-          />
-          <CopyButton
-            text={identity || ""}
-            disabled={!identity}
-            className="h-9"
-          />
-        </div>
-        <div className="flex items-end gap-1">
-          <TextField
-            label={t("form.secret")}
-            className="grow"
-            value={secret || ""}
-            type={showSecret ? "text" : "password"}
-            isReadOnly
-          />
-          <Button
-            variant="icon"
-            className="h-9"
-            onPress={() => setShowSecret(!showSecret)}
-          >
-            {showSecret ? (
-              <EyeOff className="h-5 w-5" />
-            ) : (
-              <Eye className="h-5 w-5" />
-            )}
-          </Button>
-          <CopyButton text={secret || ""} disabled={!secret} className="h-9" />
-        </div>
+      <div className="flex w-full flex-col gap-3">
+        <button
+          className="w-fit cursor-pointer text-sm text-red-500 hover:underline"
+          onClick={() => setShowResetSection(!showResetSection)}
+        >
+          {showResetSection ? (
+            <div className="flex items-center gap-1">
+              {t("reset.spoiler")} <ChevronUp className="h-4 w-4" />
+            </div>
+          ) : (
+            <div className="flex items-center gap-1">
+              {t("reset.spoiler")} <ChevronDown className="h-4 w-4" />
+            </div>
+          )}
+        </button>
+        {showResetSection && (
+          <div className="flex flex-col gap-4">
+            <div className="text-sm">{t("reset.description")}</div>
+            <div className="flex flex-col gap-4">
+              <Checkbox
+                isSelected={resetConfirmed}
+                onChange={(isSelected) => setResetConfirmed(isSelected)}
+              >
+                {t("reset.confirm")}
+              </Checkbox>
+              <Button
+                isDisabled={!resetConfirmed}
+                className="w-fit"
+                variant="secondary"
+                onPress={onReset}
+              >
+                {t("reset.submit")}
+              </Button>
+            </div>
+            <div className="flex w-full gap-2">
+              <TriangleAlert className="h-4 w-4 shrink-0 text-red-500" />
+              <p className="text-xs">
+                {t.rich("reset.disclaimer", {
+                  link1: (chunks) => (
+                    <Link href="/terms-of-service">{chunks}</Link>
+                  ),
+                  link2: (chunks) => (
+                    <Link href="/privacy-policy">{chunks}</Link>
+                  ),
+                  b: (chunks) => (
+                    <span className="font-semibold">{chunks}</span>
+                  ),
+                })}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -272,7 +355,7 @@ export function IdentityDialog(props: IdentityDialogProps) {
                 </div>
               </TabPanel>
               <TabPanel id="identity-tab-credentials" className="p-0">
-                <MyAuthenticationDataSection />
+                <MyAuthenticationDataSection close={close} />
               </TabPanel>
               <TabPanel id="identity-tab-transfer" className="p-0">
                 <TransferIdentitySection />

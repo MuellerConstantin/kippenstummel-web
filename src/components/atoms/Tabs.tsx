@@ -61,11 +61,11 @@ const tabProps = tv({
   variants: {
     isSelected: {
       false:
-        "text-slate-600 dark:text-zinc-300 hover:text-slate-700 pressed:text-slate-700 dark:hover:text-zinc-200 dark:pressed:text-zinc-200 hover:bg-slate-200 dark:hover:bg-zinc-800 pressed:bg-slate-200 dark:pressed:bg-zinc-800",
-      true: "text-white dark:text-black forced-colors:text-[HighlightText] bg-slate-800 dark:bg-zinc-200 forced-colors:bg-[Highlight]",
+        "text-slate-600 dark:text-slate-300 hover:text-slate-700 pressed:text-slate-700 dark:hover:text-slate-200 dark:pressed:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 pressed:bg-slate-200 dark:pressed:bg-slate-800",
+      true: "text-white dark:text-black forced-colors:text-[HighlightText] bg-slate-800 dark:bg-slate-200 forced-colors:bg-[Highlight]",
     },
     isDisabled: {
-      true: "text-slate-200 dark:text-zinc-600 forced-colors:text-[slateText] selected:text-slate-300 dark:selected:text-zinc-500 forced-colors:selected:text-[HighlightText] selected:bg-slate-200 dark:selected:bg-zinc-600 forced-colors:selected:bg-[slateText]",
+      true: "text-slate-200 dark:text-slate-600 forced-colors:text-[slateText] selected:text-slate-300 dark:selected:text-slate-500 forced-colors:selected:text-[HighlightText] selected:bg-slate-200 dark:selected:bg-slate-600 forced-colors:selected:bg-[slateText]",
     },
   },
 });
@@ -83,7 +83,7 @@ export function Tab(props: TabProps) {
 
 const tabPanelStyles = tv({
   extend: focusRing,
-  base: "flex-1 p-4 text-sm text-slate-900 dark:text-zinc-100",
+  base: "flex-1 p-4 text-sm text-slate-900 dark:text-slate-100",
 });
 
 export function TabPanel(props: TabPanelProps) {
