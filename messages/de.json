@@ -417,6 +417,11 @@
     "title": "Identität",
     "uniqueId": "Öffentliche ID",
     "close": "Schließen",
+    "tabs": {
+      "profile": "Profil",
+      "credentials": "Anmeldeinformationen",
+      "transfer": "Identität übertragen"
+    },
     "authentication": {
       "spoiler": "Meine Anmeldeinformationen",
       "description": "Deine Anmeldeinformationen bestehen aus einer öffentlichen ID (UUID) und einem geheimen Secret. Diese Daten werden lokal in deinem Browser gespeichert und ermöglichen die anonyme Nutzung der Anwendung. <b>Bitte beachte:</b> Das Secret ist vertraulich und darf nicht an Dritte weitergegeben werden, da damit auf deine Daten zugegriffen werden kann.",

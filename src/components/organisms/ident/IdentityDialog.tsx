@@ -8,21 +8,14 @@ import { Dialog } from "@/components/atoms/Dialog";
 import { Button } from "@/components/atoms/Button";
 import { IdentIcon } from "@/components/atoms/IdentIcon";
 import { useAppSelector } from "@/store";
-import {
-  Check,
-  ChevronDown,
-  ChevronUp,
-  Copy,
-  TriangleAlert,
-  Eye,
-  EyeOff,
-} from "lucide-react";
+import { Check, Copy, TriangleAlert, Eye, EyeOff } from "lucide-react";
 import { Link } from "@/components/atoms/Link";
 import { TextField } from "@/components/atoms/TextField";
 import { Form } from "@/components/atoms/Form";
 import { Spinner } from "@/components/atoms/Spinner";
 import { encryptWithPassword } from "@/lib";
 import useApi from "@/hooks/useApi";
+import { Tab, TabList, TabPanel, Tabs } from "@/components/atoms/Tabs";
 
 interface CopyButtonProps {
   text: string;
@@ -234,10 +227,6 @@ export function IdentityDialog(props: IdentityDialogProps) {
 
   const identity = useAppSelector((state) => state.ident.identity);
 
-  const [showTransferSection, setShowTransferSection] = useState(false);
-  const [showAuthenticationDataSection, setShowAuthenticationDataSection] =
-    useState(false);
-
   return (
     <Dialog {...props}>
       {({ close }) => (
@@ -248,57 +237,47 @@ export function IdentityDialog(props: IdentityDialogProps) {
           >
             {t("title")}
           </Heading>
-          <div className="mt-4 flex flex-col items-center gap-4">
-            <div className="h-32 w-32 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-900">
-              <IdentIcon value={identity || ""} />
-            </div>
-            <div className="brorder-slate-200 w-full space-y-2 rounded-md border p-4 dark:border-slate-600">
-              <div className="font-semibold">{t("uniqueId")}</div>
-              <div className="flex items-center gap-2">
-                <div className="text-xs">{identity || "Anonymous"}</div>
-                <CopyButton text={identity || ""} disabled={!identity} />
-              </div>
-            </div>
-            <div className="flex w-full flex-col gap-3">
-              <button
-                className="w-fit cursor-pointer text-sm text-green-600 hover:underline"
-                onClick={() =>
-                  setShowAuthenticationDataSection(
-                    !showAuthenticationDataSection,
-                  )
-                }
-              >
-                {showAuthenticationDataSection ? (
-                  <div className="flex items-center gap-1">
-                    {t("authentication.spoiler")}{" "}
-                    <ChevronUp className="h-4 w-4" />
+          <div className="mt-4 flex flex-col items-start gap-4">
+            <Tabs orientation="horizontal" className="w-full">
+              <TabList className="overflow-x-scroll pb-2">
+                <Tab className="w-fit min-w-fit" id="identity-tab-overview">
+                  {t("tabs.profile")}
+                </Tab>
+                <Tab className="w-fit min-w-fit" id="identity-tab-credentials">
+                  {t("tabs.credentials")}
+                </Tab>
+                <Tab className="w-fit min-w-fit" id="identity-tab-transfer">
+                  {t("tabs.transfer")}
+                </Tab>
+              </TabList>
+              <TabPanel id="identity-tab-overview" className="p-0">
+                <div className="flex w-full flex-col items-center gap-4">
+                  <div className="h-32 w-32 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-900">
+                    <IdentIcon value={identity || ""} />
                   </div>
-                ) : (
-                  <div className="flex items-center gap-1">
-                    {t("authentication.spoiler")}{" "}
-                    <ChevronDown className="h-4 w-4" />
+                  <div className="brorder-slate-200 w-full space-y-2 rounded-md border p-4 dark:border-slate-600">
+                    <div className="font-semibold">{t("uniqueId")}</div>
+                    <div className="flex items-center gap-2">
+                      <div className="overflow-x-scroll pb-2 text-xs whitespace-nowrap">
+                        {identity || "Anonymous"}
+                      </div>
+                      <div className="pb-2">
+                        <CopyButton
+                          text={identity || ""}
+                          disabled={!identity}
+                        />
+                      </div>
+                    </div>
                   </div>
-                )}
-              </button>
-              {showAuthenticationDataSection && <MyAuthenticationDataSection />}
-            </div>
-            <div className="flex w-full flex-col gap-3">
-              <button
-                className="w-fit cursor-pointer text-sm text-green-600 hover:underline"
-                onClick={() => setShowTransferSection(!showTransferSection)}
-              >
-                {showTransferSection ? (
-                  <div className="flex items-center gap-1">
-                    {t("transfer.spoiler")} <ChevronUp className="h-4 w-4" />
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-1">
-                    {t("transfer.spoiler")} <ChevronDown className="h-4 w-4" />
-                  </div>
-                )}
-              </button>
-              {showTransferSection && <TransferIdentitySection />}
-            </div>
+                </div>
+              </TabPanel>
+              <TabPanel id="identity-tab-credentials" className="p-0">
+                <MyAuthenticationDataSection />
+              </TabPanel>
+              <TabPanel id="identity-tab-transfer" className="p-0">
+                <TransferIdentitySection />
+              </TabPanel>
+            </Tabs>
             <div className="flex w-full justify-start gap-4">
               <Button onPress={close} className="w-full">
                 {t("close")}

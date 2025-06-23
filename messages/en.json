@@ -418,6 +418,11 @@
     "uniqueId": "Public ID",
     "info": "This is your personal identity, used for authentication and linked to all your interactions. Please keep it confidential. For more information, see our <link1>Terms of Use</link1> and <link2>Privacy Policy</link2>.",
     "close": "Close",
+    "tabs": {
+      "profile": "Profile",
+      "credentials": "Credentials",
+      "transfer": "Transfer"
+    },
     "authentication": {
       "spoiler": "My authentication credentials",
       "description": "Your login credentials consist of a public ID (UUID) and a secret key. These credentials are stored locally in your browser and allow anonymous use of the application. <b>Please note:</b> The secret is sensitive information and must not be shared with others, as it grants access to your data.",

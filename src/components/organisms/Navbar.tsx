@@ -222,7 +222,7 @@ function NavbarAuthenticatedOptionsMenu() {
           isOpen={showIdentityDialog}
           onOpenChange={setShowIdentityDialog}
         >
-          <Modal>
+          <Modal className="max-w-xl">
             <IdentityDialog />
           </Modal>
         </DialogTrigger>
