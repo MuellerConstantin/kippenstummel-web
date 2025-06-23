@@ -294,9 +294,8 @@
   },
   "CookieBanner": {
     "title": "We use cookies!",
-    "description": "This website uses cookies or similar technologies, to implement essential features and to enhance your browsing experience. Additionally, we integrate third-party services that may also use cookies or similar technologies. We need your consent to proceed. Some features may not work properly without cookies. For more information, see our <link>Privacy Policy</link>.",
-    "accept": "Accept cookies",
-    "decline": "Decline cookies"
+    "description": "This website uses cookies or similar technologies to implement essential functions and improve your browsing experience. This website generally uses only technically necessary cookies. Should the integration of third-party services result in the use of cookies or similar technologies for purposes that are not technically necessary, we will inform you in advance and obtain your consent. Further information can be found in our <link>Privacy Policy</link>.",
+    "confirm": "I understand & continue"
   },
   "RequestIdentDialog": {
     "title": "Create Identity",
@@ -317,7 +316,7 @@
   },
   "CvmOptInMap": {
     "title": "Please accept the <tos>Terms of Service</tos> and <pp>Privacy Policy</pp> to continue.",
-    "description": "The services of this website use a number of features that require your consent. These include loading third-party tile layers for map visualizations, the use of cookies or similar technologies, and device fingerprinting. Furthermore, it may be necessary to query the user's current location for individual features.",
+    "description": "To activate the interactive map, content from a third-party provider (OpenStreetMap) is loaded. Your IP address may be transmitted to the provider. In this context, the third-party provider may use cookies or similar technologies over which we have no control.<br></br><br></br>For certain functions of the map (e.g., displaying your own location), a temporary location query may also be carried out. This only occurs with your express consent.<br></br><br></br>By loading the map, you agree to the data transfer and possible use of cookies by the third-party provider. Further information can be found in our privacy policy.",
     "accept": "Accept & Continue"
   },
   "LocationMarker": {

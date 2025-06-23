@@ -294,9 +294,8 @@
   },
   "CookieBanner": {
     "title": "Wir verwenden Cookies!",
-    "description": "Diese Website verwendet Cookies oder ähnliche Technologien, um wesentliche Funktionen zu implementieren und Ihr Browser-Erlebnis zu verbessern. Darüber hinaus integrieren wir Dienste von Drittanbietern, die ebenfalls Cookies oder ähnliche Technologien verwenden können. Um fortzufahren, benötigen wir Ihre Zustimmung. Einige Funktionen funktionieren ohne Cookies möglicherweise nicht ordnungsgemäß. Weitere Informationen finden Sie in unserer <link>Datenschutzerklärung</link>.",
-    "accept": "Cookies akzeptieren",
-    "decline": "Cookies ablehnen"
+    "description": "Diese Website verwendet Cookies oder ähnliche Technologien, um wesentliche Funktionen zu implementieren und Ihr Browser-Erlebnis zu verbessern. Grundsätzlich verwendet diese Website nur technisch notwendige Cookies. Sollten durch die Integration von Diensten von Drittanbietern Cookies oder ähnliche Technologien zu technisch nicht notwendigen Zwecken verwendet werden, informieren wir Sie vorab darüber und holen Ihre Zustimmung ein. Weitere Informationen finden Sie in unserer <link>Datenschutzerklärung</link>.",
+    "confirm": "Verstanden & fortfahren"
   },
   "RequestIdentDialog": {
     "title": "Identität anlegen",
@@ -317,7 +316,7 @@
   },
   "CvmOptInMap": {
     "title": "Bitte akzeptiere die <tos>Nutzungsbedingungen</tos> und die <pp>Datenschutzerklärung</pp>, um fortzufahren.",
-    "description": "Die Dienste dieser Website nutzen eine Reihe von Funktionen, die Ihre Zustimmung erfordern. Dazu gehören das Laden von Kachelebenen von Drittanbietern für Kartenvisualisierungen, die Verwendung von Cookies oder ähnlichen Technologien sowie das Device-Fingerprinting. Darüber hinaus kann es für einzelne Funktionen erforderlich sein, den aktuellen Standort des Nutzers abzufragen.",
+    "description": "Zum Aktivieren der interaktiven Karte werden Inhalte von einem Drittanbieter (OpenStreetMap) geladen. Dabei kann Ihre IP-Adresse an den Anbieter übertragen werden. Der Drittanbieter kann in diesem Zusammenhang Cookies oder ähnliche Technologien einsetzen, auf die wir keinen Einfluss haben.<br></br><br></br>Für bestimmte Funktionen der Karte (z. B. Anzeige des eigenen Standorts) kann zusätzlich eine temporäre Standortabfrage erfolgen. Diese erfolgt nur mit Ihrer ausdrücklichen Zustimmung.<br></br><br></br>Mit dem Laden der Karte stimmen Sie der Datenübertragung und möglichen Cookie-Nutzung durch den Drittanbieter zu. Weitere Informationen finden Sie in unserer Datenschutzerklärung.",
     "accept": "Akzeptieren & Fortfahren"
   },
   "LocationMarker": {

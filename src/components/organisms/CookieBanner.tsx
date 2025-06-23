@@ -22,10 +22,6 @@ export function CookieBanner() {
     setOpen(false);
   };
 
-  const declineCookies = () => {
-    setOpen(false);
-  };
-
   useEffect(() => {
     if (!cookiesAllowed) {
       setOpen(true);
@@ -46,17 +42,8 @@ export function CookieBanner() {
               })}
             </p>
             <Button variant="primary" className="w-full" onPress={allowCookies}>
-              {t("accept")}
+              {t("confirm")}
             </Button>
-            <div className="flex justify-center">
-              <button
-                type="button"
-                className="text-xs hover:underline"
-                onClick={declineCookies}
-              >
-                {t("decline")}
-              </button>
-            </div>
           </div>
         </div>
       </div>
