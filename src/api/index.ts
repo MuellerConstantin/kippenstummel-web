@@ -9,7 +9,7 @@ export const injectStore = (_store: AppStore) => {
 };
 
 export const api = axios.create({
-  baseURL: "/api/proxy",
+  baseURL: "/api/bff",
   timeout: 10000,
   headers: {
     Accept: "application/json",
