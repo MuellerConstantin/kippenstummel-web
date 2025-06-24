@@ -17,6 +17,12 @@ communication. In addition, the following services are required:
 Redis is a key-value store that is used for the storage of temporary application state. It is primarly
 used as distributed 2-Level cache for storing map tiles fetched from the tile server.
 
+**Tile Server**
+
+The tile server is used to fetch map tiles for the map view. It is required for the map view to work.
+Hence, a tile server compatible with the [XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) protocol
+similar to [OSM](https://www.openstreetmap.org/) is required.
+
 ## Deployment
 
 The web client can be deployed on any [Node.js](https://nodejs.org/) runtime
