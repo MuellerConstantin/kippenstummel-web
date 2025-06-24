@@ -128,17 +128,6 @@ export default function PrivacyPolicy() {
           })}
         </p>
       </section>
-      <section className="flex flex-col gap-4">
-        <h2 className="text-2xl font-bold text-green-600">
-          {t("thirdParty.title")}
-        </h2>
-        <h3 className="text-xl font-bold">{t("thirdParty.osm.title")}</h3>
-        <p>
-          {t.rich("thirdParty.osm.description", {
-            br: () => <br />,
-          })}
-        </p>
-      </section>
     </div>
   );
 }
