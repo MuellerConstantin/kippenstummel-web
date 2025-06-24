@@ -91,6 +91,34 @@ export default function TermsOfService() {
       </section>
       <section className="flex flex-col gap-4">
         <h2 className="text-2xl font-bold text-green-600">
+          {t("availability.title")}
+        </h2>
+        <div>
+          {t.rich("availability.description", {
+            br: () => <br />,
+          })}
+        </div>
+      </section>
+      <section className="flex flex-col gap-4">
+        <h2 className="text-2xl font-bold text-green-600">
+          {t("identity.title")}
+        </h2>
+        <div>
+          {t.rich("identity.description", {
+            br: () => <br />,
+          })}
+        </div>
+      </section>
+      <section className="flex flex-col gap-4">
+        <h2 className="text-2xl font-bold text-green-600">{t("api.title")}</h2>
+        <div>
+          {t.rich("api.description", {
+            br: () => <br />,
+          })}
+        </div>
+      </section>
+      <section className="flex flex-col gap-4">
+        <h2 className="text-2xl font-bold text-green-600">
           {t("alteration.title")}
         </h2>
         <div>
