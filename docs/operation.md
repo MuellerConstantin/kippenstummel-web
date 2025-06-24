@@ -7,10 +7,15 @@ requires a proper [Node.js](https://nodejs.org/) runtime environment to run.
 ## System Environment
 
 The web client has almost zero dependencies to third-party services and is
-operated on-premise. The only external service the web client relies on is
+operated on-premise. One external service the web client relies on is
 obviously the [Kippenstummel API](https://github.com/MuellerConstantin/kippenstummel-api)
 service itself. Therefore, this service must be present and available for
-communication.
+communication. In addition, the following services are required:
+
+**[Redis](https://redis.io/)**
+
+Redis is a key-value store that is used for the storage of temporary application state. It is primarly
+used as distributed 2-Level cache for storing map tiles fetched from the tile server.
 
 ## Deployment
 

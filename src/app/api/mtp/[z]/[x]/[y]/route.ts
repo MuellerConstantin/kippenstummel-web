@@ -82,7 +82,7 @@ async function proxyRequest(
     lruCache.set(tileKey, Buffer.from(tileBuffer));
     redisCache.setex(
       tileKey,
-      process.env.TILE_REDIS_CACHE_TTL!,
+      process.env.TILE_REDIS_CACHE_TTL || 60 * 60 * 24 * 7,
       Buffer.from(tileBuffer),
     );
   })();
