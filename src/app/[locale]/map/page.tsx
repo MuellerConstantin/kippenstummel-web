@@ -64,6 +64,60 @@ export default function Map() {
     [t, api, enqueue],
   );
 
+  const onReposition = useCallback(
+    async (
+      id: string,
+      position: Leaflet.LatLng,
+      editorPosition: Leaflet.LatLng,
+    ) => {
+      try {
+        await api.patch(`/cvms/${id}`, {
+          repositionedLatitude: position.lat,
+          repositionedLongitude: position.lng,
+          editorLatitude: editorPosition.lat,
+          editorLongitude: editorPosition.lng,
+        });
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          if (
+            err.response?.status === 403 &&
+            err.response.data.code === "OUT_OF_REACH_ERROR"
+          ) {
+            enqueue(
+              {
+                title: t("Notifications.cvmOutOfReach.title"),
+                description: t("Notifications.cvmOutOfReach.description"),
+                variant: "info",
+              },
+              { timeout: 5000 },
+            );
+            return;
+          }
+        }
+
+        enqueue(
+          {
+            title: t("Notifications.cvmRepositionFailed.title"),
+            description: t("Notifications.cvmRepositionFailed.description"),
+            variant: "error",
+          },
+          { timeout: 5000 },
+        );
+        return;
+      }
+
+      enqueue(
+        {
+          title: t("Notifications.cvmRepositioned.title"),
+          description: t("Notifications.cvmRepositioned.description"),
+          variant: "success",
+        },
+        { timeout: 5000 },
+      );
+    },
+    [t, api, enqueue],
+  );
+
   const onUpvote = useCallback(
     async (id: string, position: Leaflet.LatLng) => {
       try {
@@ -179,6 +233,7 @@ export default function Map() {
         onRegister={onRegister}
         onUpvote={onUpvote}
         onDownvote={onDownvote}
+        onReposition={onReposition}
         selectedCvm={data}
       />
     </div>

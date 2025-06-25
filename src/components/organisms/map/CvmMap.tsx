@@ -20,11 +20,16 @@ import locationSlice from "@/store/slices/location";
 import usabilitySlice from "@/store/slices/usability";
 import { MenuBottomNavigation } from "./MenuBottomNavigation";
 import { FilterDialog } from "./FilterDialog";
-import { RegisterLocationMarker } from "@/components/molecules/map/RegisterLocationMarker";
+import { AdjustableLocationMarker } from "@/components/molecules/map/AdjustableLocationMarker";
 import { ConfirmRegisterBottomNavigation } from "./ConfirmRegisterBottomNavigation";
 
 export interface CvmMapProps {
   onRegister?: (position: Leaflet.LatLng) => void;
+  onReposition?: (
+    id: string,
+    position: Leaflet.LatLng,
+    editorPosition: Leaflet.LatLng,
+  ) => void;
   onUpvote?: (id: string, position: Leaflet.LatLng) => void;
   onDownvote?: (id: string, position: Leaflet.LatLng) => void;
   selectedCvm?: {
@@ -50,6 +55,15 @@ export function CvmMap(props: CvmMapProps) {
 
   const [isRegistering, setIsRegistering] = useState(false);
   const [registerPosition, setRegisterPosition] = useState<Leaflet.LatLng>();
+
+  const [isRepositioning, setIsRepositioning] = useState(false);
+  const [repositioningId, setRepositioningId] = useState<string>();
+  const [repositioningEditorPosition, setRepositioningEditorPosition] =
+    useState<Leaflet.LatLng>();
+  const [origRepositioningPosition, setOrigRepositioningPosition] =
+    useState<Leaflet.LatLng>();
+  const [repositioningPosition, setRepositioningPosition] =
+    useState<Leaflet.LatLng>();
 
   const [map, setMap] = useState<Leaflet.Map | null>(null);
   const [zoom, setZoom] = useState<number>();
@@ -233,6 +247,25 @@ export function CvmMap(props: CvmMapProps) {
     [setIsRegistering, setRegisterPosition],
   );
 
+  const onReposition = useCallback(
+    (id: string, position: Leaflet.LatLng, editorPosition: Leaflet.LatLng) => {
+      setIsRepositioning(true);
+      setRepositioningId(id);
+      setRepositioningEditorPosition(editorPosition);
+      setOrigRepositioningPosition(position);
+      setRepositioningPosition(position);
+      map?.setView(position, 18);
+    },
+    [
+      setIsRepositioning,
+      setRepositioningEditorPosition,
+      setOrigRepositioningPosition,
+      setRepositioningPosition,
+      setRepositioningId,
+      map,
+    ],
+  );
+
   useEffect(() => {
     if (props.selectedCvm) {
       map?.setView(
@@ -261,9 +294,9 @@ export function CvmMap(props: CvmMapProps) {
       onLocationError={onLocationError}
     >
       <LocateControlPlugin position="topleft" />
-      {isRegistering ? (
+      {isRegistering && (
         <>
-          <RegisterLocationMarker
+          <AdjustableLocationMarker
             reference={{
               position: [location!.lat, location!.lng],
               maxDistance: 25,
@@ -284,7 +317,42 @@ export function CvmMap(props: CvmMapProps) {
             }}
           />
         </>
-      ) : (
+      )}
+      {isRepositioning && (
+        <>
+          <AdjustableLocationMarker
+            reference={{
+              position: [
+                origRepositioningPosition!.lat,
+                origRepositioningPosition!.lng,
+              ],
+              maxDistance: 25,
+            }}
+            position={[repositioningPosition!.lat, repositioningPosition!.lng]}
+            onAdapt={setRepositioningPosition}
+          />
+          <Circle
+            radius={25}
+            center={[
+              origRepositioningPosition!.lat,
+              origRepositioningPosition!.lng,
+            ]}
+            pathOptions={{ color: "#16a34a", fillColor: "#16a34a" }}
+          />
+          <ConfirmRegisterBottomNavigation
+            onCancel={() => setIsRepositioning(false)}
+            onConfirm={() => {
+              props.onReposition?.(
+                repositioningId!,
+                repositioningPosition!,
+                repositioningEditorPosition!,
+              );
+              setIsRepositioning(false);
+            }}
+          />
+        </>
+      )}
+      {!isRegistering && !isRepositioning && (
         <>
           <DialogTrigger
             isOpen={showHelpDialog}
@@ -314,6 +382,7 @@ export function CvmMap(props: CvmMapProps) {
               onDownvote={(voterPosition) =>
                 props.onDownvote?.(marker.id, voterPosition)
               }
+              onReposition={onReposition}
               selected={marker.id === props.selectedCvm?.id}
             />
           ))}

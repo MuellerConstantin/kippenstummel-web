@@ -329,7 +329,8 @@
     "location": "Standort",
     "share": "Teilen",
     "copyLink": "Link kopieren",
-    "openInGoogleMaps": "In Google Maps öffnen"
+    "openInGoogleMaps": "In Google Maps öffnen",
+    "reposition": "Umpositionieren"
   },
   "Notifications": {
     "cvmRegistered": {
@@ -339,6 +340,14 @@
     "cvmRegisterFailed": {
       "title": "Meldung fehlgeschlagen",
       "description": "Es gab einen Fehler beim Senden deiner Meldung."
+    },
+    "cvmRepositioned": {
+      "title": "Neupositionierung eingereicht",
+      "description": "Deine Neupositionierung wurde eingereicht. Vielen Dank!"
+    },
+    "cvmRepositionFailed": {
+      "title": "Neupositionierung fehlgeschlagen",
+      "description": "Es gab einen Fehler beim Senden deiner Neupositionierung."
     },
     "cvmVoted": {
       "title": "Abgestimmt",

@@ -4,7 +4,7 @@ import { Marker } from "react-leaflet";
 import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
 import { MapPinPlusInside } from "lucide-react";
 
-interface RegisterLocationMarkerProps {
+interface AdjustableLocationMarkerProps {
   onAdapt?: (position: Leaflet.LatLng) => void;
   position: [number, number];
   reference?: {
@@ -13,7 +13,7 @@ interface RegisterLocationMarkerProps {
   };
 }
 
-export function RegisterLocationMarker(props: RegisterLocationMarkerProps) {
+export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
   const { reference, onAdapt } = props;
 
   const markerRef = useRef<Leaflet.Marker>(null);

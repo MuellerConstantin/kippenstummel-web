@@ -329,7 +329,8 @@
     "location": "Location",
     "share": "Share",
     "copyLink": "Copy Link",
-    "openInGoogleMaps": "Open in Google Maps"
+    "openInGoogleMaps": "Open in Google Maps",
+    "reposition": "Reposition"
   },
   "Notifications": {
     "cvmRegistered": {
@@ -338,6 +339,14 @@
     },
     "cvmRegisterFailed": {
       "title": "Report Failed",
+      "description": "There was an error submitting your report."
+    },
+    "cvmRepositioned": {
+      "title": "Repositioned",
+      "description": "Your report has been sent. Thanks for your help!"
+    },
+    "cvmRepositionFailed": {
+      "title": "Reposition Failed",
       "description": "There was an error submitting your report."
     },
     "cvmVoted": {

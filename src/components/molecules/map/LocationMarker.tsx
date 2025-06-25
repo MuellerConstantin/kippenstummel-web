@@ -57,15 +57,21 @@ interface LocationMarkerDialogProps {
   score: number;
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
   onDownvote?: (voterPosition: Leaflet.LatLng) => void;
+  onReposition?: (
+    id: string,
+    position: Leaflet.LatLng,
+    editorPosition: Leaflet.LatLng,
+  ) => void;
 }
 
 function LocationMarkerDialog(props: LocationMarkerDialogProps) {
   const t = useTranslations("LocationMarker");
   const map = useMap();
   const locate = useLocate(map);
-  const { onUpvote, onDownvote } = props;
+  const { onUpvote, onDownvote, onReposition } = props;
 
   const [voting, setVoting] = useState<"up" | "down" | false>(false);
+  const [isRepositioning, setIsRepositioning] = useState(false);
 
   const onUpvoteRequest = useCallback(() => {
     setVoting("up");
@@ -86,6 +92,18 @@ function LocationMarkerDialog(props: LocationMarkerDialogProps) {
         setVoting(false);
       });
   }, [locate, onDownvote]);
+
+  const onRepositionRequest = useCallback(() => {
+    setIsRepositioning(true);
+
+    locate({ setView: true, maxZoom: 18 })
+      .then((position) => {
+        onReposition?.(props.id, props.position, position);
+      })
+      .finally(() => {
+        setIsRepositioning(false);
+      });
+  }, [locate, props.id, props.position, onReposition]);
 
   return (
     <Dialog>
@@ -126,7 +144,7 @@ function LocationMarkerDialog(props: LocationMarkerDialogProps) {
                   className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
                   onClick={onUpvoteRequest}
                   onMouseDown={(e) => e.stopPropagation()}
-                  disabled={voting !== false}
+                  disabled={voting !== false || isRepositioning}
                 >
                   {voting === "up" ? (
                     <Spinner />
@@ -141,7 +159,7 @@ function LocationMarkerDialog(props: LocationMarkerDialogProps) {
                   className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
                   onClick={onDownvoteRequest}
                   onMouseDown={(e) => e.stopPropagation()}
-                  disabled={voting !== false}
+                  disabled={voting !== false || isRepositioning}
                 >
                   {voting === "down" ? (
                     <Spinner />
@@ -153,7 +171,7 @@ function LocationMarkerDialog(props: LocationMarkerDialogProps) {
               <div className="flex grow flex-col gap-2">
                 <div className="space-y-1">
                   <div className="text-sm font-semibold">{t("location")}</div>
-                  <div className="text-xs">
+                  <div className="text-sm">
                     {props.position.lat.toFixed(7)} /{" "}
                     {props.position.lng.toFixed(7)} (lat/lng)
                   </div>
@@ -181,6 +199,16 @@ function LocationMarkerDialog(props: LocationMarkerDialogProps) {
                 </div>
               </div>
             </div>
+            <div className="flex justify-end gap-1">
+              <button
+                className="flex cursor-pointer items-center gap-1 text-xs text-slate-500 hover:underline disabled:cursor-not-allowed disabled:text-slate-300 dark:text-slate-400 dark:hover:text-slate-200"
+                onClick={onRepositionRequest}
+                disabled={isRepositioning || voting !== false}
+              >
+                <span>{t("reposition")}</span>
+                {isRepositioning && <Spinner size={14} />}
+              </button>
+            </div>
           </div>
         </>
       )}
@@ -194,15 +222,21 @@ interface LocationMarkerPopupProps {
   score: number;
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
   onDownvote?: (voterPosition: Leaflet.LatLng) => void;
+  onReposition?: (
+    id: string,
+    position: Leaflet.LatLng,
+    editorPosition: Leaflet.LatLng,
+  ) => void;
 }
 
 function LocationMarkerPopup(props: LocationMarkerPopupProps) {
   const t = useTranslations("LocationMarker");
   const map = useMap();
   const locate = useLocate(map);
-  const { onUpvote, onDownvote } = props;
+  const { onUpvote, onDownvote, onReposition } = props;
 
   const [voting, setVoting] = useState<"up" | "down" | false>(false);
+  const [isRepositioning, setIsRepositioning] = useState(false);
 
   const onUpvoteRequest = useCallback(() => {
     setVoting("up");
@@ -223,6 +257,18 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
         setVoting(false);
       });
   }, [locate, onDownvote]);
+
+  const onRepositionRequest = useCallback(() => {
+    setIsRepositioning(true);
+
+    locate({ setView: true, maxZoom: 18 })
+      .then((position) => {
+        onReposition?.(props.id, props.position, position);
+      })
+      .finally(() => {
+        setIsRepositioning(false);
+      });
+  }, [locate, props.id, props.position, onReposition]);
 
   return (
     <Popup
@@ -245,69 +291,85 @@ function LocationMarkerPopup(props: LocationMarkerPopupProps) {
           <Equal className="h-4 w-4 text-white" />
         </div>
       )}
-      <div className="flex w-full items-center justify-between gap-2">
-        <div className="flex items-center gap-2 overflow-hidden">
-          <div className="text-base font-semibold">{t("title")}</div>
-        </div>
-        <div>
-          <Button variant="icon" onPress={() => map.closePopup()}>
-            <X className="h-5 w-5" />
-          </Button>
-        </div>
-      </div>
-      <div className="flex items-center gap-4">
-        <div className="flex flex-col items-center">
-          <button
-            className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
-            onClick={onUpvoteRequest}
-            onMouseDown={(e) => e.stopPropagation()}
-            disabled={voting !== false}
-          >
-            {voting === "up" ? <Spinner /> : <ChevronUp className="h-8 w-8" />}
-          </button>
-          <div className="text-lg font-semibold">
-            {(props.score / 100).toFixed(1)}
+      <div className="flex flex-col gap-2">
+        <div className="flex w-full items-center justify-between gap-2">
+          <div className="flex items-center gap-2 overflow-hidden">
+            <div className="text-base font-semibold">{t("title")}</div>
           </div>
-          <button
-            className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
-            onClick={onDownvoteRequest}
-            onMouseDown={(e) => e.stopPropagation()}
-            disabled={voting !== false}
-          >
-            {voting === "down" ? (
-              <Spinner />
-            ) : (
-              <ChevronDown className="h-8 w-8" />
-            )}
-          </button>
-        </div>
-        <div className="grow space-y-1">
-          <div className="text-sm font-semibold">{t("location")}</div>
-          <div className="text-xs">
-            {props.position.lat.toFixed(7)} / {props.position.lng.toFixed(7)}{" "}
-            (lat/lng)
+          <div>
+            <Button variant="icon" onPress={() => map.closePopup()}>
+              <X className="h-5 w-5" />
+            </Button>
           </div>
-          <div className="flex w-full flex-col gap-1">
-            <div className="text-sm font-semibold">{t("share")}</div>
-            <div className="flex items-center gap-2">
-              <input
-                readOnly
-                value={`${window.location.protocol}//${window.location.host}/map?shared=${props.id}`}
-                className="min-w-0 flex-1 rounded-md border-2 border-gray-300 bg-white px-1 py-0.5 text-xs text-gray-800 outline outline-0 focus:border-green-600 disabled:text-gray-200 dark:border-slate-500 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-slate-300 dark:disabled:text-slate-600"
-              />
-              <CopyButton
-                text={`${window.location.protocol}//${window.location.host}/map?shared=${props.id}`}
-                disabled={voting !== false}
-              />
-            </div>
-            <Link
-              href={`https://www.google.com.sa/maps/search/${props.position.lat},${props.position.lng}`}
-              target="_blank"
-              className="block text-sm"
+        </div>
+        <div className="flex items-center gap-6">
+          <div className="flex flex-col items-center">
+            <button
+              className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
+              onClick={onUpvoteRequest}
+              onMouseDown={(e) => e.stopPropagation()}
+              disabled={voting !== false || isRepositioning}
             >
-              {t("openInGoogleMaps")}
-            </Link>
+              {voting === "up" ? (
+                <Spinner />
+              ) : (
+                <ChevronUp className="h-8 w-8" />
+              )}
+            </button>
+            <div className="text-lg font-semibold">
+              {(props.score / 100).toFixed(1)}
+            </div>
+            <button
+              className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
+              onClick={onDownvoteRequest}
+              onMouseDown={(e) => e.stopPropagation()}
+              disabled={voting !== false || isRepositioning}
+            >
+              {voting === "down" ? (
+                <Spinner />
+              ) : (
+                <ChevronDown className="h-8 w-8" />
+              )}
+            </button>
           </div>
+          <div className="grow space-y-1">
+            <div className="text-sm font-semibold">{t("location")}</div>
+            <div className="text-sm">
+              {props.position.lat.toFixed(7)} / {props.position.lng.toFixed(7)}{" "}
+              (lat/lng)
+            </div>
+            <div className="flex w-full flex-col gap-1">
+              <div className="text-sm font-semibold">{t("share")}</div>
+              <div className="flex items-center gap-2">
+                <input
+                  readOnly
+                  value={`${window.location.protocol}//${window.location.host}/map?shared=${props.id}`}
+                  className="min-w-0 flex-1 rounded-md border-2 border-gray-300 bg-white px-1 py-0.5 text-xs text-gray-800 outline outline-0 focus:border-green-600 disabled:text-gray-200 dark:border-slate-500 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-slate-300 dark:disabled:text-slate-600"
+                />
+                <CopyButton
+                  text={`${window.location.protocol}//${window.location.host}/map?shared=${props.id}`}
+                  disabled={voting !== false}
+                />
+              </div>
+              <Link
+                href={`https://www.google.com.sa/maps/search/${props.position.lat},${props.position.lng}`}
+                target="_blank"
+                className="block text-sm"
+              >
+                {t("openInGoogleMaps")}
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-end gap-1">
+          <button
+            className="flex cursor-pointer items-center gap-1 text-xs text-slate-500 hover:underline disabled:cursor-not-allowed disabled:text-slate-300 dark:text-slate-400 dark:hover:text-slate-200"
+            onClick={onRepositionRequest}
+            disabled={isRepositioning || voting !== false}
+          >
+            <span>{t("reposition")}</span>
+            {isRepositioning && <Spinner size={14} />}
+          </button>
         </div>
       </div>
     </Popup>
@@ -320,6 +382,11 @@ interface LocationMarkerProps {
   score: number;
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
   onDownvote?: (voterPosition: Leaflet.LatLng) => void;
+  onReposition?: (
+    id: string,
+    position: Leaflet.LatLng,
+    editorPosition: Leaflet.LatLng,
+  ) => void;
   selected: boolean;
 }
 
