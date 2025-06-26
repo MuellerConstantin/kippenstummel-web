@@ -81,7 +81,7 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
             </div>
           ),
           size: Leaflet.point(32, 32),
-          anchor: Leaflet.point(16, 32),
+          anchor: Leaflet.point(16, 24),
           className: "!z-[3000]",
         })}
       ></Marker>

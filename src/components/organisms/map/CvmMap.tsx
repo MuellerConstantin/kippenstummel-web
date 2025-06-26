@@ -22,6 +22,7 @@ import { MenuBottomNavigation } from "./MenuBottomNavigation";
 import { FilterDialog } from "./FilterDialog";
 import { AdjustableLocationMarker } from "@/components/molecules/map/AdjustableLocationMarker";
 import { ConfirmRegisterBottomNavigation } from "./ConfirmRegisterBottomNavigation";
+import { CvmInfoDialog } from "./CvmInfoDialog";
 
 export interface CvmMapProps {
   onRegister?: (position: Leaflet.LatLng) => void;
@@ -64,6 +65,13 @@ export function CvmMap(props: CvmMapProps) {
     useState<Leaflet.LatLng>();
   const [repositioningPosition, setRepositioningPosition] =
     useState<Leaflet.LatLng>();
+
+  const [selectedCvm, setSelectedCvm] = useState<{
+    id: string;
+    latitude: number;
+    longitude: number;
+    score: number;
+  } | null>(null);
 
   const [map, setMap] = useState<Leaflet.Map | null>(null);
   const [zoom, setZoom] = useState<number>();
@@ -267,13 +275,16 @@ export function CvmMap(props: CvmMapProps) {
   );
 
   useEffect(() => {
-    if (props.selectedCvm) {
-      map?.setView(
-        [props.selectedCvm.latitude, props.selectedCvm.longitude],
-        18,
-      );
+    if (selectedCvm) {
+      map?.setView([selectedCvm.latitude, selectedCvm.longitude], 18);
     }
-  }, [props.selectedCvm, map]);
+  }, [selectedCvm, map]);
+
+  useEffect(() => {
+    if (props.selectedCvm) {
+      setSelectedCvm(props.selectedCvm);
+    }
+  }, [props.selectedCvm]);
 
   if (!mapView) {
     return null;
@@ -293,8 +304,8 @@ export function CvmMap(props: CvmMapProps) {
       onLocationFound={onLocationFound}
       onLocationError={onLocationError}
     >
-      <ZoomControl position="topleft" zoomInTitle="" zoomOutTitle="" />
-      <LocateControlPlugin position="topleft" />
+      <ZoomControl position="topright" zoomInTitle="" zoomOutTitle="" />
+      <LocateControlPlugin position="topright" />
       {isRegistering && (
         <>
           <AdjustableLocationMarker
@@ -355,13 +366,44 @@ export function CvmMap(props: CvmMapProps) {
       )}
       {!isRegistering && !isRepositioning && (
         <>
-          <div className="absolute bottom-6 left-1/2 z-[2000] h-fit w-fit -translate-x-1/2 px-2">
-            <MenuBottomNavigation
-              map={map!}
-              onHelp={onHelp}
-              onFilter={onFilter}
-              onRegister={onRegister}
-            />
+          <div className="absolute flex h-full w-full">
+            <div className="z-[2000] h-full shrink-0">
+              {!!selectedCvm && (
+                <CvmInfoDialog
+                  open={!!selectedCvm}
+                  onOpenChange={(open) =>
+                    setSelectedCvm(open ? selectedCvm : null)
+                  }
+                  cvm={selectedCvm || undefined}
+                  onUpvote={(voterPosition) =>
+                    props.onUpvote?.(selectedCvm!.id, voterPosition)
+                  }
+                  onDownvote={(voterPosition) =>
+                    props.onDownvote?.(selectedCvm!.id, voterPosition)
+                  }
+                  onReposition={(editorPosition) =>
+                    onReposition(
+                      selectedCvm!.id,
+                      Leaflet.latLng(
+                        selectedCvm!.latitude,
+                        selectedCvm!.longitude,
+                      ),
+                      editorPosition,
+                    )
+                  }
+                />
+              )}
+            </div>
+            <div className="relative grow">
+              <div className="absolute bottom-6 left-1/2 z-[2000] h-fit w-fit -translate-x-1/2 px-2">
+                <MenuBottomNavigation
+                  map={map!}
+                  onHelp={onHelp}
+                  onFilter={onFilter}
+                  onRegister={onRegister}
+                />
+              </div>
+            </div>
           </div>
           <DialogTrigger
             isOpen={showHelpDialog}
@@ -382,17 +424,9 @@ export function CvmMap(props: CvmMapProps) {
           {markers?.map((marker) => (
             <LocationMarker
               key={marker.id}
-              id={marker.id}
-              position={new Leaflet.LatLng(marker.latitude, marker.longitude)}
-              score={marker.score}
-              onUpvote={(voterPosition) =>
-                props.onUpvote?.(marker.id, voterPosition)
-              }
-              onDownvote={(voterPosition) =>
-                props.onDownvote?.(marker.id, voterPosition)
-              }
-              onReposition={onReposition}
-              selected={marker.id === props.selectedCvm?.id}
+              cvm={marker}
+              selected={marker.id === selectedCvm?.id}
+              onSelect={() => setSelectedCvm(marker)}
             />
           ))}
           {clusters?.map((marker, index) => (

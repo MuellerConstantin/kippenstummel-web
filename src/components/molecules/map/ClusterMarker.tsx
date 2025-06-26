@@ -63,13 +63,14 @@ export function ClusterMarker(props: ClusterMarkerProps) {
             className={`${outerClasses} box-border h-fit w-fit rounded-[20px] p-[3px]`}
           >
             <div
-              className={`${innerClasses} h-[30px] w-[30px] rounded-full text-center font-sans text-[12px] leading-[30px]`}
+              className={`${innerClasses} h-[32px] w-[32px] rounded-full text-center font-sans text-[12px] leading-[30px]`}
             >
               <span>{formatNumberShort(props.count)}</span>
             </div>
           </div>
         ),
-        anchor: Leaflet.point(30, 30),
+        size: Leaflet.point(32, 32),
+        anchor: Leaflet.point(16, 16),
       })}
       eventHandlers={{ click: handleClick }}
     />
