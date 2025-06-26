@@ -305,7 +305,7 @@ function CvmSidebarDialog(props: CvmSidebarDialogProps) {
           </div>
           <div className="absolute top-2 right-2">
             <Button variant="icon" onPress={props.onClose}>
-              <X className="h-6 w-6" />
+              <X className="h-6 w-6 text-white dark:text-slate-400" />
             </Button>
           </div>
         </div>
