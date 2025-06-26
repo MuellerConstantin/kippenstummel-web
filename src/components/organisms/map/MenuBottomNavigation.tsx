@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   MapPinPlus,
   LoaderCircle,
@@ -18,6 +18,7 @@ interface MenuBottomNavigationProps {
 export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
   const { map, onRegister, onHelp, onFilter } = props;
   const locate = useLocate(map);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const [registeringCvm, setRegisteringCvm] = useState<boolean>(false);
 
@@ -31,9 +32,18 @@ export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
       });
   }, [locate, onRegister]);
 
+  useEffect(() => {
+    if (containerRef.current) {
+      Leaflet.DomEvent.disableClickPropagation(containerRef.current);
+    }
+  }, []);
+
   return (
-    <div className="absolute bottom-6 left-1/2 z-[2000] h-16 w-full -translate-x-1/2 px-2">
-      <div className="mx-auto grid h-full max-w-fit grid-cols-3 rounded-md border-2 border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-900 dark:text-white">
+    <div className="h-16 w-full cursor-default px-2">
+      <div
+        ref={containerRef}
+        className="mx-auto grid h-full max-w-fit grid-cols-3 rounded-md border-2 border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-900 dark:text-white"
+      >
         <button
           type="button"
           onClick={() => onHelp?.()}

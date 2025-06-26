@@ -82,6 +82,7 @@ export function LeafletMap(props: LeafletMapProps) {
         minZoom={minZoom}
         maxZoom={maxZoom}
         closePopupOnClick={true}
+        zoomControl={false}
       >
         <TileLayer attribution={tileLayerAttribution} url={tileLayerUrl} />
         <LeafletMapEventHandler

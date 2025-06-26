@@ -3,7 +3,7 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import useSWR from "swr";
 import Leaflet from "leaflet";
-import { Circle } from "react-leaflet";
+import { Circle, ZoomControl } from "react-leaflet";
 import { useTranslations } from "next-intl";
 import useApi from "@/hooks/useApi";
 import { DialogTrigger } from "react-aria-components";
@@ -293,6 +293,7 @@ export function CvmMap(props: CvmMapProps) {
       onLocationFound={onLocationFound}
       onLocationError={onLocationError}
     >
+      <ZoomControl position="topleft" zoomInTitle="" zoomOutTitle="" />
       <LocateControlPlugin position="topleft" />
       {isRegistering && (
         <>
@@ -354,6 +355,14 @@ export function CvmMap(props: CvmMapProps) {
       )}
       {!isRegistering && !isRepositioning && (
         <>
+          <div className="absolute bottom-6 left-1/2 z-[2000] h-fit w-fit -translate-x-1/2 px-2">
+            <MenuBottomNavigation
+              map={map!}
+              onHelp={onHelp}
+              onFilter={onFilter}
+              onRegister={onRegister}
+            />
+          </div>
           <DialogTrigger
             isOpen={showHelpDialog}
             onOpenChange={setShowHelpDialog}
@@ -393,12 +402,6 @@ export function CvmMap(props: CvmMapProps) {
               count={marker.count}
             />
           ))}
-          <MenuBottomNavigation
-            map={map!}
-            onHelp={onHelp}
-            onFilter={onFilter}
-            onRegister={onRegister}
-          />
         </>
       )}
       {location && (
