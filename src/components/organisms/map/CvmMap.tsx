@@ -23,6 +23,7 @@ import { FilterDialog } from "./FilterDialog";
 import { AdjustableLocationMarker } from "@/components/molecules/map/AdjustableLocationMarker";
 import { ConfirmRegisterBottomNavigation } from "./ConfirmRegisterBottomNavigation";
 import { CvmInfoDialog } from "./CvmInfoDialog";
+import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
 
 export interface CvmMapProps {
   onRegister?: (position: Leaflet.LatLng) => void;
@@ -421,14 +422,15 @@ export function CvmMap(props: CvmMapProps) {
               <FilterDialog />
             </Modal>
           </DialogTrigger>
-          {markers?.map((marker) => (
-            <LocationMarker
-              key={marker.id}
-              cvm={marker}
-              selected={marker.id === selectedCvm?.id}
-              onSelect={() => setSelectedCvm(marker)}
-            />
-          ))}
+          {markers
+            ?.filter((marker) => marker.id !== selectedCvm?.id)
+            .map((marker) => (
+              <LocationMarker
+                key={marker.id}
+                cvm={marker}
+                onSelect={() => setSelectedCvm(marker)}
+              />
+            ))}
           {clusters?.map((marker, index) => (
             <ClusterMarker
               key={index}
@@ -436,6 +438,7 @@ export function CvmMap(props: CvmMapProps) {
               count={marker.count}
             />
           ))}
+          {!!selectedCvm && <SelectedMarker cvm={selectedCvm} />}
         </>
       )}
       {location && (
