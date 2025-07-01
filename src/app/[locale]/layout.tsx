@@ -7,6 +7,7 @@ import { StoreProvider } from "@/store";
 import { NotificationProvider } from "@/contexts/NotificationProvider";
 import { NotificationView } from "@/components/organisms/NotificationView";
 import { RequireIdentInterceptor } from "@/components/organisms/ident/RequireIdentInterceptor";
+import { AckeeTracker } from "@/components/organisms/AckeeTracker";
 
 import "./globals.css";
 import { PWAInstallProvider } from "@/contexts/PWAInstallProvider";
@@ -52,7 +53,11 @@ export default async function RootLayout({
           href="/apple-touch-icon.png"
         />
         <meta name="apple-mobile-web-app-title" content="Kippenstummel" />
-        <link rel="manifest" href={`/manifest.${locale}.json`} />
+        <link
+          crossOrigin="use-credentials"
+          rel="manifest"
+          href={`/manifest.${locale}.json`}
+        />
       </head>
       <body className={`${lato.variable} bg-white dark:bg-slate-800`}>
         <NextIntlClientProvider>
@@ -62,6 +67,7 @@ export default async function RootLayout({
                 <RequireIdentInterceptor>
                   {children}
                   <NotificationView />
+                  <AckeeTracker />
                 </RequireIdentInterceptor>
               </PWAInstallProvider>
             </NotificationProvider>

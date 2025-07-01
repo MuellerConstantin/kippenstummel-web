@@ -32,7 +32,10 @@ here for the sake of completeness.
 Build time configuration variables are in general prefixed with `NEXT_PUBLIC_`. Changing these variables
 requires a rebuild of the web client. These variables are loaded and hardcoded at build time.
 
-_None variables to configure._
+| Environment Variable     | Description                           | Required |
+| ------------------------ | ------------------------------------- | -------- |
+| NEXT_PUBLIC_ACKEE_SERVER | Url of the Ackee analytics server.    | Yes      |
+| NEXT_PUBLIC_ACKEE_DOMAIN | Domain of the Ackee analytics server. | Yes      |
 
 ### Runtime configuration
 

@@ -120,6 +120,10 @@ export default function PrivacyPolicy() {
           })}
         </div>
         <h3 className="text-xl font-bold">
+          {t("dataCollection.tracking.title")}
+        </h3>
+        <div>{t("dataCollection.tracking.description")}</div>
+        <h3 className="text-xl font-bold">
           {t("dataCollection.contact.title")}
         </h3>
         <p>

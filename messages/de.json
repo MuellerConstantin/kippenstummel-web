@@ -184,7 +184,11 @@
       },
       "logs": {
         "title": "Server-Log-Dateien",
-        "description": "Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt. Dies sind: <br></br><br></br> <ul><li>Browsertyp und Browserversion</li><li>verwendetes Betriebssystem</li><li>Referrer URL</li><li>Hostname des zugreifenden Rechners</li><li>Uhrzeit der Serveranfrage</li><li>IP-Adresse</li></ul> <br></br> Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. <br></br><br></br> Die Erfassung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse an der technisch fehlerfreien Darstellung und der Optimierung seiner Website - hierzu müssen die Server-Log-Files erfasst werden"
+        "description": "Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt. Dies sind: <br></br><br></br> <ul><li>Browsertyp und Browserversion</li><li>verwendetes Betriebssystem</li><li>Referrer URL</li><li>Hostname des zugreifenden Rechners</li><li>Uhrzeit der Serveranfrage</li><li>IP-Adresse</li></ul> <br></br> Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. <br></br><br></br> Die Erfassung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse an der technisch fehlerfreien Darstellung und der Optimierung seiner Website - hierzu müssen die Server-Log-Files erfasst werden."
+      },
+      "tracking": {
+        "title": "Tracking und Analyse",
+        "description": "Zur Analyse des Nutzerverhaltens auf unserer Website setzen wir die Open-Source-Software Ackee ein. Dieses Analysetool ermöglicht uns die Erfassung allgemeiner Nutzungsstatistiken, ohne personenbezogene Daten einzelner Nutzer zu erheben oder zu speichern. Ackee verzichtet auf das Tracking individueller Besucher und anonymisiert die IP-Adressen vollständig. Zudem werden keine Cookies eingesetzt. Die erhobenen anonymen Daten verbleiben außerdem vollständig auf unseren eigenen Server."
       },
       "contact": {
         "title": "Anfrage per E-Mail, Telefon oder Telefax",
