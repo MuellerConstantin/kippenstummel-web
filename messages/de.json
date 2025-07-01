@@ -9,7 +9,8 @@
       "gettingStarted": "Jetzt Zigarettenautomat finden!",
       "install": {
         "or": "oder",
-        "button": "App installieren"
+        "button": "Zum Home-Bildschirm hinzufügen",
+        "tooltip": "Speichere diese App auf deinem Gerät, um sie schnell und einfach zu öffnen."
       }
     },
     "features": {

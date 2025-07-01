@@ -18,6 +18,8 @@ import {
 } from "@/components/atoms/Disclosure";
 import { Link } from "@/components/atoms/Link";
 import { usePWAInstallPrompt } from "@/contexts/PWAInstallProvider";
+import { TooltipTrigger } from "react-aria-components";
+import { Tooltip } from "@/components/atoms/Tooltip";
 
 function InstallAppButton() {
   const t = useTranslations("HomePage");
@@ -141,7 +143,10 @@ export default function Home() {
                   </span>
                   <div className="w-16 flex-1 border-t border-gray-600"></div>
                 </div>
-                <InstallAppButton />
+                <TooltipTrigger>
+                  <InstallAppButton />
+                  <Tooltip>{t("cta.install.tooltip")}</Tooltip>
+                </TooltipTrigger>
               </div>
             )}
           </div>
