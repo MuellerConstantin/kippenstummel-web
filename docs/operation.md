@@ -23,6 +23,12 @@ The tile server is used to fetch map tiles for the map view. It is required for 
 Hence, a tile server compatible with the [XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) protocol
 similar to [OSM](https://www.openstreetmap.org/) is required.
 
+**[Ackee](https://ackee.electerious.com/)**
+
+The web client uses the [Ackee](https://ackee.electerious.com/) analytics service to collect anonymous usage
+statistics. The analytics server must be present and available for communication. It is not essential for
+the correct operation of the web client but required for the statistics view and insights.
+
 ## Deployment
 
 The web client can be deployed on any [Node.js](https://nodejs.org/) runtime
