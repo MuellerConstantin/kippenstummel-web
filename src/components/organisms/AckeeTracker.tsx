@@ -15,22 +15,17 @@ export function AckeeTracker() {
 
   useEffect(() => {
     if (ackeeServer && ackeeDomain) {
-      const tracker = ackeeTracker.create(
-        process.env.NEXT_PUBLIC_ACKEE_SERVER!,
-        {
-          detailed: false,
-          ignoreLocalhost: true,
-          ignoreOwnVisits: true,
-        },
-      );
+      const tracker = ackeeTracker.create(ackeeServer, {
+        detailed: false,
+        ignoreLocalhost: true,
+        ignoreOwnVisits: true,
+      });
 
       if (trackerRef.current) {
         trackerRef.current.stop();
       }
 
-      trackerRef.current = tracker.record(
-        process.env.NEXT_PUBLIC_ACKEE_DOMAIN!,
-      );
+      trackerRef.current = tracker.record(ackeeDomain);
 
       return () => {
         if (trackerRef.current) {
