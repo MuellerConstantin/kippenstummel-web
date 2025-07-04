@@ -62,7 +62,7 @@ export function Navbar() {
         </div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:static md:top-auto md:left-auto md:translate-x-0 md:translate-y-0">
           <NextLink href="/home">
-            <div className="flex w-fit items-center justify-center md:space-x-4">
+            <div className="relative flex w-fit items-center justify-center md:space-x-4">
               <Image
                 src="/images/logo.svg"
                 width={42}
@@ -73,6 +73,9 @@ export function Navbar() {
               <span className="hidden self-center text-xl font-semibold whitespace-nowrap md:block dark:text-white">
                 Kippenstummel
               </span>
+              <div className="absolute -top-1 -left-5 rounded-full bg-amber-500 p-1 text-[0.4rem] text-white md:top-auto md:-right-1 md:-bottom-1 md:left-auto">
+                Pre Release
+              </div>
             </div>
           </NextLink>
         </div>

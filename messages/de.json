@@ -467,5 +467,8 @@
       "share": "Mit anderen Geräten teilen",
       "disclaimer": "Hierbei handelt es sich um deine persönliche Identität, welche der Authentifzierung dient und mit all deinen Interaktionen verknüpft wird. Behandle sie vertraulich und gebe sie nicht an Dritte weiter."
     }
+  },
+  "PreReleaseBanner": {
+    "notice": "<highlight>Baustelle!</highlight> Diese Version ist noch in der Entwicklung und kann fehlerhaft sein. Fehler bitte <link>hier</link> melden."
   }
 }

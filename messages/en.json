@@ -468,5 +468,8 @@
       "share": "Share to other devices",
       "disclaimer": "This is your personal identity, which is used for authentication and linked to all your interactions. Please keep it confidential and do not share it with third parties."
     }
+  },
+  "PreReleaseBanner": {
+    "notice": "<highlight>Work in Progress!</highlight> This version is still in development and may contain bugs. Please <link>report</link> any issues."
   }
 }
