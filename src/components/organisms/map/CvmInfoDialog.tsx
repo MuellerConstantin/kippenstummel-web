@@ -53,16 +53,18 @@ interface CvmMobileDialogProps {
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
   onDownvote?: (voterPosition: Leaflet.LatLng) => void;
   onReposition?: (editorPosition: Leaflet.LatLng) => void;
+  onReport?: (reporterPosition: Leaflet.LatLng) => void;
 }
 
 function CvmMobileDialog(props: CvmMobileDialogProps) {
-  const t = useTranslations("LocationMarker");
+  const t = useTranslations("CvmInfoDialog");
   const map = useMap();
   const locate = useLocate(map);
-  const { onUpvote, onDownvote, onReposition } = props;
+  const { onUpvote, onDownvote, onReposition, onReport } = props;
 
   const [voting, setVoting] = useState<"up" | "down" | false>(false);
   const [isRepositioning, setIsRepositioning] = useState(false);
+  const [isReporting, setIsReporting] = useState(false);
 
   const onUpvoteRequest = useCallback(() => {
     setVoting("up");
@@ -95,6 +97,18 @@ function CvmMobileDialog(props: CvmMobileDialogProps) {
         setIsRepositioning(false);
       });
   }, [locate, onReposition]);
+
+  const onReportRequest = useCallback(() => {
+    setIsReporting(true);
+
+    locate({ setView: true, maxZoom: 18 })
+      .then((position) => {
+        onReport?.(position);
+      })
+      .finally(() => {
+        setIsReporting(false);
+      });
+  }, [locate, onReport]);
 
   return (
     <Dialog className="!p-0">
@@ -204,7 +218,15 @@ function CvmMobileDialog(props: CvmMobileDialogProps) {
                   </div>
                 </div>
               </div>
-              <div className="flex justify-end gap-1">
+              <div className="flex justify-end gap-2">
+                <button
+                  className="flex cursor-pointer items-center gap-1 text-xs text-slate-500 hover:underline disabled:cursor-not-allowed disabled:text-slate-300 dark:text-slate-400 dark:hover:text-slate-200"
+                  onClick={onReportRequest}
+                  disabled={isReporting || isRepositioning || voting !== false}
+                >
+                  <span>{t("report")}</span>
+                  {isReporting && <Spinner size={14} />}
+                </button>
                 <button
                   className="flex cursor-pointer items-center gap-1 text-xs text-slate-500 hover:underline disabled:cursor-not-allowed disabled:text-slate-300 dark:text-slate-400 dark:hover:text-slate-200"
                   onClick={onRepositionRequest}
@@ -233,16 +255,18 @@ interface CvmSidebarDialogProps {
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
   onDownvote?: (voterPosition: Leaflet.LatLng) => void;
   onReposition?: (editorPosition: Leaflet.LatLng) => void;
+  onReport?: (reporterPosition: Leaflet.LatLng) => void;
 }
 
 function CvmSidebarDialog(props: CvmSidebarDialogProps) {
-  const t = useTranslations("LocationMarker");
+  const t = useTranslations("CvmInfoDialog");
   const map = useMap();
   const locate = useLocate(map);
-  const { onUpvote, onDownvote, onReposition } = props;
+  const { onUpvote, onDownvote, onReposition, onReport } = props;
 
   const [voting, setVoting] = useState<"up" | "down" | false>(false);
   const [isRepositioning, setIsRepositioning] = useState(false);
+  const [isReporting, setIsReporting] = useState(false);
 
   const onUpvoteRequest = useCallback(() => {
     setVoting("up");
@@ -275,6 +299,18 @@ function CvmSidebarDialog(props: CvmSidebarDialogProps) {
         setIsRepositioning(false);
       });
   }, [locate, onReposition]);
+
+  const onReportRequest = useCallback(() => {
+    setIsReporting(true);
+
+    locate({ setView: true, maxZoom: 18 })
+      .then((position) => {
+        onReport?.(position);
+      })
+      .finally(() => {
+        setIsReporting(false);
+      });
+  }, [locate, onReport]);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -378,7 +414,15 @@ function CvmSidebarDialog(props: CvmSidebarDialogProps) {
                 </div>
               </div>
             </div>
-            <div className="flex justify-end gap-1">
+            <div className="flex justify-end gap-2">
+              <button
+                className="flex cursor-pointer items-center gap-1 text-xs text-slate-500 hover:underline disabled:cursor-not-allowed disabled:text-slate-300 dark:text-slate-400 dark:hover:text-slate-200"
+                onClick={onReportRequest}
+                disabled={isReporting || isRepositioning || voting !== false}
+              >
+                <span>{t("report")}</span>
+                {isReporting && <Spinner size={14} />}
+              </button>
               <button
                 className="flex cursor-pointer items-center gap-1 text-xs text-slate-500 hover:underline disabled:cursor-not-allowed disabled:text-slate-300 dark:text-slate-400 dark:hover:text-slate-200"
                 onClick={onRepositionRequest}
@@ -407,6 +451,7 @@ interface CvmInfoDialogProps {
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
   onDownvote?: (voterPosition: Leaflet.LatLng) => void;
   onReposition?: (editorPosition: Leaflet.LatLng) => void;
+  onReport?: (reporterPosition: Leaflet.LatLng) => void;
 }
 
 export function CvmInfoDialog(props: CvmInfoDialogProps) {

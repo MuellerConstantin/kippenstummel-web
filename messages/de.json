@@ -329,13 +329,26 @@
     "description": "Die Nutzung unserer Dienste setzt Ihre Zustimmung zur Datenverarbeitung, dem Datenschutz und unseren Nutzungsbedingungen voraus. Indem Sie fortfahren versichern Sie, die Nutzungsbedingungen sowie die Datenschutzerklärung gelesen zu haben und zu akzeptieren.",
     "accept": "Akzeptieren & Fortfahren"
   },
-  "LocationMarker": {
+  "CvmInfoDialog": {
     "title": "Zigarettenautomat",
     "location": "Standort",
     "share": "Teilen",
     "copyLink": "Link kopieren",
     "openInGoogleMaps": "In Google Maps öffnen",
-    "reposition": "Umpositionieren"
+    "reposition": "Umpositionieren",
+    "report": "Melden"
+  },
+  "CvmReportDialog": {
+    "title": "Zigarettenautomat melden",
+    "description": "Warum willst du den Automaten melden?",
+    "submit": "Jetzt melden",
+    "cancel": "Abbrechen",
+    "reasons": {
+      "missing": "Dieser Automat existiert nicht (mehr).",
+      "spam": "Dieser Automat existiert nicht und die Meldung wirkt unseriös.",
+      "inactive": "Der Automat ist dauerhaft außer Betrieb.",
+      "inaccessible": "Der Automat ist unzugänglich bzw. nicht zu erreichen."
+    }
   },
   "Notifications": {
     "cvmRegistered": {
@@ -361,6 +374,14 @@
     "cvmVoteFailed": {
       "title": "Abstimmung fehlgeschlagen",
       "description": "Es gab einen Fehler beim Senden deiner Abstimmung."
+    },
+    "cvmReported": {
+      "title": "Befund gemeldet",
+      "description": "Der Automat wurde gemeldet, wir kümmern uns um die Störung."
+    },
+    "cvmReportFailed": {
+      "title": "Meldung fehlschlagen",
+      "description": "Es gab einen Fehler beim Melden des Automaten."
     },
     "locationDeterminationFailed": {
       "permissionDenied": {

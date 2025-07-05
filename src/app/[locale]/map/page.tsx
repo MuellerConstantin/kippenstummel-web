@@ -214,6 +214,59 @@ export default function Map() {
     [t, api, enqueue],
   );
 
+  const onReport = useCallback(
+    async (
+      id: string,
+      position: Leaflet.LatLng,
+      type: "missing" | "spam" | "inactive" | "inaccessible",
+    ) => {
+      try {
+        await api.post(`/cvms/${id}/report`, {
+          latitude: position.lat,
+          longitude: position.lng,
+          type,
+        });
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          if (
+            err.response?.status === 403 &&
+            err.response.data.code === "OUT_OF_REACH_ERROR"
+          ) {
+            enqueue(
+              {
+                title: t("Notifications.cvmOutOfReach.title"),
+                description: t("Notifications.cvmOutOfReach.description"),
+                variant: "info",
+              },
+              { timeout: 5000 },
+            );
+            return;
+          }
+        }
+
+        enqueue(
+          {
+            title: t("Notifications.cvmReportFailed.title"),
+            description: t("Notifications.cvmReportFailed.description"),
+            variant: "error",
+          },
+          { timeout: 5000 },
+        );
+        return;
+      }
+
+      enqueue(
+        {
+          title: t("Notifications.cvmReported.title"),
+          description: t("Notifications.cvmReported.description"),
+          variant: "success",
+        },
+        { timeout: 5000 },
+      );
+    },
+    [t, api, enqueue],
+  );
+
   useEffect(() => {
     if (error) {
       enqueue(
@@ -234,6 +287,7 @@ export default function Map() {
         onUpvote={onUpvote}
         onDownvote={onDownvote}
         onReposition={onReposition}
+        onReport={onReport}
         selectedCvm={data}
       />
     </div>

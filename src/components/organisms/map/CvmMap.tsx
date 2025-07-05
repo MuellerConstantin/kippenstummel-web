@@ -23,6 +23,7 @@ import { FilterDialog } from "./FilterDialog";
 import { AdjustableLocationMarker } from "@/components/molecules/map/AdjustableLocationMarker";
 import { ConfirmRegisterBottomNavigation } from "./ConfirmRegisterBottomNavigation";
 import { CvmInfoDialog } from "./CvmInfoDialog";
+import { CvmReportDialog } from "./CvmReportDialog";
 import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
 
 export interface CvmMapProps {
@@ -31,6 +32,11 @@ export interface CvmMapProps {
     id: string,
     position: Leaflet.LatLng,
     editorPosition: Leaflet.LatLng,
+  ) => void;
+  onReport?: (
+    id: string,
+    position: Leaflet.LatLng,
+    type: "missing" | "spam" | "inactive" | "inaccessible",
   ) => void;
   onUpvote?: (id: string, position: Leaflet.LatLng) => void;
   onDownvote?: (id: string, position: Leaflet.LatLng) => void;
@@ -66,6 +72,10 @@ export function CvmMap(props: CvmMapProps) {
     useState<Leaflet.LatLng>();
   const [repositioningPosition, setRepositioningPosition] =
     useState<Leaflet.LatLng>();
+
+  const [isReporting, setIsReporting] = useState(false);
+  const [reportingId, setReportingId] = useState<string>();
+  const [reportingPosition, setReportingPosition] = useState<Leaflet.LatLng>();
 
   const [selectedCvm, setSelectedCvm] = useState<{
     id: string;
@@ -392,6 +402,12 @@ export function CvmMap(props: CvmMapProps) {
                       editorPosition,
                     )
                   }
+                  onReport={(reporterPosition) => {
+                    setIsReporting(true);
+                    setReportingId(selectedCvm!.id);
+                    setReportingPosition(reporterPosition);
+                    setSelectedCvm(null);
+                  }}
                 />
               )}
             </div>
@@ -406,6 +422,16 @@ export function CvmMap(props: CvmMapProps) {
               </div>
             </div>
           </div>
+          <DialogTrigger isOpen={isReporting} onOpenChange={setIsReporting}>
+            <Modal>
+              <CvmReportDialog
+                onReport={(type) => {
+                  props.onReport?.(reportingId!, reportingPosition!, type);
+                  setIsReporting(false);
+                }}
+              />
+            </Modal>
+          </DialogTrigger>
           <DialogTrigger
             isOpen={showHelpDialog}
             onOpenChange={setShowHelpDialog}

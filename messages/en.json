@@ -329,13 +329,26 @@
     "description": "Using our services requires your consent to our data processing, privacy policy, and our Terms of Use. By continuing, you confirm that you have read and accepted the Terms of Use and the Privacy Policy.",
     "accept": "Accept & Continue"
   },
-  "LocationMarker": {
+  "CvmInfoDialog": {
     "title": "Cigarette Vending Machine",
     "location": "Location",
     "share": "Share",
     "copyLink": "Copy Link",
     "openInGoogleMaps": "Open in Google Maps",
-    "reposition": "Reposition"
+    "reposition": "Reposition",
+    "report": "Report"
+  },
+  "CvmReportDialog": {
+    "title": "Report Cigarette Vending Machine",
+    "description": "Why do you want to report the machine?",
+    "submit": "Report now",
+    "cancel": "Cancel",
+    "reasons": {
+      "missing": "This machine no longer exists or never existed.",
+      "spam": "This machine does not exist and the location seems dubious.",
+      "inactive": "The machine is permanently out of service.",
+      "inaccessible": "The machine is inaccessible or cannot be reached."
+    }
   },
   "Notifications": {
     "cvmRegistered": {
@@ -361,6 +374,14 @@
     "cvmVoteFailed": {
       "title": "Vote Failed",
       "description": "There was an error submitting your vote."
+    },
+    "cvmReported": {
+      "title": "Report sent",
+      "description": "The machine has been reported and we are taking care of the problem."
+    },
+    "cvmReportFailed": {
+      "title": "Report failed",
+      "description": "There was an error reporting the machine."
     },
     "locationDeterminationFailed": {
       "permissionDenied": {
