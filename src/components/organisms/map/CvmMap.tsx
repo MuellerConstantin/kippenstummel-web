@@ -45,6 +45,12 @@ export interface CvmMapProps {
     longitude: number;
     latitude: number;
     score: number;
+    recentlyReported: {
+      missing: number;
+      spam: number;
+      inactive: number;
+      inaccessible: number;
+    };
   } | null;
 }
 
@@ -82,6 +88,12 @@ export function CvmMap(props: CvmMapProps) {
     latitude: number;
     longitude: number;
     score: number;
+    recentlyReported: {
+      missing: number;
+      spam: number;
+      inactive: number;
+      inaccessible: number;
+    };
   } | null>(null);
 
   const [map, setMap] = useState<Leaflet.Map | null>(null);
@@ -208,7 +220,18 @@ export function CvmMap(props: CvmMapProps) {
 
   const { data } = useSWR<
     (
-      | { id: string; longitude: number; latitude: number; score: number }
+      | {
+          id: string;
+          longitude: number;
+          latitude: number;
+          score: number;
+          recentlyReported: {
+            missing: number;
+            spam: number;
+            inactive: number;
+            inaccessible: number;
+          };
+        }
       | {
           id: string;
           cluster: true;
@@ -234,6 +257,12 @@ export function CvmMap(props: CvmMapProps) {
         longitude: number;
         latitude: number;
         score: number;
+        recentlyReported: {
+          missing: number;
+          spam: number;
+          inactive: number;
+          inaccessible: number;
+        };
       }[],
     [data],
   );

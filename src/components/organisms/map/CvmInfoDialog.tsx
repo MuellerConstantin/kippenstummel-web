@@ -13,6 +13,8 @@ import { Button } from "@/components/atoms/Button";
 import useIsMobile from "@/hooks/useIsMobile";
 import Image from "next/image";
 
+const REPORT_THRESHOLD = 3;
+
 interface CopyButtonProps {
   text: string;
   disabled?: boolean;
@@ -43,12 +45,56 @@ function CopyButton(props: CopyButtonProps) {
   );
 }
 
+interface ReportedMessageProps {
+  cvm: {
+    id: string;
+    latitude: number;
+    longitude: number;
+    score: number;
+    recentlyReported: {
+      missing: number;
+      spam: number;
+      inactive: number;
+      inaccessible: number;
+    };
+  };
+}
+
+function ReportedMessage({ cvm }: ReportedMessageProps) {
+  console.log(cvm);
+  const t = useTranslations("CvmInfoDialog");
+  const reports = cvm.recentlyReported;
+  const entries = Object.entries(reports);
+  const filtered = entries.filter(([, count]) => count >= REPORT_THRESHOLD);
+
+  if (filtered.length === 0) return null;
+
+  const [worstType, count] = filtered.reduce((max, curr) =>
+    curr[1] > max[1] ? curr : max,
+  );
+
+  return (
+    <div className="rounded-md bg-amber-200 p-2 text-xs text-amber-600 dark:bg-amber-600 dark:text-amber-200">
+      {t.rich(`reported.${worstType}`, {
+        count,
+        b: (chunks) => <span className="font-semibold">{chunks}</span>,
+      })}
+    </div>
+  );
+}
+
 interface CvmMobileDialogProps {
   cvm: {
     id: string;
     latitude: number;
     longitude: number;
     score: number;
+    recentlyReported: {
+      missing: number;
+      spam: number;
+      inactive: number;
+      inaccessible: number;
+    };
   };
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
   onDownvote?: (voterPosition: Leaflet.LatLng) => void;
@@ -157,66 +203,71 @@ function CvmMobileDialog(props: CvmMobileDialogProps) {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-4">
-                <div className="flex flex-col items-center">
-                  <button
-                    className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
-                    onClick={onUpvoteRequest}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    disabled={voting !== false || isRepositioning}
-                  >
-                    {voting === "up" ? (
-                      <Spinner />
-                    ) : (
-                      <ChevronUp className="h-8 w-8" />
-                    )}
-                  </button>
-                  <div className="text-lg font-semibold">
-                    {(props.cvm.score / 100).toFixed(1)}
-                  </div>
-                  <button
-                    className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
-                    onClick={onDownvoteRequest}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    disabled={voting !== false || isRepositioning}
-                  >
-                    {voting === "down" ? (
-                      <Spinner />
-                    ) : (
-                      <ChevronDown className="h-8 w-8" />
-                    )}
-                  </button>
-                </div>
-                <div className="flex grow flex-col gap-2">
-                  <div className="space-y-1">
-                    <div className="text-sm font-semibold">{t("location")}</div>
-                    <div className="text-sm">
-                      {props.cvm.latitude.toFixed(7)} /{" "}
-                      {props.cvm.longitude.toFixed(7)} (lat/lng)
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <div className="text-sm font-semibold">{t("share")}</div>
-                    <div className="flex items-center gap-2">
-                      <input
-                        readOnly
-                        value={`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`}
-                        className="min-w-0 flex-1 rounded-md border-2 border-gray-300 bg-white px-1 py-0.5 text-xs text-gray-800 outline outline-0 focus:border-green-600 disabled:text-gray-200 dark:border-slate-500 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-slate-300 dark:disabled:text-slate-600"
-                      />
-                      <CopyButton
-                        text={`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`}
-                        disabled={voting !== false}
-                      />
-                    </div>
-                    <Link
-                      href={`https://www.google.com.sa/maps/search/${props.cvm.latitude},${props.cvm.longitude}`}
-                      target="_blank"
-                      className="block text-sm"
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="flex flex-col items-center">
+                    <button
+                      className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
+                      onClick={onUpvoteRequest}
+                      onMouseDown={(e) => e.stopPropagation()}
+                      disabled={voting !== false || isRepositioning}
                     >
-                      {t("openInGoogleMaps")}
-                    </Link>
+                      {voting === "up" ? (
+                        <Spinner />
+                      ) : (
+                        <ChevronUp className="h-8 w-8" />
+                      )}
+                    </button>
+                    <div className="text-lg font-semibold">
+                      {(props.cvm.score / 100).toFixed(1)}
+                    </div>
+                    <button
+                      className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
+                      onClick={onDownvoteRequest}
+                      onMouseDown={(e) => e.stopPropagation()}
+                      disabled={voting !== false || isRepositioning}
+                    >
+                      {voting === "down" ? (
+                        <Spinner />
+                      ) : (
+                        <ChevronDown className="h-8 w-8" />
+                      )}
+                    </button>
+                  </div>
+                  <div className="flex grow flex-col gap-2">
+                    <div className="space-y-1">
+                      <div className="text-sm font-semibold">
+                        {t("location")}
+                      </div>
+                      <div className="text-sm">
+                        {props.cvm.latitude.toFixed(7)} /{" "}
+                        {props.cvm.longitude.toFixed(7)} (lat/lng)
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <div className="text-sm font-semibold">{t("share")}</div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          readOnly
+                          value={`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`}
+                          className="min-w-0 flex-1 rounded-md border-2 border-gray-300 bg-white px-1 py-0.5 text-xs text-gray-800 outline outline-0 focus:border-green-600 disabled:text-gray-200 dark:border-slate-500 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-slate-300 dark:disabled:text-slate-600"
+                        />
+                        <CopyButton
+                          text={`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`}
+                          disabled={voting !== false}
+                        />
+                      </div>
+                      <Link
+                        href={`https://www.google.com.sa/maps/search/${props.cvm.latitude},${props.cvm.longitude}`}
+                        target="_blank"
+                        className="block text-sm"
+                      >
+                        {t("openInGoogleMaps")}
+                      </Link>
+                    </div>
                   </div>
                 </div>
+                <ReportedMessage cvm={props.cvm} />
               </div>
               <div className="flex justify-end gap-2">
                 <button
@@ -250,6 +301,12 @@ interface CvmSidebarDialogProps {
     latitude: number;
     longitude: number;
     score: number;
+    recentlyReported: {
+      missing: number;
+      spam: number;
+      inactive: number;
+      inaccessible: number;
+    };
   };
   onClose: () => void;
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
@@ -353,66 +410,69 @@ function CvmSidebarDialog(props: CvmSidebarDialogProps) {
             {t("title")}
           </h2>
           <div className="flex grow flex-col justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <div className="flex flex-col items-center">
-                <button
-                  className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
-                  onClick={onUpvoteRequest}
-                  onMouseDown={(e) => e.stopPropagation()}
-                  disabled={voting !== false || isRepositioning}
-                >
-                  {voting === "up" ? (
-                    <Spinner />
-                  ) : (
-                    <ChevronUp className="h-8 w-8" />
-                  )}
-                </button>
-                <div className="text-lg font-semibold">
-                  {(props.cvm.score / 100).toFixed(1)}
-                </div>
-                <button
-                  className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
-                  onClick={onDownvoteRequest}
-                  onMouseDown={(e) => e.stopPropagation()}
-                  disabled={voting !== false || isRepositioning}
-                >
-                  {voting === "down" ? (
-                    <Spinner />
-                  ) : (
-                    <ChevronDown className="h-8 w-8" />
-                  )}
-                </button>
-              </div>
-              <div className="flex grow flex-col gap-2">
-                <div className="space-y-1">
-                  <div className="text-sm font-semibold">{t("location")}</div>
-                  <div className="text-sm">
-                    {props.cvm.latitude.toFixed(7)} /{" "}
-                    {props.cvm.longitude.toFixed(7)} (lat/lng)
-                  </div>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <div className="text-sm font-semibold">{t("share")}</div>
-                  <div className="flex items-center gap-2">
-                    <input
-                      readOnly
-                      value={`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`}
-                      className="min-w-0 flex-1 rounded-md border-2 border-gray-300 bg-white px-1 py-0.5 text-xs text-gray-800 outline outline-0 focus:border-green-600 disabled:text-gray-200 dark:border-slate-500 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-slate-300 dark:disabled:text-slate-600"
-                    />
-                    <CopyButton
-                      text={`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`}
-                      disabled={voting !== false}
-                    />
-                  </div>
-                  <Link
-                    href={`https://www.google.com.sa/maps/search/${props.cvm.latitude},${props.cvm.longitude}`}
-                    target="_blank"
-                    className="block text-sm !text-green-600"
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-4">
+                <div className="flex flex-col items-center">
+                  <button
+                    className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
+                    onClick={onUpvoteRequest}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    disabled={voting !== false || isRepositioning}
                   >
-                    {t("openInGoogleMaps")}
-                  </Link>
+                    {voting === "up" ? (
+                      <Spinner />
+                    ) : (
+                      <ChevronUp className="h-8 w-8" />
+                    )}
+                  </button>
+                  <div className="text-lg font-semibold">
+                    {(props.cvm.score / 100).toFixed(1)}
+                  </div>
+                  <button
+                    className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
+                    onClick={onDownvoteRequest}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    disabled={voting !== false || isRepositioning}
+                  >
+                    {voting === "down" ? (
+                      <Spinner />
+                    ) : (
+                      <ChevronDown className="h-8 w-8" />
+                    )}
+                  </button>
+                </div>
+                <div className="flex grow flex-col gap-2">
+                  <div className="space-y-1">
+                    <div className="text-sm font-semibold">{t("location")}</div>
+                    <div className="text-sm">
+                      {props.cvm.latitude.toFixed(7)} /{" "}
+                      {props.cvm.longitude.toFixed(7)} (lat/lng)
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <div className="text-sm font-semibold">{t("share")}</div>
+                    <div className="flex items-center gap-2">
+                      <input
+                        readOnly
+                        value={`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`}
+                        className="min-w-0 flex-1 rounded-md border-2 border-gray-300 bg-white px-1 py-0.5 text-xs text-gray-800 outline outline-0 focus:border-green-600 disabled:text-gray-200 dark:border-slate-500 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-slate-300 dark:disabled:text-slate-600"
+                      />
+                      <CopyButton
+                        text={`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`}
+                        disabled={voting !== false}
+                      />
+                    </div>
+                    <Link
+                      href={`https://www.google.com.sa/maps/search/${props.cvm.latitude},${props.cvm.longitude}`}
+                      target="_blank"
+                      className="block text-sm !text-green-600"
+                    >
+                      {t("openInGoogleMaps")}
+                    </Link>
+                  </div>
                 </div>
               </div>
+              <ReportedMessage cvm={props.cvm} />
             </div>
             <div className="flex justify-end gap-2">
               <button
@@ -445,6 +505,12 @@ interface CvmInfoDialogProps {
     latitude: number;
     longitude: number;
     score: number;
+    recentlyReported: {
+      missing: number;
+      spam: number;
+      inactive: number;
+      inaccessible: number;
+    };
   };
   open: boolean;
   onOpenChange: (open: boolean) => void;

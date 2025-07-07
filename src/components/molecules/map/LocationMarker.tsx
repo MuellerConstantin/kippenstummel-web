@@ -9,6 +9,12 @@ interface LocationMarkerProps {
     latitude: number;
     longitude: number;
     score: number;
+    recentlyReported: {
+      missing: number;
+      spam: number;
+      inactive: number;
+      inaccessible: number;
+    };
   };
   onSelect: () => void;
 }

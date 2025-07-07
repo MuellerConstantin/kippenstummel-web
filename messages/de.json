@@ -335,6 +335,12 @@
     "share": "Teilen",
     "copyLink": "Link kopieren",
     "openInGoogleMaps": "In Google Maps öffnen",
+    "reported": {
+      "missing": "<b>Achtung:</b> Dieser Automat wurde in den letzten Tagen {count} Mal als nicht vorhanden gemeldet.",
+      "spam": "<b>Hinweis:</b> Dieser Standort wurde in den letzten Tagen {count} Mal als Spam markiert.",
+      "inactive": "<b>Achtung:</b> Dieser Automat wurde in den letzten Tagen {count} Mal als außer Betrieb gemeldet.",
+      "inaccessible": "<b>Hinweis:</b> Dieser Automat wurde in den letzten Tagen {count} Mal als nicht zugänglich gemeldet."
+    },
     "reposition": "Umpositionieren",
     "report": "Melden"
   },
@@ -431,11 +437,11 @@
     "description": {
       "general": "Die Karte vor dir zeigt dir die Standorte der Zigarettenautomaten an. Je nach Zoom-Stufe werden die Automaten aus Gründen der Übersicht in Clustern zusammengefasst. Bei höherer Zoom-Stufe werden die Standorte dann einzeln angezeigt. Durch Anwählen eines einzelnen Zigarattenautomaten erscheint dessen Menü mit weitere Informationen.<br></br><br></br>Jeder Zigarettenautomat verfügt über einen Score, welcher von -5 bis 5 gehen kann. Der Score wird aus den Bewertungen der Benutzer errechnet. Ein negativer Score bedeutet, das Benutzer vermehrt Probleme mit dem Automaten hatten, der Standort könnte falsch oder der Automat defekt sein. Ein positiver Score bedeutete mehrere Benutzer scheinen den Automaten erfolgreich genutzt zu haben.<br></br><br></br>Jeder Automat ist außerdem mit einem Badge versehen, welches die Güte des Automaten anzeigt. Je nach Score wird ein anderes Badge verwendet. Die folgenden Badges gibt es:",
       "report": "Du kannst auch selber ganz einfach die Standorte noch nicht erfasster Automaten melden. Hierfür findest du rechts unten die entsprechende Schaltfläche. Folge einfach den Anweisungen. Bitte überprüfe zuvor, ob der Automat an deiner aktuellen Position nicht vielleicht schon erfasst wurde.",
-      "vote": "Die Standorte von Automaten werden via Schwarmintelligenz verifiziert. Du kannst für Automaten positiv abstimmen, welche funktionstüchtig tatsächlich an der ansprechenden Stelle standen oder auch negativ abstimmen für fehlende oder nicht funktionierende Automaten. Abstimmen kannst du über das Menü der einzelnen Automaten.<br></br><br></br>Bitte bewerte nur, ob ein Automat vor Ort vorhanden ist und funktioniert.<br></br><br></br>👍 Upvote: Automat ist vorhanden und funktioniert.<br></br>👎 Downvote: Automat fehlt oder ist defekt.<br></br><br></br>Bitte keine Bewertungen aus anderen Gründen (z.B. keine Kartenzahlung, schwer erreichbar, unpassender Standort)."
+      "vote": "Die Standorte von Automaten werden via Schwarmintelligenz verifiziert. Du kannst für Automaten positiv abstimmen, welche funktionstüchtig tatsächlich an der ansprechenden Stelle standen oder auch negativ abstimmen für fehlende oder nicht funktionierende Automaten. Abstimmen kannst du über das Menü der einzelnen Automaten. Alternativ kannst du Automaten welche missbräuchlich gemeldet wurden oder nicht mehr länger vorhanden sind, melden."
     },
     "general": {
       "unsteady": "Eignung unsicher (Score von -5 to -1)",
-      "approved": "Mehrfach verifiziert (Score von -1 to +1)",
+      "approved": "Verifiziert (Score von -1 to +1)",
       "trusted": "Vertrauenswürdig (Score von +1 to +5)"
     },
     "close": "Schließen"
