@@ -24,6 +24,12 @@ export default function Map() {
       latitude: number;
       longitude: number;
       score: number;
+      recentlyReported: {
+        missing: number;
+        spam: number;
+        inactive: number;
+        inaccessible: number;
+      };
     },
     unknown,
     string | null

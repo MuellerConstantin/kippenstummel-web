@@ -12,6 +12,12 @@ export interface CvmOptInMap extends CvmMapProps {
     longitude: number;
     latitude: number;
     score: number;
+    recentlyReported: {
+      missing: number;
+      spam: number;
+      inactive: number;
+      inaccessible: number;
+    };
   } | null;
 }
 
