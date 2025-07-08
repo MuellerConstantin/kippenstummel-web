@@ -322,7 +322,7 @@ export function IdentityDialog(props: IdentityDialogProps) {
           </Heading>
           <div className="mt-4 flex flex-col items-start gap-4">
             <Tabs orientation="horizontal" className="w-full">
-              <TabList className="overflow-x-scroll pb-2">
+              <TabList className="overflow-x-auto pb-2">
                 <Tab className="w-fit min-w-fit" id="identity-tab-overview">
                   {t("tabs.profile")}
                 </Tab>
@@ -341,7 +341,7 @@ export function IdentityDialog(props: IdentityDialogProps) {
                   <div className="brorder-slate-200 w-full space-y-2 rounded-md border p-4 dark:border-slate-600">
                     <div className="font-semibold">{t("uniqueId")}</div>
                     <div className="flex items-center gap-2">
-                      <div className="overflow-x-scroll pb-2 text-xs whitespace-nowrap">
+                      <div className="overflow-x-auto pb-2 text-xs whitespace-nowrap">
                         {identity || "Anonymous"}
                       </div>
                       <div className="pb-2">

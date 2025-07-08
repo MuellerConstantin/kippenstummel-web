@@ -29,7 +29,7 @@ export function Modal(
   });
 
   const modalStyles = tv({
-    base: "w-full max-w-md max-h-full overflow-scroll h-fit rounded-2xl bg-white dark:bg-slate-800/70 dark:backdrop-blur-2xl dark:backdrop-saturate-200 forced-colors:bg-[Canvas] text-left align-middle text-slate-700 dark:text-slate-300 shadow-2xl bg-clip-padding border border-black/10 dark:border-white/10",
+    base: "w-full max-w-md max-h-full overflow-auto h-fit rounded-2xl bg-white dark:bg-slate-800/70 dark:backdrop-blur-2xl dark:backdrop-saturate-200 forced-colors:bg-[Canvas] text-left align-middle text-slate-700 dark:text-slate-300 shadow-2xl bg-clip-padding border border-black/10 dark:border-white/10",
     variants: {
       isEntering: {
         true: "animate-in zoom-in-105 ease-out duration-200",
