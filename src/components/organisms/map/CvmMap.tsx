@@ -337,7 +337,7 @@ export function CvmMap(props: CvmMapProps) {
       center={mapView.center}
       zoom={mapView.zoom}
       minZoom={12}
-      maxZoom={18}
+      maxZoom={19}
       onReady={onReady}
       onMoveEnd={onMoveEnd}
       onZoomEnd={onZoomEnd}
