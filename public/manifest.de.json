@@ -1,6 +1,7 @@
 {
   "name": "Kippenstummel",
   "short_name": "Kippenstummel",
+  "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - diese App hilft Rauchern, Zigarettenautomaten in der Nähe zu finden.",
   "start_url": "/de",
   "icons": [
     {
@@ -21,13 +22,13 @@
       "purpose": "any"
     },
     {
-      "src": "/web-app-manifest-192x192.png",
+      "src": "/web-app-manifest-192x192-maskable.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/web-app-manifest-512x512.png",
+      "src": "/web-app-manifest-512x512-maskable.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
