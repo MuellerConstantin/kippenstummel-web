@@ -176,11 +176,11 @@ function CvmMobileDialog(props: CvmMobileDialogProps) {
           <div className="flex flex-col gap-4 p-4">
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2 overflow-hidden">
-                {props.cvm.score < -100 ? (
+                {props.cvm.score < -5 ? (
                   <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-500">
                     <ChevronDown className="h-4 w-4 text-white" />
                   </div>
-                ) : props.cvm.score > 100 ? (
+                ) : props.cvm.score > 5 ? (
                   <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-600">
                     <ChevronUp className="h-4 w-4 text-white" />
                   </div>
@@ -219,7 +219,7 @@ function CvmMobileDialog(props: CvmMobileDialogProps) {
                       )}
                     </button>
                     <div className="text-lg font-semibold">
-                      {(props.cvm.score / 100).toFixed(1)}
+                      {props.cvm.score}
                     </div>
                     <button
                       className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
@@ -425,9 +425,7 @@ function CvmSidebarDialog(props: CvmSidebarDialogProps) {
                       <ChevronUp className="h-8 w-8" />
                     )}
                   </button>
-                  <div className="text-lg font-semibold">
-                    {(props.cvm.score / 100).toFixed(1)}
-                  </div>
+                  <div className="text-lg font-semibold">{props.cvm.score}</div>
                   <button
                     className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
                     onClick={onDownvoteRequest}

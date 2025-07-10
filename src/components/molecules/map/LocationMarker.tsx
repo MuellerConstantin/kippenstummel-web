@@ -27,11 +27,11 @@ export function LocationMarker(props: LocationMarkerProps) {
         icon={LeafletDivIcon({
           source: (
             <div className="relative z-[50] h-fit w-fit">
-              {props.cvm.score < -99 ? (
+              {props.cvm.score < -5 ? (
                 <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-500">
                   <ChevronDown className="h-2.5 w-2.5 text-white" />
                 </div>
-              ) : props.cvm.score > 99 ? (
+              ) : props.cvm.score > 5 ? (
                 <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-green-600">
                   <ChevronUp className="h-2.5 w-2.5 text-white" />
                 </div>
