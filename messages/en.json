@@ -70,7 +70,7 @@
         },
         "7": {
           "question": "Why is a reported location or rating not shown?",
-          "answer": "Reported locations or reviews are first validated within the system, which can take some time. Therefore, reports may not be visible immediately. Furthermore, a report may not be accepted by the system and therefore not be noticeable."
+          "answer": "Reported locations or reviews are first validated within the system, which can take some time. Therefore, reports may not be visible immediately. Furthermore, a report may not be accepted by the system and therefore not be noticeable. Should one of your contributions be rejected, it's important to us to emphasize that we're not rejecting them due to a lack of trust, but rather to ensure a balanced vote in the spirit of swarm intelligence. Thank you for your commitment!"
         },
         "8": {
           "question": "What is my personal identity?",
@@ -367,7 +367,7 @@
     },
     "cvmRegisterThrottled": {
       "title": "Slow down, champ",
-      "description": "You're more eager than our servers can handle. Take a short break and try again in a bit."
+      "description": "You're more eager than our servers can handle. Take a short break and try again in a bit. <link>More info</link>"
     },
     "cvmRepositioned": {
       "title": "Repositioned",
@@ -379,7 +379,7 @@
     },
     "cvmRepositionThrottled": {
       "title": "Slow down, champ",
-      "description": "You're more eager than our servers can handle. Take a short break and try again in a bit."
+      "description": "You're more eager than our servers can handle. Take a short break and try again in a bit. <link>More info</link>"
     },
     "cvmVoted": {
       "title": "Voted",

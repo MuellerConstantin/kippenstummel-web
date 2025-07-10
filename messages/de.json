@@ -70,7 +70,7 @@
         },
         "7": {
           "question": "Warum wird ein gemeldeter Standort oder eine Bewertung nicht angezeigt?",
-          "answer": "Gemeldete Standorte oder Bewertungen werden systemintern zunächst validiert was einige Zeit in Anspruch nehmen kann. Daher sind Meldungen unter Umständen nicht sofort sichtbar. Darüber hinaus kann es auch sein, das eine Meldung vom System nicht akzeptiert wird und daher nicht bemerkbar wird."
+          "answer": "Gemeldete Standorte oder Bewertungen werden systemintern zunächst validiert was einige Zeit in Anspruch nehmen kann. Daher sind Meldungen unter Umständen nicht sofort sichtbar. Darüber hinaus kann es auch sein, das eine Meldung vom System nicht akzeptiert wird und daher nicht bemerkbar wird. Sollte eine deiner Meldungen doch einmal abgelehnt werden ist es uns wichtig zu betonen, dass wir diese nicht aus mangelndem Vertrauen ablehnen, sondern um ein ausgewogenes Stimmverhältnis im Sinne der Schwarmintelligenz zu garantieren. Vielen Dank für deinen Einsatz!"
         },
         "8": {
           "question": "Was ist meine persönliche Identität?",
@@ -367,7 +367,7 @@
     },
     "cvmRegisterThrottled": {
       "title": "Gönn dir eine Pause",
-      "description": "Du scheinst fleißiger zu sein als unsere Server es erlauben. Gönn dir 'ne Pause - versuch's in ein paar Minuten nochmal."
+      "description": "Du scheinst fleißiger zu sein als unsere Server es erlauben. Gönn dir 'ne Pause - versuch's in ein paar Minuten nochmal. <link>Mehr Informationen</link>"
     },
     "cvmRepositioned": {
       "title": "Neupositionierung eingereicht",
@@ -379,7 +379,7 @@
     },
     "cvmRepositionThrottled": {
       "title": "Gönn dir eine Pause",
-      "description": "Du scheinst fleißiger zu sein als unsere Server es erlauben. Gönn dir 'ne Pause - versuch's in ein paar Minuten nochmal."
+      "description": "Du scheinst fleißiger zu sein als unsere Server es erlauben. Gönn dir 'ne Pause - versuch's in ein paar Minuten nochmal. <link>Mehr Informationen</link>"
     },
     "cvmVoted": {
       "title": "Abgestimmt",

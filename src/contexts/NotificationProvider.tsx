@@ -5,7 +5,7 @@ import { ToastQueue } from "@/components/atoms/Toast";
 
 export interface Notification {
   title: string;
-  description: string;
+  description: string | React.ReactNode;
   variant?: "default" | "success" | "error" | "info";
 }
 

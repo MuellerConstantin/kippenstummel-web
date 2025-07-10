@@ -9,6 +9,7 @@ import { useNotifications } from "@/contexts/NotificationProvider";
 import useApi from "@/hooks/useApi";
 import { AxiosError } from "axios";
 import useSWR from "swr";
+import { Link } from "@/components/atoms/Link";
 
 export default function Map() {
   const t = useTranslations();
@@ -55,8 +56,11 @@ export default function Map() {
             enqueue(
               {
                 title: t("Notifications.cvmRegisterThrottled.title"),
-                description: t(
+                description: t.rich(
                   "Notifications.cvmRegisterThrottled.description",
+                  {
+                    link: (chunks) => <Link href="/home#faq-7">{chunks}</Link>,
+                  },
                 ),
                 variant: "info",
               },
@@ -124,8 +128,11 @@ export default function Map() {
             enqueue(
               {
                 title: t("Notifications.cvmRepositionThrottled.title"),
-                description: t(
+                description: t.rich(
                   "Notifications.cvmRepositionThrottled.description",
+                  {
+                    link: (chunks) => <Link href="/home#faq-7">{chunks}</Link>,
+                  },
                 ),
                 variant: "info",
               },

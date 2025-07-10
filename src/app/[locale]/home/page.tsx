@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -67,6 +67,36 @@ function InstallAppButton() {
       <Button variant="secondary" onPress={promptInstall}>
         {t("cta.install.button")}
       </Button>
+    </div>
+  );
+}
+
+function FaqItem({
+  id,
+  question,
+  answer,
+}: {
+  id: string;
+  question: string;
+  answer: ReactNode;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (window.location.hash === `#${id}`) {
+      setTimeout(() => {
+        setIsOpen(true);
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }, [id]);
+
+  return (
+    <div id={id}>
+      <Disclosure isExpanded={isOpen} onExpandedChange={setIsOpen}>
+        <DisclosureHeader>{question}</DisclosureHeader>
+        <DisclosurePanel>{answer}</DisclosurePanel>
+      </Disclosure>
     </div>
   );
 }
@@ -259,51 +289,57 @@ export default function Home() {
             </div>
           </div>
           <div className="flex w-full max-w-[60rem] flex-col gap-4">
-            <Disclosure>
-              <DisclosureHeader>{t("faq.items.1.question")}</DisclosureHeader>
-              <DisclosurePanel>{t("faq.items.1.answer")}</DisclosurePanel>
-            </Disclosure>
-            <Disclosure>
-              <DisclosureHeader>{t("faq.items.2.question")}</DisclosureHeader>
-              <DisclosurePanel>{t("faq.items.2.answer")}</DisclosurePanel>
-            </Disclosure>
-            <Disclosure>
-              <DisclosureHeader>{t("faq.items.3.question")}</DisclosureHeader>
-              <DisclosurePanel>{t("faq.items.3.answer")}</DisclosurePanel>
-            </Disclosure>
-            <Disclosure>
-              <DisclosureHeader>{t("faq.items.4.question")}</DisclosureHeader>
-              <DisclosurePanel>{t("faq.items.4.answer")}</DisclosurePanel>
-            </Disclosure>
-            <Disclosure>
-              <DisclosureHeader>{t("faq.items.5.question")}</DisclosureHeader>
-              <DisclosurePanel>{t("faq.items.5.answer")}</DisclosurePanel>
-            </Disclosure>
-            <Disclosure>
-              <DisclosureHeader>{t("faq.items.6.question")}</DisclosureHeader>
-              <DisclosurePanel>
-                {t.rich("faq.items.6.answer", {
-                  link1: (chunks) => (
-                    <Link target="_blank" href="https://rauchfrei-info.de">
-                      {chunks}
-                    </Link>
-                  ),
-                  link2: (chunks) => (
-                    <Link target="_blank" href="https://www.dhs.de/">
-                      {chunks}
-                    </Link>
-                  ),
-                })}
-              </DisclosurePanel>
-            </Disclosure>
-            <Disclosure>
-              <DisclosureHeader>{t("faq.items.7.question")}</DisclosureHeader>
-              <DisclosurePanel>{t("faq.items.7.answer")}</DisclosurePanel>
-            </Disclosure>
-            <Disclosure>
-              <DisclosureHeader>{t("faq.items.8.question")}</DisclosureHeader>
-              <DisclosurePanel>{t("faq.items.8.answer")}</DisclosurePanel>
-            </Disclosure>
+            <FaqItem
+              id="faq-1"
+              question={t("faq.items.1.question")}
+              answer={t("faq.items.1.answer")}
+            />
+            <FaqItem
+              id="faq-2"
+              question={t("faq.items.2.question")}
+              answer={t("faq.items.2.answer")}
+            />
+            <FaqItem
+              id="faq-3"
+              question={t("faq.items.3.question")}
+              answer={t("faq.items.3.answer")}
+            />
+            <FaqItem
+              id="faq-4"
+              question={t("faq.items.4.question")}
+              answer={t("faq.items.4.answer")}
+            />
+            <FaqItem
+              id="faq-5"
+              question={t("faq.items.5.question")}
+              answer={t("faq.items.5.answer")}
+            />
+            <FaqItem
+              id="faq-6"
+              question={t("faq.items.6.question")}
+              answer={t.rich("faq.items.6.answer", {
+                link1: (chunks) => (
+                  <Link target="_blank" href="https://rauchfrei-info.de">
+                    {chunks}
+                  </Link>
+                ),
+                link2: (chunks) => (
+                  <Link target="_blank" href="https://www.dhs.de/">
+                    {chunks}
+                  </Link>
+                ),
+              })}
+            />
+            <FaqItem
+              id="faq-7"
+              question={t("faq.items.7.question")}
+              answer={t("faq.items.7.answer")}
+            />
+            <FaqItem
+              id="faq-8"
+              question={t("faq.items.8.question")}
+              answer={t("faq.items.8.answer")}
+            />
           </div>
         </section>
       </div>

@@ -11,7 +11,7 @@ import { X } from "lucide-react";
 
 export interface Toast {
   title: string;
-  description?: string;
+  description?: string | React.ReactNode;
   variant?: "default" | "success" | "error" | "info";
 }
 
