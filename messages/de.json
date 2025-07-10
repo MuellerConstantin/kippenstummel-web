@@ -365,6 +365,10 @@
       "title": "Meldung fehlgeschlagen",
       "description": "Es gab einen Fehler beim Senden deiner Meldung."
     },
+    "cvmRegisterThrottled": {
+      "title": "Gönn dir eine Pause",
+      "description": "Du scheinst fleißiger zu sein als unsere Server es erlauben. Gönn dir 'ne Pause - versuch's in ein paar Minuten nochmal."
+    },
     "cvmRepositioned": {
       "title": "Neupositionierung eingereicht",
       "description": "Deine Neupositionierung wurde eingereicht. Vielen Dank!"
@@ -372,6 +376,10 @@
     "cvmRepositionFailed": {
       "title": "Neupositionierung fehlgeschlagen",
       "description": "Es gab einen Fehler beim Senden deiner Neupositionierung."
+    },
+    "cvmRepositionThrottled": {
+      "title": "Gönn dir eine Pause",
+      "description": "Du scheinst fleißiger zu sein als unsere Server es erlauben. Gönn dir 'ne Pause - versuch's in ein paar Minuten nochmal."
     },
     "cvmVoted": {
       "title": "Abgestimmt",

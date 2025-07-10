@@ -100,7 +100,7 @@ export function RequireIdentInterceptor({
         description: t("Notifications.canceledIdentityCreation.description"),
         variant: "error",
       },
-      { timeout: 5000 },
+      { timeout: 10000 },
     );
   }, [pendingQueue, enqueue, t]);
 

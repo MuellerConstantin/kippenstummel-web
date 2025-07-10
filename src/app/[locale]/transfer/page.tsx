@@ -95,7 +95,7 @@ export default function Tranfer() {
             description: notificationsT("identityTransfered.description"),
             variant: "success",
           },
-          { timeout: 5000 },
+          { timeout: 10000 },
         );
 
         router.replace("/");

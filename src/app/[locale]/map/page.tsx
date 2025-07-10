@@ -46,14 +46,33 @@ export default function Map() {
           latitude: position.lat,
           longitude: position.lng,
         });
-      } catch {
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          if (
+            err.response?.status === 429 &&
+            err.response.data.code === "THROTTLED_ERROR"
+          ) {
+            enqueue(
+              {
+                title: t("Notifications.cvmRegisterThrottled.title"),
+                description: t(
+                  "Notifications.cvmRegisterThrottled.description",
+                ),
+                variant: "info",
+              },
+              { timeout: 10000 },
+            );
+            return;
+          }
+        }
+
         enqueue(
           {
             title: t("Notifications.cvmRegisterFailed.title"),
             description: t("Notifications.cvmRegisterFailed.description"),
             variant: "error",
           },
-          { timeout: 5000 },
+          { timeout: 10000 },
         );
         return;
       }
@@ -64,7 +83,7 @@ export default function Map() {
           description: t("Notifications.cvmRegistered.description"),
           variant: "success",
         },
-        { timeout: 5000 },
+        { timeout: 10000 },
       );
     },
     [t, api, enqueue],
@@ -95,7 +114,22 @@ export default function Map() {
                 description: t("Notifications.cvmOutOfReach.description"),
                 variant: "info",
               },
-              { timeout: 5000 },
+              { timeout: 10000 },
+            );
+            return;
+          } else if (
+            err.response?.status === 429 &&
+            err.response.data.code === "THROTTLED_ERROR"
+          ) {
+            enqueue(
+              {
+                title: t("Notifications.cvmRepositionThrottled.title"),
+                description: t(
+                  "Notifications.cvmRepositionThrottled.description",
+                ),
+                variant: "info",
+              },
+              { timeout: 10000 },
             );
             return;
           }
@@ -107,7 +141,7 @@ export default function Map() {
             description: t("Notifications.cvmRepositionFailed.description"),
             variant: "error",
           },
-          { timeout: 5000 },
+          { timeout: 10000 },
         );
         return;
       }
@@ -118,7 +152,7 @@ export default function Map() {
           description: t("Notifications.cvmRepositioned.description"),
           variant: "success",
         },
-        { timeout: 5000 },
+        { timeout: 10000 },
       );
     },
     [t, api, enqueue],
@@ -143,7 +177,7 @@ export default function Map() {
                 description: t("Notifications.cvmOutOfReach.description"),
                 variant: "info",
               },
-              { timeout: 5000 },
+              { timeout: 10000 },
             );
             return;
           }
@@ -155,7 +189,7 @@ export default function Map() {
             description: t("Notifications.cvmVoteFailed.description"),
             variant: "error",
           },
-          { timeout: 5000 },
+          { timeout: 10000 },
         );
         return;
       }
@@ -166,7 +200,7 @@ export default function Map() {
           description: t("Notifications.cvmVoted.description"),
           variant: "success",
         },
-        { timeout: 5000 },
+        { timeout: 10000 },
       );
     },
     [t, api, enqueue],
@@ -191,7 +225,7 @@ export default function Map() {
                 description: t("Notifications.cvmOutOfReach.description"),
                 variant: "info",
               },
-              { timeout: 5000 },
+              { timeout: 10000 },
             );
             return;
           }
@@ -203,7 +237,7 @@ export default function Map() {
             description: t("Notifications.cvmVoteFailed.description"),
             variant: "error",
           },
-          { timeout: 5000 },
+          { timeout: 10000 },
         );
         return;
       }
@@ -214,7 +248,7 @@ export default function Map() {
           description: t("Notifications.cvmVoted.description"),
           variant: "success",
         },
-        { timeout: 5000 },
+        { timeout: 10000 },
       );
     },
     [t, api, enqueue],
@@ -244,7 +278,7 @@ export default function Map() {
                 description: t("Notifications.cvmOutOfReach.description"),
                 variant: "info",
               },
-              { timeout: 5000 },
+              { timeout: 10000 },
             );
             return;
           }
@@ -256,7 +290,7 @@ export default function Map() {
             description: t("Notifications.cvmReportFailed.description"),
             variant: "error",
           },
-          { timeout: 5000 },
+          { timeout: 10000 },
         );
         return;
       }
@@ -267,7 +301,7 @@ export default function Map() {
           description: t("Notifications.cvmReported.description"),
           variant: "success",
         },
-        { timeout: 5000 },
+        { timeout: 10000 },
       );
     },
     [t, api, enqueue],
@@ -281,7 +315,7 @@ export default function Map() {
           description: t("Notifications.sharedNotFound.description"),
           variant: "error",
         },
-        { timeout: 5000 },
+        { timeout: 10000 },
       );
     }
   }, [error, enqueue, t]);

@@ -209,11 +209,14 @@ export function CvmMap(props: CvmMapProps) {
           break;
       }
 
-      enqueue({
-        title,
-        description,
-        variant: "error",
-      });
+      enqueue(
+        {
+          title,
+          description,
+          variant: "error",
+        },
+        { timeout: 10000 },
+      );
     },
     [enqueue, t],
   );

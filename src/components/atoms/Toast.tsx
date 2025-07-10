@@ -28,7 +28,7 @@ const toast = tv({
         "bg-green-50 border-green-200 text-green-800 dark:bg-green-950 dark:border-green-800 dark:text-green-100",
       error:
         "bg-red-50 border-red-200 text-red-800 dark:bg-red-950 dark:border-red-800 dark:text-red-100",
-      info: "bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-950 dark:border-blue-800 dark:text-blue-100",
+      info: "bg-slate-50 border-slate-200 text-slate-800 dark:bg-slate-950 dark:border-slate-800 dark:text-slate-100",
     },
   },
   defaultVariants: {
@@ -41,7 +41,7 @@ const toastTitle = tv({
 });
 
 const toastDescription = tv({
-  base: "text-sm opacity-80 line-clamp-2",
+  base: "text-sm opacity-80 line-clamp-4",
 });
 
 const toastCloseButton = tv({

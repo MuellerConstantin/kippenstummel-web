@@ -365,6 +365,10 @@
       "title": "Report Failed",
       "description": "There was an error submitting your report."
     },
+    "cvmRegisterThrottled": {
+      "title": "Slow down, champ",
+      "description": "You're more eager than our servers can handle. Take a short break and try again in a bit."
+    },
     "cvmRepositioned": {
       "title": "Repositioned",
       "description": "Your report has been sent. Thanks for your help!"
@@ -372,6 +376,10 @@
     "cvmRepositionFailed": {
       "title": "Reposition Failed",
       "description": "There was an error submitting your report."
+    },
+    "cvmRepositionThrottled": {
+      "title": "Slow down, champ",
+      "description": "You're more eager than our servers can handle. Take a short break and try again in a bit."
     },
     "cvmVoted": {
       "title": "Voted",
