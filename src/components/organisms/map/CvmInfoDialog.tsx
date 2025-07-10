@@ -57,6 +57,7 @@ interface ReportedMessageProps {
       inactive: number;
       inaccessible: number;
     };
+    alreadyVoted?: "upvote" | "downvote";
   };
 }
 
@@ -95,6 +96,7 @@ interface CvmMobileDialogProps {
       inactive: number;
       inaccessible: number;
     };
+    alreadyVoted?: "upvote" | "downvote";
   };
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
   onDownvote?: (voterPosition: Leaflet.LatLng) => void;
@@ -205,32 +207,38 @@ function CvmMobileDialog(props: CvmMobileDialogProps) {
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-4">
                 <div className="flex items-center gap-4">
-                  <div className="flex flex-col items-center">
+                  <div className="flex flex-col items-center gap-1">
                     <button
-                      className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
+                      className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed disabled:text-slate-400 dark:hover:!text-slate-200 ${props.cvm.alreadyVoted === "upvote" ? "border-green-600 bg-green-100 !text-green-600 dark:bg-green-900" : "border-slate-400 dark:border-slate-600"}`}
                       onClick={onUpvoteRequest}
                       onMouseDown={(e) => e.stopPropagation()}
-                      disabled={voting !== false || isRepositioning}
+                      disabled={
+                        voting !== false ||
+                        isRepositioning ||
+                        !!props.cvm.alreadyVoted
+                      }
                     >
                       {voting === "up" ? (
                         <Spinner />
                       ) : (
-                        <ChevronUp className="h-8 w-8" />
+                        <ChevronUp className="h-7 w-7" />
                       )}
                     </button>
-                    <div className="text-lg font-semibold">
-                      {props.cvm.score}
-                    </div>
+                    <div className="text-xl font-bold">{props.cvm.score}</div>
                     <button
-                      className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
+                      className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed disabled:text-slate-400 dark:hover:!text-slate-200 ${props.cvm.alreadyVoted === "downvote" ? "border-green-600 bg-green-100 !text-green-600 dark:bg-green-900" : "border-slate-400 dark:border-slate-600"}`}
                       onClick={onDownvoteRequest}
                       onMouseDown={(e) => e.stopPropagation()}
-                      disabled={voting !== false || isRepositioning}
+                      disabled={
+                        voting !== false ||
+                        isRepositioning ||
+                        !!props.cvm.alreadyVoted
+                      }
                     >
                       {voting === "down" ? (
                         <Spinner />
                       ) : (
-                        <ChevronDown className="h-8 w-8" />
+                        <ChevronDown className="h-7 w-7" />
                       )}
                     </button>
                   </div>
@@ -307,6 +315,7 @@ interface CvmSidebarDialogProps {
       inactive: number;
       inaccessible: number;
     };
+    alreadyVoted?: "upvote" | "downvote";
   };
   onClose: () => void;
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
@@ -403,39 +412,62 @@ function CvmSidebarDialog(props: CvmSidebarDialogProps) {
           </div>
         </div>
         <div className="flex grow flex-col gap-4 p-4">
-          <h2
-            slot="title"
-            className="my-0 truncate text-lg leading-6 font-semibold"
-          >
-            {t("title")}
-          </h2>
+          <div className="flex gap-2">
+            {props.cvm.score < -5 ? (
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-500">
+                <ChevronDown className="h-4 w-4 text-white" />
+              </div>
+            ) : props.cvm.score > 5 ? (
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-600">
+                <ChevronUp className="h-4 w-4 text-white" />
+              </div>
+            ) : (
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-500">
+                <Equal className="h-4 w-4 text-white" />
+              </div>
+            )}
+            <h2
+              slot="title"
+              className="my-0 truncate text-lg leading-6 font-semibold"
+            >
+              {t("title")}
+            </h2>
+          </div>
           <div className="flex grow flex-col justify-between gap-4">
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-4">
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center gap-1">
                   <button
-                    className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
+                    className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed disabled:text-slate-400 dark:hover:!text-slate-200 ${props.cvm.alreadyVoted === "upvote" ? "border-green-600 bg-green-100 !text-green-600 dark:bg-green-900" : "border-slate-400 dark:border-slate-600"}`}
                     onClick={onUpvoteRequest}
                     onMouseDown={(e) => e.stopPropagation()}
-                    disabled={voting !== false || isRepositioning}
+                    disabled={
+                      voting !== false ||
+                      isRepositioning ||
+                      !!props.cvm.alreadyVoted
+                    }
                   >
                     {voting === "up" ? (
                       <Spinner />
                     ) : (
-                      <ChevronUp className="h-8 w-8" />
+                      <ChevronUp className="h-7 w-7" />
                     )}
                   </button>
-                  <div className="text-lg font-semibold">{props.cvm.score}</div>
+                  <div className="text-xl font-bold">{props.cvm.score}</div>
                   <button
-                    className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed dark:hover:!text-slate-200"
+                    className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed disabled:text-slate-400 dark:hover:!text-slate-200 ${props.cvm.alreadyVoted === "downvote" ? "border-green-600 bg-green-100 !text-green-600 dark:bg-green-900" : "border-slate-400 dark:border-slate-600"}`}
                     onClick={onDownvoteRequest}
                     onMouseDown={(e) => e.stopPropagation()}
-                    disabled={voting !== false || isRepositioning}
+                    disabled={
+                      voting !== false ||
+                      isRepositioning ||
+                      !!props.cvm.alreadyVoted
+                    }
                   >
                     {voting === "down" ? (
                       <Spinner />
                     ) : (
-                      <ChevronDown className="h-8 w-8" />
+                      <ChevronDown className="h-7 w-7" />
                     )}
                   </button>
                 </div>
@@ -509,6 +541,7 @@ interface CvmInfoDialogProps {
       inactive: number;
       inaccessible: number;
     };
+    alreadyVoted?: "upvote" | "downvote";
   };
   open: boolean;
   onOpenChange: (open: boolean) => void;

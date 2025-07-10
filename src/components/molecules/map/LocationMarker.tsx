@@ -15,6 +15,7 @@ interface LocationMarkerProps {
       inactive: number;
       inaccessible: number;
     };
+    alreadyVoted?: "upvote" | "downvote";
   };
   onSelect: () => void;
 }

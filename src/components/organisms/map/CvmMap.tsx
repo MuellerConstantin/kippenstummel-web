@@ -51,6 +51,7 @@ export interface CvmMapProps {
       inactive: number;
       inaccessible: number;
     };
+    alreadyVoted?: "upvote" | "downvote";
   } | null;
 }
 
@@ -94,6 +95,7 @@ export function CvmMap(props: CvmMapProps) {
       inactive: number;
       inaccessible: number;
     };
+    alreadyVoted?: "upvote" | "downvote";
   } | null>(null);
 
   const [map, setMap] = useState<Leaflet.Map | null>(null);
@@ -234,6 +236,7 @@ export function CvmMap(props: CvmMapProps) {
             inactive: number;
             inaccessible: number;
           };
+          alreadyVoted?: "upvote" | "downvote";
         }
       | {
           id: string;
@@ -266,6 +269,7 @@ export function CvmMap(props: CvmMapProps) {
           inactive: number;
           inaccessible: number;
         };
+        alreadyVoted?: "upvote" | "downvote";
       }[],
     [data],
   );
