@@ -3,14 +3,23 @@ import {
   ModalOverlay,
   ModalOverlayProps,
   Modal as RACModal,
-  composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import { motion, HTMLMotionProps } from "framer-motion";
 
-export function Modal(
-  props: ModalOverlayProps & { placement?: "center" | "bottom" },
-) {
-  const isBottom = props.placement === "bottom";
+const MotionModal = motion(RACModal);
+
+type ModalProps = HTMLMotionProps<"div"> &
+  ModalOverlayProps & { placement?: "center" | "bottom" };
+
+export function Modal(props: ModalProps) {
+  const {
+    placement = "center",
+    className: modalClassName,
+    children,
+    ...overlayRest
+  } = props;
+  const isBottom = placement === "bottom";
 
   const overlayStyles = tv({
     base: "fixed top-0 left-0 w-full h-full isolate z-[120000] bg-black/[15%] p-4 backdrop-blur-none",
@@ -40,18 +49,26 @@ export function Modal(
     },
   });
 
+  // Props, die speziell an das Modal weitergegeben werden (ModalProps von RACModal)
+  // Du kannst hier noch explizit Props definieren, falls nötig, momentan einfach children als Beispiel
+  const modalProps = {
+    children,
+    initial: props.initial,
+    animate: props.animate,
+    exit: props.exit,
+    transition: props.transition,
+  };
+
   return (
     <ModalOverlay
-      {...props}
+      {...overlayRest}
       className={(renderProps) => overlayStyles({ ...renderProps, isBottom })}
     >
-      <RACModal
-        {...props}
-        className={composeRenderProps(
-          props.className,
-          (className, renderProps) =>
-            modalStyles({ ...renderProps, className }),
-        )}
+      <MotionModal
+        {...modalProps}
+        className={(renderProps) =>
+          [modalStyles(renderProps), modalClassName].filter(Boolean).join(" ")
+        }
       />
     </ModalOverlay>
   );

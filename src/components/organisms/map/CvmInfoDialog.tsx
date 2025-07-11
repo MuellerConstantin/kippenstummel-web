@@ -3,6 +3,7 @@ import Leaflet from "leaflet";
 import { useMap } from "react-leaflet";
 import { useTranslations } from "next-intl";
 import { ChevronUp, ChevronDown, Equal, Copy, Check, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/components/atoms/Link";
 import { Spinner } from "@/components/atoms/Spinner";
 import useLocate from "@/hooks/useLocate";
@@ -62,7 +63,6 @@ interface ReportedMessageProps {
 }
 
 function ReportedMessage({ cvm }: ReportedMessageProps) {
-  console.log(cvm);
   const t = useTranslations("CvmInfoDialog");
   const reports = cvm.recentlyReported;
   const entries = Object.entries(reports);
@@ -388,9 +388,14 @@ function CvmSidebarDialog(props: CvmSidebarDialogProps) {
   }, []);
 
   return (
-    <div
+    <motion.div
       ref={containerRef}
+      key="cvm-info-dialog"
       className="h-full w-[25rem] cursor-default pt-3 pb-6 pl-3"
+      initial={{ opacity: 0, x: -200 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -200 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
     >
       <div className="flex h-full w-full flex-col overflow-y-auto rounded-md border-2 border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-900 dark:text-white">
         <div className="relative">
@@ -525,7 +530,7 @@ function CvmSidebarDialog(props: CvmSidebarDialogProps) {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -551,29 +556,39 @@ interface CvmInfoDialogProps {
   onReport?: (reporterPosition: Leaflet.LatLng) => void;
 }
 
-export function CvmInfoDialog(props: CvmInfoDialogProps) {
+export function CvmInfoDialog({
+  open,
+  onOpenChange,
+  ...props
+}: CvmInfoDialogProps) {
   const isMobile = useIsMobile();
 
   if (isMobile) {
     return (
-      <Modal
-        isOpen={props.open}
-        onOpenChange={props.onOpenChange}
-        placement="bottom"
-      >
-        <CvmMobileDialog {...props} />
-      </Modal>
+      <AnimatePresence>
+        {open && (
+          <Modal
+            initial={{ opacity: 0, y: 200 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 200 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            isOpen={open}
+            onOpenChange={onOpenChange}
+            placement="bottom"
+            isDismissable
+          >
+            <CvmMobileDialog {...props} />
+          </Modal>
+        )}
+      </AnimatePresence>
     );
   } else {
     return (
-      <>
-        {props.open && (
-          <CvmSidebarDialog
-            {...props}
-            onClose={() => props.onOpenChange(false)}
-          />
+      <AnimatePresence>
+        {open && (
+          <CvmSidebarDialog {...props} onClose={() => onOpenChange(false)} />
         )}
-      </>
+      </AnimatePresence>
     );
   }
 }

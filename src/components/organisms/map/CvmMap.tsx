@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import useSWR from "swr";
 import Leaflet from "leaflet";
 import { Circle, ZoomControl } from "react-leaflet";
@@ -25,6 +25,7 @@ import { ConfirmRegisterBottomNavigation } from "./ConfirmRegisterBottomNavigati
 import { CvmInfoDialog } from "./CvmInfoDialog";
 import { CvmReportDialog } from "./CvmReportDialog";
 import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
+import { motion } from "framer-motion";
 
 export interface CvmMapProps {
   onRegister?: (position: Leaflet.LatLng) => void;
@@ -60,6 +61,28 @@ export function CvmMap(props: CvmMapProps) {
   const api = useApi();
   const dispatch = useAppDispatch();
   const { enqueue } = useNotifications();
+
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const [sidebarWidth, setSidebarWidth] = useState(0);
+
+  useEffect(() => {
+    if (!sidebarRef.current) {
+      return;
+    }
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setSidebarWidth(entry.contentRect.width);
+      }
+    });
+
+    observer.observe(sidebarRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sidebarRef.current]);
 
   const location = useAppSelector((state) => state.location.location);
   const mapVariant = useAppSelector((state) => state.usability.mapVariant);
@@ -414,41 +437,51 @@ export function CvmMap(props: CvmMapProps) {
       {!isRegistering && !isRepositioning && (
         <>
           <div className="absolute flex h-full w-full">
-            <div className="z-[2000] h-full shrink-0">
-              {!!selectedCvm && (
-                <CvmInfoDialog
-                  open={!!selectedCvm}
-                  onOpenChange={(open) =>
-                    setSelectedCvm(open ? selectedCvm : null)
-                  }
-                  cvm={selectedCvm || undefined}
-                  onUpvote={(voterPosition) =>
-                    props.onUpvote?.(selectedCvm!.id, voterPosition)
-                  }
-                  onDownvote={(voterPosition) =>
-                    props.onDownvote?.(selectedCvm!.id, voterPosition)
-                  }
-                  onReposition={(editorPosition) =>
-                    onReposition(
-                      selectedCvm!.id,
-                      Leaflet.latLng(
-                        selectedCvm!.latitude,
-                        selectedCvm!.longitude,
-                      ),
-                      editorPosition,
-                    )
-                  }
-                  onReport={(reporterPosition) => {
-                    setIsReporting(true);
-                    setReportingId(selectedCvm!.id);
-                    setReportingPosition(reporterPosition);
-                    setSelectedCvm(null);
-                  }}
-                />
-              )}
+            <div ref={sidebarRef} className="z-[2000] h-full shrink-0">
+              <CvmInfoDialog
+                open={!!selectedCvm}
+                onOpenChange={(open) =>
+                  setSelectedCvm(open ? selectedCvm : null)
+                }
+                cvm={selectedCvm!}
+                onUpvote={(voterPosition) =>
+                  props.onUpvote?.(selectedCvm!.id, voterPosition)
+                }
+                onDownvote={(voterPosition) =>
+                  props.onDownvote?.(selectedCvm!.id, voterPosition)
+                }
+                onReposition={(editorPosition) =>
+                  onReposition(
+                    selectedCvm!.id,
+                    Leaflet.latLng(
+                      selectedCvm!.latitude,
+                      selectedCvm!.longitude,
+                    ),
+                    editorPosition,
+                  )
+                }
+                onReport={(reporterPosition) => {
+                  setIsReporting(true);
+                  setReportingId(selectedCvm!.id);
+                  setReportingPosition(reporterPosition);
+                  setSelectedCvm(null);
+                }}
+              />
             </div>
             <div className="relative grow">
-              <div className="absolute bottom-6 left-1/2 z-[2000] h-fit w-fit -translate-x-1/2 px-2">
+              <motion.div
+                className="fixed bottom-12 left-1/2 z-[2000] hidden h-fit w-fit -translate-x-1/2 px-2 md:block"
+                animate={{ x: !!selectedCvm ? sidebarWidth / 2 : 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                <MenuBottomNavigation
+                  map={map!}
+                  onHelp={onHelp}
+                  onFilter={onFilter}
+                  onRegister={onRegister}
+                />
+              </motion.div>
+              <div className="absolute bottom-6 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 md:hidden">
                 <MenuBottomNavigation
                   map={map!}
                   onHelp={onHelp}
@@ -472,7 +505,7 @@ export function CvmMap(props: CvmMapProps) {
             isOpen={showHelpDialog}
             onOpenChange={setShowHelpDialog}
           >
-            <Modal className="max-w-2xl">
+            <Modal className="!max-w-2xl">
               <HelpDialog />
             </Modal>
           </DialogTrigger>
