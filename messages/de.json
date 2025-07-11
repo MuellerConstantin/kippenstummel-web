@@ -448,9 +448,9 @@
       "vote": "Die Standorte von Automaten werden via Schwarmintelligenz verifiziert. Du kannst für Automaten positiv abstimmen, welche funktionstüchtig tatsächlich an der ansprechenden Stelle standen oder auch negativ abstimmen für fehlende oder nicht funktionierende Automaten. Abstimmen kannst du über das Menü der einzelnen Automaten. Alternativ kannst du Automaten welche missbräuchlich gemeldet wurden oder nicht mehr länger vorhanden sind, melden."
     },
     "general": {
-      "unsteady": "Eignung unsicher (Score von -10 to -5)",
-      "approved": "Verifiziert (Score von -5 to +5)",
-      "trusted": "Vertrauenswürdig (Score von +5 to +10)"
+      "unsteady": "Eignung unsicher (Score von -10 bis -5)",
+      "approved": "Verifiziert (Score von -5 bis +5)",
+      "trusted": "Vertrauenswürdig (Score von +5 bis +10)"
     },
     "close": "Schließen"
   },
