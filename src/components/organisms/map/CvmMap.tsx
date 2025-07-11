@@ -6,7 +6,6 @@ import Leaflet from "leaflet";
 import { Circle, ZoomControl } from "react-leaflet";
 import { useTranslations } from "next-intl";
 import useApi from "@/hooks/useApi";
-import { DialogTrigger } from "react-aria-components";
 import { LeafletMap } from "@/components/organisms/leaflet/LeafletMap";
 import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
 import { LocationMarker } from "@/components/molecules/map/LocationMarker";
@@ -25,7 +24,7 @@ import { ConfirmRegisterBottomNavigation } from "./ConfirmRegisterBottomNavigati
 import { CvmInfoDialog } from "./CvmInfoDialog";
 import { CvmReportDialog } from "./CvmReportDialog";
 import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 export interface CvmMapProps {
   onRegister?: (position: Leaflet.LatLng) => void;
@@ -491,32 +490,54 @@ export function CvmMap(props: CvmMapProps) {
               </div>
             </div>
           </div>
-          <DialogTrigger isOpen={isReporting} onOpenChange={setIsReporting}>
-            <Modal>
-              <CvmReportDialog
-                onReport={(type) => {
-                  props.onReport?.(reportingId!, reportingPosition!, type);
-                  setIsReporting(false);
-                }}
-              />
-            </Modal>
-          </DialogTrigger>
-          <DialogTrigger
-            isOpen={showHelpDialog}
-            onOpenChange={setShowHelpDialog}
-          >
-            <Modal className="!max-w-2xl">
-              <HelpDialog />
-            </Modal>
-          </DialogTrigger>
-          <DialogTrigger
-            isOpen={showFilterDialog}
-            onOpenChange={setShowFilterDialog}
-          >
-            <Modal>
-              <FilterDialog />
-            </Modal>
-          </DialogTrigger>
+          <AnimatePresence>
+            {isReporting && (
+              <Modal
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                isOpen={isReporting}
+                onOpenChange={setIsReporting}
+              >
+                <CvmReportDialog
+                  onReport={(type) => {
+                    props.onReport?.(reportingId!, reportingPosition!, type);
+                    setIsReporting(false);
+                  }}
+                />
+              </Modal>
+            )}
+          </AnimatePresence>
+          <AnimatePresence>
+            {showHelpDialog && (
+              <Modal
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="!max-w-2xl"
+                isOpen={showHelpDialog}
+                onOpenChange={setShowHelpDialog}
+              >
+                <HelpDialog />
+              </Modal>
+            )}
+          </AnimatePresence>
+          <AnimatePresence>
+            {showFilterDialog && (
+              <Modal
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                isOpen={showFilterDialog}
+                onOpenChange={setShowFilterDialog}
+              >
+                <FilterDialog />
+              </Modal>
+            )}
+          </AnimatePresence>
           {markers
             ?.filter((marker) => marker.id !== selectedCvm?.id)
             .map((marker) => (

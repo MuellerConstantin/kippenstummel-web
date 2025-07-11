@@ -14,7 +14,7 @@ import {
   IdCard,
   Signature,
 } from "lucide-react";
-import { DialogTrigger, MenuTrigger } from "react-aria-components";
+import { MenuTrigger } from "react-aria-components";
 import { Button } from "@/components/atoms/Button";
 import { Link } from "@/components/atoms/Link";
 import { Switch } from "@/components/atoms/Switch";
@@ -28,6 +28,7 @@ import { useAppSelector, useAppDispatch } from "@/store";
 import usabilitySlice from "@/store/slices/usability";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { RequestIdentDialog } from "./ident/RequestIdentDialog";
+import { AnimatePresence } from "framer-motion";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
@@ -163,14 +164,12 @@ export function NavbarUnauthenticatedOptionsMenu() {
               </div>
             </ListBoxItem>
           </ListBox>
-          <DialogTrigger
+          <Modal
             isOpen={showNewIdentityDialog}
             onOpenChange={setShowNewIdentityDialog}
           >
-            <Modal>
-              <RequestIdentDialog />
-            </Modal>
-          </DialogTrigger>
+            <RequestIdentDialog />
+          </Modal>
         </div>
       </div>
     </Popover>
@@ -221,14 +220,21 @@ function NavbarAuthenticatedOptionsMenu() {
             </div>
           </ListBoxItem>
         </ListBox>
-        <DialogTrigger
-          isOpen={showIdentityDialog}
-          onOpenChange={setShowIdentityDialog}
-        >
-          <Modal className="max-w-xl">
-            <IdentityDialog />
-          </Modal>
-        </DialogTrigger>
+        <AnimatePresence>
+          {showIdentityDialog && (
+            <Modal
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              isOpen={showIdentityDialog}
+              onOpenChange={setShowIdentityDialog}
+              className="max-w-xl"
+            >
+              <IdentityDialog />
+            </Modal>
+          )}
+        </AnimatePresence>
       </div>
     </Popover>
   );
