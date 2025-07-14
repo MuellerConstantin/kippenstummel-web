@@ -374,7 +374,7 @@ export function CvmMap(props: CvmMapProps) {
       onLocationFound={onLocationFound}
       onLocationError={onLocationError}
     >
-      <MapLibreTileLayer url="https://tiles.openfreemap.org/styles/bright" />
+      <MapLibreTileLayer url="/tiles/default.json" />
       <ZoomControl position="topright" zoomInTitle="" zoomOutTitle="" />
       <LocateControlPlugin position="topright" />
       {isRegistering && (
