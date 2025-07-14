@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface UsabilityState {
   darkMode: boolean;
   recurringUser: boolean;
-  mapVariant: "all" | "trusted" | "approved";
+  mapVariant: "rAll" | "r5p" | "rN5p" | "rN8p";
   mapView: {
     center: [number, number];
     zoom: number;
@@ -13,7 +13,7 @@ interface UsabilityState {
 const initialState: UsabilityState = {
   darkMode: false,
   recurringUser: false,
-  mapVariant: "all",
+  mapVariant: "rN8p",
   mapView: { center: [49.006889, 8.403653], zoom: 14 },
 };
 
@@ -32,7 +32,7 @@ const usabilitySlice = createSlice({
     },
     setMapVariant: (
       state,
-      action: PayloadAction<"all" | "trusted" | "approved">,
+      action: PayloadAction<"rAll" | "r5p" | "rN5p" | "rN8p">,
     ) => {
       state.mapVariant = action.payload;
     },

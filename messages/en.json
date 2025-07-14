@@ -455,9 +455,10 @@
       "vote": "The locations of vending machines are verified using swarm intelligence. You can vote positively for vending machines that were actually in the right place and were working, or negatively for missing or non-functioning machines. You can vote via the menu for each vending machine. Alternatively, you can report machines that have been reported as being misused or are no longer available."
     },
     "general": {
-      "unsteady": "Suitability uncertain (Score of -10 to -5)",
-      "approved": "Verified (Score of -5 to +5)",
-      "trusted": "Trustworthy (Score of +5 to +10)"
+      "r5p": "Top Rated (Score von +5 bis +10)",
+      "rN5p": "Neutral+ (Score of -5 to +4)",
+      "rN8p": "Bad+ (Score of -8 to -4)",
+      "rN10p": "For Deletion (Score of -10 to -9)"
     },
     "close": "Close"
   },
@@ -467,9 +468,10 @@
     "variant": {
       "label": "Variant",
       "options": {
-        "all": "All",
-        "approved": "Verified",
-        "trusted": "Trustworthy"
+        "rAll": "All",
+        "r5p": "Top Rated",
+        "rN5p": "Neutral+",
+        "rN8p": "Bad+"
       }
     }
   },

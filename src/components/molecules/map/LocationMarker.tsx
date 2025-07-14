@@ -1,7 +1,7 @@
 import Leaflet from "leaflet";
 import { Marker } from "react-leaflet";
 import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
-import { MapPin, ChevronUp, ChevronDown, Equal } from "lucide-react";
+import { MapPin, ChevronUp, ChevronDown, Equal, X } from "lucide-react";
 
 interface LocationMarkerProps {
   cvm: {
@@ -28,11 +28,15 @@ export function LocationMarker(props: LocationMarkerProps) {
         icon={LeafletDivIcon({
           source: (
             <div className="relative z-[50] h-fit w-fit">
-              {props.cvm.score < -5 ? (
+              {props.cvm.score < -8 ? (
+                <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-800">
+                  <X className="h-2.5 w-2.5 text-white" />
+                </div>
+              ) : props.cvm.score < -5 ? (
                 <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-500">
                   <ChevronDown className="h-2.5 w-2.5 text-white" />
                 </div>
-              ) : props.cvm.score > 5 ? (
+              ) : props.cvm.score >= 5 ? (
                 <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-green-600">
                   <ChevronUp className="h-2.5 w-2.5 text-white" />
                 </div>

@@ -4,7 +4,7 @@ import { DialogProps, Heading } from "react-aria-components";
 import { Dialog } from "@/components/atoms/Dialog";
 import { Button } from "@/components/atoms/Button";
 import { Select, SelectItem } from "@/components/atoms/Select";
-import { ChevronDown, ChevronUp, Equal } from "lucide-react";
+import { ChevronDown, ChevronUp, Equal, X } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import usabilitySlice from "@/store/slices/usability";
 
@@ -24,17 +24,21 @@ export function FilterDialog(props: FilterDialogProps) {
   useEffect(() => {
     if (selectedVariant) {
       switch (selectedVariant) {
-        case "layer-variant-trusted": {
-          dispatch(usabilitySlice.actions.setMapVariant("trusted"));
+        case "layer-variant-rN8p": {
+          dispatch(usabilitySlice.actions.setMapVariant("rN8p"));
           break;
         }
-        case "layer-variant-approved": {
-          dispatch(usabilitySlice.actions.setMapVariant("approved"));
+        case "layer-variant-rN5p": {
+          dispatch(usabilitySlice.actions.setMapVariant("rN5p"));
           break;
         }
-        case "layer-variant-all":
+        case "layer-variant-r5p": {
+          dispatch(usabilitySlice.actions.setMapVariant("r5p"));
+          break;
+        }
+        case "layer-variant-rAll":
         default: {
-          dispatch(usabilitySlice.actions.setMapVariant("all"));
+          dispatch(usabilitySlice.actions.setMapVariant("rAll"));
           break;
         }
       }
@@ -60,13 +64,32 @@ export function FilterDialog(props: FilterDialogProps) {
                   setSelectedVariant(property as string)
                 }
               >
-                <SelectItem
-                  id="layer-variant-all"
-                  key="layer-variant-all"
-                  textValue="All"
-                >
+                <SelectItem id="layer-variant-r5p" key="layer-variant-r5p">
                   <div className="flex items-center gap-2">
-                    <div>{t("variant.options.all")}</div>
+                    <div>{t("variant.options.r5p")}</div>
+                    <div className="flex items-center gap-1">
+                      <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-green-600">
+                        <ChevronUp className="h-3 w-3 text-white" />
+                      </div>
+                    </div>
+                  </div>
+                </SelectItem>
+                <SelectItem id="layer-variant-rN5p" key="layer-variant-rN5p">
+                  <div className="flex items-center gap-2">
+                    <div>{t("variant.options.rN5p")}</div>
+                    <div className="flex items-center gap-1">
+                      <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-green-600">
+                        <ChevronUp className="h-3 w-3 text-white" />
+                      </div>
+                      <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-slate-500">
+                        <Equal className="h-3 w-3 text-white" />
+                      </div>
+                    </div>
+                  </div>
+                </SelectItem>
+                <SelectItem id="layer-variant-rN8p" key="layer-variant-rN8p">
+                  <div className="flex items-center gap-2">
+                    <div>{t("variant.options.rN8p")}</div>
                     <div className="flex items-center gap-1">
                       <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-green-600">
                         <ChevronUp className="h-3 w-3 text-white" />
@@ -80,33 +103,21 @@ export function FilterDialog(props: FilterDialogProps) {
                     </div>
                   </div>
                 </SelectItem>
-                <SelectItem
-                  id="layer-variant-trusted"
-                  key="layer-variant-trusted"
-                  textValue="Trusted"
-                >
+                <SelectItem id="layer-variant-rAll" key="layer-variant-rAll">
                   <div className="flex items-center gap-2">
-                    <div>{t("variant.options.trusted")}</div>
-                    <div className="flex items-center gap-1">
-                      <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-green-600">
-                        <ChevronUp className="h-3 w-3 text-white" />
-                      </div>
-                    </div>
-                  </div>
-                </SelectItem>
-                <SelectItem
-                  id="layer-variant-approved"
-                  key="layer-variant-approved"
-                  textValue="Approved"
-                >
-                  <div className="flex items-center gap-2">
-                    <div>{t("variant.options.approved")}</div>
+                    <div>{t("variant.options.rAll")}</div>
                     <div className="flex items-center gap-1">
                       <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-green-600">
                         <ChevronUp className="h-3 w-3 text-white" />
                       </div>
                       <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-slate-500">
                         <Equal className="h-3 w-3 text-white" />
+                      </div>
+                      <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-red-500">
+                        <ChevronDown className="h-3 w-3 text-white" />
+                      </div>
+                      <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-red-800">
+                        <X className="h-3 w-3 text-white" />
                       </div>
                     </div>
                   </div>

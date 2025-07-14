@@ -178,11 +178,15 @@ function CvmMobileDialog(props: CvmMobileDialogProps) {
           <div className="flex flex-col gap-4 p-4">
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2 overflow-hidden">
-                {props.cvm.score < -5 ? (
+                {props.cvm.score < -8 ? (
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-800">
+                    <X className="h-4 w-4 text-white" />
+                  </div>
+                ) : props.cvm.score < -5 ? (
                   <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-500">
                     <ChevronDown className="h-4 w-4 text-white" />
                   </div>
-                ) : props.cvm.score > 5 ? (
+                ) : props.cvm.score >= 5 ? (
                   <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-600">
                     <ChevronUp className="h-4 w-4 text-white" />
                   </div>
@@ -418,11 +422,15 @@ function CvmSidebarDialog(props: CvmSidebarDialogProps) {
         </div>
         <div className="flex grow flex-col gap-4 p-4">
           <div className="flex gap-2">
-            {props.cvm.score < -5 ? (
+            {props.cvm.score < -8 ? (
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-800">
+                <X className="h-4 w-4 text-white" />
+              </div>
+            ) : props.cvm.score < -5 ? (
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-500">
                 <ChevronDown className="h-4 w-4 text-white" />
               </div>
-            ) : props.cvm.score > 5 ? (
+            ) : props.cvm.score >= 5 ? (
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-600">
                 <ChevronUp className="h-4 w-4 text-white" />
               </div>
