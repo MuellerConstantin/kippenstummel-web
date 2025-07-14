@@ -9,7 +9,6 @@ import { NotificationView } from "@/components/organisms/NotificationView";
 import { RequireIdentInterceptor } from "@/components/organisms/ident/RequireIdentInterceptor";
 import { AckeeTracker } from "@/components/organisms/AckeeTracker";
 import { RuntimeConfigProvider } from "@/contexts/RuntimeConfigProvider";
-import { PreReleaseBanner } from "@/components/organisms/PreReleaseBanner";
 
 import "./globals.css";
 import { PWAInstallProvider } from "@/contexts/PWAInstallProvider";
@@ -71,7 +70,6 @@ export default async function RootLayout({
                     {children}
                     <NotificationView />
                     <AckeeTracker />
-                    <PreReleaseBanner />
                   </RuntimeConfigProvider>
                 </RequireIdentInterceptor>
               </PWAInstallProvider>

@@ -74,9 +74,6 @@ export function Navbar() {
               <span className="hidden self-center text-xl font-semibold whitespace-nowrap md:block dark:text-white">
                 Kippenstummel
               </span>
-              <div className="absolute -top-1 -left-5 rounded-full bg-amber-500 p-1 text-[0.4rem] text-white md:top-auto md:-right-1 md:-bottom-1 md:left-auto">
-                Pre Release
-              </div>
             </div>
           </NextLink>
         </div>
