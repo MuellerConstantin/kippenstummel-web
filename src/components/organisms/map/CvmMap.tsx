@@ -362,8 +362,6 @@ export function CvmMap(props: CvmMapProps) {
 
   return (
     <LeafletMap
-      tileLayerUrl="/api/mtp/{z}/{x}/{y}.png"
-      tileLayerAttribution='&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       center={mapView.center}
       zoom={mapView.zoom}
       minZoom={12}

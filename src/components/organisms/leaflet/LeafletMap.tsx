@@ -37,8 +37,6 @@ function LeafletMapEventHandler(params: LeafletMapEventHandlerProps) {
 
 export interface LeafletMapProps {
   children?: React.ReactNode;
-  tileLayerUrl: string;
-  tileLayerAttribution: string;
   center?: [number, number];
   zoom?: number;
   minZoom?: number;
