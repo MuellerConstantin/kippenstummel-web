@@ -38,10 +38,6 @@ body {
   color: #16a34a;
 }
 
-.dark .leaflet-layer {
-  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
-}
-
 .leaflet-control-zoom-in,
 .leaflet-control-zoom-out {
   @apply !bg-white !text-slate-900;

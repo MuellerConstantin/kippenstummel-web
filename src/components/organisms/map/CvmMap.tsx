@@ -25,6 +25,7 @@ import { CvmInfoDialog } from "./CvmInfoDialog";
 import { CvmReportDialog } from "./CvmReportDialog";
 import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
 import { AnimatePresence, motion } from "framer-motion";
+import { MapLibreTileLayer } from "../leaflet/MapLibreTileLayer";
 
 export interface CvmMapProps {
   onRegister?: (position: Leaflet.LatLng) => void;
@@ -373,6 +374,7 @@ export function CvmMap(props: CvmMapProps) {
       onLocationFound={onLocationFound}
       onLocationError={onLocationError}
     >
+      <MapLibreTileLayer url="https://tiles.openfreemap.org/styles/bright" />
       <ZoomControl position="topright" zoomInTitle="" zoomOutTitle="" />
       <LocateControlPlugin position="topright" />
       {isRegistering && (

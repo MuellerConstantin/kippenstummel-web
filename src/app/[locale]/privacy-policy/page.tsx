@@ -132,6 +132,29 @@ export default function PrivacyPolicy() {
           })}
         </p>
       </section>
+      <section className="flex flex-col gap-4">
+        <h2 className="text-2xl font-bold text-green-600">
+          {t("thirdParty.title")}
+        </h2>
+        <h3 className="text-xl font-bold">{t("thirdParty.ofm.title")}</h3>
+        <div>
+          {t.rich("thirdParty.ofm.description", {
+            link1: (chunks) => (
+              <Link target="_blank" href="https://openfreemap.org">
+                {chunks}
+              </Link>
+            ),
+            link2: (chunks) => (
+              <Link target="_blank" href="https://openfreemap.org/privacy">
+                {chunks}
+              </Link>
+            ),
+            br: () => <br />,
+            ul: (chunks) => <ul className="list-disc">{chunks}</ul>,
+            li: (chunks) => <li className="ml-4">{chunks}</li>,
+          })}
+        </div>
+      </section>
     </div>
   );
 }

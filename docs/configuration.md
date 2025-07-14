@@ -42,12 +42,6 @@ requires a rebuild of the web client. These variables are loaded and hardcoded a
 Runtime configuration variables are used by the frontend's web server responsible for serving the web client. Changing these variables
 requires a restart of the web server.
 
-| Environment Variable  | Description                                                                                                                                                           | Required |
-| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| KIPPENSTUMMEL_API_URL | Url of the Kippenstummel API. Including the api prefix and version. (e.g. `http://<HOST>:<PORT>/api/v1`)                                                              | Yes      |
-| TILE_BASE_URL         | Base Url of the tile server. The used server should support the [XYZ](https://en.wikipedia.org/wiki/Tiled_web_map) protocol in the format <BASE_URL>/{Z}/{X}/{Y}.png. | Yes      |
-| TILE_USER_AGENT       | User-Agent header sent to the tile server. Default is the user agent of the web client.                                                                               | No       |
-| TILE_LRU_CACHE_MAX    | Maximum number of entries in the instance specific in-memory LRU cache. Default is 500.                                                                               | No       |
-| TILE_LRU_CACHE_TTL    | Time to live of cache entries in milliseconds. Default is 5 minutes.                                                                                                  | No       |
-| TILE_REDIS_CACHE_URL  | Url of the Redis cache server.                                                                                                                                        | Yes      |
-| TILE_REDIS_CACHE_TTL  | Time to live of cache entries in milliseconds. Default is 7 days.                                                                                                     | No       |
+| Environment Variable  | Description                                                                                              | Required |
+| --------------------- | -------------------------------------------------------------------------------------------------------- | -------- |
+| KIPPENSTUMMEL_API_URL | Url of the Kippenstummel API. Including the api prefix and version. (e.g. `http://<HOST>:<PORT>/api/v1`) | Yes      |
