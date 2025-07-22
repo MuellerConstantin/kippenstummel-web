@@ -36,7 +36,6 @@ export function RequireIdentInterceptor({
 
         if (
           err.response &&
-          err.config.url !== "/ident" &&
           err.response?.status === 401 &&
           (err.response.data?.code === "INVALID_IDENT_TOKEN_ERROR" ||
             err.response.data?.code === "UNKNOWN_IDENTITY_ERROR") &&
