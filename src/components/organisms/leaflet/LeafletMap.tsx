@@ -72,6 +72,7 @@ export function LeafletMap(props: LeafletMapProps) {
         maxZoom={maxZoom}
         closePopupOnClick={true}
         zoomControl={false}
+        attributionControl={false}
       >
         <LeafletMapEventHandler
           onZoomStart={props.onZoomStart}

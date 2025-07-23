@@ -3,7 +3,7 @@
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import useSWR from "swr";
 import Leaflet from "leaflet";
-import { Circle, ZoomControl } from "react-leaflet";
+import { AttributionControl, Circle, ZoomControl } from "react-leaflet";
 import { useTranslations } from "next-intl";
 import useApi from "@/hooks/useApi";
 import { LeafletMap } from "@/components/organisms/leaflet/LeafletMap";
@@ -373,6 +373,7 @@ export function CvmMap(props: CvmMapProps) {
       onLocationError={onLocationError}
     >
       <MapLibreTileLayer url="/tiles/default.json" />
+      <AttributionControl prefix={false} />
       <ZoomControl position="topright" zoomInTitle="" zoomOutTitle="" />
       <LocateControlPlugin position="topright" />
       {isRegistering && (

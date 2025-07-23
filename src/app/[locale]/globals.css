@@ -39,6 +39,17 @@ body {
   filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }
 
+.leaflet-control-attribution {
+  @apply !bg-white text-slate-900;
+
+  @variant dark {
+    @apply !bg-slate-900 !text-white;
+  }
+
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .dark .preview {
   filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }
