@@ -21,7 +21,7 @@ export default function useLocate(map: Leaflet.Map) {
           map.once("locationfound", onLocationFound);
           map.once("locationerror", onLocationError);
 
-          map.locate(options);
+          map.locate({ maximumAge: 60000, ...options });
         });
       }
 
