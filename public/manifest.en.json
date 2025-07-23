@@ -3,6 +3,7 @@
   "short_name": "Kippenstummel",
   "description": "Find the nearest cigarette vending machine near you - this app helps smokers find nearby cigarette vending machines.",
   "start_url": "/en",
+  "lang": "en",
   "icons": [
     {
       "src": "/favicon.svg",
@@ -36,5 +37,12 @@
   ],
   "background_color": "#ffffff",
   "theme_color": "#000000",
-  "display": "standalone"
+  "display": "standalone",
+  "display_override": [
+    "fullscreen",
+    "window-controls-overlay",
+    "standalone",
+    "browser"
+  ],
+  "orientation": "portrait"
 }
