@@ -77,7 +77,7 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
         icon={LeafletDivIcon({
           source: (
             <div className="relative h-fit w-fit">
-              <MapPinPlusInside className="h-[36px] w-[36px] fill-green-600 text-white" />
+              <MapPinPlusInside className="h-[36px] w-[36px] fill-green-600 text-white dark:text-slate-600" />
             </div>
           ),
           size: Leaflet.point(36, 36),

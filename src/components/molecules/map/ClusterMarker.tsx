@@ -3,15 +3,6 @@ import Leaflet from "leaflet";
 import { Marker, useMap } from "react-leaflet";
 import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
 
-function formatNumberShort(n: number): string {
-  if (n < 1000) return n.toString();
-  if (n < 1_000_000) return (n / 1000).toFixed(n < 10_000 ? 1 : 0) + "K";
-  if (n < 1_000_000_000) return (n / 1_000_000).toFixed(1) + "M";
-  if (n < 1_000_000_000_000) return (n / 1_000_000_000).toFixed(1) + "B";
-
-  return (n / 1_000_000_000).toFixed(1) + "B";
-}
-
 interface ClusterMarkerProps {
   count: number;
   position: Leaflet.LatLng;
@@ -34,18 +25,16 @@ export function ClusterMarker(props: ClusterMarkerProps) {
     return outerClasses;
   }, [props.count]);
 
-  const innerClasses = useMemo(() => {
-    let innerClasses = "";
+  const formattedCount = useMemo(() => {
+    if (props.count < 1000) return props.count.toString();
+    if (props.count < 1_000_000)
+      return (props.count / 1000).toFixed(props.count < 10_000 ? 1 : 0) + "K";
+    if (props.count < 1_000_000_000)
+      return (props.count / 1_000_000).toFixed(1) + "M";
+    if (props.count < 1_000_000_000_000)
+      return (props.count / 1_000_000_000).toFixed(1) + "B";
 
-    if (props.count < 10) {
-      innerClasses = "bg-slate-300 text-slate-800";
-    } else if (props.count < 100) {
-      innerClasses = "bg-slate-300 text-slate-800";
-    } else {
-      innerClasses = "bg-slate-300 text-slate-800";
-    }
-
-    return innerClasses;
+    return (props.count / 1_000_000_000).toFixed(1) + "B";
   }, [props.count]);
 
   const handleClick = useCallback(() => {
@@ -62,10 +51,8 @@ export function ClusterMarker(props: ClusterMarkerProps) {
           <div
             className={`${outerClasses} box-border h-fit w-fit rounded-[20px] p-[3px]`}
           >
-            <div
-              className={`${innerClasses} h-[32px] w-[32px] rounded-full text-center font-sans text-[12px] leading-[30px]`}
-            >
-              <span>{formatNumberShort(props.count)}</span>
+            <div className="h-[32px] w-[32px] rounded-full bg-slate-300 text-center font-sans text-[12px] leading-[30px] text-slate-800 dark:bg-slate-600 dark:text-slate-100">
+              <span>{formattedCount}</span>
             </div>
           </div>
         ),

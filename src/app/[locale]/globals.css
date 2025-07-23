@@ -27,7 +27,15 @@ body {
   font-family: var(--font-lato), sans-serif;
 }
 
-.dark .leaflet-gl-layer {
+.leaflet-gl-layer {
+  @apply !bg-white;
+
+  @variant dark {
+    @apply !bg-slate-900;
+  }
+}
+
+.dark .maplibregl-canvas-container {
   filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }
 
