@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import Leaflet from "leaflet";
@@ -8,7 +8,6 @@ import { CvmOptInMap } from "@/components/organisms/map/CvmOptInMap";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import useApi from "@/hooks/useApi";
 import { AxiosError } from "axios";
-import useSWR from "swr";
 import { Link } from "@/components/atoms/Link";
 
 export default function Map() {
@@ -18,27 +17,6 @@ export default function Map() {
 
   const searchParams = useSearchParams();
   const shared = searchParams.get("shared");
-
-  const { data, error } = useSWR<
-    {
-      id: string;
-      latitude: number;
-      longitude: number;
-      score: number;
-      recentlyReported: {
-        missing: number;
-        spam: number;
-        inactive: number;
-        inaccessible: number;
-      };
-    },
-    unknown,
-    string | null
-  >(
-    shared ? `/cvms/${shared}` : null,
-    (url) => api.get(url).then((res) => res.data),
-    { shouldRetryOnError: false, revalidateOnFocus: false },
-  );
 
   const onRegister = useCallback(
     async (position: Leaflet.LatLng) => {
@@ -314,19 +292,6 @@ export default function Map() {
     [t, api, enqueue],
   );
 
-  useEffect(() => {
-    if (error) {
-      enqueue(
-        {
-          title: t("Notifications.sharedNotFound.title"),
-          description: t("Notifications.sharedNotFound.description"),
-          variant: "error",
-        },
-        { timeout: 10000 },
-      );
-    }
-  }, [error, enqueue, t]);
-
   return (
     <div className="flex grow flex-col">
       <CvmOptInMap
@@ -335,7 +300,7 @@ export default function Map() {
         onDownvote={onDownvote}
         onReposition={onReposition}
         onReport={onReport}
-        selectedCvm={data}
+        sharedCvmId={shared}
       />
     </div>
   );

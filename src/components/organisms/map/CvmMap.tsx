@@ -41,19 +41,7 @@ export interface CvmMapProps {
   ) => void;
   onUpvote?: (id: string, position: Leaflet.LatLng) => void;
   onDownvote?: (id: string, position: Leaflet.LatLng) => void;
-  selectedCvm?: {
-    id: string;
-    longitude: number;
-    latitude: number;
-    score: number;
-    recentlyReported: {
-      missing: number;
-      spam: number;
-      inactive: number;
-      inaccessible: number;
-    };
-    alreadyVoted?: "upvote" | "downvote";
-  } | null;
+  sharedCvmId: string | null;
 }
 
 export function CvmMap(props: CvmMapProps) {
@@ -279,6 +267,27 @@ export function CvmMap(props: CvmMapProps) {
     { keepPreviousData: true },
   );
 
+  const { data: sharedCvmData, error: sharedCvmError } = useSWR<
+    {
+      id: string;
+      latitude: number;
+      longitude: number;
+      score: number;
+      recentlyReported: {
+        missing: number;
+        spam: number;
+        inactive: number;
+        inaccessible: number;
+      };
+    },
+    unknown,
+    string | null
+  >(
+    props.sharedCvmId ? `/cvms/${props.sharedCvmId}` : null,
+    (url) => api.get(url).then((res) => res.data),
+    { shouldRetryOnError: false, revalidateOnFocus: false },
+  );
+
   const markers = useMemo(
     () =>
       data?.filter((item) => !("cluster" in item)) as {
@@ -308,6 +317,19 @@ export function CvmMap(props: CvmMapProps) {
       }[],
     [data],
   );
+
+  useEffect(() => {
+    if (sharedCvmError) {
+      enqueue(
+        {
+          title: t("Notifications.sharedNotFound.title"),
+          description: t("Notifications.sharedNotFound.description"),
+          variant: "error",
+        },
+        { timeout: 10000 },
+      );
+    }
+  }, [sharedCvmError, enqueue, t]);
 
   const onHelp = useCallback(() => {
     setShowHelpDialog(true);
@@ -351,10 +373,10 @@ export function CvmMap(props: CvmMapProps) {
   }, [selectedCvm, map]);
 
   useEffect(() => {
-    if (props.selectedCvm) {
-      setSelectedCvm(props.selectedCvm);
+    if (sharedCvmData) {
+      setSelectedCvm(sharedCvmData);
     }
-  }, [props.selectedCvm]);
+  }, [sharedCvmData]);
 
   if (!mapView) {
     return null;
