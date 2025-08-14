@@ -273,7 +273,7 @@ export function CvmMap(props: CvmMapProps) {
     string | null
   >(
     !!bottomLeft && !!topRight && !!zoom && !!mapVariant
-      ? `/cvms?bottomLeft=${bottomLeft?.[0]},${bottomLeft?.[1]}&topRight=${topRight?.[0]},${topRight?.[1]}&zoom=${zoom}&variant=${mapVariant}`
+      ? `/cvms?bottomLeft=${bottomLeft?.[0]},${bottomLeft?.[1]}&topRight=${topRight?.[0]},${topRight?.[1]}&zoom=${zoom > 18 ? 18 : zoom}&variant=${mapVariant}`
       : null,
     (url) => api.get(url).then((res) => res.data),
     { keepPreviousData: true },
