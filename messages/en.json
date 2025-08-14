@@ -310,11 +310,6 @@
     "allRightsReserved": "All rights reserved.",
     "privacySettings": "Privacy Settings"
   },
-  "CookieBanner": {
-    "title": "We use cookies!",
-    "description": "This website uses cookies or similar technologies to implement essential functions and improve your browsing experience. This website generally uses only technically necessary cookies. Should the integration of third-party services result in the use of cookies or similar technologies for purposes that are not technically necessary, we will inform you in advance and obtain your consent. Further information can be found in our <link>Privacy Policy</link>.",
-    "confirm": "I understand & continue"
-  },
   "RequestIdentDialog": {
     "title": "Create Identity",
     "description": "To keep our platform secure, a registered identity is required for active participation. This identity is issued anonymously and individually for each user. Your interactions, achievements, and personal preferences are linked to your identity. Please complete the CAPTCHA below to proceed and create your Personal Identity.",
@@ -539,5 +534,8 @@
         "description": "Collecting this information enables us to create basic statistics and analyze website traffic. This helps us improve our website and adapt content."
       }
     }
+  },
+  "AdjustableLocationMarker": {
+    "tooltip": "Drag to move"
   }
 }

@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Leaflet from "leaflet";
-import { Marker } from "react-leaflet";
+import { Marker, Tooltip } from "react-leaflet";
 import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
 import { MapPinPlusInside } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface AdjustableLocationMarkerProps {
   onAdapt?: (position: Leaflet.LatLng) => void;
@@ -15,12 +16,15 @@ interface AdjustableLocationMarkerProps {
 
 export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
   const { reference, onAdapt } = props;
+  const t = useTranslations("AdjustableLocationMarker");
 
   const markerRef = useRef<Leaflet.Marker>(null);
 
   const [position, setPosition] = useState<Leaflet.LatLng>(
     Leaflet.latLng(props.position[0], props.position[1]),
   );
+  const [tooltipOpen, setTooltipOpen] = useState(true);
+
   const eventHandlers = useMemo(
     () => ({
       drag() {
@@ -57,6 +61,9 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
           }
         }
       },
+      mousedown() {
+        setTooltipOpen(false);
+      },
     }),
     [reference, position],
   );
@@ -84,7 +91,13 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
           anchor: Leaflet.point(18, 26),
           className: "!z-[3000]",
         })}
-      ></Marker>
+      >
+        {tooltipOpen && (
+          <Tooltip permanent offset={[0, -26]} direction="top">
+            {t("tooltip")}
+          </Tooltip>
+        )}
+      </Marker>
     </>
   );
 }

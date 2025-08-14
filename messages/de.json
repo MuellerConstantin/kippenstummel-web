@@ -310,11 +310,6 @@
     "allRightsReserved": "Alle Rechte vorbehalten.",
     "privacySettings": "Privatsphäre-Einstellungen"
   },
-  "CookieBanner": {
-    "title": "Wir verwenden Cookies!",
-    "description": "Diese Website verwendet Cookies oder ähnliche Technologien, um wesentliche Funktionen zu implementieren und Ihr Browser-Erlebnis zu verbessern. Grundsätzlich verwendet diese Website nur technisch notwendige Cookies. Sollten durch die Integration von Diensten von Drittanbietern Cookies oder ähnliche Technologien zu technisch nicht notwendigen Zwecken verwendet werden, informieren wir Sie vorab darüber und holen Ihre Zustimmung ein. Weitere Informationen finden Sie in unserer <link>Datenschutzerklärung</link>.",
-    "confirm": "Verstanden & fortfahren"
-  },
   "RequestIdentDialog": {
     "title": "Identität anlegen",
     "description": "Um unsere Plattform sicher zu halten, ist für das aktive Mitwirken eine registrierte Identität erforderlich. Diese wird anonym und individuell je Benutzer ausgestellt. Mit deiner Identität sind deine Interaktionen, Errungenschaften und deine persönliche Einstellungen verknüpft. Bitte fülle das CAPTCHA unten aus um fortzufahren und deine Persönliche Identität zu erstellen.",
@@ -538,5 +533,8 @@
         "description": "Das Sammeln dieser Informationen ermöglicht uns das erstellen grundlegender Statistiken und die Analyse des Website-Traffic. Dadurch wird es uns möglich unsere Website zu verbessern und Inhalte anzupassen."
       }
     }
+  },
+  "AdjustableLocationMarker": {
+    "tooltip": "Zum Verschieben greifen"
   }
 }
