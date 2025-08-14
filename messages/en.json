@@ -307,7 +307,8 @@
     "imprint": "Imprint",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
-    "allRightsReserved": "All rights reserved."
+    "allRightsReserved": "All rights reserved.",
+    "privacySettings": "Privacy Settings"
   },
   "CookieBanner": {
     "title": "We use cookies!",
@@ -513,7 +514,30 @@
       "disclaimer": "This is your personal identity, which is used for authentication and linked to all your interactions. Please keep it confidential and do not share it with third parties."
     }
   },
-  "PreReleaseBanner": {
-    "notice": "<highlight>Work in Progress!</highlight> This version is still in development and may contain bugs. Please <link>report</link> any issues."
+  "PrivacySettingsDialog": {
+    "title": "We use cookies",
+    "description": "We use cookies and similar technologies to personalize content, embed media, and analyze website traffic. In doing so, we process personal data (e.g., IP address) and may share it with third parties as described in the privacy settings. For details, see our <privacyHyperlink>Privacy Policy</privacyHyperlink>.",
+    "accept": "Accept all",
+    "decline": "Decline",
+    "adapt": "Customize",
+    "save": "Save settings",
+    "privacyPolicy": "Privacy Policy",
+    "imprint": "Imprint",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "details": {
+      "required": {
+        "title": "Technically necessary",
+        "description": "These cookies are required for the basic functionality of the website and therefore cannot be disabled."
+      },
+      "personalization": {
+        "title": "Personalization",
+        "description": "These cookies are used to personalize the website and its content based on user behavior. Enabling them allows us, for example, to save map settings."
+      },
+      "analytics": {
+        "title": "Analytics & Statistics",
+        "description": "Collecting this information enables us to create basic statistics and analyze website traffic. This helps us improve our website and adapt content."
+      }
+    }
   }
 }

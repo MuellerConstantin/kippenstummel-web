@@ -307,7 +307,8 @@
     "imprint": "Impressum",
     "privacyPolicy": "Datenschutzerklärung",
     "termsOfService": "Nutzungsbedingungen",
-    "allRightsReserved": "Alle Rechte vorbehalten."
+    "allRightsReserved": "Alle Rechte vorbehalten.",
+    "privacySettings": "Privatsphäre-Einstellungen"
   },
   "CookieBanner": {
     "title": "Wir verwenden Cookies!",
@@ -512,7 +513,30 @@
       "disclaimer": "Hierbei handelt es sich um deine persönliche Identität, welche der Authentifzierung dient und mit all deinen Interaktionen verknüpft wird. Behandle sie vertraulich und gebe sie nicht an Dritte weiter."
     }
   },
-  "PreReleaseBanner": {
-    "notice": "<highlight>Baustelle!</highlight> Diese Version ist noch in der Entwicklung und kann fehlerhaft sein. Fehler bitte <link>hier</link> melden."
+  "PrivacySettingsDialog": {
+    "title": "Wir verwenden Cookies",
+    "description": "Wir nutzen Cookies und ähnliche Technologien, um Inhalte zu personalisieren, Medien einzubinden und den Website-Traffic zu analysieren. Dabei verarbeiten wir personenbezogene Daten (z. B. IP-Adresse) und geben diese, wie in den Datenschutzeinstellungen beschrieben, unter Umständen an Dritte weiter. Für Details siehe unsere <privacyHyperlink>Datenschutzerklärung</privacyHyperlink>.",
+    "accept": "Alle akzeptieren",
+    "decline": "Ablehnen",
+    "adapt": "Anpassen",
+    "save": "Einstellungen speichern",
+    "privacyPolicy": "Datenschutzerklärung",
+    "imprint": "Impressum",
+    "enabled": "Eingeschaltet",
+    "disabled": "Ausgeschaltet",
+    "details": {
+      "required": {
+        "title": "Technisch notwendig",
+        "description": "Diese Cookies sind für die grundlegende Funktionalität der Website erforderlich und können daher nicht deaktiviert werden."
+      },
+      "personalization": {
+        "title": "Personalisierung",
+        "description": "Diese Cookies werden zur Personalisierung der Website und ihrer Inhalte basierend auf dem Benutzerverhalten verwendet. Das Einschalten ermöglicht es uns beispielsweise Karteneinstellungen zu speichern."
+      },
+      "analytics": {
+        "title": "Analyse & Statistik",
+        "description": "Das Sammeln dieser Informationen ermöglicht uns das erstellen grundlegender Statistiken und die Analyse des Website-Traffic. Dadurch wird es uns möglich unsere Website zu verbessern und Inhalte anzupassen."
+      }
+    }
   }
 }

@@ -20,7 +20,9 @@ import usabilitySlice from "@/store/slices/usability";
 import identSlice from "./slices/ident";
 import privacySlice from "./slices/privacy";
 import locationSlice from "./slices/location";
-import { CookieBanner } from "@/components/organisms/CookieBanner";
+import { Modal } from "@/components/atoms/Modal";
+import { PrivacySettingsDialog } from "@/components/organisms/PrivacySettingsDialog";
+import { AnimatePresence } from "framer-motion";
 
 const persistConfig = {
   key: "kippenstummel",
@@ -91,21 +93,34 @@ export default function PrivacyCompliantPersistGate({
   persistor: ReturnType<typeof persistStore>;
   loading: React.ReactNode;
 }>) {
-  const cookiesAllowed = useAppSelector(
-    (state) => state.privacy.cookiesAllowed,
+  const cookieSettingsSelected = useAppSelector(
+    (state) => state.privacy.cookieSettingsSelected,
   );
 
   useEffect(() => {
-    if (cookiesAllowed) {
+    if (cookieSettingsSelected) {
       persistor.persist();
       persistor.flush();
     }
-  }, [cookiesAllowed, persistor]);
+  }, [cookieSettingsSelected, persistor]);
 
   return (
     <PersistGate persistor={persistor} loading={loading}>
       {children}
-      <CookieBanner />
+      <AnimatePresence>
+        {!cookieSettingsSelected && (
+          <Modal
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            isOpen={!cookieSettingsSelected}
+            className="max-w-xl"
+          >
+            <PrivacySettingsDialog />
+          </Modal>
+        )}
+      </AnimatePresence>
     </PersistGate>
   );
 }

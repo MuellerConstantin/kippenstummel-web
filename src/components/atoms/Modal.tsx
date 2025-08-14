@@ -22,7 +22,7 @@ export function Modal(props: ModalProps) {
   const isBottom = placement === "bottom";
 
   const overlayStyles = tv({
-    base: "fixed top-0 left-0 w-full h-full isolate z-[120000] bg-black/[15%] p-4 backdrop-blur-none",
+    base: "fixed top-0 left-0 w-full h-full isolate z-[120000] bg-black/[50%] p-4 backdrop-blur-none",
     variants: {
       isEntering: {
         true: "animate-in fade-in duration-200 ease-out",
@@ -60,16 +60,18 @@ export function Modal(props: ModalProps) {
   };
 
   return (
-    <ModalOverlay
-      {...overlayRest}
-      className={(renderProps) => overlayStyles({ ...renderProps, isBottom })}
-    >
-      <MotionModal
-        {...modalProps}
-        className={(renderProps) =>
-          [modalStyles(renderProps), modalClassName].filter(Boolean).join(" ")
-        }
-      />
-    </ModalOverlay>
+    <div onClick={(e) => e.stopPropagation()} className="hidden">
+      <ModalOverlay
+        {...overlayRest}
+        className={(renderProps) => overlayStyles({ ...renderProps, isBottom })}
+      >
+        <MotionModal
+          {...modalProps}
+          className={(renderProps) =>
+            [modalStyles(renderProps), modalClassName].filter(Boolean).join(" ")
+          }
+        />
+      </ModalOverlay>
+    </div>
   );
 }

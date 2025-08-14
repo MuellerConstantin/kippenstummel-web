@@ -1,21 +1,49 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface PrivacyState {
-  cookiesAllowed: boolean | null;
-  mapOptInAllowed: boolean | null;
+  cookieSettingsSelected: boolean;
+  allowTechnicalCookies: boolean;
+  allowAnalyticsCookies: boolean;
+  allowPersonalizationCookies: boolean;
+  mapOptInAllowed: boolean;
 }
 
 const initialState: PrivacyState = {
-  cookiesAllowed: null,
-  mapOptInAllowed: null,
+  cookieSettingsSelected: false,
+  allowTechnicalCookies: true,
+  allowAnalyticsCookies: false,
+  allowPersonalizationCookies: false,
+  mapOptInAllowed: false,
 };
 
 const privacySlice = createSlice({
   name: "privacy",
   initialState,
   reducers: {
-    setCookiesAllowed: (state, action: PayloadAction<boolean>) => {
-      state.cookiesAllowed = action.payload;
+    setCookieSettingsSet: (state, action: PayloadAction<boolean>) => {
+      state.cookieSettingsSelected = action.payload;
+    },
+    acceptAll: (state) => {
+      state.cookieSettingsSelected = true;
+      state.allowAnalyticsCookies = true;
+      state.allowPersonalizationCookies = true;
+    },
+    declineAll: (state) => {
+      state.cookieSettingsSelected = true;
+      state.allowAnalyticsCookies = false;
+      state.allowPersonalizationCookies = false;
+    },
+    saveCustom: (
+      state,
+      action: PayloadAction<{
+        allowAnalyticsCookies: boolean;
+        allowPersonalizationCookies: boolean;
+      }>,
+    ) => {
+      state.cookieSettingsSelected = true;
+      state.allowAnalyticsCookies = action.payload.allowAnalyticsCookies;
+      state.allowPersonalizationCookies =
+        action.payload.allowPersonalizationCookies;
     },
     setMapOptInAllowed: (state, action: PayloadAction<boolean>) => {
       state.mapOptInAllowed = action.payload;

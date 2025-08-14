@@ -31,7 +31,6 @@ export function CvmOptInMap(props: CvmOptInMap) {
 
   const allowOptIn = () => {
     dispatch(privacySlice.actions.setMapOptInAllowed(true));
-    dispatch(privacySlice.actions.setCookiesAllowed(true));
     dispatch(usabilitySlice.actions.setRecurringUser(true));
   };
 
