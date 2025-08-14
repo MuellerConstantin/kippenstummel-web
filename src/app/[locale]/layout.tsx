@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Lato } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
@@ -23,6 +23,13 @@ export const metadata: Metadata = {
   title: "Kippenstummel",
 };
 
+export function generateViewport(): Viewport {
+  return {
+    width: "device-width",
+    initialScale: 1,
+  };
+}
+
 export default async function RootLayout({
   children,
   params,
@@ -39,7 +46,6 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
         <link
           rel="icon"

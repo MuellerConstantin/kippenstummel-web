@@ -36,8 +36,8 @@
     }
   ],
   "background_color": "#ffffff",
-  "theme_color": "#000000",
-  "display": "standalone",
+  "theme_color": "#16a34a",
+  "display": "fullscreen",
   "display_override": [
     "fullscreen",
     "window-controls-overlay",
