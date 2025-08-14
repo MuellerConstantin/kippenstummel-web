@@ -95,24 +95,117 @@ export function CvmMap(props: CvmMapProps) {
   const [reportingId, setReportingId] = useState<string>();
   const [reportingPosition, setReportingPosition] = useState<Leaflet.LatLng>();
 
-  const [selectedCvm, setSelectedCvm] = useState<{
-    id: string;
-    latitude: number;
-    longitude: number;
-    score: number;
-    recentlyReported: {
-      missing: number;
-      spam: number;
-      inactive: number;
-      inaccessible: number;
-    };
-    alreadyVoted?: "upvote" | "downvote";
-  } | null>(null);
-
   const [map, setMap] = useState<Leaflet.Map | null>(null);
   const [zoom, setZoom] = useState<number>();
   const [bottomLeft, setBottomLeft] = useState<[number, number]>();
   const [topRight, setTopRight] = useState<[number, number]>();
+
+  /* ============ Data Fetching - Start ============ */
+
+  const { data } = useSWR<
+    (
+      | {
+          id: string;
+          longitude: number;
+          latitude: number;
+          score: number;
+          recentlyReported: {
+            missing: number;
+            spam: number;
+            inactive: number;
+            inaccessible: number;
+          };
+          alreadyVoted?: "upvote" | "downvote";
+        }
+      | {
+          id: string;
+          cluster: true;
+          longitude: number;
+          latitude: number;
+          count: number;
+        }
+    )[],
+    unknown,
+    string | null
+  >(
+    !!bottomLeft && !!topRight && !!zoom && !!mapVariant
+      ? `/cvms?bottomLeft=${bottomLeft?.[0]},${bottomLeft?.[1]}&topRight=${topRight?.[0]},${topRight?.[1]}&zoom=${zoom > 18 ? 18 : zoom}&variant=${mapVariant}`
+      : null,
+    (url) => api.get(url).then((res) => res.data),
+    { keepPreviousData: true },
+  );
+
+  /*
+   * The CVM selected via the share link must be loaded independently of the last loaded
+   * viewport, as it may not be located in the viewport. Nevertheless, the CVM's details
+   * must be known in order to center the viewport on the CVM's coordinates in the next step.
+   */
+
+  const { data: sharedCvmData, error: sharedCvmError } = useSWR<
+    {
+      id: string;
+      latitude: number;
+      longitude: number;
+      score: number;
+      recentlyReported: {
+        missing: number;
+        spam: number;
+        inactive: number;
+        inaccessible: number;
+      };
+    },
+    unknown,
+    string | null
+  >(
+    props.sharedCvmId ? `/cvms/${props.sharedCvmId}` : null,
+    (url) => api.get(url).then((res) => res.data),
+    { shouldRetryOnError: false, revalidateOnFocus: false },
+  );
+
+  const markers = useMemo(
+    () =>
+      data?.filter((item) => !("cluster" in item)) as {
+        id: string;
+        longitude: number;
+        latitude: number;
+        score: number;
+        recentlyReported: {
+          missing: number;
+          spam: number;
+          inactive: number;
+          inaccessible: number;
+        };
+        alreadyVoted?: "upvote" | "downvote";
+      }[],
+    [data],
+  );
+
+  const clusters = useMemo(
+    () =>
+      data?.filter((item) => "cluster" in item) as {
+        id: string;
+        cluster: true;
+        longitude: number;
+        latitude: number;
+        count: number;
+      }[],
+    [data],
+  );
+
+  useEffect(() => {
+    if (sharedCvmError) {
+      enqueue(
+        {
+          title: t("Notifications.sharedNotFound.title"),
+          description: t("Notifications.sharedNotFound.description"),
+          variant: "error",
+        },
+        { timeout: 10000 },
+      );
+    }
+  }, [sharedCvmError, enqueue, t]);
+
+  /* ============ Data Fetching - End ============ */
 
   const onReady = useCallback((map: Leaflet.Map) => {
     const mapBounds = map.getBounds();
@@ -234,103 +327,6 @@ export function CvmMap(props: CvmMapProps) {
     [enqueue, t],
   );
 
-  const { data } = useSWR<
-    (
-      | {
-          id: string;
-          longitude: number;
-          latitude: number;
-          score: number;
-          recentlyReported: {
-            missing: number;
-            spam: number;
-            inactive: number;
-            inaccessible: number;
-          };
-          alreadyVoted?: "upvote" | "downvote";
-        }
-      | {
-          id: string;
-          cluster: true;
-          longitude: number;
-          latitude: number;
-          count: number;
-        }
-    )[],
-    unknown,
-    string | null
-  >(
-    !!bottomLeft && !!topRight && !!zoom && !!mapVariant
-      ? `/cvms?bottomLeft=${bottomLeft?.[0]},${bottomLeft?.[1]}&topRight=${topRight?.[0]},${topRight?.[1]}&zoom=${zoom > 18 ? 18 : zoom}&variant=${mapVariant}`
-      : null,
-    (url) => api.get(url).then((res) => res.data),
-    { keepPreviousData: true },
-  );
-
-  const { data: sharedCvmData, error: sharedCvmError } = useSWR<
-    {
-      id: string;
-      latitude: number;
-      longitude: number;
-      score: number;
-      recentlyReported: {
-        missing: number;
-        spam: number;
-        inactive: number;
-        inaccessible: number;
-      };
-    },
-    unknown,
-    string | null
-  >(
-    props.sharedCvmId ? `/cvms/${props.sharedCvmId}` : null,
-    (url) => api.get(url).then((res) => res.data),
-    { shouldRetryOnError: false, revalidateOnFocus: false },
-  );
-
-  const markers = useMemo(
-    () =>
-      data?.filter((item) => !("cluster" in item)) as {
-        id: string;
-        longitude: number;
-        latitude: number;
-        score: number;
-        recentlyReported: {
-          missing: number;
-          spam: number;
-          inactive: number;
-          inaccessible: number;
-        };
-        alreadyVoted?: "upvote" | "downvote";
-      }[],
-    [data],
-  );
-
-  const clusters = useMemo(
-    () =>
-      data?.filter((item) => "cluster" in item) as {
-        id: string;
-        cluster: true;
-        longitude: number;
-        latitude: number;
-        count: number;
-      }[],
-    [data],
-  );
-
-  useEffect(() => {
-    if (sharedCvmError) {
-      enqueue(
-        {
-          title: t("Notifications.sharedNotFound.title"),
-          description: t("Notifications.sharedNotFound.description"),
-          variant: "error",
-        },
-        { timeout: 10000 },
-      );
-    }
-  }, [sharedCvmError, enqueue, t]);
-
   const onHelp = useCallback(() => {
     setShowHelpDialog(true);
   }, [setShowHelpDialog]);
@@ -366,17 +362,58 @@ export function CvmMap(props: CvmMapProps) {
     ],
   );
 
+  /* ============ CVM-Selection - Start ============ */
+
+  const [selectedCvmId, setSelectedCvmId] = useState<string | null>(null);
+  const appliedSharedIdRef = useRef<string | null>(null);
+
+  // Sets the shared CVM once when rendering the map if a shared CVM link was followed
   useEffect(() => {
-    if (selectedCvm) {
+    if (
+      props.sharedCvmId &&
+      sharedCvmData &&
+      appliedSharedIdRef.current !== props.sharedCvmId
+    ) {
+      setSelectedCvmId(sharedCvmData.id);
+      // Ensure that the sharedCvmId is only applied once
+      appliedSharedIdRef.current = props.sharedCvmId;
+    }
+  }, [props.sharedCvmId, sharedCvmData, map]);
+
+  // Determine the selected CVM
+  const selectedCvm = useMemo(() => {
+    if (!selectedCvmId) {
+      return null;
+    }
+
+    const fromMarkers = markers?.find((m) => m.id === selectedCvmId);
+
+    if (fromMarkers) {
+      return fromMarkers;
+    }
+
+    if (sharedCvmData && sharedCvmData.id === selectedCvmId) {
+      return sharedCvmData;
+    }
+
+    return null;
+  }, [markers, selectedCvmId, sharedCvmData]);
+
+  // Center the map on the selected CVM
+  useEffect(() => {
+    /*
+     * It's important to check for the selectedCvm?.latitude and selectedCvm?.longitude
+     * because the selectedCvm object reference may change every time, the viewport is moved
+     * because the markers array change, which in turn causes a change of the selectedCvm reference.
+     * But this doesn't necessarily means that the selectedCvm itself has changed.
+     */
+
+    if (selectedCvm?.latitude && selectedCvm?.longitude) {
       map?.setView([selectedCvm.latitude, selectedCvm.longitude], 18);
     }
-  }, [selectedCvm, map]);
+  }, [selectedCvm?.latitude, selectedCvm?.longitude, map]);
 
-  useEffect(() => {
-    if (sharedCvmData) {
-      setSelectedCvm(sharedCvmData);
-    }
-  }, [sharedCvmData]);
+  /* ============ CVM-Selection - End ============ */
 
   if (!mapView) {
     return null;
@@ -463,7 +500,7 @@ export function CvmMap(props: CvmMapProps) {
               <CvmInfoDialog
                 open={!!selectedCvm}
                 onOpenChange={(open) =>
-                  setSelectedCvm(open ? selectedCvm : null)
+                  setSelectedCvmId(open ? selectedCvmId : null)
                 }
                 cvm={selectedCvm!}
                 onUpvote={(voterPosition) =>
@@ -486,7 +523,7 @@ export function CvmMap(props: CvmMapProps) {
                   setIsReporting(true);
                   setReportingId(selectedCvm!.id);
                   setReportingPosition(reporterPosition);
-                  setSelectedCvm(null);
+                  setSelectedCvmId(null);
                 }}
               />
             </div>
@@ -567,7 +604,7 @@ export function CvmMap(props: CvmMapProps) {
               <LocationMarker
                 key={marker.id}
                 cvm={marker}
-                onSelect={() => setSelectedCvm(marker)}
+                onSelect={() => setSelectedCvmId(marker.id)}
               />
             ))}
           {clusters?.map((marker, index) => (

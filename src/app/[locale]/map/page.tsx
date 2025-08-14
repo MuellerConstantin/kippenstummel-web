@@ -8,12 +8,14 @@ import { CvmOptInMap } from "@/components/organisms/map/CvmOptInMap";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import useApi from "@/hooks/useApi";
 import { AxiosError } from "axios";
+import { useSWRConfig } from "swr";
 import { Link } from "@/components/atoms/Link";
 
 export default function Map() {
   const t = useTranslations();
   const api = useApi();
   const { enqueue } = useNotifications();
+  const { mutate } = useSWRConfig();
 
   const searchParams = useSearchParams();
   const shared = searchParams.get("shared");
@@ -25,6 +27,10 @@ export default function Map() {
           latitude: position.lat,
           longitude: position.lng,
         });
+
+        mutate(
+          (key) => typeof key === "string" && /^\/cvms(\b|\/|\?).*/.test(key),
+        );
       } catch (err) {
         if (err instanceof AxiosError) {
           if (
@@ -68,7 +74,7 @@ export default function Map() {
         { timeout: 10000 },
       );
     },
-    [t, api, enqueue],
+    [t, api, enqueue, mutate],
   );
 
   const onReposition = useCallback(
@@ -84,6 +90,10 @@ export default function Map() {
           editorLatitude: editorPosition.lat,
           editorLongitude: editorPosition.lng,
         });
+
+        mutate(
+          (key) => typeof key === "string" && /^\/cvms(\b|\/|\?).*/.test(key),
+        );
       } catch (err) {
         if (err instanceof AxiosError) {
           if (
@@ -140,7 +150,7 @@ export default function Map() {
         { timeout: 10000 },
       );
     },
-    [t, api, enqueue],
+    [t, api, enqueue, mutate],
   );
 
   const onUpvote = useCallback(
@@ -150,6 +160,10 @@ export default function Map() {
           latitude: position.lat,
           longitude: position.lng,
         });
+
+        mutate(
+          (key) => typeof key === "string" && /^\/cvms(\b|\/|\?).*/.test(key),
+        );
       } catch (err) {
         if (err instanceof AxiosError) {
           if (
@@ -188,7 +202,7 @@ export default function Map() {
         { timeout: 10000 },
       );
     },
-    [t, api, enqueue],
+    [t, api, enqueue, mutate],
   );
 
   const onDownvote = useCallback(
@@ -198,6 +212,10 @@ export default function Map() {
           latitude: position.lat,
           longitude: position.lng,
         });
+
+        mutate(
+          (key) => typeof key === "string" && /^\/cvms(\b|\/|\?).*/.test(key),
+        );
       } catch (err) {
         if (err instanceof AxiosError) {
           if (
@@ -236,7 +254,7 @@ export default function Map() {
         { timeout: 10000 },
       );
     },
-    [t, api, enqueue],
+    [t, api, enqueue, mutate],
   );
 
   const onReport = useCallback(
@@ -251,6 +269,10 @@ export default function Map() {
           longitude: position.lng,
           type,
         });
+
+        mutate(
+          (key) => typeof key === "string" && /^\/cvms(\b|\/|\?).*/.test(key),
+        );
       } catch (err) {
         if (err instanceof AxiosError) {
           if (
@@ -289,7 +311,7 @@ export default function Map() {
         { timeout: 10000 },
       );
     },
-    [t, api, enqueue],
+    [t, api, enqueue, mutate],
   );
 
   return (
