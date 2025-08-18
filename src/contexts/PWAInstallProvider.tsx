@@ -15,6 +15,7 @@ type BeforeInstallPromptEvent = Event & {
 
 const pwaInstallContext = createContext<{
   isInstallable: boolean;
+  isIOSInstallable: boolean;
   promptInstall: () => Promise<boolean>;
 } | null>(null);
 
@@ -26,8 +27,21 @@ export function PWAInstallProvider({
   const [installPromptEvent, setInstallPromptEvent] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [isInstallable, setIsInstallable] = useState(false);
+  const [isIOSInstallable, setIsIOSInstallable] = useState(false);
 
   useEffect(() => {
+    const isIOS = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+    const isSafari =
+      isIOS &&
+      /safari/i.test(window.navigator.userAgent) &&
+      !/crios|fxios|edgios/i.test(window.navigator.userAgent);
+    const isInStandaloneMode =
+      "standalone" in window.navigator && window.navigator.standalone;
+
+    if (isIOS && isSafari && !isInStandaloneMode) {
+      setIsIOSInstallable(true);
+    }
+
     const handler = (e: Event) => {
       e.preventDefault();
       setInstallPromptEvent(e as BeforeInstallPromptEvent);
@@ -49,7 +63,9 @@ export function PWAInstallProvider({
   }, [installPromptEvent]);
 
   return (
-    <pwaInstallContext.Provider value={{ isInstallable, promptInstall }}>
+    <pwaInstallContext.Provider
+      value={{ isInstallable, promptInstall, isIOSInstallable }}
+    >
       {children}
     </pwaInstallContext.Provider>
   );

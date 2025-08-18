@@ -534,6 +534,14 @@
       }
     }
   },
+  "IOSInstallInstructionsDialog": {
+    "title": "Installationsanleitung",
+    "steps": {
+      "1": "Tippe unten auf das Teilen-Symbol <shareIcon></shareIcon>.",
+      "2": "Wähle „Zum Home-Bildschirm“",
+      "3": "Bestätige mit „Hinzufügen“"
+    }
+  },
   "AdjustableLocationMarker": {
     "tooltip": "Zum Verschieben greifen"
   }

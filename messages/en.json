@@ -535,6 +535,14 @@
       }
     }
   },
+  "IOSInstallInstructionsDialog": {
+    "title": "Installation instructions",
+    "steps": {
+      "1": "Tap the share icon <shareIcon></shareIcon> at the bottom of the screen.",
+      "2": "Select „Add to Home Screen“",
+      "3": "Confirm with „Add“"
+    }
+  },
   "AdjustableLocationMarker": {
     "tooltip": "Drag to move"
   }
