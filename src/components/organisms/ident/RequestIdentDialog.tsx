@@ -19,7 +19,11 @@ interface RequestIdentDialogProps extends Omit<DialogProps, "children"> {
   onCancel?: () => void;
 }
 
-export function RequestIdentDialog(props: RequestIdentDialogProps) {
+export function RequestIdentDialog({
+  onCancel,
+  onConfirm,
+  ...props
+}: RequestIdentDialogProps) {
   const t = useTranslations("RequestIdentDialog");
   const dispatch = useAppDispatch();
   const api = useApi();
@@ -90,7 +94,7 @@ export function RequestIdentDialog(props: RequestIdentDialogProps) {
 
         dispatch(identSlice.actions.setToken(tokenRes.data.token));
 
-        chain(close, props.onConfirm)();
+        chain(close, onConfirm)();
       } catch (err) {
         if (err instanceof AxiosError) {
           if (
@@ -110,7 +114,7 @@ export function RequestIdentDialog(props: RequestIdentDialogProps) {
         setSubmitting(false);
       }
     },
-    [captchaSolution, captcha, t, api, dispatch, props.onConfirm],
+    [captchaSolution, captcha, t, api, dispatch, onConfirm],
   );
 
   useEffect(() => {
@@ -181,7 +185,7 @@ export function RequestIdentDialog(props: RequestIdentDialogProps) {
             </div>
             <div className="flex justify-center">
               <Link
-                onPress={chain(close, props.onCancel)}
+                onPress={chain(close, onCancel)}
                 variant="secondary"
                 className="!cursor-pointer !text-xs"
               >
