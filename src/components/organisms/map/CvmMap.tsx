@@ -15,7 +15,6 @@ import { LocateControlPlugin } from "./LocateControl";
 import { HelpDialog } from "./HelpDialog";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import { useAppDispatch, useAppSelector } from "@/store";
-import locationSlice from "@/store/slices/location";
 import usabilitySlice from "@/store/slices/usability";
 import { MenuBottomNavigation } from "./MenuBottomNavigation";
 import { FilterDialog } from "./FilterDialog";
@@ -221,72 +220,6 @@ export function CvmMap(props: CvmMapProps) {
     [dispatch],
   );
 
-  const onLocationFound = useCallback(
-    (event: Leaflet.LeafletEvent) => {
-      const position = (event as Leaflet.LocationEvent).latlng;
-
-      dispatch(
-        locationSlice.actions.setLocation({
-          lat: position.lat,
-          lng: position.lng,
-        }),
-      );
-    },
-    [dispatch],
-  );
-
-  const onLocationError = useCallback(
-    (event: Leaflet.ErrorEvent) => {
-      let title = "";
-      let description = "";
-
-      const PERMISSION_DENIED = 1;
-      const POSITION_UNAVAILABLE = 2;
-      const TIMEOUT = 3;
-
-      switch (event.code) {
-        case PERMISSION_DENIED:
-          title = t(
-            "Notifications.locationDeterminationFailed.permissionDenied.title",
-          );
-          description = t(
-            "Notifications.locationDeterminationFailed.permissionDenied.description",
-          );
-          break;
-        case POSITION_UNAVAILABLE:
-          title = t(
-            "Notifications.locationDeterminationFailed.unavailable.title",
-          );
-          description = t(
-            "Notifications.locationDeterminationFailed.unavailable.description",
-          );
-          break;
-        case TIMEOUT:
-          title = t("Notifications.locationDeterminationFailed.timeout.title");
-          description = t(
-            "Notifications.locationDeterminationFailed.timeout.description",
-          );
-          break;
-        default:
-          title = t("Notifications.locationDeterminationFailed.default.title");
-          description = t(
-            "Notifications.locationDeterminationFailed.default.description",
-          );
-          break;
-      }
-
-      enqueue(
-        {
-          title,
-          description,
-          variant: "error",
-        },
-        { timeout: 10000 },
-      );
-    },
-    [enqueue, t],
-  );
-
   const onHelp = useCallback(() => {
     setShowHelpDialog(true);
   }, [setShowHelpDialog]);
@@ -414,8 +347,6 @@ export function CvmMap(props: CvmMapProps) {
       onReady={onReady}
       onMoveEnd={onMoveEnd}
       onZoomEnd={onZoomEnd}
-      onLocationFound={onLocationFound}
-      onLocationError={onLocationError}
     >
       <MapLibreTileLayer url="/tiles/default.json" />
       <AttributionControl prefix={false} />

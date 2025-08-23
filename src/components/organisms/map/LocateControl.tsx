@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState, memo } from "react";
-import ReactDOM from "react-dom/client";
+import { useCallback, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useMap } from "react-leaflet";
 import Leaflet from "leaflet";
 import { Navigation, LoaderCircle } from "lucide-react";
@@ -40,60 +40,30 @@ export function LocateControlComponent(props: LocateControlComponentProps) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface LocateControlProps extends Leaflet.ControlOptions {}
-
-export class LocateControl extends Leaflet.Control {
-  private _container?: HTMLElement;
-  private _root?: ReactDOM.Root;
-
-  constructor(options: LocateControlProps) {
-    super(options);
-  }
-
-  onAdd(map: Leaflet.Map): HTMLElement {
-    this._container = Leaflet.DomUtil.create(
-      "div",
-      "leaflet-bar leaflet-control",
-    );
-    Leaflet.DomEvent.disableClickPropagation(this._container);
-
-    this._root = ReactDOM.createRoot(this._container);
-    this._root.render(<LocateControlComponent map={map} />);
-
-    return this._container;
-  }
-
-  onRemove(): void {
-    if (this._root) {
-      setTimeout(() => {
-        this._root?.unmount();
-      }, 0);
-    }
-
-    if (this._container && this._container.parentNode) {
-      this._container.parentNode.removeChild(this._container);
-    }
-  }
-}
-
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface LocateControlPluginProps extends Leaflet.ControlOptions {}
 
-export const LocateControlPlugin = memo(function LocateControlPlugin(
-  props: LocateControlPluginProps,
-) {
+export function LocateControlPlugin(props: LocateControlPluginProps) {
   const map = useMap();
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (map) {
-      const control = new LocateControl(props);
-      map.addControl(control);
+    if (!map) return;
 
-      return () => {
-        map.removeControl(control);
-      };
-    }
+    const control = new Leaflet.Control(props);
+    const div = Leaflet.DomUtil.create("div", "leaflet-bar leaflet-control");
+    Leaflet.DomEvent.disableClickPropagation(div);
+
+    control.onAdd = () => div;
+    map.addControl(control);
+
+    setContainer(div);
+
+    return () => {
+      map.removeControl(control);
+    };
   }, [map, props]);
 
-  return null;
-});
+  return container
+    ? createPortal(<LocateControlComponent map={map!} />, container)
+    : null;
+}
