@@ -135,33 +135,6 @@ export function CvmMap(props: CvmMapProps) {
     { keepPreviousData: true },
   );
 
-  /*
-   * The CVM selected via the share link must be loaded independently of the last loaded
-   * viewport, as it may not be located in the viewport. Nevertheless, the CVM's details
-   * must be known in order to center the viewport on the CVM's coordinates in the next step.
-   */
-
-  const { data: sharedCvmData, error: sharedCvmError } = useSWR<
-    {
-      id: string;
-      latitude: number;
-      longitude: number;
-      score: number;
-      recentlyReported: {
-        missing: number;
-        spam: number;
-        inactive: number;
-        inaccessible: number;
-      };
-    },
-    unknown,
-    string | null
-  >(
-    props.sharedCvmId ? `/cvms/${props.sharedCvmId}` : null,
-    (url) => api.get(url).then((res) => res.data),
-    { shouldRetryOnError: false, revalidateOnFocus: false },
-  );
-
   const markers = useMemo(
     () =>
       data?.filter((item) => !("cluster" in item)) as {
@@ -191,19 +164,6 @@ export function CvmMap(props: CvmMapProps) {
       }[],
     [data],
   );
-
-  useEffect(() => {
-    if (sharedCvmError) {
-      enqueue(
-        {
-          title: t("Notifications.sharedNotFound.title"),
-          description: t("Notifications.sharedNotFound.description"),
-          variant: "error",
-        },
-        { timeout: 10000 },
-      );
-    }
-  }, [sharedCvmError, enqueue, t]);
 
   /* ============ Data Fetching - End ============ */
 
@@ -367,18 +327,54 @@ export function CvmMap(props: CvmMapProps) {
   const [selectedCvmId, setSelectedCvmId] = useState<string | null>(null);
   const appliedSharedIdRef = useRef<string | null>(null);
 
+  /*
+   * The CVM selected via the share link must be loaded independently of the last loaded
+   * viewport, as it may not be located in the viewport. Nevertheless, the CVM's details
+   * must be known in order to center the viewport on the CVM's coordinates in the next step.
+   */
+
+  const { data: selectedCvmData, error: selectedCvmError } = useSWR<
+    {
+      id: string;
+      latitude: number;
+      longitude: number;
+      score: number;
+      recentlyReported: {
+        missing: number;
+        spam: number;
+        inactive: number;
+        inaccessible: number;
+      };
+    },
+    unknown,
+    string | null
+  >(
+    selectedCvmId ? `/cvms/${selectedCvmId}` : null,
+    (url) => api.get(url).then((res) => res.data),
+    { shouldRetryOnError: false, revalidateOnFocus: false },
+  );
+
+  useEffect(() => {
+    if (selectedCvmError) {
+      enqueue(
+        {
+          title: t("Notifications.sharedNotFound.title"),
+          description: t("Notifications.sharedNotFound.description"),
+          variant: "error",
+        },
+        { timeout: 10000 },
+      );
+    }
+  }, [selectedCvmError, enqueue, t]);
+
   // Sets the shared CVM once when rendering the map if a shared CVM link was followed
   useEffect(() => {
-    if (
-      props.sharedCvmId &&
-      sharedCvmData &&
-      appliedSharedIdRef.current !== props.sharedCvmId
-    ) {
-      setSelectedCvmId(sharedCvmData.id);
+    if (props.sharedCvmId && appliedSharedIdRef.current !== props.sharedCvmId) {
+      setSelectedCvmId(props.sharedCvmId);
       // Ensure that the sharedCvmId is only applied once
       appliedSharedIdRef.current = props.sharedCvmId;
     }
-  }, [props.sharedCvmId, sharedCvmData, map]);
+  }, [props.sharedCvmId, map]);
 
   // Determine the selected CVM
   const selectedCvm = useMemo(() => {
@@ -386,18 +382,8 @@ export function CvmMap(props: CvmMapProps) {
       return null;
     }
 
-    const fromMarkers = markers?.find((m) => m.id === selectedCvmId);
-
-    if (fromMarkers) {
-      return fromMarkers;
-    }
-
-    if (sharedCvmData && sharedCvmData.id === selectedCvmId) {
-      return sharedCvmData;
-    }
-
-    return null;
-  }, [markers, selectedCvmId, sharedCvmData]);
+    return selectedCvmData || null;
+  }, [selectedCvmData, selectedCvmId]);
 
   // Center the map on the selected CVM
   useEffect(() => {
