@@ -367,7 +367,7 @@ export function CvmMap(props: CvmMapProps) {
   );
 
   useEffect(() => {
-    if (selectedCvmError) {
+    if (selectedCvmError && appliedSharedIdRef.current) {
       enqueue(
         {
           title: t("Notifications.sharedNotFound.title"),
