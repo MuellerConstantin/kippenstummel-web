@@ -339,11 +339,14 @@ export function CvmMap(props: CvmMapProps) {
   const [selectedCvmId, setSelectedCvmId] = useState<string | null>(null);
   const appliedSharedIdRef = useRef<string | null>(null);
 
-  /*
-   * The CVM selected via the share link must be loaded independently of the last loaded
-   * viewport, as it may not be located in the viewport. Nevertheless, the CVM's details
-   * must be known in order to center the viewport on the CVM's coordinates in the next step.
-   */
+  // Sets the shared CVM once when rendering the map if a shared CVM link was followed
+  useEffect(() => {
+    if (props.sharedCvmId && appliedSharedIdRef.current !== props.sharedCvmId) {
+      setSelectedCvmId(props.sharedCvmId);
+      // Ensure that the sharedCvmId is only applied once
+      appliedSharedIdRef.current = props.sharedCvmId;
+    }
+  }, [props.sharedCvmId, map]);
 
   const { data: selectedCvmData, error: selectedCvmError } = useSWR<
     {
@@ -366,6 +369,16 @@ export function CvmMap(props: CvmMapProps) {
     { shouldRetryOnError: false, revalidateOnFocus: false },
   );
 
+  // Determine the selected CVM
+  const selectedCvm = useMemo(() => {
+    if (!selectedCvmId) {
+      return null;
+    }
+
+    return selectedCvmData || null;
+  }, [selectedCvmData, selectedCvmId]);
+
+  // Show a notification if the shared CVM is not found
   useEffect(() => {
     if (selectedCvmError && appliedSharedIdRef.current) {
       enqueue(
@@ -379,25 +392,7 @@ export function CvmMap(props: CvmMapProps) {
     }
   }, [selectedCvmError, enqueue, t]);
 
-  // Sets the shared CVM once when rendering the map if a shared CVM link was followed
-  useEffect(() => {
-    if (props.sharedCvmId && appliedSharedIdRef.current !== props.sharedCvmId) {
-      setSelectedCvmId(props.sharedCvmId);
-      // Ensure that the sharedCvmId is only applied once
-      appliedSharedIdRef.current = props.sharedCvmId;
-    }
-  }, [props.sharedCvmId, map]);
-
-  // Determine the selected CVM
-  const selectedCvm = useMemo(() => {
-    if (!selectedCvmId) {
-      return null;
-    }
-
-    return selectedCvmData || null;
-  }, [selectedCvmData, selectedCvmId]);
-
-  // Center the map on the selected CVM
+  // Center the map on the shared CVM, only for the first render of shared CVM
   useEffect(() => {
     /*
      * It's important to check for the selectedCvm?.latitude and selectedCvm?.longitude
@@ -406,10 +401,15 @@ export function CvmMap(props: CvmMapProps) {
      * But this doesn't necessarily means that the selectedCvm itself has changed.
      */
 
-    if (selectedCvm?.latitude && selectedCvm?.longitude) {
+    if (
+      selectedCvm?.latitude &&
+      selectedCvm?.longitude &&
+      appliedSharedIdRef.current &&
+      appliedSharedIdRef.current === selectedCvmId
+    ) {
       map?.setView([selectedCvm.latitude, selectedCvm.longitude], 18);
     }
-  }, [selectedCvm?.latitude, selectedCvm?.longitude, map]);
+  }, [selectedCvm?.latitude, selectedCvm?.longitude, map, selectedCvmId]);
 
   /* ============ CVM-Selection - End ============ */
 
