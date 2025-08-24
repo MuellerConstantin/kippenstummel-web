@@ -150,6 +150,7 @@ export function CvmMap(props: CvmMapProps) {
   }, [sidebarRef.current]);
 
   const location = useAppSelector((state) => state.location.location);
+  const locatedAt = useAppSelector((state) => state.location.locatedAt);
   const mapVariant = useAppSelector((state) => state.usability.mapVariant);
   const mapView = useAppSelector((state) => state.usability.mapView);
 
@@ -587,6 +588,7 @@ export function CvmMap(props: CvmMapProps) {
       {location && (
         <LocateMarker
           position={new Leaflet.LatLng(location.lat, location.lng)}
+          lastUpdatedAgo={new Date().getTime() - new Date(locatedAt!).getTime()}
         />
       )}
     </LeafletMap>

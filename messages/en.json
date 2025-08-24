@@ -442,13 +442,17 @@
     "title": "Help",
     "headlines": {
       "general": "General",
-      "report": "Report machines",
-      "vote": "Vote machines"
+      "register": "Register machines",
+      "reposition": "Reposition machines",
+      "vote": "Vote machines",
+      "report": "Report machines"
     },
     "description": {
       "general": "The map in front of you shows the locations of the cigarette vending machines. Depending on the zoom level, the machines are grouped together for clarity. At higher zoom levels, the locations are displayed individually. Selecting an individual cigarette vending machine will open its menu with further information.<br></br><br></br>Each cigarette vending machine has a score, which can range from -10 to 10. The score is calculated from user ratings. A negative score means that users have had frequent problems with the machine; the location may be incorrect, or the machine may be defective. A positive score means that several users appear to have used the machine successfully.<br></br><br></br>Each cigarette vending machine is also provided with a badge that indicates its trust level. A different badge is used depending on the score. The following badges are available:",
-      "report": "You can also easily register the locations of new CVMs yourself. You'll find the corresponding button in the bottom right corner. Simply follow the instructions. Please check first to see if the CVM has already been registered at your current location.",
-      "vote": "The locations of vending machines are verified using swarm intelligence. You can vote positively for vending machines that were actually in the right place and were working, or negatively for missing or non-functioning machines. You can vote via the menu for each vending machine. Alternatively, you can report machines that have been reported as being misused or are no longer available."
+      "register": "You can also easily register the locations of new CVMs yourself. You'll find the corresponding button <interfaceIcon></interfaceIcon> in the map's menu at the bottom. Simply follow the instructions. Please check first to see if the CVM has already been registered at your current location.",
+      "reposition": "Sometimes, the location of a machine on the map may not exactly match the actual location. Although we allow you to adjust the exact location when registering machines, regardless of the location of the person reporting it, such scenarios can occur. In this case, you don't need to report the machine again; you can move/correct its location via the machine's menu.",
+      "vote": "The locations of vending machines are verified using swarm intelligence. You can vote positively <upIcon></upIcon> for vending machines that were actually in the right place and were working, or negatively <downIcon></downIcon> for missing or non-functioning machines. You can vote via the menu for each vending machine. Select the machine's marker on the map to open its menu. Alternatively, you can report machines that have been reported as being misused or are no longer available.",
+      "report": "In particularly serious cases, such as obvious abuse, spam, or misplacement, it is also possible to explicitly report machines and thus warn other users against visiting them. Reporting a machine is also possible via its menu. Please only use this option as a last resort in particularly serious cases! Generally, the quality of the machines should and will be controlled by ratings."
     },
     "general": {
       "r5p": "Top Rated (Score von +5 bis +10)",

@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import { DialogProps, Heading } from "react-aria-components";
 import { Dialog } from "@/components/atoms/Dialog";
 import { Button } from "@/components/atoms/Button";
-import { ChevronDown, ChevronUp, Equal, X } from "lucide-react";
+import { ChevronDown, ChevronUp, Equal, MapPinPlus, X } from "lucide-react";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface HelpDialogProps extends Omit<DialogProps, "children"> {}
@@ -52,9 +52,22 @@ export function HelpDialog(props: HelpDialogProps) {
               </div>
             </div>
             <div className="space-y-2">
-              <div className="font-semibold">{t("headlines.report")}</div>
+              <div className="font-semibold">{t("headlines.register")}</div>
               <div className="text-sm">
-                {t.rich("description.report", {
+                {t.rich("description.register", {
+                  br: () => <br />,
+                  interfaceIcon: () => (
+                    <div className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-green-600 align-middle">
+                      <MapPinPlus className="h-3 w-3 text-white" />
+                    </div>
+                  ),
+                })}
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="font-semibold">{t("headlines.reposition")}</div>
+              <div className="text-sm">
+                {t.rich("description.reposition", {
                   br: () => <br />,
                 })}
               </div>
@@ -63,6 +76,24 @@ export function HelpDialog(props: HelpDialogProps) {
               <div className="font-semibold">{t("headlines.vote")}</div>
               <div className="text-sm">
                 {t.rich("description.vote", {
+                  br: () => <br />,
+                  upIcon: () => (
+                    <div className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-slate-400 align-middle dark:border-slate-600">
+                      <ChevronUp className="h-3 w-3 text-slate-600" />
+                    </div>
+                  ),
+                  downIcon: () => (
+                    <div className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-slate-400 align-middle dark:border-slate-600">
+                      <ChevronDown className="h-3 w-3 text-slate-600" />
+                    </div>
+                  ),
+                })}
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="font-semibold">{t("headlines.report")}</div>
+              <div className="text-sm">
+                {t.rich("description.report", {
                   br: () => <br />,
                 })}
               </div>
