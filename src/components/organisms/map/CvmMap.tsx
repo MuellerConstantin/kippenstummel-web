@@ -380,15 +380,26 @@ export function CvmMap(props: CvmMapProps) {
 
   // Show a notification if the shared CVM is not found
   useEffect(() => {
-    if (selectedCvmError && appliedSharedIdRef.current) {
-      enqueue(
-        {
-          title: t("Notifications.sharedNotFound.title"),
-          description: t("Notifications.sharedNotFound.description"),
-          variant: "error",
-        },
-        { timeout: 10000 },
-      );
+    if (selectedCvmError) {
+      if (appliedSharedIdRef.current) {
+        enqueue(
+          {
+            title: t("Notifications.sharedNotFound.title"),
+            description: t("Notifications.sharedNotFound.description"),
+            variant: "error",
+          },
+          { timeout: 10000 },
+        );
+      } else {
+        enqueue(
+          {
+            title: t("Notifications.selectedNotFound.title"),
+            description: t("Notifications.selectedNotFound.description"),
+            variant: "error",
+          },
+          { timeout: 10000 },
+        );
+      }
     }
   }, [selectedCvmError, enqueue, t]);
 

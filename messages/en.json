@@ -433,6 +433,10 @@
     "sharedNotFound": {
       "title": "Shared Vending Machine not found",
       "description": "The shared vending machine could not be found."
+    },
+    "selectedNotFound": {
+      "title": "Selected Vending Machine not found",
+      "description": "Something went wrong, the selected vending machine could not be found."
     }
   },
   "Validation": {

@@ -433,6 +433,10 @@
     "sharedNotFound": {
       "title": "Geteilter Automat nicht gefunden",
       "description": "Der geteilte Automat konnte nicht gefunden werden."
+    },
+    "selectedNotFound": {
+      "title": "Ausgewählter Automat nicht gefunden",
+      "description": "Etwas ging schief, der gewählte Automat konnte nicht gefunden werden."
     }
   },
   "Validation": {
