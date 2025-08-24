@@ -3,7 +3,7 @@
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import useSWR from "swr";
 import Leaflet from "leaflet";
-import { AttributionControl, Circle, ZoomControl } from "react-leaflet";
+import { AttributionControl, ZoomControl } from "react-leaflet";
 import { useTranslations } from "next-intl";
 import useApi from "@/hooks/useApi";
 import { LeafletMap } from "@/components/organisms/leaflet/LeafletMap";
@@ -25,6 +25,84 @@ import { CvmReportDialog } from "./CvmReportDialog";
 import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
 import { AnimatePresence, motion } from "framer-motion";
 import { MapLibreTileLayer } from "../leaflet/MapLibreTileLayer";
+
+interface CvmMapRegisteringViewProps {
+  originalPosition?: Leaflet.LatLng;
+  maxDistance?: number;
+  currentPosition: Leaflet.LatLng;
+  onCurrentPositionChange: (position: Leaflet.LatLng) => void;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+function CvmMapRegisteringView({
+  onConfirm,
+  onCancel,
+  originalPosition,
+  maxDistance,
+  currentPosition,
+  onCurrentPositionChange,
+}: CvmMapRegisteringViewProps) {
+  return (
+    <>
+      <AdjustableLocationMarker
+        reference={
+          (originalPosition &&
+            maxDistance && {
+              position: originalPosition,
+              maxDistance,
+            }) ||
+          undefined
+        }
+        position={currentPosition}
+        onAdapt={onCurrentPositionChange}
+      />
+      <ConfirmRegisterBottomNavigation
+        onCancel={onCancel}
+        onConfirm={onConfirm}
+      />
+    </>
+  );
+}
+
+interface CvmMapRepositioningViewProps {
+  originalPosition?: Leaflet.LatLng;
+  maxDistance?: number;
+  currentPosition: Leaflet.LatLng;
+  onCurrentPositionChange: (position: Leaflet.LatLng) => void;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+function CvmMapRepositioningView({
+  onConfirm,
+  onCancel,
+  originalPosition,
+  maxDistance,
+  currentPosition,
+  onCurrentPositionChange,
+}: CvmMapRepositioningViewProps) {
+  return (
+    <>
+      <AdjustableLocationMarker
+        reference={
+          (originalPosition &&
+            maxDistance && {
+              position: originalPosition,
+              maxDistance,
+            }) ||
+          undefined
+        }
+        position={currentPosition}
+        onAdapt={onCurrentPositionChange}
+      />
+      <ConfirmRegisterBottomNavigation
+        onCancel={onCancel}
+        onConfirm={onConfirm}
+      />
+    </>
+  );
+}
 
 export interface CvmMapProps {
   onRegister?: (position: Leaflet.LatLng) => void;
@@ -243,7 +321,7 @@ export function CvmMap(props: CvmMapProps) {
       setRepositioningEditorPosition(editorPosition);
       setOrigRepositioningPosition(position);
       setRepositioningPosition(position);
-      map?.setView(position, 18);
+      map?.setView(position, 19);
     },
     [
       setIsRepositioning,
@@ -353,62 +431,34 @@ export function CvmMap(props: CvmMapProps) {
       <ZoomControl position="topright" zoomInTitle="" zoomOutTitle="" />
       <LocateControlPlugin position="topright" />
       {isRegistering && (
-        <>
-          <AdjustableLocationMarker
-            reference={{
-              position: [location!.lat, location!.lng],
-              maxDistance: 25,
-            }}
-            position={[registerPosition!.lat, registerPosition!.lng]}
-            onAdapt={setRegisterPosition}
-          />
-          <Circle
-            radius={25}
-            center={[location!.lat, location!.lng]}
-            pathOptions={{ color: "#16a34a", fillColor: "#16a34a" }}
-          />
-          <ConfirmRegisterBottomNavigation
-            onCancel={() => setIsRegistering(false)}
-            onConfirm={() => {
-              props.onRegister?.(registerPosition!);
-              setIsRegistering(false);
-            }}
-          />
-        </>
+        <CvmMapRegisteringView
+          onCancel={() => setIsRegistering(false)}
+          onConfirm={() => {
+            props.onRegister?.(registerPosition!);
+            setIsRegistering(false);
+          }}
+          originalPosition={new Leaflet.LatLng(location!.lat, location!.lng)}
+          maxDistance={25}
+          onCurrentPositionChange={setRegisterPosition}
+          currentPosition={registerPosition!}
+        />
       )}
       {isRepositioning && (
-        <>
-          <AdjustableLocationMarker
-            reference={{
-              position: [
-                origRepositioningPosition!.lat,
-                origRepositioningPosition!.lng,
-              ],
-              maxDistance: 25,
-            }}
-            position={[repositioningPosition!.lat, repositioningPosition!.lng]}
-            onAdapt={setRepositioningPosition}
-          />
-          <Circle
-            radius={25}
-            center={[
-              origRepositioningPosition!.lat,
-              origRepositioningPosition!.lng,
-            ]}
-            pathOptions={{ color: "#16a34a", fillColor: "#16a34a" }}
-          />
-          <ConfirmRegisterBottomNavigation
-            onCancel={() => setIsRepositioning(false)}
-            onConfirm={() => {
-              props.onReposition?.(
-                repositioningId!,
-                repositioningPosition!,
-                repositioningEditorPosition!,
-              );
-              setIsRepositioning(false);
-            }}
-          />
-        </>
+        <CvmMapRepositioningView
+          onCancel={() => setIsRepositioning(false)}
+          onConfirm={() => {
+            props.onReposition?.(
+              repositioningId!,
+              repositioningPosition!,
+              repositioningEditorPosition!,
+            );
+            setIsRepositioning(false);
+          }}
+          originalPosition={origRepositioningPosition}
+          maxDistance={25}
+          onCurrentPositionChange={setRepositioningPosition}
+          currentPosition={repositioningPosition!}
+        />
       )}
       {!isRegistering && !isRepositioning && (
         <>

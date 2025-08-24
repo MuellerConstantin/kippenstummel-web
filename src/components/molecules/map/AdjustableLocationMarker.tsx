@@ -1,15 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Leaflet from "leaflet";
-import { Marker, Tooltip } from "react-leaflet";
+import { Circle, Marker, Tooltip } from "react-leaflet";
 import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
 import { MapPinPlusInside } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface AdjustableLocationMarkerProps {
   onAdapt?: (position: Leaflet.LatLng) => void;
-  position: [number, number];
+  position: Leaflet.LatLng;
   reference?: {
-    position: [number, number];
+    position: Leaflet.LatLng;
     maxDistance: number;
   };
 }
@@ -20,9 +20,7 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
 
   const markerRef = useRef<Leaflet.Marker>(null);
 
-  const [position, setPosition] = useState<Leaflet.LatLng>(
-    Leaflet.latLng(props.position[0], props.position[1]),
-  );
+  const [position, setPosition] = useState<Leaflet.LatLng>(props.position);
   const [tooltipOpen, setTooltipOpen] = useState(true);
 
   const eventHandlers = useMemo(
@@ -32,9 +30,7 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
         if (marker && reference) {
           const newPosition = marker.getLatLng();
 
-          const distance = Leaflet.latLng(reference.position).distanceTo(
-            newPosition,
-          );
+          const distance = reference.position.distanceTo(newPosition);
 
           if (distance > reference.maxDistance) {
             marker.setLatLng(newPosition);
@@ -47,9 +43,7 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
           const newPosition = marker.getLatLng();
 
           if (reference) {
-            const distance = Leaflet.latLng(reference.position).distanceTo(
-              newPosition,
-            );
+            const distance = reference.position.distanceTo(newPosition);
 
             if (distance <= reference.maxDistance) {
               setPosition(newPosition);
@@ -98,6 +92,13 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
           </Tooltip>
         )}
       </Marker>
+      {reference && (
+        <Circle
+          radius={reference.maxDistance}
+          center={reference.position}
+          pathOptions={{ color: "#16a34a", fillColor: "#16a34a" }}
+        />
+      )}
     </>
   );
 }

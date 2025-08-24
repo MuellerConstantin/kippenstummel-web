@@ -4,9 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import locationSlice from "@/store/slices/location";
 import { useTranslations } from "next-intl";
 import { useNotifications } from "@/contexts/NotificationProvider";
-
-const LOCATION_TTL = 60 * 1000;
-const LOCATION_COOLDOWN = 10 * 1000;
+import { LOCATION_TTL, LOCATION_COOLDOWN } from "@/lib/constants";
 
 export default function useLocate(map: Leaflet.Map) {
   const dispatch = useAppDispatch();
