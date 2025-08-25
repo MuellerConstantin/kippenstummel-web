@@ -61,7 +61,8 @@ export function LocateControlPlugin(props: LocateControlPluginProps) {
     return () => {
       map.removeControl(control);
     };
-  }, [map, props]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map, ...Object.values(props)]);
 
   return container
     ? createPortal(<LocateControlComponent map={map!} />, container)
