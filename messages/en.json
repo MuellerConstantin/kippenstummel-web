@@ -562,5 +562,8 @@
   },
   "AdjustableLocationMarker": {
     "tooltip": "Drag to move"
+  },
+  "OfflineBanner": {
+    "message": "You are offline."
   }
 }
