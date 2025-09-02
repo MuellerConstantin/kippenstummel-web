@@ -273,6 +273,15 @@
     "description": "Die Seite, die du suchst, konnte nicht gefunden werden.",
     "backToHomepage": "Zurück zur Startseite"
   },
+  "OfflinePage": {
+    "meta": {
+      "title": "Kippenstummel | Du bist offline",
+      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+    },
+    "headline": "Du bist offline",
+    "description": "Die scheinst im Moment keine Internetverbindung zu haben. Die Seite konnte nicht geladen werden.",
+    "retry": "Erneut versuchen"
+  },
   "TransferPage": {
     "meta": {
       "title": "Kippenstummel | Identität übertragen",

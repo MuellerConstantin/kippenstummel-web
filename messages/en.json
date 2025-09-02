@@ -273,6 +273,15 @@
     "description": "Sorry, we can't find that page. You'll find lots to explore on the home page.",
     "backToHomepage": "Back to home"
   },
+  "OfflinePage": {
+    "meta": {
+      "title": "Kippenstummel | You are offline",
+      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+    },
+    "headline": "You are offline",
+    "description": "It seems like you're offline. We can't find that page.",
+    "retry": "Retry"
+  },
   "TransferPage": {
     "meta": {
       "title": "Kippenstummel | Transfer identity",

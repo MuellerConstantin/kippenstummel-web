@@ -12,6 +12,17 @@ const withSerwist = withSerwistInit({
   swSrc: "src/sw.ts",
   swDest: "public/sw.js",
   disable: process.env.NODE_ENV === "development",
+  reloadOnOnline: true,
+  additionalPrecacheEntries: [
+    {
+      url: "/de/offline",
+      revision: "1",
+    },
+    {
+      url: "/en/offline",
+      revision: "1",
+    },
+  ],
 });
 
 const withNextIntl = createNextIntlPlugin();

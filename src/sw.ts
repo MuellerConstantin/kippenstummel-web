@@ -16,6 +16,35 @@ declare const self: ServiceWorkerGlobalScope;
 
 const serwist = new Serwist({
   precacheEntries: self.__SW_MANIFEST,
+  precacheOptions: {
+    cleanupOutdatedCaches: true,
+    concurrency: 10,
+    ignoreURLParametersMatching: [],
+  },
+  fallbacks: {
+    entries: [
+      {
+        url: "/de/offline",
+        matcher: ({ request }) => {
+          if (request.mode !== "navigate") return false;
+
+          const url = new URL(request.url);
+          const firstSegment = url.pathname.split("/").filter(Boolean)[0];
+          return firstSegment !== "en";
+        },
+      },
+      {
+        url: "/en/offline",
+        matcher: ({ request }) => {
+          if (request.mode !== "navigate") return false;
+
+          const url = new URL(request.url);
+          const firstSegment = url.pathname.split("/").filter(Boolean)[0];
+          return firstSegment === "en";
+        },
+      },
+    ],
+  },
   skipWaiting: true,
   clientsClaim: true,
   navigationPreload: true,
