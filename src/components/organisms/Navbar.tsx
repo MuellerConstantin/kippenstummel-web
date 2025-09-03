@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useCallback, useMemo, useState } from "react";
-import NextLink from "next/link";
+import { Link as NextLink } from "@/i18n/navigation";
 import Image from "next/image";
-import { useParams } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import {
   Menu as MenuIcon,
@@ -260,19 +259,12 @@ export function NavbarLanguagesMenu() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
-  const params = useParams();
 
   const onLocaleChange = useCallback(
     (newLocale: string) => {
-      router.replace(
-        {
-          pathname,
-          query: { ...params, locale: newLocale },
-        },
-        { locale: newLocale },
-      );
+      router.replace(pathname, { locale: newLocale });
     },
-    [pathname, params, router],
+    [pathname, router],
   );
 
   return (
