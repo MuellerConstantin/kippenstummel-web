@@ -24,7 +24,7 @@
         },
         "current": {
           "title": "Current & comprehensive",
-          "description": "Our services are committed to providing the most up-to-date information. The data is regularly updated and checked for accuracy."
+          "description": "Our services are committed to providing the most up-to-date information. The data is regularly updated and checked for validity."
         },
         "community": {
           "title": "Self-regulating",
@@ -32,7 +32,7 @@
         },
         "device": {
           "title": "Device independent",
-          "description": "Our services are available on any device. No app required."
+          "description": "The application can be used on any device, regardless of platform. Furthermore, the application can be installed natively on many different platforms."
         }
       }
     },
@@ -50,7 +50,7 @@
         },
         "2": {
           "question": "Where does the location data come from?",
-          "answer": "Kippenstummel relies on community self-regulation. Most vending machine locations are entered and maintained by the community itself. The data is regularly updated and checked for accuracy. Additionally, our database is supplemented with public data from third-party sources."
+          "answer": "Kippenstummel relies on community self-regulation. Most vending machine locations are entered and maintained by the community itself. The data is regularly updated and checked for validity. Additionally, our database is supplemented with public data from third-party sources."
         },
         "3": {
           "question": "Is Kippenstummel free?",

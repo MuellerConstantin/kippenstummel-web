@@ -24,7 +24,7 @@
         },
         "current": {
           "title": "Aktuell & umfassend",
-          "description": "Unsere Dienste haben den Anspruch auf top aktuelle Daten. Die Daten werden regelmäßig aktualisiert und auf korrektheit geprüft."
+          "description": "Unsere Dienste haben den Anspruch auf top aktuelle Daten. Die Daten werden regelmäßig aktualisiert und auf Korrektheit geprüft."
         },
         "community": {
           "title": "Selbstregulierend",
@@ -32,7 +32,7 @@
         },
         "device": {
           "title": "Geräteunabhängig",
-          "description": "Unsere Dienste sind auf jedem Gerät nutzbar. Keine App erforderlich."
+          "description": "Die Anwendung lässt sich plattformunabhängig auf jeden Gerät nutzen. Darüber hinaus kann die Anwendung auf vielen verschiedenen Plattformen nativ installiert werden."
         }
       }
     },
@@ -70,7 +70,7 @@
         },
         "7": {
           "question": "Warum wird ein gemeldeter Standort oder eine Bewertung nicht angezeigt?",
-          "answer": "Gemeldete Standorte oder Bewertungen werden systemintern zunächst validiert was einige Zeit in Anspruch nehmen kann. Daher sind Meldungen unter Umständen nicht sofort sichtbar. Darüber hinaus kann es auch sein, das eine Meldung vom System nicht akzeptiert wird und daher nicht bemerkbar wird. Sollte eine deiner Meldungen doch einmal abgelehnt werden ist es uns wichtig zu betonen, dass wir diese nicht aus mangelndem Vertrauen ablehnen, sondern um ein ausgewogenes Stimmverhältnis im Sinne der Schwarmintelligenz zu garantieren. Vielen Dank für deinen Einsatz!"
+          "answer": "Gemeldete Standorte oder Bewertungen werden systemintern zunächst validiert was einige Zeit in Anspruch nehmen kann. Daher sind Meldungen unter Umständen nicht sofort sichtbar. Darüber hinaus kann es auch sein, dass eine Meldung vom System nicht akzeptiert wird und daher nicht bemerkbar wird. Sollte eine deiner Meldungen doch einmal abgelehnt werden ist es uns wichtig zu betonen, dass wir diese nicht aus mangelndem Vertrauen ablehnen, sondern um ein ausgewogenes Stimmverhältnis im Sinne der Schwarmintelligenz zu garantieren. Vielen Dank für deinen Einsatz!"
         },
         "8": {
           "question": "Was ist meine persönliche Identität?",
