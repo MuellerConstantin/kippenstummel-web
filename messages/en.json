@@ -469,8 +469,8 @@
     },
     "general": {
       "r5p": "Top Rated (Score von +5 bis +10)",
-      "rN5p": "Neutral+ (Score of -5 to +4)",
-      "rN8p": "Bad+ (Score of -8 to -4)",
+      "r0P": "Neutral (Score of 0 to +4)",
+      "rN8p": "Bad (Score of -8 to -1)",
       "rN10p": "For Deletion (Score of -10 to -9)"
     },
     "close": "Close"
@@ -483,7 +483,7 @@
       "options": {
         "rAll": "All",
         "r5p": "Top Rated",
-        "rN5p": "Neutral+",
+        "r0P": "Neutral+",
         "rN8p": "Bad+"
       }
     }

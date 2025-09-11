@@ -32,7 +32,7 @@ export function LocationMarker(props: LocationMarkerProps) {
                 <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-800">
                   <X className="h-2.5 w-2.5 text-white" />
                 </div>
-              ) : props.cvm.score < -5 ? (
+              ) : props.cvm.score < 0 ? (
                 <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-500">
                   <ChevronDown className="h-2.5 w-2.5 text-white" />
                 </div>

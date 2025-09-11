@@ -38,7 +38,7 @@ export function HelpDialog(props: HelpDialogProps) {
                 <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-500">
                   <Equal className="h-4 w-4 text-white" />
                 </div>
-                <div>{t("general.rN5p")}</div>
+                <div>{t("general.r0P")}</div>
 
                 <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-500">
                   <ChevronDown className="h-4 w-4 text-white" />

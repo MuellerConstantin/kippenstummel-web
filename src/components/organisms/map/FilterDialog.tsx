@@ -28,8 +28,8 @@ export function FilterDialog(props: FilterDialogProps) {
           dispatch(usabilitySlice.actions.setMapVariant("rN8p"));
           break;
         }
-        case "layer-variant-rN5p": {
-          dispatch(usabilitySlice.actions.setMapVariant("rN5p"));
+        case "layer-variant-r0P": {
+          dispatch(usabilitySlice.actions.setMapVariant("r0P"));
           break;
         }
         case "layer-variant-r5p": {
@@ -74,9 +74,9 @@ export function FilterDialog(props: FilterDialogProps) {
                     </div>
                   </div>
                 </SelectItem>
-                <SelectItem id="layer-variant-rN5p" key="layer-variant-rN5p">
+                <SelectItem id="layer-variant-r0P" key="layer-variant-r0P">
                   <div className="flex items-center gap-2">
-                    <div>{t("variant.options.rN5p")}</div>
+                    <div>{t("variant.options.r0P")}</div>
                     <div className="flex items-center gap-1">
                       <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-white bg-green-600">
                         <ChevronUp className="h-3 w-3 text-white" />

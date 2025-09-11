@@ -178,7 +178,7 @@ export function CvmInfoMobileDialog(props: CvmInfoMobileDialogProps) {
                   <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-800">
                     <X className="h-4 w-4 text-white" />
                   </div>
-                ) : props.cvm.score < -5 ? (
+                ) : props.cvm.score < 0 ? (
                   <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-500">
                     <ChevronDown className="h-4 w-4 text-white" />
                   </div>
