@@ -30,7 +30,7 @@ export default function Imprint() {
         </div>
       </div>
       <div className="flex items-center gap-4">
-        <Info className="h-8 w-8 text-green-600" />
+        <Info className="h-6 w-6 shrink-0 text-green-600" />
         <div>{t("disclaimer")}</div>
       </div>
       <section className="flex flex-col gap-4">

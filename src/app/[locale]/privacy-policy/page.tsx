@@ -11,7 +11,7 @@ export default function PrivacyPolicy() {
     <div className="mx-auto my-8 flex w-full max-w-[80rem] flex-col gap-8 p-4 text-slate-800 dark:text-white">
       <h1 className="text-3xl font-bold">{t("headline")}</h1>
       <div className="flex items-center gap-4">
-        <Info className="h-8 w-8 text-green-600" />
+        <Info className="h-6 w-6 shrink-0 text-green-600" />
         <div>{t("disclaimer")}</div>
       </div>
       <section className="flex flex-col gap-4">
