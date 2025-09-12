@@ -15,11 +15,25 @@ export function ClusterMarker(props: ClusterMarkerProps) {
     let outerClasses = "";
 
     if (props.count < 10) {
-      outerClasses = "bg-green-500 opacity-80";
+      outerClasses = "bg-green-400 dark:bg-green-600";
     } else if (props.count < 100) {
-      outerClasses = "bg-amber-500 opacity-80";
+      outerClasses = "bg-amber-300 dark:bg-amber-600";
     } else {
-      outerClasses = "bg-orange-500 opacity-80";
+      outerClasses = "bg-orange-300 dark:bg-orange-600";
+    }
+
+    return outerClasses;
+  }, [props.count]);
+
+  const innerClasses = useMemo(() => {
+    let outerClasses = "";
+
+    if (props.count < 10) {
+      outerClasses = "bg-green-600 dark:bg-green-800 text-white";
+    } else if (props.count < 100) {
+      outerClasses = "bg-amber-500 dark:bg-amber-800 text-white";
+    } else {
+      outerClasses = "bg-orange-500 dark:bg-orange-800 text-white";
     }
 
     return outerClasses;
@@ -34,7 +48,7 @@ export function ClusterMarker(props: ClusterMarkerProps) {
     if (props.count < 1_000_000_000_000)
       return (props.count / 1_000_000_000).toFixed(1) + "B";
 
-    return (props.count / 1_000_000_000).toFixed(1) + "B";
+    return (props.count / 1_000_000_000).toFixed(1) + "B+";
   }, [props.count]);
 
   const handleClick = useCallback(() => {
@@ -51,8 +65,12 @@ export function ClusterMarker(props: ClusterMarkerProps) {
           <div
             className={`${outerClasses} box-border h-fit w-fit rounded-[20px] p-[3px]`}
           >
-            <div className="h-[32px] w-[32px] rounded-full bg-slate-300 text-center font-sans text-[12px] leading-[30px] text-slate-800 dark:bg-slate-600 dark:text-slate-100">
-              <span>{formattedCount}</span>
+            <div
+              className={`${innerClasses} flex h-[32px] w-[32px] items-center justify-center rounded-full`}
+            >
+              <span className="text-center font-sans text-[12px] leading-[30px]">
+                {formattedCount}
+              </span>
             </div>
           </div>
         ),
