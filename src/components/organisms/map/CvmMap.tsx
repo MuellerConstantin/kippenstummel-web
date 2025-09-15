@@ -25,6 +25,7 @@ import { CvmReportDialog } from "./CvmReportDialog";
 import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
 import { AnimatePresence, motion } from "framer-motion";
 import { MapLibreTileLayer } from "../leaflet/MapLibreTileLayer";
+import { latLonToTile, tileToLatLon } from "@/lib/geo";
 
 interface CvmMapRegisteringViewProps {
   originalPosition?: Leaflet.LatLng;
@@ -178,6 +179,49 @@ export function CvmMap(props: CvmMapProps) {
   const [bottomLeft, setBottomLeft] = useState<[number, number]>();
   const [topRight, setTopRight] = useState<[number, number]>();
 
+  const normalizedZoom = useMemo(() => {
+    if (zoom == null || zoom == undefined) return undefined;
+    return zoom > 18 ? 18 : zoom;
+  }, [zoom]);
+
+  /**
+   * The normalized bottom left coordinates. The coordinates are normalized
+   * to the lower left corner of the tile that contains the given coordinates.
+   */
+  const normalizedBottomLeft = useMemo(() => {
+    if (!bottomLeft || zoom == null || zoom == undefined) return undefined;
+
+    const [lat, lon] = bottomLeft;
+    const { x, y, z } = latLonToTile(lat, lon, zoom);
+
+    const { latitude: normalizedLat, longitude: normalizedLon } = tileToLatLon(
+      x,
+      y + 1,
+      z,
+    );
+
+    return [normalizedLat, normalizedLon];
+  }, [bottomLeft, zoom]);
+
+  /**
+   * The normalized top right coordinates. The coordinates are normalized
+   * to the upper right corner of the tile that contains the given coordinates.
+   */
+  const normalizedTopRight = useMemo(() => {
+    if (!topRight || zoom == null || zoom == undefined) return undefined;
+
+    const [lat, lon] = topRight;
+    const { x, y, z } = latLonToTile(lat, lon, zoom);
+
+    const { latitude: normalizedLat, longitude: normalizedLon } = tileToLatLon(
+      x + 1,
+      y,
+      z,
+    );
+
+    return [normalizedLat, normalizedLon];
+  }, [topRight, zoom]);
+
   /* ============ Data Fetching - Start ============ */
 
   const { data } = useSWR<
@@ -206,8 +250,11 @@ export function CvmMap(props: CvmMapProps) {
     unknown,
     string | null
   >(
-    !!bottomLeft && !!topRight && !!zoom && !!mapVariant
-      ? `/cvms?bottomLeft=${bottomLeft?.[0]},${bottomLeft?.[1]}&topRight=${topRight?.[0]},${topRight?.[1]}&zoom=${zoom > 18 ? 18 : zoom}&variant=${mapVariant}`
+    !!normalizedBottomLeft &&
+      !!normalizedTopRight &&
+      !!normalizedZoom &&
+      !!mapVariant
+      ? `/cvms?bottomLeft=${normalizedBottomLeft?.[0]},${normalizedBottomLeft?.[1]}&topRight=${normalizedTopRight?.[0]},${normalizedTopRight?.[1]}&zoom=${normalizedZoom}&variant=${mapVariant}`
       : null,
     (url) => api.get(url).then((res) => res.data),
     { keepPreviousData: true },
