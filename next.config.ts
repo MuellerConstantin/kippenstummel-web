@@ -16,15 +16,15 @@ const withSerwist = withSerwistInit({
   additionalPrecacheEntries: [
     {
       url: "/de/offline",
-      revision: "1",
+      revision: Date.now().toString(16),
     },
     {
       url: "/en/offline",
-      revision: "1",
+      revision: Date.now().toString(16),
     },
     {
       url: "/images/logo.svg",
-      revision: "1",
+      revision: Date.now().toString(16),
     },
   ],
 });
