@@ -1,14 +1,20 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
+import { WifiOff as WifiOffIcon, RotateCw as RotateCwIcon } from "lucide-react";
+import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/atoms/Button";
-import { RotateCw as RotateCwIcon, WifiOff as WifiOffIcon } from "lucide-react";
 
 export default function Offline() {
   const t = useTranslations("OfflinePage");
   const router = useRouter();
+
+  const routerRef = useRef(router);
+
+  useEffect(() => {
+    routerRef.current = router;
+  }, [router]);
 
   useEffect(() => {
     document.title = t("meta.title");
@@ -16,6 +22,12 @@ export default function Offline() {
       .querySelector("meta[name='description']")
       ?.setAttribute("content", t("meta.description"));
   }, [t]);
+
+  useEffect(() => {
+    if (window.navigator.onLine) {
+      routerRef.current.replace("/map");
+    }
+  }, []);
 
   return (
     <div className="relative isolate flex grow items-center justify-center overflow-hidden px-4 py-12">
@@ -34,7 +46,7 @@ export default function Offline() {
             <Button
               variant="primary"
               className="flex w-fit items-center justify-center gap-2"
-              onPress={() => router.push("/")}
+              onPress={() => router.refresh()}
             >
               <span>{t("retry")}</span>
               <RotateCwIcon className="h-4 w-4" />

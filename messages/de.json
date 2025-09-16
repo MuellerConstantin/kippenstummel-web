@@ -561,8 +561,5 @@
   },
   "AdjustableLocationMarker": {
     "tooltip": "Zum Verschieben greifen"
-  },
-  "OfflineBanner": {
-    "message": "Du bist offline."
   }
 }

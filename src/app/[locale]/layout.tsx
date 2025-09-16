@@ -10,9 +10,10 @@ import { NotificationView } from "@/components/organisms/NotificationView";
 import { RequireIdentInterceptor } from "@/components/organisms/ident/RequireIdentInterceptor";
 import { AckeeTracker } from "@/components/organisms/AckeeTracker";
 import { RuntimeConfigProvider } from "@/contexts/RuntimeConfigProvider";
+import { PWAInstallProvider } from "@/contexts/PWAInstallProvider";
+import { OfflineHandler } from "@/components/organisms/OfflineHandler";
 
 import "./globals.css";
-import { PWAInstallProvider } from "@/contexts/PWAInstallProvider";
 
 const lato = Lato({
   variable: "--font-lato",
@@ -84,6 +85,7 @@ export default async function RootLayout({
                     {children}
                     <NotificationView />
                     <AckeeTracker />
+                    <OfflineHandler />
                   </RuntimeConfigProvider>
                 </RequireIdentInterceptor>
               </PWAInstallProvider>

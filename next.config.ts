@@ -22,6 +22,10 @@ const withSerwist = withSerwistInit({
       url: "/en/offline",
       revision: "1",
     },
+    {
+      url: "/images/logo.svg",
+      revision: "1",
+    },
   ],
 });
 
