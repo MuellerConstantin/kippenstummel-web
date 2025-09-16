@@ -478,14 +478,9 @@
   "FilterDialog": {
     "title": "Filter",
     "close": "Close",
-    "variant": {
-      "label": "Variant",
-      "options": {
-        "rAll": "All",
-        "r5p": "Top Rated",
-        "r0P": "Neutral+",
-        "rN8p": "Bad+"
-      }
+    "reset": "Reset filters",
+    "score": {
+      "label": "Score"
     }
   },
   "IdentityDialog": {

@@ -478,14 +478,9 @@
   "FilterDialog": {
     "title": "Filter",
     "close": "Schließen",
-    "variant": {
-      "label": "Variante",
-      "options": {
-        "rAll": "Alle",
-        "r5p": "Bestbewertet",
-        "r0P": "Neutral+",
-        "rN8p": "Schlecht+"
-      }
+    "reset": "Filter zurücksetzen",
+    "score": {
+      "label": "Score"
     }
   },
   "IdentityDialog": {

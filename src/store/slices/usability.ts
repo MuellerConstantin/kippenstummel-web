@@ -3,18 +3,23 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface UsabilityState {
   darkMode: boolean;
   recurringUser: boolean;
-  mapVariant: "rAll" | "r5p" | "r0P" | "rN8p";
   mapView: {
     center: [number, number];
     zoom: number;
+  };
+  mapFilters?: {
+    score?: {
+      min?: number;
+      max?: number;
+    };
   };
 }
 
 const initialState: UsabilityState = {
   darkMode: false,
   recurringUser: false,
-  mapVariant: "rN8p",
   mapView: { center: [49.006889, 8.403653], zoom: 14 },
+  mapFilters: {},
 };
 
 const usabilitySlice = createSlice({
@@ -30,11 +35,17 @@ const usabilitySlice = createSlice({
     setRecurringUser: (state, action: PayloadAction<boolean>) => {
       state.recurringUser = action.payload;
     },
-    setMapVariant: (
+    setMapFilters: (
       state,
-      action: PayloadAction<"rAll" | "r5p" | "r0P" | "rN8p">,
+      action: PayloadAction<UsabilityState["mapFilters"]>,
     ) => {
-      state.mapVariant = action.payload;
+      state.mapFilters = action.payload;
+    },
+    setScoreMapFilters: (
+      state,
+      action: PayloadAction<{ min: number; max: number }>,
+    ) => {
+      state.mapFilters = { ...state.mapFilters, score: action.payload };
     },
     setMapView: (
       state,

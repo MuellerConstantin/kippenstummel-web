@@ -152,8 +152,29 @@ export function CvmMap(props: CvmMapProps) {
 
   const location = useAppSelector((state) => state.location.location);
   const locatedAt = useAppSelector((state) => state.location.locatedAt);
-  const mapVariant = useAppSelector((state) => state.usability.mapVariant);
   const mapView = useAppSelector((state) => state.usability.mapView);
+  const mapFilters = useAppSelector((state) => state.usability.mapFilters);
+
+  const mapFilterQuery = useMemo(() => {
+    if (!mapFilters) {
+      return undefined;
+    } else {
+      const appliedFilters: string[] = [];
+
+      if (mapFilters.score) {
+        if (mapFilters.score.min !== undefined) {
+          appliedFilters.push(`score >= ${mapFilters.score.min}`);
+        }
+
+        if (mapFilters.score.max !== undefined) {
+          appliedFilters.push(`score <= ${mapFilters.score.max}`);
+        }
+      }
+
+      const finalFilter = appliedFilters.filter(Boolean).join(" and ");
+      return finalFilter.length > 0 ? finalFilter : undefined;
+    }
+  }, [mapFilters]);
 
   const [showHelpDialog, setShowHelpDialog] = useState(false);
   const [showFilterDialog, setShowFilterDialog] = useState(false);
@@ -250,11 +271,8 @@ export function CvmMap(props: CvmMapProps) {
     unknown,
     string | null
   >(
-    !!normalizedBottomLeft &&
-      !!normalizedTopRight &&
-      !!normalizedZoom &&
-      !!mapVariant
-      ? `/cvms?bottomLeft=${normalizedBottomLeft?.[0]},${normalizedBottomLeft?.[1]}&topRight=${normalizedTopRight?.[0]},${normalizedTopRight?.[1]}&zoom=${normalizedZoom}&variant=${mapVariant}`
+    !!normalizedBottomLeft && !!normalizedTopRight && !!normalizedZoom
+      ? `/cvms?bottomLeft=${normalizedBottomLeft?.[0]},${normalizedBottomLeft?.[1]}&topRight=${normalizedTopRight?.[0]},${normalizedTopRight?.[1]}&zoom=${normalizedZoom}${mapFilterQuery ? `&filter=${mapFilterQuery}` : ""}`
       : null,
     (url) => api.get(url).then((res) => res.data),
     { keepPreviousData: true },
@@ -479,7 +497,7 @@ export function CvmMap(props: CvmMapProps) {
     <LeafletMap
       center={mapView.center}
       zoom={mapView.zoom}
-      minZoom={12}
+      minZoom={8}
       maxZoom={19}
       onReady={onReady}
       onMoveEnd={onMoveEnd}

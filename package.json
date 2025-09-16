@@ -45,6 +45,7 @@
     "redux-persist": "^6.0.0",
     "swr": "^2.3.3",
     "tailwind-variants": "^1.0.0",
+    "tailwindcss-react-aria-components": "^2.0.1",
     "yup": "^1.6.1"
   },
   "devDependencies": {
