@@ -2,7 +2,15 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Leaflet from "leaflet";
 import { useMap } from "react-leaflet";
 import { useTranslations } from "next-intl";
-import { ChevronUp, ChevronDown, Equal, Copy, Check, X } from "lucide-react";
+import {
+  ChevronUp,
+  ChevronDown,
+  Equal,
+  Copy,
+  Check,
+  X,
+  Share2,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "@/components/atoms/Link";
 import { Spinner } from "@/components/atoms/Spinner";
@@ -220,7 +228,7 @@ export function CvmInfoSidebarDialog(props: CvmInfoSidebarDialogProps) {
           </div>
           <div className="flex grow flex-col justify-between gap-4">
             <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-4">
+              <div className="flex items-start gap-4">
                 <div className="flex flex-col items-center gap-1">
                   <button
                     className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed disabled:text-slate-400 dark:hover:!text-slate-200 ${props.cvm.alreadyVoted === "upvote" ? "border-green-600 bg-green-100 !text-green-600 dark:bg-green-900" : "border-slate-400 dark:border-slate-600"}`}
@@ -256,34 +264,73 @@ export function CvmInfoSidebarDialog(props: CvmInfoSidebarDialogProps) {
                     )}
                   </button>
                 </div>
-                <div className="flex grow flex-col gap-2">
-                  <div className="space-y-1">
+                <div className="flex grow flex-col gap-4">
+                  <div className="flex flex-col gap-2">
                     <div className="text-sm font-semibold">{t("location")}</div>
                     <div className="text-sm">
                       {props.cvm.latitude.toFixed(7)} /{" "}
                       {props.cvm.longitude.toFixed(7)} (lat/lng)
                     </div>
                   </div>
-                  <div className="flex flex-col gap-1">
-                    <div className="text-sm font-semibold">{t("share")}</div>
-                    <div className="flex items-center gap-2">
-                      <input
-                        readOnly
-                        value={`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`}
-                        className="min-w-0 flex-1 rounded-md border-2 border-gray-300 bg-white px-1 py-0.5 text-xs text-gray-800 outline outline-0 focus:border-green-600 disabled:text-gray-200 dark:border-slate-500 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-slate-300 dark:disabled:text-slate-600"
-                      />
-                      <CopyButton
-                        text={`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`}
-                        disabled={voting !== false}
-                      />
+                  <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-2">
+                      <div className="text-sm font-semibold">{t("share")}</div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          readOnly
+                          value={`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`}
+                          className="min-w-0 flex-1 rounded-md border-2 border-gray-300 bg-white px-1 py-0.5 text-xs text-gray-800 outline outline-0 focus:border-green-600 disabled:text-gray-200 dark:border-slate-500 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-slate-300 dark:disabled:text-slate-600"
+                        />
+                        <CopyButton
+                          text={`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`}
+                          disabled={voting !== false}
+                        />
+                      </div>
                     </div>
-                    <Link
-                      href={`https://www.google.com.sa/maps/search/${props.cvm.latitude},${props.cvm.longitude}`}
-                      target="_blank"
-                      className="block text-sm !text-green-600"
-                    >
-                      {t("openInGoogleMaps")}
-                    </Link>
+                    <div className="flex flex-wrap gap-2">
+                      <Link
+                        href={`https://www.google.com.sa/maps/search/${props.cvm.latitude},${props.cvm.longitude}`}
+                        target="_blank"
+                        className="flex h-8 items-center justify-center rounded-full bg-slate-200 p-2 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700"
+                      >
+                        <div className="relative h-4 w-4 overflow-hidden">
+                          <Image
+                            src="/icons/google-maps.svg"
+                            alt="WhatsApp"
+                            fill
+                            objectFit="contain"
+                            layout="fill"
+                          />
+                        </div>
+                      </Link>
+                      <Link
+                        href={`whatsapp://send?text=${encodeURI(`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`)}`}
+                        target="_blank"
+                        className="flex h-8 items-center justify-center rounded-full bg-slate-200 p-2 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700"
+                      >
+                        <div className="relative h-4 w-4 overflow-hidden">
+                          <Image
+                            src="/icons/whatsapp.svg"
+                            alt="WhatsApp"
+                            fill
+                            objectFit="contain"
+                            layout="fill"
+                          />
+                        </div>
+                      </Link>
+                      {window.navigator.share && (
+                        <Link
+                          onPress={() =>
+                            navigator.share({
+                              url: `${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`,
+                            })
+                          }
+                          className="flex h-8 items-center justify-center rounded-full bg-slate-200 p-2 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700"
+                        >
+                          <Share2 className="h-4 w-4 text-slate-800 dark:text-slate-200" />
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
