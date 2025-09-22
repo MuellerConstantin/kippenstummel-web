@@ -548,8 +548,9 @@
   },
   "IOSInstallInstructionsDialog": {
     "title": "Installationsanleitung",
+    "description": "Auf Apple-Geräten kann die Installation der App nicht automatisch gestartet werden. Stattdessen erhalten Sie hier eine kurze Anleitung, wie Sie die App manuell zu Ihrem Home-Bildschirm hinzufügen können.",
     "steps": {
-      "1": "Tippe unten auf das Teilen-Symbol <shareIcon></shareIcon>.",
+      "1": "Tippe auf das Teilen-Symbol <shareIcon></shareIcon>.",
       "2": "Wähle „Zum Home-Bildschirm“",
       "3": "Bestätige mit „Hinzufügen“"
     }

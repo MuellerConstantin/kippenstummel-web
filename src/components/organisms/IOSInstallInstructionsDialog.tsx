@@ -30,6 +30,9 @@ export function IOSInstallInstructionsDialog(
               </Button>
             </div>
           </div>
+          <div className="mt-4 flex flex-col gap-4 text-sm">
+            {t("description")}
+          </div>
           <div className="mt-4 flex flex-col gap-4">
             <ol className="list-decimal space-y-2 pl-6 text-slate-800 dark:text-white">
               <li>

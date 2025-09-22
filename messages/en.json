@@ -549,8 +549,9 @@
   },
   "IOSInstallInstructionsDialog": {
     "title": "Installation instructions",
+    "description": "On Apple devices, the installation of the app cannot be started automatically. Instead, you will find a short guide here on how to manually add the app to your home screen.",
     "steps": {
-      "1": "Tap the share icon <shareIcon></shareIcon> at the bottom of the screen.",
+      "1": "Tap the share icon <shareIcon></shareIcon>.",
       "2": "Select „Add to Home Screen“",
       "3": "Confirm with „Add“"
     }
