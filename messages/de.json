@@ -558,7 +558,8 @@
     "tooltip": "Zum Verschieben greifen"
   },
   "PreReleaseBanner": {
-    "message": "<bold>Pre-Release:</bold> Es handelt sich um eine inoffizielle Vorabversion. <link>Mehr erfahren</link>"
+    "message": "<bold>Pre-Release:</bold> Es handelt sich um eine inoffizielle Vorabversion.",
+    "learnMore": "Mehr erfahren"
   },
   "PreReleaseInfoDialog": {
     "title": "Pre-Release Information",

@@ -559,7 +559,8 @@
     "tooltip": "Drag to move"
   },
   "PreReleaseBanner": {
-    "message": "<bold>Pre-Release:</bold> This is an unofficial preview version. <link>Learn more</link>"
+    "message": "<bold>Pre-Release:</bold> This is an unofficial preview version.",
+    "learnMore": "Learn more"
   },
   "PreReleaseInfoDialog": {
     "title": "Pre-Release Information",
