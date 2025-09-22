@@ -94,8 +94,12 @@ async function proxyRequest(
   try {
     const response = await fetch(targetUrl, fetchOptions);
     const headers = new Headers(response.headers);
+    const body = await response.arrayBuffer();
 
-    return new Response(response.body, {
+    headers.delete("content-encoding");
+    headers.delete("content-length");
+
+    return new Response(body, {
       status: response.status,
       headers,
     });
