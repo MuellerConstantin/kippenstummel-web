@@ -88,14 +88,11 @@ async function proxyRequest(
     method: req.method,
     headers,
     body: req.method !== "GET" && req.method !== "HEAD" ? req.body : undefined,
-    duplex: "half",
   };
 
   try {
     const response = await fetch(targetUrl, fetchOptions);
     const headers = new Headers(response.headers);
-
-    headers.delete("content-length");
 
     return new Response(response.body, {
       status: response.status,
