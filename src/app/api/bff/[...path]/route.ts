@@ -94,11 +94,10 @@ async function proxyRequest(
   try {
     const response = await fetch(targetUrl, fetchOptions);
     const headers = new Headers(response.headers);
-    const body = await response.arrayBuffer();
 
     headers.delete("content-length");
 
-    return new Response(body, {
+    return new Response(response.body, {
       status: response.status,
       headers,
     });
