@@ -93,8 +93,23 @@ async function proxyRequest(
   try {
     const response = await fetch(targetUrl, fetchOptions);
     const headers = new Headers(response.headers);
+    const body = await response.arrayBuffer();
 
-    return new Response(response.body, {
+    [
+      "transfer-encoding",
+      "connection",
+      "keep-alive",
+      "te",
+      "trailer",
+      "upgrade",
+      "content-length",
+      "date",
+      "x-powered-by",
+      "vary",
+      "alt-svc",
+    ].forEach((h) => headers.delete(h));
+
+    return new Response(body, {
       status: response.status,
       headers,
     });
