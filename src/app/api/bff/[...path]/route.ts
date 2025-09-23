@@ -109,6 +109,8 @@ async function proxyRequest(
       "alt-svc",
     ].forEach((h) => headers.delete(h));
 
+    headers.set("content-length", String(body.byteLength));
+
     return new Response(body, {
       status: response.status,
       headers,
