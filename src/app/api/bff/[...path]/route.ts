@@ -102,6 +102,7 @@ async function proxyRequest(
       "te",
       "trailer",
       "upgrade",
+      "content-encoding",
       "content-length",
       "date",
       "x-powered-by",
