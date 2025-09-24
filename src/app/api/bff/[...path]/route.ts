@@ -91,29 +91,22 @@ async function proxyRequest(
   };
 
   try {
-    const response = await fetch(targetUrl, fetchOptions);
-    const headers = new Headers(response.headers);
-    const body = await response.arrayBuffer();
+    const upstream = await fetch(targetUrl, fetchOptions);
+    const forwardHeaders = new Headers(upstream.headers);
 
     [
-      "transfer-encoding",
       "connection",
       "keep-alive",
+      "transfer-encoding",
       "te",
       "trailer",
       "upgrade",
-      "content-encoding",
-      "content-length",
       "date",
       "x-powered-by",
-      "vary",
-      "alt-svc",
-    ].forEach((h) => headers.delete(h));
+    ].forEach((header) => forwardHeaders.delete(header));
 
-    headers.set("content-length", String(body.byteLength));
-
-    return new Response(body, {
-      status: response.status,
+    return new Response(upstream.body, {
+      status: upstream.status,
       headers,
     });
   } catch (error) {
