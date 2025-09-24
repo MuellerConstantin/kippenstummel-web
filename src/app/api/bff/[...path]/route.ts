@@ -92,12 +92,13 @@ async function proxyRequest(
 
   try {
     const response = await fetch(targetUrl, fetchOptions);
+    const responseHeaders = new Headers(response.headers);
 
-    response.headers.delete("content-encoding");
+    responseHeaders.delete("content-encoding");
 
     return new Response(response.body, {
       status: response.status,
-      headers: response.headers,
+      headers: responseHeaders,
     });
   } catch (error) {
     console.error("Proxy-Error:", error);
