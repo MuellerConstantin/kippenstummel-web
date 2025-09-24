@@ -76,36 +76,44 @@ async function proxyRequest(
     targetUrl.searchParams.append(key, value);
   });
 
-  const headers = new Headers();
-
-  req.headers.forEach((value, key) => {
-    if (key.toLowerCase() !== "content-length") {
-      headers.append(key, value);
-    }
-  });
+  const requestHeaders = new Headers(req.headers);
+  const requestBody =
+    req.method !== "GET" && req.method !== "HEAD"
+      ? JSON.stringify(await req.json())
+      : undefined;
 
   const fetchOptions = {
     method: req.method,
-    headers,
-    body: req.method !== "GET" && req.method !== "HEAD" ? req.body : undefined,
+    headers: {
+      ...requestHeaders,
+      ...(req.method !== "GET" &&
+        req.method !== "HEAD" &&
+        requestBody && {
+          "Content-Type": "application/json",
+          "Content-Length": requestBody.length.toString(),
+        }),
+    },
+    ...(req.method !== "GET" &&
+      req.method !== "HEAD" &&
+      requestBody && {
+        body: requestBody,
+      }),
   };
 
   try {
     const response = await fetch(targetUrl, fetchOptions);
     const responseHeaders = new Headers(response.headers);
-    const responseBody = await response.json();
-    const forwardHeaders = new Headers();
+    const responseBody = JSON.stringify(await response.json());
 
-    // Keep only headers that are safe to forward
-    ["x-pow"].forEach((header) => {
-      if (responseHeaders.has(header)) {
-        forwardHeaders.append(header, responseHeaders.get(header)!);
-      }
-    });
-
-    return Response.json(responseBody, {
+    return new Response(responseBody ? responseBody : undefined, {
       status: response.status,
-      headers: forwardHeaders,
+      headers: {
+        ...responseHeaders,
+        ...(responseBody && {
+          "Content-Type": "application/json",
+          "Content-Length": responseBody.length.toString(),
+        }),
+      },
     });
   } catch (error) {
     console.error("Proxy-Error:", error);
