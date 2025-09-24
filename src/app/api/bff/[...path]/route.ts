@@ -78,42 +78,26 @@ async function proxyRequest(
 
   const requestHeaders = new Headers(req.headers);
   const requestBody =
-    req.method !== "GET" && req.method !== "HEAD"
-      ? JSON.stringify(await req.json())
-      : undefined;
+    req.method !== "GET" && req.method !== "HEAD" ? req.body : undefined;
 
-  const fetchOptions = {
+  const fetchOptions: RequestInit = {
     method: req.method,
-    headers: {
-      ...requestHeaders,
-      ...(req.method !== "GET" &&
-        req.method !== "HEAD" &&
-        requestBody && {
-          "Content-Type": "application/json",
-          "Content-Length": requestBody.length.toString(),
-        }),
-    },
-    ...(req.method !== "GET" &&
-      req.method !== "HEAD" &&
-      requestBody && {
-        body: requestBody,
-      }),
+    headers: requestHeaders,
+    body: requestBody ?? undefined,
+    redirect: "manual",
   };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if (req.body) (fetchOptions as any).duplex = "half";
 
   try {
     const response = await fetch(targetUrl, fetchOptions);
-    const responseHeaders = new Headers(response.headers);
-    const responseBody = JSON.stringify(await response.json());
 
-    return new Response(responseBody ? responseBody : undefined, {
+    response.headers.delete("content-encoding");
+
+    return new Response(response.body, {
       status: response.status,
-      headers: {
-        ...responseHeaders,
-        ...(responseBody && {
-          "Content-Type": "application/json",
-          "Content-Length": responseBody.length.toString(),
-        }),
-      },
+      headers: response.headers,
     });
   } catch (error) {
     console.error("Proxy-Error:", error);
