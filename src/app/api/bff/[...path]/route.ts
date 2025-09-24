@@ -91,22 +91,20 @@ async function proxyRequest(
   };
 
   try {
-    const upstream = await fetch(targetUrl, fetchOptions);
-    const forwardHeaders = new Headers(upstream.headers);
+    const response = await fetch(targetUrl, fetchOptions);
+    const responseHeaders = new Headers(response.headers);
+    const responseBody = await response.json();
+    const forwardHeaders = new Headers();
 
-    [
-      "connection",
-      "keep-alive",
-      "transfer-encoding",
-      "te",
-      "trailer",
-      "upgrade",
-      "date",
-      "x-powered-by",
-    ].forEach((header) => forwardHeaders.delete(header));
+    // Keep only headers that are safe to forward
+    ["x-pow"].forEach((header) => {
+      if (responseHeaders.has(header)) {
+        forwardHeaders.append(header, responseHeaders.get(header)!);
+      }
+    });
 
-    return new Response(upstream.body, {
-      status: upstream.status,
+    return Response.json(responseBody, {
+      status: response.status,
       headers: forwardHeaders,
     });
   } catch (error) {
