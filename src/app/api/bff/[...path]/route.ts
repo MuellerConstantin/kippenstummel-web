@@ -77,28 +77,55 @@ async function proxyRequest(
   });
 
   const requestHeaders = new Headers(req.headers);
-  const requestBody =
-    req.method !== "GET" && req.method !== "HEAD" ? req.body : undefined;
+
+  requestHeaders.delete("accept-encoding");
+  requestHeaders.set("accept-encoding", "identity");
+
+  [
+    "host",
+    "connection",
+    "keep-alive",
+    "proxy-authenticate",
+    "proxy-authorization",
+    "te",
+    "trailers",
+    "transfer-encoding",
+    "upgrade",
+  ].forEach((header) => requestHeaders.delete(header));
+
+  const couldHaveBody = req.method !== "GET" && req.method !== "HEAD";
 
   const fetchOptions: RequestInit = {
     method: req.method,
     headers: requestHeaders,
-    body: requestBody ?? undefined,
+    body: couldHaveBody ? req.body : undefined,
     redirect: "manual",
+    // @ts-expect-error: Not available for browser fetch type
+    duplex: couldHaveBody ? "half" : undefined,
+    cache: "no-store",
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  if (req.body) (fetchOptions as any).duplex = "half";
-
   try {
-    const response = await fetch(targetUrl, fetchOptions);
-    const responseHeaders = new Headers(response.headers);
+    const upstream = await fetch(targetUrl, fetchOptions);
+    const upstreamHeaders = new Headers(upstream.headers);
 
-    responseHeaders.delete("content-encoding");
+    upstreamHeaders.delete("content-encoding");
+    upstreamHeaders.delete("content-length");
 
-    return new Response(response.body, {
-      status: response.status,
-      headers: responseHeaders,
+    [
+      "connection",
+      "keep-alive",
+      "transfer-encoding",
+      "upgrade",
+      "proxy-authenticate",
+      "proxy-authorization",
+      "te",
+      "trailers",
+    ].forEach((header) => upstreamHeaders.delete(header));
+
+    return new Response(upstream.body, {
+      status: upstream.status,
+      headers: upstreamHeaders,
     });
   } catch (error) {
     console.error("Proxy-Error:", error);
