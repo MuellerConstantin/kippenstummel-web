@@ -107,7 +107,7 @@ async function proxyRequest(
 
     return new Response(upstream.body, {
       status: upstream.status,
-      headers,
+      headers: forwardHeaders,
     });
   } catch (error) {
     console.error("Proxy-Error:", error);
