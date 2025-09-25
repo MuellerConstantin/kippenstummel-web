@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import Leaflet from "leaflet";
 import useLocate from "@/hooks/useLocate";
+import { useAppSelector } from "@/store";
 
 interface MenuBottomNavigationProps {
   map: Leaflet.Map;
@@ -19,6 +20,12 @@ export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
   const { map, onRegister, onHelp, onFilter } = props;
   const locate = useLocate(map);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const numberOfActiveFilters = useAppSelector((state) => {
+    let count = 0;
+    if (state.usability.mapFilters?.score) count += 1;
+    return count;
+  });
 
   const [registeringCvm, setRegisteringCvm] = useState<boolean>(false);
 
@@ -69,7 +76,16 @@ export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
           onClick={() => onFilter?.()}
           className="flex cursor-pointer flex-col items-center justify-center rounded-r-md px-5 hover:bg-slate-50 dark:hover:bg-slate-800"
         >
-          <SlidersVertical className="h-6 w-6" />
+          <div className="relative">
+            {!!numberOfActiveFilters && (
+              <div className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-green-600 p-1">
+                <span className="text-[10px] text-white">
+                  {numberOfActiveFilters >= 10 ? "9+" : numberOfActiveFilters}
+                </span>
+              </div>
+            )}
+            <SlidersVertical className="h-6 w-6" />
+          </div>
         </button>
       </div>
     </div>
