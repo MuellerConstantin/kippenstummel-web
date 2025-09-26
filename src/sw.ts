@@ -1,5 +1,11 @@
 import type { PrecacheEntry, SerwistGlobalConfig } from "serwist";
-import { NetworkOnly, Serwist } from "serwist";
+import {
+  CacheableResponsePlugin,
+  CacheFirst,
+  ExpirationPlugin,
+  NetworkOnly,
+  Serwist,
+} from "serwist";
 
 // This declares the value of `injectionPoint` to TypeScript.
 // `injectionPoint` is the string that will be replaced by the
@@ -48,6 +54,22 @@ const serwist = new Serwist({
   clientsClaim: true,
   navigationPreload: true,
   runtimeCaching: [
+    {
+      matcher: ({ url }) => url.hostname === "tiles.openfreemap.org",
+      handler: new CacheFirst({
+        cacheName: "ofm-assets",
+        plugins: [
+          new CacheableResponsePlugin({
+            statuses: [200],
+          }),
+          new ExpirationPlugin({
+            maxEntries: 5000,
+            maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+            purgeOnQuotaError: true,
+          }),
+        ],
+      }),
+    },
     {
       matcher: /.*/i,
       handler: new NetworkOnly(),
