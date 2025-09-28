@@ -38,18 +38,17 @@ export function CvmOptInMap(props: CvmOptInMap) {
     return (
       <div className="relative flex h-full grow overflow-auto py-12">
         <div className="preview absolute inset-0 z-0 bg-[url(/images/preview.png)] bg-cover" />
-        <div className="absolute inset-0 z-10 bg-white/30 backdrop-blur-sm dark:bg-black/30" />
+        <div className="absolute inset-0 z-10 bg-white/40 backdrop-blur-sm dark:bg-black/40" />
         <div className="relative z-20 flex grow flex-col items-center justify-center gap-12 lg:flex-row">
           <div className="flex flex-col items-center justify-center gap-4 p-4">
-            <div className="max-w-sm text-center text-slate-500">
-              {t.rich("title", {
-                tos: (chunks) => <Link href="/terms-of-service">{chunks}</Link>,
-                pp: (chunks) => <Link href="/privacy-policy">{chunks}</Link>,
-              })}
+            <div className="max-w-sm text-center text-xl font-semibold text-slate-500 drop-shadow-lg">
+              {t("title")}
             </div>
-            <div className="max-w-sm text-center text-xs text-slate-400">
+            <div className="max-w-sm text-center text-sm text-slate-400 drop-shadow-lg">
               {t.rich("description", {
                 br: () => <br />,
+                tos: (chunks) => <Link href="/terms-of-service">{chunks}</Link>,
+                pp: (chunks) => <Link href="/privacy-policy">{chunks}</Link>,
               })}
             </div>
             <Button onPress={allowOptIn}>{t("accept")}</Button>

@@ -253,7 +253,7 @@
     },
     "api": {
       "title": "Nutzung der API und maschinellen Endpunkte",
-      "description": "Die Anwendung Kippenstummel darf grundsätzlich nur über die dafür vorgesehenen Webanwendungen und Endnutzerschnittstellen genutzt werden. Die API sowie sämtliche maschinellen Endpunkte der Plattform (einschließlich Backend-API, Backend-for-Frontend (BFF) und Tile-Proxy) dienen ausschließlich der internen Nutzung durch eigene Anwendungen des Anbieters (First-Party-Apps). Soweit überhaupt öffentlich erreichbar, ist jegliche Nutzung, Integration oder Weiterverwendung der API oder der maschinellen Endpunkte in Drittanwendungen oder durch Dritte ohne ausdrückliche, schriftliche Erlaubnis des Anbieters ausdrücklich untersagt. Der Anbieter behält sich das Recht vor, Zugriffe, die nicht den vorstehenden Bedingungen entsprechen, technisch zu unterbinden und bei Verstößen rechtliche Schritte einzuleiten."
+      "description": "Die Anwendung Kippenstummel darf grundsätzlich nur über die dafür vorgesehenen Webanwendungen und Endnutzerschnittstellen genutzt werden. Die API sowie sämtliche maschinellen Endpunkte der Plattform (einschließlich Backend-API und Backend-for-Frontend (BFF)) dienen ausschließlich der internen Nutzung durch eigene Anwendungen des Anbieters (First-Party-Apps). Soweit überhaupt öffentlich erreichbar, ist jegliche Nutzung, Integration oder Weiterverwendung der API oder der maschinellen Endpunkte in Drittanwendungen oder durch Dritte ohne ausdrückliche, schriftliche Erlaubnis des Anbieters ausdrücklich untersagt. Der Anbieter behält sich das Recht vor, Zugriffe, die nicht den vorstehenden Bedingungen entsprechen, technisch zu unterbinden und bei Verstößen rechtliche Schritte einzuleiten."
     },
     "alteration": {
       "title": "Änderungen der Nutzungsbedingungen",
@@ -337,8 +337,8 @@
     "disclaimer": "Durch die Bestätigung akzeptierst du unsere <tos>Nutzungsbedingungen</tos> und unsere <pp>Datenschutzerklärung</pp>."
   },
   "CvmOptInMap": {
-    "title": "Bitte akzeptiere die <tos>Nutzungsbedingungen</tos> und die <pp>Datenschutzerklärung</pp>, um fortzufahren.",
-    "description": "Die Nutzung unserer Dienste setzt Ihre Zustimmung zur Datenverarbeitung, dem Datenschutz und unseren Nutzungsbedingungen voraus. Indem Sie fortfahren versichern Sie, die Nutzungsbedingungen sowie die Datenschutzerklärung gelesen zu haben und zu akzeptieren.",
+    "title": "Hier sollte eigentlich die Karte sein...",
+    "description": "Wir würden dir gerne zeigen, wo die Automaten stehen. Dafür brauchen wir dein ausdrückliches Einverständnis. Mit deiner Zustimmung akzeptierst du unsere <tos>Nutzungsbedingungen</tos> und <pp>Datenschutzerklärung</pp>, stimmst einer möglichen Datenübermittlung an Drittdienste zu und bestätigst, dass du mindestens 18 Jahre alt bist.",
     "accept": "Akzeptieren & Fortfahren"
   },
   "CvmInfoDialog": {

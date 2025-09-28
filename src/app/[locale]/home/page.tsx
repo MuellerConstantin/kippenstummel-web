@@ -173,7 +173,7 @@ export default function Home() {
     <div>
       <div className="relative w-full overflow-hidden pt-20 pb-32">
         <div className="preview absolute inset-0 z-0 bg-[url(/images/preview.png)] bg-cover" />
-        <div className="absolute inset-0 z-10 bg-white/30 backdrop-blur-sm dark:bg-black/30" />
+        <div className="absolute inset-0 z-10 bg-white/40 backdrop-blur-sm dark:bg-black/40" />
         <div className="relative z-20 flex flex-col gap-12 lg:flex-row lg:justify-center">
           <div className="flex flex-col items-center justify-center gap-8 p-4">
             <div className="space-y-2">
@@ -186,11 +186,11 @@ export default function Home() {
                     objectFit="contain"
                   />
                 </div>
-                <div className="text-4xl font-bold md:text-6xl">
+                <div className="text-4xl font-bold drop-shadow-lg md:text-6xl">
                   Kippenstummel
                 </div>
               </div>
-              <div className="text-center text-xl text-slate-500 md:text-2xl dark:text-slate-400">
+              <div className="text-center text-xl text-slate-500 drop-shadow-lg md:text-2xl dark:text-slate-400">
                 &ldquo;{t("slogan")}&rdquo;
               </div>
             </div>
