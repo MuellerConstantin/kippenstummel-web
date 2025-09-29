@@ -358,12 +358,12 @@
   },
   "CvmReportDialog": {
     "title": "Zigarettenautomat melden",
-    "description": "Warum willst du den Automaten melden?",
+    "description": "Warum willst du den Automaten unseren Moderatoren melden?",
     "submit": "Jetzt melden",
     "cancel": "Abbrechen",
     "reasons": {
       "missing": "Dieser Automat existiert nicht (mehr).",
-      "spam": "Dieser Automat existiert nicht und die Meldung wirkt unseriös.",
+      "spam": "Die Meldung wirkt wie Spam oder irreführend.",
       "inactive": "Der Automat ist dauerhaft außer Betrieb.",
       "inaccessible": "Der Automat ist unzugänglich bzw. nicht zu erreichen."
     }
@@ -465,7 +465,7 @@
       "register": "Du kannst auch selber ganz einfach die Standorte noch nicht erfasster Automaten registrieren. Hierfür findest du unten im Menü der Karte die entsprechende Schaltfläche <interfaceIcon></interfaceIcon>. Folge einfach den Anweisungen. Bitte überprüfe zuvor, ob der Automat an deiner aktuellen Position nicht vielleicht schon erfasst wurde.",
       "reposition": "Manchmal kann es vorkommen, dass die Position eines Automaten auf der Karte nicht exakt mit der Wirklichkeit übereinstimmt. Obwohl wir beim Registrieren von Automaten ein Justieren der exakten Position unabhängig der Position des Meldenden zulassen, kann es zu diesen Szenarien kommen. In diesem Fall musst du den Automaten nicht erneut melden, sondern kannst über das Menü des Automaten dessen Position verschieben/korrigieren.",
       "vote": "Die Standorte von Automaten werden via Schwarmintelligenz verifiziert. Du kannst für Automaten positiv <upIcon></upIcon> abstimmen, welche funktionstüchtig tatsächlich an der ansprechenden Stelle standen oder auch negativ <downIcon></downIcon> abstimmen für fehlende oder nicht funktionierende Automaten. Abstimmen kannst du über das Menü der einzelnen Automaten. Um das Menü eines Automaten zu öffnen, wähle diesen auf der Karte aus. Alternativ kannst du Automaten welche missbräuchlich gemeldet wurden oder nicht mehr länger vorhanden sind, melden.",
-      "report": "In besonders schweren Fällen, bspw. bei offensichtlichem Missbrauch, Spam oder Fehlpositionierung, ist es auch möglich Automaten explizit zu melden und so andere Benutzer vor dem Aufsuchen zu warnen. Das Melden eines Automaten ist ebenfalls über dessen Menü möglich. Bitte nutze das Melden nur als letzte Option in besonders schwerwiegenden Fällen! Grundsätzlich soll und wird die Qulität der Automaten über die Bewertungen gesteuert."
+      "report": "In besonders schweren Fällen, bspw. bei offensichtlichem Missbrauch, Spam oder Fehlpositionierung, ist es auch möglich Automaten unseren Moderatoren zu melden und durch die Meldung zusätzlich andere Benutzer vor dem Aufsuchen zu warnen. Das Melden eines Automaten ist ebenfalls über dessen Menü möglich. Bitte nutze das Melden nur als letzte Option in besonders schwerwiegenden Fällen, unsere Moderatoren überprüfen den Standort dann genauer! Grundsätzlich soll und wird die Qulität der Automaten über die Bewertungen gesteuert."
     },
     "general": {
       "r5p": "Bestbewertet (Score von +5 bis +10)",

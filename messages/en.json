@@ -358,12 +358,12 @@
   },
   "CvmReportDialog": {
     "title": "Report Cigarette Vending Machine",
-    "description": "Why do you want to report the machine?",
+    "description": "Why do you want to report the machine to our moderators?",
     "submit": "Report now",
     "cancel": "Cancel",
     "reasons": {
       "missing": "This machine no longer exists or never existed.",
-      "spam": "This machine does not exist and the location seems dubious.",
+      "spam": "The message seems like spam or misleading.",
       "inactive": "The machine is permanently out of service.",
       "inaccessible": "The machine is inaccessible or cannot be reached."
     }
@@ -465,7 +465,7 @@
       "register": "You can also easily register the locations of new CVMs yourself. You'll find the corresponding button <interfaceIcon></interfaceIcon> in the map's menu at the bottom. Simply follow the instructions. Please check first to see if the CVM has already been registered at your current location.",
       "reposition": "Sometimes, the location of a machine on the map may not exactly match the actual location. Although we allow you to adjust the exact location when registering machines, regardless of the location of the person reporting it, such scenarios can occur. In this case, you don't need to report the machine again; you can move/correct its location via the machine's menu.",
       "vote": "The locations of vending machines are verified using swarm intelligence. You can vote positively <upIcon></upIcon> for vending machines that were actually in the right place and were working, or negatively <downIcon></downIcon> for missing or non-functioning machines. You can vote via the menu for each vending machine. Select the machine's marker on the map to open its menu. Alternatively, you can report machines that have been reported as being misused or are no longer available.",
-      "report": "In particularly serious cases, such as obvious abuse, spam, or misplacement, it is also possible to explicitly report machines and thus warn other users against visiting them. Reporting a machine is also possible via its menu. Please only use this option as a last resort in particularly serious cases! Generally, the quality of the machines should and will be controlled by ratings."
+      "report": "In particularly serious cases, such as obvious abuse, spam, or incorrect positioning, it is also possible to report vending machines to our moderators, thereby also warning other users against visiting them. Reporting a vending machine is also possible via its menu. Please only use this option as a last resort in particularly serious cases; our moderators will then review the location more closely! Generally, the quality of the vending machines should and will be determined by the ratings."
     },
     "general": {
       "r5p": "Top Rated (Score von +5 bis +10)",
