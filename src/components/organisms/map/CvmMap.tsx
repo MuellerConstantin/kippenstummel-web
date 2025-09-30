@@ -25,7 +25,7 @@ import { CvmReportDialog } from "./CvmReportDialog";
 import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
 import { AnimatePresence, motion } from "framer-motion";
 import { MapLibreTileLayer } from "../leaflet/MapLibreTileLayer";
-import { latLonToTile, tileToLatLon } from "@/lib/geo";
+import useMapViewportCvmData from "@/hooks/useMapViewportCvmData";
 
 interface CvmMapDefaultViewProps {
   markers: {
@@ -347,28 +347,6 @@ export function CvmMap(props: CvmMapProps) {
   const location = useAppSelector((state) => state.location.location);
   const locatedAt = useAppSelector((state) => state.location.locatedAt);
   const mapView = useAppSelector((state) => state.usability.mapView);
-  const mapFilters = useAppSelector((state) => state.usability.mapFilters);
-
-  const mapFilterQuery = useMemo(() => {
-    if (!mapFilters) {
-      return undefined;
-    } else {
-      const appliedFilters: string[] = [];
-
-      if (mapFilters.score) {
-        if (mapFilters.score.min !== undefined) {
-          appliedFilters.push(`score >= ${mapFilters.score.min}`);
-        }
-
-        if (mapFilters.score.max !== undefined) {
-          appliedFilters.push(`score <= ${mapFilters.score.max}`);
-        }
-      }
-
-      const finalFilter = appliedFilters.filter(Boolean).join(" and ");
-      return finalFilter.length > 0 ? finalFilter : undefined;
-    }
-  }, [mapFilters]);
 
   const [isRegistering, setIsRegistering] = useState(false);
   const [registerPosition, setRegisterPosition] = useState<Leaflet.LatLng>();
@@ -387,115 +365,11 @@ export function CvmMap(props: CvmMapProps) {
   const [bottomLeft, setBottomLeft] = useState<[number, number]>();
   const [topRight, setTopRight] = useState<[number, number]>();
 
-  const normalizedZoom = useMemo(() => {
-    if (zoom == null || zoom == undefined) return undefined;
-    return zoom > 18 ? 18 : zoom;
-  }, [zoom]);
-
-  /**
-   * The normalized bottom left coordinates. The coordinates are normalized
-   * to the lower left corner of the tile that contains the given coordinates.
-   */
-  const normalizedBottomLeft = useMemo(() => {
-    if (!bottomLeft || zoom == null || zoom == undefined) return undefined;
-
-    const [lat, lon] = bottomLeft;
-    const { x, y, z } = latLonToTile(lat, lon, zoom);
-
-    const { latitude: normalizedLat, longitude: normalizedLon } = tileToLatLon(
-      x,
-      y + 1,
-      z,
-    );
-
-    return [normalizedLat, normalizedLon];
-  }, [bottomLeft, zoom]);
-
-  /**
-   * The normalized top right coordinates. The coordinates are normalized
-   * to the upper right corner of the tile that contains the given coordinates.
-   */
-  const normalizedTopRight = useMemo(() => {
-    if (!topRight || zoom == null || zoom == undefined) return undefined;
-
-    const [lat, lon] = topRight;
-    const { x, y, z } = latLonToTile(lat, lon, zoom);
-
-    const { latitude: normalizedLat, longitude: normalizedLon } = tileToLatLon(
-      x + 1,
-      y,
-      z,
-    );
-
-    return [normalizedLat, normalizedLon];
-  }, [topRight, zoom]);
-
-  /* ============ Data Fetching - Start ============ */
-
-  const { data } = useSWR<
-    (
-      | {
-          id: string;
-          longitude: number;
-          latitude: number;
-          score: number;
-          recentlyReported: {
-            missing: number;
-            spam: number;
-            inactive: number;
-            inaccessible: number;
-          };
-          alreadyVoted?: "upvote" | "downvote";
-        }
-      | {
-          id: string;
-          cluster: true;
-          longitude: number;
-          latitude: number;
-          count: number;
-        }
-    )[],
-    unknown,
-    string | null
-  >(
-    !!normalizedBottomLeft && !!normalizedTopRight && !!normalizedZoom
-      ? `/cvms?bottomLeft=${normalizedBottomLeft?.[0]},${normalizedBottomLeft?.[1]}&topRight=${normalizedTopRight?.[0]},${normalizedTopRight?.[1]}&zoom=${normalizedZoom}${mapFilterQuery ? `&filter=${mapFilterQuery}` : ""}`
-      : null,
-    (url) => api.get(url).then((res) => res.data),
-    { keepPreviousData: true },
-  );
-
-  const markers = useMemo(
-    () =>
-      data?.filter((item) => !("cluster" in item)) as {
-        id: string;
-        longitude: number;
-        latitude: number;
-        score: number;
-        recentlyReported: {
-          missing: number;
-          spam: number;
-          inactive: number;
-          inaccessible: number;
-        };
-        alreadyVoted?: "upvote" | "downvote";
-      }[],
-    [data],
-  );
-
-  const clusters = useMemo(
-    () =>
-      data?.filter((item) => "cluster" in item) as {
-        id: string;
-        cluster: true;
-        longitude: number;
-        latitude: number;
-        count: number;
-      }[],
-    [data],
-  );
-
-  /* ============ Data Fetching - End ============ */
+  const { markers, clusters } = useMapViewportCvmData({
+    zoom: zoom!,
+    bottomLeft: bottomLeft!,
+    topRight: topRight!,
+  });
 
   const onReady = useCallback((map: Leaflet.Map) => {
     const mapBounds = map.getBounds();
@@ -507,29 +381,7 @@ export function CvmMap(props: CvmMapProps) {
     setMap(map);
   }, []);
 
-  const onZoomEnd = useCallback(
-    (event: Leaflet.LeafletEvent) => {
-      const map = event.target as Leaflet.Map;
-      const mapBounds = map.getBounds();
-
-      setBottomLeft([
-        mapBounds.getSouthWest().lat,
-        mapBounds.getSouthWest().lng,
-      ]);
-      setTopRight([mapBounds.getNorthEast().lat, mapBounds.getNorthEast().lng]);
-      setZoom(map.getZoom());
-
-      dispatch(
-        usabilitySlice.actions.setMapView({
-          center: [mapBounds.getCenter().lat, mapBounds.getCenter().lng],
-          zoom: map.getZoom(),
-        }),
-      );
-    },
-    [dispatch],
-  );
-
-  const onMoveEnd = useCallback(
+  const onViewportChange = useCallback(
     (event: Leaflet.LeafletEvent) => {
       const map = event.target as Leaflet.Map;
       const mapBounds = map.getBounds();
@@ -679,8 +531,8 @@ export function CvmMap(props: CvmMapProps) {
       minZoom={8}
       maxZoom={19}
       onReady={onReady}
-      onMoveEnd={onMoveEnd}
-      onZoomEnd={onZoomEnd}
+      onMoveEnd={onViewportChange}
+      onZoomEnd={onViewportChange}
     >
       <MapLibreTileLayer url="/tiles/default.json" />
       <AttributionControl prefix={false} />
