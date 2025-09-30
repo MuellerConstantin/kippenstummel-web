@@ -175,7 +175,7 @@ export function CvmInfoSidebarDialog(props: CvmInfoSidebarDialogProps) {
     <motion.div
       ref={containerRef}
       key="cvm-info-dialog"
-      className="h-full w-[25rem] cursor-default pt-3 pb-6 pl-3"
+      className="h-full w-[25rem] cursor-default"
       initial={{ opacity: 0, x: -200 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -200 }}

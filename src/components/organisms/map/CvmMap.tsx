@@ -3,7 +3,7 @@
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import useSWR from "swr";
 import Leaflet from "leaflet";
-import { AttributionControl, ZoomControl } from "react-leaflet";
+import { AttributionControl, useMap, ZoomControl } from "react-leaflet";
 import { useTranslations } from "next-intl";
 import useApi from "@/hooks/useApi";
 import { LeafletMap } from "@/components/organisms/leaflet/LeafletMap";
@@ -26,6 +26,222 @@ import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
 import { AnimatePresence, motion } from "framer-motion";
 import { MapLibreTileLayer } from "../leaflet/MapLibreTileLayer";
 import { latLonToTile, tileToLatLon } from "@/lib/geo";
+
+interface CvmMapDefaultViewProps {
+  markers: {
+    id: string;
+    longitude: number;
+    latitude: number;
+    score: number;
+    recentlyReported: {
+      missing: number;
+      spam: number;
+      inactive: number;
+      inaccessible: number;
+    };
+    alreadyVoted?: "upvote" | "downvote" | undefined;
+  }[];
+  clusters: {
+    id: string;
+    cluster: true;
+    longitude: number;
+    latitude: number;
+    count: number;
+  }[];
+  selectedCvm: {
+    id: string;
+    latitude: number;
+    longitude: number;
+    score: number;
+    recentlyReported: {
+      missing: number;
+      spam: number;
+      inactive: number;
+      inaccessible: number;
+    };
+    alreadyVoted?: "upvote" | "downvote" | undefined;
+  } | null;
+  onSelectCvm?: (cvmId: string | null) => void;
+  onUpvote?: (id: string, voterPosition: Leaflet.LatLng) => void;
+  onDownvote?: (id: string, voterPosition: Leaflet.LatLng) => void;
+  onReposition?: (id: string, editorPosition: Leaflet.LatLng) => void;
+  onReport?: (
+    id: string,
+    reporterPosition: Leaflet.LatLng,
+    type: "missing" | "spam" | "inactive" | "inaccessible",
+  ) => void;
+  onRegister?: (position: Leaflet.LatLng) => void;
+}
+
+export function CvmMapDefaultView(props: CvmMapDefaultViewProps) {
+  const {
+    markers,
+    clusters,
+    selectedCvm,
+    onSelectCvm,
+    onDownvote,
+    onUpvote,
+    onReposition,
+    onReport,
+    onRegister,
+  } = props;
+
+  const map = useMap();
+
+  const [showHelpDialog, setShowHelpDialog] = useState(false);
+  const [showFilterDialog, setShowFilterDialog] = useState(false);
+  const [showReportDialog, setShowReportDialog] = useState(false);
+  const [reporterPosition, setReporterPosition] = useState<Leaflet.LatLng>();
+
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const [sidebarWidth, setSidebarWidth] = useState(0);
+
+  useEffect(() => {
+    if (!sidebarRef.current) {
+      return;
+    }
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setSidebarWidth(entry.contentRect.width);
+      }
+    });
+
+    observer.observe(sidebarRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sidebarRef.current]);
+
+  const onHelp = useCallback(() => {
+    setShowHelpDialog(true);
+  }, [setShowHelpDialog]);
+
+  const onFilter = useCallback(() => {
+    setShowFilterDialog(true);
+  }, [setShowFilterDialog]);
+
+  return (
+    <>
+      <div className="absolute flex h-full w-full">
+        <div
+          ref={sidebarRef}
+          className="z-[2000] h-full shrink-0 pt-3 pb-6 pl-3"
+        >
+          <CvmInfoDialog
+            open={!!selectedCvm}
+            onOpenChange={(open) =>
+              onSelectCvm?.(open ? selectedCvm!.id : null)
+            }
+            cvm={selectedCvm!}
+            onUpvote={(voterPosition) =>
+              onUpvote?.(selectedCvm!.id, voterPosition)
+            }
+            onDownvote={(voterPosition) =>
+              onDownvote?.(selectedCvm!.id, voterPosition)
+            }
+            onReposition={(editorPosition) =>
+              onReposition?.(selectedCvm!.id, editorPosition)
+            }
+            onReport={(reporterPosition) => {
+              setShowReportDialog(true);
+              setReporterPosition(reporterPosition);
+            }}
+          />
+        </div>
+        <div className="relative grow">
+          <motion.div
+            className="fixed bottom-12 left-1/2 z-[2000] hidden h-fit w-fit -translate-x-1/2 px-2 md:block"
+            animate={{ x: !!selectedCvm ? sidebarWidth / 2 : 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <MenuBottomNavigation
+              map={map!}
+              onHelp={onHelp}
+              onFilter={onFilter}
+              onRegister={onRegister}
+            />
+          </motion.div>
+          <div className="absolute bottom-6 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 md:hidden">
+            <MenuBottomNavigation
+              map={map!}
+              onHelp={onHelp}
+              onFilter={onFilter}
+              onRegister={onRegister}
+            />
+          </div>
+        </div>
+      </div>
+      <AnimatePresence>
+        {showReportDialog && (
+          <Modal
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            isOpen={showReportDialog}
+            onOpenChange={setShowReportDialog}
+          >
+            <CvmReportDialog
+              onReport={(type) => {
+                onReport?.(selectedCvm!.id, reporterPosition!, type);
+                setShowReportDialog(false);
+              }}
+            />
+          </Modal>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showHelpDialog && (
+          <Modal
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="!max-w-2xl"
+            isOpen={showHelpDialog}
+            onOpenChange={setShowHelpDialog}
+          >
+            <HelpDialog />
+          </Modal>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showFilterDialog && (
+          <Modal
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            isOpen={showFilterDialog}
+            onOpenChange={setShowFilterDialog}
+          >
+            <FilterDialog />
+          </Modal>
+        )}
+      </AnimatePresence>
+      {markers
+        ?.filter((marker) => marker.id !== selectedCvm?.id)
+        .map((marker) => (
+          <LocationMarker
+            key={marker.id}
+            cvm={marker}
+            onSelect={() => onSelectCvm?.(marker.id)}
+          />
+        ))}
+      {clusters?.map((marker, index) => (
+        <ClusterMarker
+          key={index}
+          position={new Leaflet.LatLng(marker.latitude, marker.longitude)}
+          count={marker.count}
+        />
+      ))}
+      {!!selectedCvm && <SelectedMarker cvm={selectedCvm} />}
+    </>
+  );
+}
 
 interface CvmMapRegisteringViewProps {
   originalPosition?: Leaflet.LatLng;
@@ -128,28 +344,6 @@ export function CvmMap(props: CvmMapProps) {
   const dispatch = useAppDispatch();
   const { enqueue } = useNotifications();
 
-  const sidebarRef = useRef<HTMLDivElement>(null);
-  const [sidebarWidth, setSidebarWidth] = useState(0);
-
-  useEffect(() => {
-    if (!sidebarRef.current) {
-      return;
-    }
-
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        setSidebarWidth(entry.contentRect.width);
-      }
-    });
-
-    observer.observe(sidebarRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sidebarRef.current]);
-
   const location = useAppSelector((state) => state.location.location);
   const locatedAt = useAppSelector((state) => state.location.locatedAt);
   const mapView = useAppSelector((state) => state.usability.mapView);
@@ -176,9 +370,6 @@ export function CvmMap(props: CvmMapProps) {
     }
   }, [mapFilters]);
 
-  const [showHelpDialog, setShowHelpDialog] = useState(false);
-  const [showFilterDialog, setShowFilterDialog] = useState(false);
-
   const [isRegistering, setIsRegistering] = useState(false);
   const [registerPosition, setRegisterPosition] = useState<Leaflet.LatLng>();
 
@@ -190,10 +381,6 @@ export function CvmMap(props: CvmMapProps) {
     useState<Leaflet.LatLng>();
   const [repositioningPosition, setRepositioningPosition] =
     useState<Leaflet.LatLng>();
-
-  const [isReporting, setIsReporting] = useState(false);
-  const [reportingId, setReportingId] = useState<string>();
-  const [reportingPosition, setReportingPosition] = useState<Leaflet.LatLng>();
 
   const [map, setMap] = useState<Leaflet.Map | null>(null);
   const [zoom, setZoom] = useState<number>();
@@ -364,14 +551,6 @@ export function CvmMap(props: CvmMapProps) {
     [dispatch],
   );
 
-  const onHelp = useCallback(() => {
-    setShowHelpDialog(true);
-  }, [setShowHelpDialog]);
-
-  const onFilter = useCallback(() => {
-    setShowFilterDialog(true);
-  }, [setShowFilterDialog]);
-
   const onRegister = useCallback(
     (position: Leaflet.LatLng) => {
       setIsRegistering(true);
@@ -507,6 +686,31 @@ export function CvmMap(props: CvmMapProps) {
       <AttributionControl prefix={false} />
       <ZoomControl position="topright" zoomInTitle="" zoomOutTitle="" />
       <LocateControlPlugin position="topright" />
+      {location && (
+        <LocateMarker
+          position={new Leaflet.LatLng(location.lat, location.lng)}
+          lastUpdatedAgo={new Date().getTime() - new Date(locatedAt!).getTime()}
+        />
+      )}
+      {!isRegistering && !isRepositioning && (
+        <CvmMapDefaultView
+          markers={markers}
+          clusters={clusters}
+          selectedCvm={selectedCvm}
+          onRegister={onRegister}
+          onReposition={(id, editorPosition) => {
+            onReposition(
+              id,
+              new Leaflet.LatLng(selectedCvm!.latitude, selectedCvm!.longitude),
+              editorPosition,
+            );
+          }}
+          onDownvote={props.onDownvote}
+          onUpvote={props.onUpvote}
+          onReport={props.onReport}
+          onSelectCvm={setSelectedCvmId}
+        />
+      )}
       {isRegistering && (
         <CvmMapRegisteringView
           onCancel={() => setIsRegistering(false)}
@@ -535,136 +739,6 @@ export function CvmMap(props: CvmMapProps) {
           maxDistance={25}
           onCurrentPositionChange={setRepositioningPosition}
           currentPosition={repositioningPosition!}
-        />
-      )}
-      {!isRegistering && !isRepositioning && (
-        <>
-          <div className="absolute flex h-full w-full">
-            <div ref={sidebarRef} className="z-[2000] h-full shrink-0">
-              <CvmInfoDialog
-                open={!!selectedCvm}
-                onOpenChange={(open) =>
-                  setSelectedCvmId(open ? selectedCvmId : null)
-                }
-                cvm={selectedCvm!}
-                onUpvote={(voterPosition) =>
-                  props.onUpvote?.(selectedCvm!.id, voterPosition)
-                }
-                onDownvote={(voterPosition) =>
-                  props.onDownvote?.(selectedCvm!.id, voterPosition)
-                }
-                onReposition={(editorPosition) =>
-                  onReposition(
-                    selectedCvm!.id,
-                    Leaflet.latLng(
-                      selectedCvm!.latitude,
-                      selectedCvm!.longitude,
-                    ),
-                    editorPosition,
-                  )
-                }
-                onReport={(reporterPosition) => {
-                  setIsReporting(true);
-                  setReportingId(selectedCvm!.id);
-                  setReportingPosition(reporterPosition);
-                  setSelectedCvmId(null);
-                }}
-              />
-            </div>
-            <div className="relative grow">
-              <motion.div
-                className="fixed bottom-12 left-1/2 z-[2000] hidden h-fit w-fit -translate-x-1/2 px-2 md:block"
-                animate={{ x: !!selectedCvm ? sidebarWidth / 2 : 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-              >
-                <MenuBottomNavigation
-                  map={map!}
-                  onHelp={onHelp}
-                  onFilter={onFilter}
-                  onRegister={onRegister}
-                />
-              </motion.div>
-              <div className="absolute bottom-6 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 md:hidden">
-                <MenuBottomNavigation
-                  map={map!}
-                  onHelp={onHelp}
-                  onFilter={onFilter}
-                  onRegister={onRegister}
-                />
-              </div>
-            </div>
-          </div>
-          <AnimatePresence>
-            {isReporting && (
-              <Modal
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                isOpen={isReporting}
-                onOpenChange={setIsReporting}
-              >
-                <CvmReportDialog
-                  onReport={(type) => {
-                    props.onReport?.(reportingId!, reportingPosition!, type);
-                    setIsReporting(false);
-                  }}
-                />
-              </Modal>
-            )}
-          </AnimatePresence>
-          <AnimatePresence>
-            {showHelpDialog && (
-              <Modal
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="!max-w-2xl"
-                isOpen={showHelpDialog}
-                onOpenChange={setShowHelpDialog}
-              >
-                <HelpDialog />
-              </Modal>
-            )}
-          </AnimatePresence>
-          <AnimatePresence>
-            {showFilterDialog && (
-              <Modal
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                isOpen={showFilterDialog}
-                onOpenChange={setShowFilterDialog}
-              >
-                <FilterDialog />
-              </Modal>
-            )}
-          </AnimatePresence>
-          {markers
-            ?.filter((marker) => marker.id !== selectedCvm?.id)
-            .map((marker) => (
-              <LocationMarker
-                key={marker.id}
-                cvm={marker}
-                onSelect={() => setSelectedCvmId(marker.id)}
-              />
-            ))}
-          {clusters?.map((marker, index) => (
-            <ClusterMarker
-              key={index}
-              position={new Leaflet.LatLng(marker.latitude, marker.longitude)}
-              count={marker.count}
-            />
-          ))}
-          {!!selectedCvm && <SelectedMarker cvm={selectedCvm} />}
-        </>
-      )}
-      {location && (
-        <LocateMarker
-          position={new Leaflet.LatLng(location.lat, location.lng)}
-          lastUpdatedAgo={new Date().getTime() - new Date(locatedAt!).getTime()}
         />
       )}
     </LeafletMap>
