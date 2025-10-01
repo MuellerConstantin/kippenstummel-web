@@ -341,7 +341,7 @@ export function CvmMap(props: CvmMapProps) {
       setIsRegistering(true);
       setRegisteringCurrentPosition(position);
       setRegisteringOrigPosition(position);
-      map?.setView(Leaflet.latLng(position.latitude, position.longitude), 19);
+      map?.flyTo(Leaflet.latLng(position.latitude, position.longitude), 19);
     },
     [map],
   );
@@ -352,7 +352,7 @@ export function CvmMap(props: CvmMapProps) {
       setRepositioningEditorPosition(editorPosition);
       setRepositioningCurrentPosition(position);
       setRepositioningOrigPosition(position);
-      map?.setView(Leaflet.latLng(position.latitude, position.longitude), 19);
+      map?.flyTo(Leaflet.latLng(position.latitude, position.longitude), 19);
     },
     [map],
   );

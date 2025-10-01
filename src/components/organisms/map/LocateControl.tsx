@@ -11,17 +11,21 @@ interface LocateControlComponentProps {
 
 export function LocateControlComponent(props: LocateControlComponentProps) {
   const { map } = props;
-  const locate = useLocate(map);
+  const locate = useLocate();
 
   const [locating, setLocating] = useState(false);
 
   const onClick = useCallback(() => {
     setLocating(true);
 
-    locate({ setView: true, maxZoom: 15 }).finally(() => {
-      setLocating(false);
-    });
-  }, [locate]);
+    locate()
+      .then((position) =>
+        map.flyTo(Leaflet.latLng(position.latitude, position.longitude), 15),
+      )
+      .finally(() => {
+        setLocating(false);
+      });
+  }, [locate, map]);
 
   return (
     <a
