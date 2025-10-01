@@ -1,4 +1,4 @@
-export interface CvmDto {
+export interface Cvm {
   id: string;
   latitude: number;
   longitude: number;
@@ -14,7 +14,7 @@ export interface CvmDto {
   updatedAt: string;
 }
 
-export interface CvmClusterDto {
+export interface CvmCluster {
   cluster: boolean;
   latitude: number;
   longitude: number;

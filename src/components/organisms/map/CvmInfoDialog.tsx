@@ -4,10 +4,10 @@ import { Modal } from "@/components/atoms/Modal";
 import useIsMobile from "@/hooks/useIsMobile";
 import { CvmInfoSidebarDialog } from "./CvmInfoSidebarDialog";
 import { CvmInfoMobileDialog } from "./CvmInfoMobileDialog";
-import { CvmDto } from "@/lib/types/cvm";
+import { Cvm } from "@/lib/types/cvm";
 
 interface CvmInfoDialogProps {
-  cvm: CvmDto;
+  cvm: Cvm;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;

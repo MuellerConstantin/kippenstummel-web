@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import useSWR from "swr";
 import { AxiosError } from "axios";
-import { CvmDto } from "@/lib/types/cvm";
-import { ErrorDto } from "@/lib/types/error";
+import { Cvm } from "@/lib/types/cvm";
+import { ApiError } from "@/lib/types/error";
 import useApi from "@/hooks/useApi";
 
 interface UseCvmSelectionProps {
@@ -32,7 +32,7 @@ export function useMapCvmSelection({ sharedCvmId }: UseCvmSelectionProps) {
     }
   }, [sharedCvmId]);
 
-  const { data, error, isLoading } = useSWR<CvmDto, AxiosError<ErrorDto>>(
+  const { data, error, isLoading } = useSWR<Cvm, AxiosError<ApiError>>(
     selectedCvmId ? `/cvms/${selectedCvmId}` : null,
     (url) => api.get(url).then((res) => res.data),
     { shouldRetryOnError: false, revalidateOnFocus: false },

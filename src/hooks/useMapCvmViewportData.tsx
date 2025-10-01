@@ -4,8 +4,8 @@ import { AxiosError } from "axios";
 import { latLonToTile, tileToLatLon } from "@/lib/geo";
 import useApi from "./useApi";
 import { useAppSelector } from "@/store";
-import { CvmClusterDto, CvmDto } from "@/lib/types/cvm";
-import { ErrorDto } from "@/lib/types/error";
+import { CvmCluster, Cvm } from "@/lib/types/cvm";
+import { ApiError } from "@/lib/types/error";
 
 export interface UseMapViewportCvmDataProps {
   zoom: number;
@@ -121,8 +121,8 @@ export default function useMapCvmViewportData(
   ]);
 
   const { data, isLoading, error } = useSWR<
-    (CvmDto | CvmClusterDto)[],
-    AxiosError<ErrorDto>,
+    (Cvm | CvmCluster)[],
+    AxiosError<ApiError>,
     string | null
   >(
     !!searchParams ? `/cvms?${searchParams.toString()}` : null,
@@ -131,12 +131,12 @@ export default function useMapCvmViewportData(
   );
 
   const markers = useMemo(
-    () => data?.filter((item): item is CvmDto => !("cluster" in item)),
+    () => data?.filter((item): item is Cvm => !("cluster" in item)),
     [data],
   );
 
   const clusters = useMemo(
-    () => data?.filter((item): item is CvmClusterDto => "cluster" in item),
+    () => data?.filter((item): item is CvmCluster => "cluster" in item),
     [data],
   );
 

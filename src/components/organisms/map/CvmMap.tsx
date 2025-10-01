@@ -21,7 +21,7 @@ import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
 import { motion } from "framer-motion";
 import { MapLibreTileLayer } from "../leaflet/MapLibreTileLayer";
 import useMapCvmViewportData from "@/hooks/useMapCvmViewportData";
-import { CvmClusterDto, CvmDto } from "@/lib/types/cvm";
+import { CvmCluster, Cvm } from "@/lib/types/cvm";
 import { useMapCvmSelection } from "@/hooks/useMapCvmSelection";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import { useTranslations } from "next-intl";
@@ -29,9 +29,9 @@ import { useElementWidth } from "@/hooks/useElementWidth";
 import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
 
 interface CvmMapDefaultViewProps {
-  markers: CvmDto[];
-  clusters: CvmClusterDto[];
-  selectedCvm: CvmDto | null;
+  markers: Cvm[];
+  clusters: CvmCluster[];
+  selectedCvm: Cvm | null;
   onSelectCvm?: (cvmId: string | null) => void;
   onUpvote?: (id: string, voterPosition: Leaflet.LatLng) => void;
   onDownvote?: (id: string, voterPosition: Leaflet.LatLng) => void;

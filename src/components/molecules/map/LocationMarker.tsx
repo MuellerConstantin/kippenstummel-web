@@ -2,10 +2,10 @@ import Leaflet from "leaflet";
 import { Marker } from "react-leaflet";
 import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
 import { MapPin, ChevronUp, ChevronDown, Equal, X } from "lucide-react";
-import { CvmDto } from "@/lib/types/cvm";
+import { Cvm } from "@/lib/types/cvm";
 
 interface LocationMarkerProps {
-  cvm: CvmDto;
+  cvm: Cvm;
   onSelect: () => void;
 }
 

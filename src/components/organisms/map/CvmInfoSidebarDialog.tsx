@@ -18,7 +18,7 @@ import useLocate from "@/hooks/useLocate";
 import { Button } from "@/components/atoms/Button";
 import Image from "next/image";
 import { REPORT_THRESHOLD } from "@/lib/constants";
-import { CvmDto } from "@/lib/types/cvm";
+import { Cvm } from "@/lib/types/cvm";
 
 interface CopyButtonProps {
   text: string;
@@ -51,7 +51,7 @@ function CopyButton(props: CopyButtonProps) {
 }
 
 interface ReportedMessageProps {
-  cvm: CvmDto;
+  cvm: Cvm;
 }
 
 function ReportedMessage({ cvm }: ReportedMessageProps) {
@@ -77,7 +77,7 @@ function ReportedMessage({ cvm }: ReportedMessageProps) {
 }
 
 export interface CvmInfoSidebarDialogProps {
-  cvm: CvmDto;
+  cvm: Cvm;
   onClose: () => void;
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
   onDownvote?: (voterPosition: Leaflet.LatLng) => void;
