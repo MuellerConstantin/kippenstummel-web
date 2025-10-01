@@ -7,7 +7,6 @@ import { LeafletMap } from "@/components/organisms/leaflet/LeafletMap";
 import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
 import { LocationMarker } from "@/components/molecules/map/LocationMarker";
 import { LocateMarker } from "@/components/molecules/map/LocateMarker";
-import { Modal } from "@/components/atoms/Modal";
 import { LocateControlPlugin } from "./LocateControl";
 import { HelpDialog } from "./HelpDialog";
 import { useAppDispatch, useAppSelector } from "@/store";
@@ -19,13 +18,15 @@ import { ConfirmRegisterBottomNavigation } from "./ConfirmRegisterBottomNavigati
 import { CvmInfoDialog } from "./CvmInfoDialog";
 import { CvmReportDialog } from "./CvmReportDialog";
 import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { MapLibreTileLayer } from "../leaflet/MapLibreTileLayer";
 import useMapCvmViewportData from "@/hooks/useMapCvmViewportData";
 import { CvmClusterDto, CvmDto } from "@/lib/types/cvm";
 import { useMapCvmSelection } from "@/hooks/useMapCvmSelection";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import { useTranslations } from "next-intl";
+import { useElementWidth } from "@/hooks/useElementWidth";
+import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
 
 interface CvmMapDefaultViewProps {
   markers: CvmDto[];
@@ -43,6 +44,12 @@ interface CvmMapDefaultViewProps {
   onRegister?: (position: Leaflet.LatLng) => void;
 }
 
+/**
+ * The default map view.
+ *
+ * @param props The props passed to the component.
+ * @returns The default map view component.
+ */
 export function CvmMapDefaultView(props: CvmMapDefaultViewProps) {
   const {
     markers,
@@ -64,26 +71,7 @@ export function CvmMapDefaultView(props: CvmMapDefaultViewProps) {
   const [reporterPosition, setReporterPosition] = useState<Leaflet.LatLng>();
 
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const [sidebarWidth, setSidebarWidth] = useState(0);
-
-  useEffect(() => {
-    if (!sidebarRef.current) {
-      return;
-    }
-
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        setSidebarWidth(entry.contentRect.width);
-      }
-    });
-
-    observer.observe(sidebarRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sidebarRef.current]);
+  const sidebarWidth = useElementWidth(sidebarRef);
 
   const onHelp = useCallback(() => {
     setShowHelpDialog(true);
@@ -144,54 +132,30 @@ export function CvmMapDefaultView(props: CvmMapDefaultViewProps) {
           </div>
         </div>
       </div>
-      <AnimatePresence>
-        {showReportDialog && (
-          <Modal
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            isOpen={showReportDialog}
-            onOpenChange={setShowReportDialog}
-          >
-            <CvmReportDialog
-              onReport={(type) => {
-                onReport?.(selectedCvm!.id, reporterPosition!, type);
-                setShowReportDialog(false);
-              }}
-            />
-          </Modal>
-        )}
-      </AnimatePresence>
-      <AnimatePresence>
-        {showHelpDialog && (
-          <Modal
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="!max-w-2xl"
-            isOpen={showHelpDialog}
-            onOpenChange={setShowHelpDialog}
-          >
-            <HelpDialog />
-          </Modal>
-        )}
-      </AnimatePresence>
-      <AnimatePresence>
-        {showFilterDialog && (
-          <Modal
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            isOpen={showFilterDialog}
-            onOpenChange={setShowFilterDialog}
-          >
-            <FilterDialog />
-          </Modal>
-        )}
-      </AnimatePresence>
+      <AnimatedDialogModal
+        isOpen={showReportDialog}
+        onOpenChange={setShowReportDialog}
+      >
+        <CvmReportDialog
+          onReport={(type) => {
+            onReport?.(selectedCvm!.id, reporterPosition!, type);
+            setShowReportDialog(false);
+          }}
+        />
+      </AnimatedDialogModal>
+      <AnimatedDialogModal
+        className="!max-w-2xl"
+        isOpen={showHelpDialog}
+        onOpenChange={setShowHelpDialog}
+      >
+        <HelpDialog />
+      </AnimatedDialogModal>
+      <AnimatedDialogModal
+        isOpen={showFilterDialog}
+        onOpenChange={setShowFilterDialog}
+      >
+        <FilterDialog />
+      </AnimatedDialogModal>
       {markers
         ?.filter((marker) => marker.id !== selectedCvm?.id)
         .map((marker) => (
@@ -213,7 +177,7 @@ export function CvmMapDefaultView(props: CvmMapDefaultViewProps) {
   );
 }
 
-interface CvmMapRegisteringViewProps {
+interface CvmMapAdjustableMarkerViewProps {
   originalPosition?: Leaflet.LatLng;
   maxDistance?: number;
   currentPosition: Leaflet.LatLng;
@@ -222,70 +186,31 @@ interface CvmMapRegisteringViewProps {
   onCancel: () => void;
 }
 
-function CvmMapRegisteringView({
-  onConfirm,
-  onCancel,
-  originalPosition,
-  maxDistance,
-  currentPosition,
-  onCurrentPositionChange,
-}: CvmMapRegisteringViewProps) {
+/**
+ * A view that allows the user to adjust the position of a marker. Most
+ * of the default view's controls are hidden.
+ *
+ * @param props The props passed to the component.
+ * @returns The view component.
+ */
+function CvmMapAdjustableMarkerView(props: CvmMapAdjustableMarkerViewProps) {
   return (
     <>
       <AdjustableLocationMarker
         reference={
-          (originalPosition &&
-            maxDistance && {
-              position: originalPosition,
-              maxDistance,
-            }) ||
-          undefined
+          props.originalPosition && props.maxDistance
+            ? {
+                position: props.originalPosition,
+                maxDistance: props.maxDistance,
+              }
+            : undefined
         }
-        position={currentPosition}
-        onAdapt={onCurrentPositionChange}
+        position={props.currentPosition}
+        onAdapt={props.onCurrentPositionChange}
       />
       <ConfirmRegisterBottomNavigation
-        onCancel={onCancel}
-        onConfirm={onConfirm}
-      />
-    </>
-  );
-}
-
-interface CvmMapRepositioningViewProps {
-  originalPosition?: Leaflet.LatLng;
-  maxDistance?: number;
-  currentPosition: Leaflet.LatLng;
-  onCurrentPositionChange: (position: Leaflet.LatLng) => void;
-  onConfirm: () => void;
-  onCancel: () => void;
-}
-
-function CvmMapRepositioningView({
-  onConfirm,
-  onCancel,
-  originalPosition,
-  maxDistance,
-  currentPosition,
-  onCurrentPositionChange,
-}: CvmMapRepositioningViewProps) {
-  return (
-    <>
-      <AdjustableLocationMarker
-        reference={
-          (originalPosition &&
-            maxDistance && {
-              position: originalPosition,
-              maxDistance,
-            }) ||
-          undefined
-        }
-        position={currentPosition}
-        onAdapt={onCurrentPositionChange}
-      />
-      <ConfirmRegisterBottomNavigation
-        onCancel={onCancel}
-        onConfirm={onConfirm}
+        onCancel={props.onCancel}
+        onConfirm={props.onConfirm}
       />
     </>
   );
@@ -483,7 +408,7 @@ export function CvmMap(props: CvmMapProps) {
         />
       )}
       {isRegistering && (
-        <CvmMapRegisteringView
+        <CvmMapAdjustableMarkerView
           onCancel={() => setIsRegistering(false)}
           onConfirm={() => {
             props.onRegister?.(registerPosition!);
@@ -496,7 +421,7 @@ export function CvmMap(props: CvmMapProps) {
         />
       )}
       {isRepositioning && (
-        <CvmMapRepositioningView
+        <CvmMapAdjustableMarkerView
           onCancel={() => setIsRepositioning(false)}
           onConfirm={() => {
             props.onReposition?.(

@@ -9,7 +9,7 @@ import { motion, HTMLMotionProps } from "framer-motion";
 
 const MotionModal = motion(RACModal);
 
-type ModalProps = HTMLMotionProps<"div"> &
+export type ModalProps = HTMLMotionProps<"div"> &
   ModalOverlayProps & { placement?: "center" | "bottom" };
 
 export function Modal(props: ModalProps) {
