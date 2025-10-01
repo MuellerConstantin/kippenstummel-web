@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Leaflet from "leaflet";
-import { useMap } from "react-leaflet";
 import { useTranslations } from "next-intl";
 import {
   ChevronUp,
@@ -19,6 +18,7 @@ import { Button } from "@/components/atoms/Button";
 import Image from "next/image";
 import { REPORT_THRESHOLD } from "@/lib/constants";
 import { Cvm } from "@/lib/types/cvm";
+import { GeoCoordinates } from "@/lib/types/geo";
 
 interface CopyButtonProps {
   text: string;
@@ -79,16 +79,15 @@ function ReportedMessage({ cvm }: ReportedMessageProps) {
 export interface CvmInfoSidebarDialogProps {
   cvm: Cvm;
   onClose: () => void;
-  onUpvote?: (voterPosition: Leaflet.LatLng) => void;
-  onDownvote?: (voterPosition: Leaflet.LatLng) => void;
-  onReposition?: (editorPosition: Leaflet.LatLng) => void;
-  onReport?: (reporterPosition: Leaflet.LatLng) => void;
+  onUpvote?: (voterPosition: GeoCoordinates) => void;
+  onDownvote?: (voterPosition: GeoCoordinates) => void;
+  onReposition?: (editorPosition: GeoCoordinates) => void;
+  onReport?: (reporterPosition: GeoCoordinates) => void;
 }
 
 export function CvmInfoSidebarDialog(props: CvmInfoSidebarDialogProps) {
   const t = useTranslations("CvmInfoDialog");
-  const map = useMap();
-  const locate = useLocate(map);
+  const locate = useLocate();
   const { onUpvote, onDownvote, onReposition, onReport } = props;
 
   const [voting, setVoting] = useState<"up" | "down" | false>(false);

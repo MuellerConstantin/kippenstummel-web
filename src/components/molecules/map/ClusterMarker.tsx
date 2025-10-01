@@ -2,10 +2,11 @@ import { useMemo, useCallback } from "react";
 import Leaflet from "leaflet";
 import { Marker, useMap } from "react-leaflet";
 import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
+import { GeoCoordinates } from "@/lib/types/geo";
 
 interface ClusterMarkerProps {
   count: number;
-  position: Leaflet.LatLng;
+  position: GeoCoordinates;
 }
 
 export function ClusterMarker(props: ClusterMarkerProps) {
@@ -51,12 +52,18 @@ export function ClusterMarker(props: ClusterMarkerProps) {
   const handleClick = useCallback(() => {
     const newZoom = Math.min(map.getZoom() + 1, map.getMaxZoom());
 
-    map.flyTo(Leaflet.latLng(props.position), newZoom);
+    map.flyTo(
+      Leaflet.latLng(props.position.latitude, props.position.longitude),
+      newZoom,
+    );
   }, [map, props.position]);
 
   return (
     <Marker
-      position={Leaflet.latLng(props.position)}
+      position={Leaflet.latLng(
+        props.position.latitude,
+        props.position.longitude,
+      )}
       icon={LeafletDivIcon({
         source: (
           <div

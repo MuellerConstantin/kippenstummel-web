@@ -1,19 +1,19 @@
-import Leaflet from "leaflet";
 import { AnimatePresence } from "framer-motion";
 import { Modal } from "@/components/atoms/Modal";
 import useIsMobile from "@/hooks/useIsMobile";
 import { CvmInfoSidebarDialog } from "./CvmInfoSidebarDialog";
 import { CvmInfoMobileDialog } from "./CvmInfoMobileDialog";
 import { Cvm } from "@/lib/types/cvm";
+import { GeoCoordinates } from "@/lib/types/geo";
 
 interface CvmInfoDialogProps {
   cvm: Cvm;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onUpvote?: (voterPosition: Leaflet.LatLng) => void;
-  onDownvote?: (voterPosition: Leaflet.LatLng) => void;
-  onReposition?: (editorPosition: Leaflet.LatLng) => void;
-  onReport?: (reporterPosition: Leaflet.LatLng) => void;
+  onUpvote?: (voterPosition: GeoCoordinates) => void;
+  onDownvote?: (voterPosition: GeoCoordinates) => void;
+  onReposition?: (editorPosition: GeoCoordinates) => void;
+  onReport?: (reporterPosition: GeoCoordinates) => void;
 }
 
 export function CvmInfoDialog({

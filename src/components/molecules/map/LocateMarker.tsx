@@ -3,9 +3,10 @@ import { Marker } from "react-leaflet";
 import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
 import { useMemo } from "react";
 import { LOCATION_TTL } from "@/lib/constants";
+import { GeoCoordinates } from "@/lib/types/geo";
 
 interface LocateMarkerProps {
-  position: Leaflet.LatLng;
+  position: GeoCoordinates;
   lastUpdatedAgo: number;
 }
 
@@ -28,7 +29,10 @@ export function LocateMarker(props: LocateMarkerProps) {
 
   return (
     <Marker
-      position={Leaflet.latLng(props.position.lat, props.position.lng)}
+      position={Leaflet.latLng(
+        props.position.latitude,
+        props.position.longitude,
+      )}
       icon={LeafletDivIcon({
         source: (
           <div className="relative !z-[2000] flex h-[20px] w-[20px]">

@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import Leaflet from "leaflet";
-import { AttributionControl, useMap, ZoomControl } from "react-leaflet";
+import { AttributionControl, ZoomControl } from "react-leaflet";
 import { LeafletMap } from "@/components/organisms/leaflet/LeafletMap";
 import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
 import { LocationMarker } from "@/components/molecules/map/LocationMarker";
@@ -27,21 +27,22 @@ import { useNotifications } from "@/contexts/NotificationProvider";
 import { useTranslations } from "next-intl";
 import { useElementWidth } from "@/hooks/useElementWidth";
 import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
+import { GeoCoordinates } from "@/lib/types/geo";
 
 interface CvmMapDefaultViewProps {
   markers: Cvm[];
   clusters: CvmCluster[];
   selectedCvm: Cvm | null;
   onSelectCvm?: (cvmId: string | null) => void;
-  onUpvote?: (id: string, voterPosition: Leaflet.LatLng) => void;
-  onDownvote?: (id: string, voterPosition: Leaflet.LatLng) => void;
-  onReposition?: (id: string, editorPosition: Leaflet.LatLng) => void;
+  onUpvote?: (id: string, voterPosition: GeoCoordinates) => void;
+  onDownvote?: (id: string, voterPosition: GeoCoordinates) => void;
+  onReposition?: (id: string, editorPosition: GeoCoordinates) => void;
   onReport?: (
     id: string,
-    reporterPosition: Leaflet.LatLng,
+    reporterPosition: GeoCoordinates,
     type: "missing" | "spam" | "inactive" | "inaccessible",
   ) => void;
-  onRegister?: (position: Leaflet.LatLng) => void;
+  onRegister?: (position: GeoCoordinates) => void;
 }
 
 /**
@@ -63,12 +64,10 @@ export function CvmMapDefaultView(props: CvmMapDefaultViewProps) {
     onRegister,
   } = props;
 
-  const map = useMap();
-
   const [showHelpDialog, setShowHelpDialog] = useState(false);
   const [showFilterDialog, setShowFilterDialog] = useState(false);
   const [showReportDialog, setShowReportDialog] = useState(false);
-  const [reporterPosition, setReporterPosition] = useState<Leaflet.LatLng>();
+  const [reporterPosition, setReporterPosition] = useState<GeoCoordinates>();
 
   const sidebarRef = useRef<HTMLDivElement>(null);
   const sidebarWidth = useElementWidth(sidebarRef);
@@ -116,7 +115,6 @@ export function CvmMapDefaultView(props: CvmMapDefaultViewProps) {
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
             <MenuBottomNavigation
-              map={map!}
               onHelp={onHelp}
               onFilter={onFilter}
               onRegister={onRegister}
@@ -124,7 +122,6 @@ export function CvmMapDefaultView(props: CvmMapDefaultViewProps) {
           </motion.div>
           <div className="absolute bottom-6 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 md:hidden">
             <MenuBottomNavigation
-              map={map!}
               onHelp={onHelp}
               onFilter={onFilter}
               onRegister={onRegister}
@@ -168,7 +165,7 @@ export function CvmMapDefaultView(props: CvmMapDefaultViewProps) {
       {clusters?.map((marker, index) => (
         <ClusterMarker
           key={index}
-          position={new Leaflet.LatLng(marker.latitude, marker.longitude)}
+          position={{ latitude: marker.latitude, longitude: marker.longitude }}
           count={marker.count}
         />
       ))}
@@ -178,10 +175,10 @@ export function CvmMapDefaultView(props: CvmMapDefaultViewProps) {
 }
 
 interface CvmMapAdjustableMarkerViewProps {
-  originalPosition?: Leaflet.LatLng;
+  originalPosition?: GeoCoordinates;
   maxDistance?: number;
-  currentPosition: Leaflet.LatLng;
-  onCurrentPositionChange: (position: Leaflet.LatLng) => void;
+  currentPosition: GeoCoordinates;
+  onCurrentPositionChange: (position: GeoCoordinates) => void;
   onConfirm: () => void;
   onCancel: () => void;
 }
@@ -217,19 +214,19 @@ function CvmMapAdjustableMarkerView(props: CvmMapAdjustableMarkerViewProps) {
 }
 
 export interface CvmMapProps {
-  onRegister?: (position: Leaflet.LatLng) => void;
+  onRegister?: (position: GeoCoordinates) => void;
   onReposition?: (
     id: string,
-    position: Leaflet.LatLng,
-    editorPosition: Leaflet.LatLng,
+    position: GeoCoordinates,
+    editorPosition: GeoCoordinates,
   ) => void;
   onReport?: (
     id: string,
-    position: Leaflet.LatLng,
+    position: GeoCoordinates,
     type: "missing" | "spam" | "inactive" | "inaccessible",
   ) => void;
-  onUpvote?: (id: string, position: Leaflet.LatLng) => void;
-  onDownvote?: (id: string, position: Leaflet.LatLng) => void;
+  onUpvote?: (id: string, position: GeoCoordinates) => void;
+  onDownvote?: (id: string, position: GeoCoordinates) => void;
   sharedCvmId: string | null;
 }
 
@@ -243,13 +240,18 @@ export function CvmMap(props: CvmMapProps) {
   const mapView = useAppSelector((state) => state.usability.mapView);
 
   const [isRegistering, setIsRegistering] = useState(false);
-  const [registerPosition, setRegisterPosition] = useState<Leaflet.LatLng>();
+  const [registeringOrigPosition, setRegisteringOrigPosition] =
+    useState<GeoCoordinates>();
+  const [registeringCurrentPosition, setRegisteringCurrentPosition] =
+    useState<GeoCoordinates>();
 
   const [isRepositioning, setIsRepositioning] = useState(false);
   const [repositioningEditorPosition, setRepositioningEditorPosition] =
-    useState<Leaflet.LatLng>();
-  const [repositioningPosition, setRepositioningPosition] =
-    useState<Leaflet.LatLng>();
+    useState<GeoCoordinates>();
+  const [repositioningOrigPosition, setRepositioningOrigPosition] =
+    useState<GeoCoordinates>();
+  const [repositioningCurrentPosition, setRepositioningCurrentPosition] =
+    useState<GeoCoordinates>();
 
   const [map, setMap] = useState<Leaflet.Map | null>(null);
   const [zoom, setZoom] = useState<number>();
@@ -335,20 +337,22 @@ export function CvmMap(props: CvmMapProps) {
   );
 
   const onRegister = useCallback(
-    (position: Leaflet.LatLng) => {
+    (position: GeoCoordinates) => {
       setIsRegistering(true);
-      setRegisterPosition(position);
-      map?.setView(position, 19);
+      setRegisteringCurrentPosition(position);
+      setRegisteringOrigPosition(position);
+      map?.setView(Leaflet.latLng(position.latitude, position.longitude), 19);
     },
     [map],
   );
 
   const onReposition = useCallback(
-    (id: string, position: Leaflet.LatLng, editorPosition: Leaflet.LatLng) => {
+    (id: string, position: GeoCoordinates, editorPosition: GeoCoordinates) => {
       setIsRepositioning(true);
       setRepositioningEditorPosition(editorPosition);
-      setRepositioningPosition(position);
-      map?.setView(position, 19);
+      setRepositioningCurrentPosition(position);
+      setRepositioningOrigPosition(position);
+      map?.setView(Leaflet.latLng(position.latitude, position.longitude), 19);
     },
     [map],
   );
@@ -373,7 +377,7 @@ export function CvmMap(props: CvmMapProps) {
       <LocateControlPlugin position="topright" />
       {location && (
         <LocateMarker
-          position={new Leaflet.LatLng(location.lat, location.lng)}
+          position={location}
           lastUpdatedAgo={new Date().getTime() - new Date(locatedAt!).getTime()}
         />
       )}
@@ -386,7 +390,10 @@ export function CvmMap(props: CvmMapProps) {
           onReposition={(id, editorPosition) => {
             onReposition(
               id,
-              new Leaflet.LatLng(selectedCvm!.latitude, selectedCvm!.longitude),
+              {
+                latitude: selectedCvm!.latitude,
+                longitude: selectedCvm!.longitude,
+              },
               editorPosition,
             );
           }}
@@ -400,13 +407,13 @@ export function CvmMap(props: CvmMapProps) {
         <CvmMapAdjustableMarkerView
           onCancel={() => setIsRegistering(false)}
           onConfirm={() => {
-            props.onRegister?.(registerPosition!);
+            props.onRegister?.(registeringCurrentPosition!);
             setIsRegistering(false);
           }}
-          originalPosition={new Leaflet.LatLng(location!.lat, location!.lng)}
+          originalPosition={registeringOrigPosition}
           maxDistance={25}
-          onCurrentPositionChange={setRegisterPosition}
-          currentPosition={registerPosition!}
+          onCurrentPositionChange={setRegisteringCurrentPosition}
+          currentPosition={registeringCurrentPosition!}
         />
       )}
       {isRepositioning && (
@@ -415,20 +422,15 @@ export function CvmMap(props: CvmMapProps) {
           onConfirm={() => {
             props.onReposition?.(
               selectedCvm!.id,
-              repositioningPosition!,
+              repositioningCurrentPosition!,
               repositioningEditorPosition!,
             );
             setIsRepositioning(false);
           }}
-          originalPosition={
-            new Leaflet.LatLng(
-              repositioningPosition!.lat,
-              repositioningPosition!.lng,
-            )
-          }
+          originalPosition={repositioningOrigPosition}
           maxDistance={25}
-          onCurrentPositionChange={setRepositioningPosition}
-          currentPosition={repositioningPosition!}
+          onCurrentPositionChange={setRepositioningCurrentPosition}
+          currentPosition={repositioningCurrentPosition!}
         />
       )}
     </LeafletMap>

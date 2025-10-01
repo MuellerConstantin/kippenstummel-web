@@ -8,17 +8,17 @@ import {
 import Leaflet from "leaflet";
 import useLocate from "@/hooks/useLocate";
 import { useAppSelector } from "@/store";
+import { GeoCoordinates } from "@/lib/types/geo";
 
 interface MenuBottomNavigationProps {
-  map: Leaflet.Map;
-  onRegister?: (position: Leaflet.LatLng) => void;
+  onRegister?: (position: GeoCoordinates) => void;
   onHelp?: () => void;
   onFilter?: () => void;
 }
 
 export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
-  const { map, onRegister, onHelp, onFilter } = props;
-  const locate = useLocate(map);
+  const { onRegister, onHelp, onFilter } = props;
+  const locate = useLocate();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const numberOfActiveFilters = useAppSelector((state) => {

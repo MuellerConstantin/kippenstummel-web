@@ -1,7 +1,8 @@
+import { GeoCoordinates } from "@/lib/types/geo";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface LocationState {
-  location: { lat: number; lng: number } | null;
+  location: GeoCoordinates | null;
   locatedAt: string | null;
 }
 
@@ -14,10 +15,7 @@ const locationSlice = createSlice({
   name: "location",
   initialState,
   reducers: {
-    setLocation: (
-      state,
-      action: PayloadAction<{ lat: number; lng: number }>,
-    ) => {
+    setLocation: (state, action: PayloadAction<GeoCoordinates>) => {
       state.location = action.payload;
       state.locatedAt = new Date().toISOString();
     },

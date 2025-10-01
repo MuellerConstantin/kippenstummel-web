@@ -1,12 +1,12 @@
 import { useCallback } from "react";
-import Leaflet from "leaflet";
 import { useAppDispatch, useAppSelector } from "@/store";
 import locationSlice from "@/store/slices/location";
 import { useTranslations } from "next-intl";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import { LOCATION_TTL, LOCATION_COOLDOWN } from "@/lib/constants";
+import { GeoCoordinates } from "@/lib/types/geo";
 
-export default function useLocate(map: Leaflet.Map) {
+export default function useLocate() {
   const dispatch = useAppDispatch();
   const t = useTranslations();
   const { enqueue } = useNotifications();
@@ -15,47 +15,40 @@ export default function useLocate(map: Leaflet.Map) {
   const lastLocatedAt = useAppSelector((state) => state.location.locatedAt);
 
   const locate = useCallback(
-    (options?: Leaflet.LocateOptions) => {
-      if (map) {
-        return new Promise<Leaflet.LatLng>((resolve, reject) => {
-          const onLocationFound = (event: Leaflet.LocationEvent) => {
-            map.off("locationfound", onLocationFound);
-            map.off("locationerror", onLocationError);
+    (options?: PositionOptions) => {
+      return new Promise<GeoCoordinates>((resolve, reject) => {
+        if (
+          lastLocation &&
+          lastLocatedAt &&
+          Date.now() - new Date(lastLocatedAt).getTime() < LOCATION_COOLDOWN
+        ) {
+          return resolve(lastLocation);
+        }
 
-            dispatch(
-              locationSlice.actions.setLocation({
-                lat: event.latlng.lat,
-                lng: event.latlng.lng,
-              }),
-            );
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const location = {
+              latitude: pos.coords.latitude,
+              longitude: pos.coords.longitude,
+            };
 
-            resolve(event.latlng);
-          };
-
-          const onLocationError = (event: Leaflet.ErrorEvent) => {
-            map.off("locationfound", onLocationFound);
-            map.off("locationerror", onLocationError);
-
-            // Use cached location if still valid
+            dispatch(locationSlice.actions.setLocation(location));
+            resolve(location);
+          },
+          (err) => {
             if (
               lastLocation &&
               lastLocatedAt &&
               Date.now() - new Date(lastLocatedAt).getTime() < LOCATION_TTL
             ) {
-              return resolve(
-                Leaflet.latLng(lastLocation.lat, lastLocation.lng),
-              );
+              return resolve(lastLocation);
             }
 
             let title = "";
             let description = "";
 
-            const PERMISSION_DENIED = 1;
-            const POSITION_UNAVAILABLE = 2;
-            const TIMEOUT = 3;
-
-            switch (event.code) {
-              case PERMISSION_DENIED:
+            switch (err.code) {
+              case err.PERMISSION_DENIED:
                 title = t(
                   "Notifications.locationDeterminationFailed.permissionDenied.title",
                 );
@@ -63,7 +56,7 @@ export default function useLocate(map: Leaflet.Map) {
                   "Notifications.locationDeterminationFailed.permissionDenied.description",
                 );
                 break;
-              case POSITION_UNAVAILABLE:
+              case err.POSITION_UNAVAILABLE:
                 title = t(
                   "Notifications.locationDeterminationFailed.unavailable.title",
                 );
@@ -71,7 +64,7 @@ export default function useLocate(map: Leaflet.Map) {
                   "Notifications.locationDeterminationFailed.unavailable.description",
                 );
                 break;
-              case TIMEOUT:
+              case err.TIMEOUT:
                 title = t(
                   "Notifications.locationDeterminationFailed.timeout.title",
                 );
@@ -90,37 +83,17 @@ export default function useLocate(map: Leaflet.Map) {
             }
 
             enqueue(
-              {
-                title,
-                description,
-                variant: "error",
-              },
+              { title, description, variant: "error" },
               { timeout: 10000 },
             );
-
             dispatch(locationSlice.actions.clearLocation());
-            reject();
-          };
-
-          // Trigger relocate only if cooldown period has passed, otherwise use cached location
-          if (
-            lastLocation &&
-            lastLocatedAt &&
-            Date.now() - new Date(lastLocatedAt).getTime() < LOCATION_COOLDOWN
-          ) {
-            return resolve(Leaflet.latLng(lastLocation.lat, lastLocation.lng));
-          }
-
-          map.once("locationfound", onLocationFound);
-          map.once("locationerror", onLocationError);
-
-          map.locate({ ...options, maximumAge: 0 });
-        });
-      }
-
-      return Promise.reject();
+            reject(err);
+          },
+          { enableHighAccuracy: true, maximumAge: 0, ...options },
+        );
+      });
     },
-    [map, dispatch, enqueue, t, lastLocation, lastLocatedAt],
+    [dispatch, enqueue, t, lastLocation, lastLocatedAt],
   );
 
   return locate;

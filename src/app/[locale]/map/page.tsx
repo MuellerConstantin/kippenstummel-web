@@ -4,12 +4,12 @@ import { useCallback } from "react";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import Leaflet from "leaflet";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import useApi from "@/hooks/useApi";
 import { AxiosError } from "axios";
 import { useSWRConfig } from "swr";
 import { Link } from "@/components/atoms/Link";
+import { GeoCoordinates } from "@/lib/types/geo";
 
 const CvmOptInMap = dynamic(
   () =>
@@ -29,11 +29,11 @@ export default function Map() {
   const shared = searchParams.get("shared");
 
   const onRegister = useCallback(
-    async (position: Leaflet.LatLng) => {
+    async (position: GeoCoordinates) => {
       try {
         await api.post("/cvms", {
-          latitude: position.lat,
-          longitude: position.lng,
+          latitude: position.latitude,
+          longitude: position.longitude,
         });
 
         mutate(
@@ -88,15 +88,15 @@ export default function Map() {
   const onReposition = useCallback(
     async (
       id: string,
-      position: Leaflet.LatLng,
-      editorPosition: Leaflet.LatLng,
+      position: GeoCoordinates,
+      editorPosition: GeoCoordinates,
     ) => {
       try {
         await api.patch(`/cvms/${id}`, {
-          repositionedLatitude: position.lat,
-          repositionedLongitude: position.lng,
-          editorLatitude: editorPosition.lat,
-          editorLongitude: editorPosition.lng,
+          repositionedLatitude: position.latitude,
+          repositionedLongitude: position.longitude,
+          editorLatitude: editorPosition.latitude,
+          editorLongitude: editorPosition.longitude,
         });
 
         mutate(
@@ -162,11 +162,11 @@ export default function Map() {
   );
 
   const onUpvote = useCallback(
-    async (id: string, position: Leaflet.LatLng) => {
+    async (id: string, position: GeoCoordinates) => {
       try {
         await api.post(`/cvms/${id}/upvote`, {
-          latitude: position.lat,
-          longitude: position.lng,
+          latitude: position.latitude,
+          longitude: position.longitude,
         });
 
         mutate(
@@ -214,11 +214,11 @@ export default function Map() {
   );
 
   const onDownvote = useCallback(
-    async (id: string, position: Leaflet.LatLng) => {
+    async (id: string, position: GeoCoordinates) => {
       try {
         await api.post(`/cvms/${id}/downvote`, {
-          latitude: position.lat,
-          longitude: position.lng,
+          latitude: position.latitude,
+          longitude: position.longitude,
         });
 
         mutate(
@@ -268,13 +268,13 @@ export default function Map() {
   const onReport = useCallback(
     async (
       id: string,
-      position: Leaflet.LatLng,
+      position: GeoCoordinates,
       type: "missing" | "spam" | "inactive" | "inaccessible",
     ) => {
       try {
         await api.post(`/cvms/${id}/report`, {
-          latitude: position.lat,
-          longitude: position.lng,
+          latitude: position.latitude,
+          longitude: position.longitude,
           type,
         });
 

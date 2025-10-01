@@ -4,12 +4,13 @@ import { Circle, Marker, Tooltip } from "react-leaflet";
 import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
 import { MapPinPlusInside } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { GeoCoordinates } from "@/lib/types/geo";
 
 interface AdjustableLocationMarkerProps {
-  onAdapt?: (position: Leaflet.LatLng) => void;
-  position: Leaflet.LatLng;
+  onAdapt?: (position: GeoCoordinates) => void;
+  position: GeoCoordinates;
   reference?: {
-    position: Leaflet.LatLng;
+    position: GeoCoordinates;
     maxDistance: number;
   };
 }
@@ -20,7 +21,7 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
 
   const markerRef = useRef<Leaflet.Marker>(null);
 
-  const [position, setPosition] = useState<Leaflet.LatLng>(props.position);
+  const [position, setPosition] = useState<GeoCoordinates>(props.position);
   const [tooltipOpen, setTooltipOpen] = useState(true);
 
   const eventHandlers = useMemo(
@@ -30,7 +31,10 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
         if (marker && reference) {
           const newPosition = marker.getLatLng();
 
-          const distance = reference.position.distanceTo(newPosition);
+          const distance = Leaflet.latLng(
+            reference.position.latitude,
+            reference.position.longitude,
+          ).distanceTo(newPosition);
 
           if (distance > reference.maxDistance) {
             marker.setLatLng(newPosition);
@@ -43,15 +47,26 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
           const newPosition = marker.getLatLng();
 
           if (reference) {
-            const distance = reference.position.distanceTo(newPosition);
+            const distance = Leaflet.latLng(
+              reference.position.latitude,
+              reference.position.longitude,
+            ).distanceTo(newPosition);
 
             if (distance <= reference.maxDistance) {
-              setPosition(newPosition);
+              setPosition({
+                latitude: newPosition.lat,
+                longitude: newPosition.lng,
+              });
             } else {
-              marker.setLatLng(position);
+              marker.setLatLng(
+                Leaflet.latLng(position.latitude, position.longitude),
+              );
             }
           } else {
-            setPosition(newPosition);
+            setPosition({
+              latitude: newPosition.lat,
+              longitude: newPosition.lng,
+            });
           }
         }
       },
@@ -74,7 +89,7 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
         eventHandlers={eventHandlers}
         draggable={true}
         ref={markerRef}
-        position={position}
+        position={Leaflet.latLng(position.latitude, position.longitude)}
         icon={LeafletDivIcon({
           source: (
             <div className="relative h-fit w-fit">
@@ -95,7 +110,10 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
       {reference && (
         <Circle
           radius={reference.maxDistance}
-          center={reference.position}
+          center={Leaflet.latLng(
+            reference.position.latitude,
+            reference.position.longitude,
+          )}
           pathOptions={{ color: "#16a34a", fillColor: "#16a34a" }}
         />
       )}
