@@ -98,7 +98,7 @@ export function CvmInfoMobileDialog(props: CvmInfoMobileDialogProps) {
   const onUpvoteRequest = useCallback(() => {
     setVoting("up");
 
-    locate({ setView: false, maxZoom: 15 })
+    locate()
       .then((position) => onUpvote?.(position))
       .finally(() => {
         setVoting(false);
@@ -108,7 +108,7 @@ export function CvmInfoMobileDialog(props: CvmInfoMobileDialogProps) {
   const onDownvoteRequest = useCallback(() => {
     setVoting("down");
 
-    locate({ setView: false, maxZoom: 15 })
+    locate()
       .then((position) => onDownvote?.(position))
       .finally(() => {
         setVoting(false);
@@ -118,7 +118,7 @@ export function CvmInfoMobileDialog(props: CvmInfoMobileDialogProps) {
   const onRepositionRequest = useCallback(() => {
     setIsRepositioning(true);
 
-    locate({ setView: true, maxZoom: 18 })
+    locate()
       .then((position) => {
         onReposition?.(position);
       })
@@ -130,7 +130,7 @@ export function CvmInfoMobileDialog(props: CvmInfoMobileDialogProps) {
   const onReportRequest = useCallback(() => {
     setIsReporting(true);
 
-    locate({ setView: true, maxZoom: 18 })
+    locate()
       .then((position) => {
         onReport?.(position);
       })

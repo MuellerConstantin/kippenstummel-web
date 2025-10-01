@@ -32,7 +32,7 @@ export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
   const onRegisterCvm = useCallback(() => {
     setRegisteringCvm(true);
 
-    locate({ setView: true, maxZoom: 18 })
+    locate()
       .then((position) => onRegister?.(position))
       .finally(() => {
         setRegisteringCvm(false);

@@ -246,10 +246,7 @@ export function CvmMap(props: CvmMapProps) {
   const [registerPosition, setRegisterPosition] = useState<Leaflet.LatLng>();
 
   const [isRepositioning, setIsRepositioning] = useState(false);
-  const [repositioningId, setRepositioningId] = useState<string>();
   const [repositioningEditorPosition, setRepositioningEditorPosition] =
-    useState<Leaflet.LatLng>();
-  const [origRepositioningPosition, setOrigRepositioningPosition] =
     useState<Leaflet.LatLng>();
   const [repositioningPosition, setRepositioningPosition] =
     useState<Leaflet.LatLng>();
@@ -341,27 +338,19 @@ export function CvmMap(props: CvmMapProps) {
     (position: Leaflet.LatLng) => {
       setIsRegistering(true);
       setRegisterPosition(position);
+      map?.setView(position, 19);
     },
-    [setIsRegistering, setRegisterPosition],
+    [map],
   );
 
   const onReposition = useCallback(
     (id: string, position: Leaflet.LatLng, editorPosition: Leaflet.LatLng) => {
       setIsRepositioning(true);
-      setRepositioningId(id);
       setRepositioningEditorPosition(editorPosition);
-      setOrigRepositioningPosition(position);
       setRepositioningPosition(position);
       map?.setView(position, 19);
     },
-    [
-      setIsRepositioning,
-      setRepositioningEditorPosition,
-      setOrigRepositioningPosition,
-      setRepositioningPosition,
-      setRepositioningId,
-      map,
-    ],
+    [map],
   );
 
   if (!mapView) {
@@ -425,13 +414,18 @@ export function CvmMap(props: CvmMapProps) {
           onCancel={() => setIsRepositioning(false)}
           onConfirm={() => {
             props.onReposition?.(
-              repositioningId!,
+              selectedCvm!.id,
               repositioningPosition!,
               repositioningEditorPosition!,
             );
             setIsRepositioning(false);
           }}
-          originalPosition={origRepositioningPosition}
+          originalPosition={
+            new Leaflet.LatLng(
+              repositioningPosition!.lat,
+              repositioningPosition!.lng,
+            )
+          }
           maxDistance={25}
           onCurrentPositionChange={setRepositioningPosition}
           currentPosition={repositioningPosition!}
