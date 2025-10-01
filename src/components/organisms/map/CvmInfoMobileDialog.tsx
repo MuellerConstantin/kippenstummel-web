@@ -19,6 +19,7 @@ import { Heading } from "react-aria-components";
 import { Button } from "@/components/atoms/Button";
 import Image from "next/image";
 import { REPORT_THRESHOLD } from "@/lib/constants";
+import { CvmDto } from "@/lib/types/cvm";
 
 interface CopyButtonProps {
   text: string;
@@ -51,19 +52,7 @@ function CopyButton(props: CopyButtonProps) {
 }
 
 interface ReportedMessageProps {
-  cvm: {
-    id: string;
-    latitude: number;
-    longitude: number;
-    score: number;
-    recentlyReported: {
-      missing: number;
-      spam: number;
-      inactive: number;
-      inaccessible: number;
-    };
-    alreadyVoted?: "upvote" | "downvote";
-  };
+  cvm: CvmDto;
 }
 
 function ReportedMessage({ cvm }: ReportedMessageProps) {
@@ -89,19 +78,7 @@ function ReportedMessage({ cvm }: ReportedMessageProps) {
 }
 
 export interface CvmInfoMobileDialogProps {
-  cvm: {
-    id: string;
-    latitude: number;
-    longitude: number;
-    score: number;
-    recentlyReported: {
-      missing: number;
-      spam: number;
-      inactive: number;
-      inaccessible: number;
-    };
-    alreadyVoted?: "upvote" | "downvote";
-  };
+  cvm: CvmDto;
   onUpvote?: (voterPosition: Leaflet.LatLng) => void;
   onDownvote?: (voterPosition: Leaflet.LatLng) => void;
   onReposition?: (editorPosition: Leaflet.LatLng) => void;

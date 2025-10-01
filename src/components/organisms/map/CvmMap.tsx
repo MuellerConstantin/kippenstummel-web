@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import useSWR from "swr";
+import { AxiosError } from "axios";
 import Leaflet from "leaflet";
 import { AttributionControl, useMap, ZoomControl } from "react-leaflet";
 import { useTranslations } from "next-intl";
@@ -26,41 +27,13 @@ import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
 import { AnimatePresence, motion } from "framer-motion";
 import { MapLibreTileLayer } from "../leaflet/MapLibreTileLayer";
 import useMapViewportCvmData from "@/hooks/useMapViewportCvmData";
+import { CvmClusterDto, CvmDto } from "@/lib/types/cvm";
+import { ErrorDto } from "@/lib/types/error";
 
 interface CvmMapDefaultViewProps {
-  markers: {
-    id: string;
-    longitude: number;
-    latitude: number;
-    score: number;
-    recentlyReported: {
-      missing: number;
-      spam: number;
-      inactive: number;
-      inaccessible: number;
-    };
-    alreadyVoted?: "upvote" | "downvote" | undefined;
-  }[];
-  clusters: {
-    id: string;
-    cluster: true;
-    longitude: number;
-    latitude: number;
-    count: number;
-  }[];
-  selectedCvm: {
-    id: string;
-    latitude: number;
-    longitude: number;
-    score: number;
-    recentlyReported: {
-      missing: number;
-      spam: number;
-      inactive: number;
-      inaccessible: number;
-    };
-    alreadyVoted?: "upvote" | "downvote" | undefined;
-  } | null;
+  markers: CvmDto[];
+  clusters: CvmClusterDto[];
+  selectedCvm: CvmDto | null;
   onSelectCvm?: (cvmId: string | null) => void;
   onUpvote?: (id: string, voterPosition: Leaflet.LatLng) => void;
   onDownvote?: (id: string, voterPosition: Leaflet.LatLng) => void;
@@ -445,19 +418,8 @@ export function CvmMap(props: CvmMapProps) {
   }, [props.sharedCvmId, map]);
 
   const { data: selectedCvmData, error: selectedCvmError } = useSWR<
-    {
-      id: string;
-      latitude: number;
-      longitude: number;
-      score: number;
-      recentlyReported: {
-        missing: number;
-        spam: number;
-        inactive: number;
-        inaccessible: number;
-      };
-    },
-    unknown,
+    CvmDto,
+    AxiosError<ErrorDto>,
     string | null
   >(
     selectedCvmId ? `/cvms/${selectedCvmId}` : null,
@@ -546,8 +508,8 @@ export function CvmMap(props: CvmMapProps) {
       )}
       {!isRegistering && !isRepositioning && (
         <CvmMapDefaultView
-          markers={markers}
-          clusters={clusters}
+          markers={markers || []}
+          clusters={clusters || []}
           selectedCvm={selectedCvm}
           onRegister={onRegister}
           onReposition={(id, editorPosition) => {

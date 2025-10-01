@@ -1,8 +1,11 @@
 import { useMemo } from "react";
 import useSWR, { SWRConfiguration } from "swr";
+import { AxiosError } from "axios";
 import { latLonToTile, tileToLatLon } from "@/lib/geo";
 import useApi from "./useApi";
 import { useAppSelector } from "@/store";
+import { CvmClusterDto, CvmDto } from "@/lib/types/cvm";
+import { ErrorDto } from "@/lib/types/error";
 
 export interface UseMapViewportCvmDataProps {
   zoom: number;
@@ -118,29 +121,8 @@ export default function useMapViewportCvmData(
   ]);
 
   const { data, isLoading, error } = useSWR<
-    (
-      | {
-          id: string;
-          longitude: number;
-          latitude: number;
-          score: number;
-          recentlyReported: {
-            missing: number;
-            spam: number;
-            inactive: number;
-            inaccessible: number;
-          };
-          alreadyVoted?: "upvote" | "downvote";
-        }
-      | {
-          id: string;
-          cluster: true;
-          longitude: number;
-          latitude: number;
-          count: number;
-        }
-    )[],
-    unknown,
+    (CvmDto | CvmClusterDto)[],
+    AxiosError<ErrorDto>,
     string | null
   >(
     !!searchParams ? `/cvms?${searchParams.toString()}` : null,
@@ -149,32 +131,12 @@ export default function useMapViewportCvmData(
   );
 
   const markers = useMemo(
-    () =>
-      data?.filter((item) => !("cluster" in item)) as {
-        id: string;
-        longitude: number;
-        latitude: number;
-        score: number;
-        recentlyReported: {
-          missing: number;
-          spam: number;
-          inactive: number;
-          inaccessible: number;
-        };
-        alreadyVoted?: "upvote" | "downvote";
-      }[],
+    () => data?.filter((item): item is CvmDto => !("cluster" in item)),
     [data],
   );
 
   const clusters = useMemo(
-    () =>
-      data?.filter((item) => "cluster" in item) as {
-        id: string;
-        cluster: true;
-        longitude: number;
-        latitude: number;
-        count: number;
-      }[],
+    () => data?.filter((item): item is CvmClusterDto => "cluster" in item),
     [data],
   );
 
