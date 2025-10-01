@@ -6,11 +6,12 @@ import useApi from "./useApi";
 import { useAppSelector } from "@/store";
 import { CvmCluster, Cvm } from "@/lib/types/cvm";
 import { ApiError } from "@/lib/types/error";
+import { GeoCoordinates } from "@/lib/types/geo";
 
 export interface UseMapViewportCvmDataProps {
   zoom: number;
-  bottomLeft: [number, number];
-  topRight: [number, number];
+  bottomLeft: GeoCoordinates;
+  topRight: GeoCoordinates;
 }
 
 /**
@@ -66,8 +67,7 @@ export default function useMapCvmViewportData(
   const normalizedBottomLeft = useMemo(() => {
     if (!bottomLeft || zoom == null || zoom == undefined) return undefined;
 
-    const [lat, lon] = bottomLeft;
-    const { x, y, z } = latLonToTile(lat, lon, zoom);
+    const { x, y, z } = latLonToTile(bottomLeft, zoom);
 
     const { latitude: normalizedLat, longitude: normalizedLon } = tileToLatLon(
       x,
@@ -85,8 +85,7 @@ export default function useMapCvmViewportData(
   const normalizedTopRight = useMemo(() => {
     if (!topRight || zoom == null || zoom == undefined) return undefined;
 
-    const [lat, lon] = topRight;
-    const { x, y, z } = latLonToTile(lat, lon, zoom);
+    const { x, y, z } = latLonToTile(topRight, zoom);
 
     const { latitude: normalizedLat, longitude: normalizedLon } = tileToLatLon(
       x + 1,

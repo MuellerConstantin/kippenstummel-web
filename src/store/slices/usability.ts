@@ -1,10 +1,11 @@
+import { GeoCoordinates } from "@/lib/types/geo";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UsabilityState {
   darkMode: boolean;
   recurringUser: boolean;
   mapView: {
-    center: [number, number];
+    center: GeoCoordinates;
     zoom: number;
   };
   mapFilters?: {
@@ -18,7 +19,7 @@ interface UsabilityState {
 const initialState: UsabilityState = {
   darkMode: false,
   recurringUser: false,
-  mapView: { center: [49.006889, 8.403653], zoom: 14 },
+  mapView: { center: { latitude: 49.006889, longitude: 8.403653 }, zoom: 14 },
   mapFilters: {},
 };
 
@@ -49,7 +50,7 @@ const usabilitySlice = createSlice({
     },
     setMapView: (
       state,
-      action: PayloadAction<{ center: [number, number]; zoom: number }>,
+      action: PayloadAction<{ center: GeoCoordinates; zoom: number }>,
     ) => {
       state.mapView = action.payload;
     },

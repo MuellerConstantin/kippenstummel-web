@@ -1,8 +1,6 @@
-export function tileToLatLon(
-  x: number,
-  y: number,
-  z: number,
-): { longitude: number; latitude: number } {
+import { GeoCoordinates } from "./types/geo";
+
+export function tileToLatLon(x: number, y: number, z: number): GeoCoordinates {
   const longitude = (x / Math.pow(2, z)) * 360 - 180;
 
   const n = Math.PI - (2 * Math.PI * y) / Math.pow(2, z);
@@ -13,16 +11,16 @@ export function tileToLatLon(
 }
 
 export function latLonToTile(
-  lat: number,
-  lon: number,
+  { latitude, longitude }: GeoCoordinates,
   z: number,
 ): { x: number; y: number; z: number } {
-  const x = Math.floor(((lon + 180) / 360) * Math.pow(2, z));
+  const x = Math.floor(((longitude + 180) / 360) * Math.pow(2, z));
 
   const y = Math.floor(
     ((1 -
       Math.log(
-        Math.tan((lat * Math.PI) / 180) + 1 / Math.cos((lat * Math.PI) / 180),
+        Math.tan((latitude * Math.PI) / 180) +
+          1 / Math.cos((latitude * Math.PI) / 180),
       ) /
         Math.PI) /
       2) *

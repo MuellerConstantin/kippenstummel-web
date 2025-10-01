@@ -255,8 +255,8 @@ export function CvmMap(props: CvmMapProps) {
 
   const [map, setMap] = useState<Leaflet.Map | null>(null);
   const [zoom, setZoom] = useState<number>();
-  const [bottomLeft, setBottomLeft] = useState<[number, number]>();
-  const [topRight, setTopRight] = useState<[number, number]>();
+  const [bottomLeft, setBottomLeft] = useState<GeoCoordinates>();
+  const [topRight, setTopRight] = useState<GeoCoordinates>();
 
   const { markers, clusters } = useMapCvmViewportData({
     zoom: zoom!,
@@ -307,8 +307,14 @@ export function CvmMap(props: CvmMapProps) {
   const onReady = useCallback((map: Leaflet.Map) => {
     const mapBounds = map.getBounds();
 
-    setBottomLeft([mapBounds.getSouthWest().lat, mapBounds.getSouthWest().lng]);
-    setTopRight([mapBounds.getNorthEast().lat, mapBounds.getNorthEast().lng]);
+    setBottomLeft({
+      latitude: mapBounds.getSouthWest().lat,
+      longitude: mapBounds.getSouthWest().lng,
+    });
+    setTopRight({
+      latitude: mapBounds.getNorthEast().lat,
+      longitude: mapBounds.getNorthEast().lng,
+    });
     setZoom(map.getZoom());
 
     setMap(map);
@@ -319,16 +325,22 @@ export function CvmMap(props: CvmMapProps) {
       const map = event.target as Leaflet.Map;
       const mapBounds = map.getBounds();
 
-      setBottomLeft([
-        mapBounds.getSouthWest().lat,
-        mapBounds.getSouthWest().lng,
-      ]);
-      setTopRight([mapBounds.getNorthEast().lat, mapBounds.getNorthEast().lng]);
+      setBottomLeft({
+        latitude: mapBounds.getSouthWest().lat,
+        longitude: mapBounds.getSouthWest().lng,
+      });
+      setTopRight({
+        latitude: mapBounds.getNorthEast().lat,
+        longitude: mapBounds.getNorthEast().lng,
+      });
       setZoom(map.getZoom());
 
       dispatch(
         usabilitySlice.actions.setMapView({
-          center: [mapBounds.getCenter().lat, mapBounds.getCenter().lng],
+          center: {
+            latitude: mapBounds.getCenter().lat,
+            longitude: mapBounds.getCenter().lng,
+          },
           zoom: map.getZoom(),
         }),
       );
@@ -363,7 +375,7 @@ export function CvmMap(props: CvmMapProps) {
 
   return (
     <LeafletMap
-      center={mapView.center}
+      center={[mapView.center.latitude, mapView.center.longitude]}
       zoom={mapView.zoom}
       minZoom={8}
       maxZoom={19}
