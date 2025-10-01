@@ -24,7 +24,7 @@ export interface UseMapViewportCvmDataProps {
  * @param props The props passed to the hook.
  * @returns The map viewport data.
  */
-export default function useMapViewportCvmData(
+export default function useMapCvmViewportData(
   props: UseMapViewportCvmDataProps & SWRConfiguration,
 ) {
   const { zoom, bottomLeft, topRight } = props;

@@ -1,12 +1,8 @@
 "use client";
 
-import { useState, useCallback, useMemo, useEffect, useRef } from "react";
-import useSWR from "swr";
-import { AxiosError } from "axios";
+import { useState, useCallback, useEffect, useRef } from "react";
 import Leaflet from "leaflet";
 import { AttributionControl, useMap, ZoomControl } from "react-leaflet";
-import { useTranslations } from "next-intl";
-import useApi from "@/hooks/useApi";
 import { LeafletMap } from "@/components/organisms/leaflet/LeafletMap";
 import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
 import { LocationMarker } from "@/components/molecules/map/LocationMarker";
@@ -14,7 +10,6 @@ import { LocateMarker } from "@/components/molecules/map/LocateMarker";
 import { Modal } from "@/components/atoms/Modal";
 import { LocateControlPlugin } from "./LocateControl";
 import { HelpDialog } from "./HelpDialog";
-import { useNotifications } from "@/contexts/NotificationProvider";
 import { useAppDispatch, useAppSelector } from "@/store";
 import usabilitySlice from "@/store/slices/usability";
 import { MenuBottomNavigation } from "./MenuBottomNavigation";
@@ -26,9 +21,11 @@ import { CvmReportDialog } from "./CvmReportDialog";
 import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
 import { AnimatePresence, motion } from "framer-motion";
 import { MapLibreTileLayer } from "../leaflet/MapLibreTileLayer";
-import useMapViewportCvmData from "@/hooks/useMapViewportCvmData";
+import useMapCvmViewportData from "@/hooks/useMapCvmViewportData";
 import { CvmClusterDto, CvmDto } from "@/lib/types/cvm";
-import { ErrorDto } from "@/lib/types/error";
+import { useMapCvmSelection } from "@/hooks/useMapCvmSelection";
+import { useNotifications } from "@/contexts/NotificationProvider";
+import { useTranslations } from "next-intl";
 
 interface CvmMapDefaultViewProps {
   markers: CvmDto[];
@@ -313,7 +310,6 @@ export interface CvmMapProps {
 
 export function CvmMap(props: CvmMapProps) {
   const t = useTranslations();
-  const api = useApi();
   const dispatch = useAppDispatch();
   const { enqueue } = useNotifications();
 
@@ -338,11 +334,51 @@ export function CvmMap(props: CvmMapProps) {
   const [bottomLeft, setBottomLeft] = useState<[number, number]>();
   const [topRight, setTopRight] = useState<[number, number]>();
 
-  const { markers, clusters } = useMapViewportCvmData({
+  const { markers, clusters } = useMapCvmViewportData({
     zoom: zoom!,
     bottomLeft: bottomLeft!,
     topRight: topRight!,
   });
+
+  const {
+    selectedCvm,
+    selectCvmId,
+    error: selectedCvmError,
+    isSharedSelection,
+  } = useMapCvmSelection({
+    sharedCvmId: props.sharedCvmId,
+  });
+
+  /**
+   * Show a notification when the selected CVM is not found. This
+   * happens mostly when the shared CVM is not found.
+   */
+  useEffect(() => {
+    if (selectedCvmError) {
+      enqueue(
+        {
+          title: isSharedSelection
+            ? t("Notifications.sharedNotFound.title")
+            : t("Notifications.selectedNotFound.title"),
+          description: isSharedSelection
+            ? t("Notifications.sharedNotFound.description")
+            : t("Notifications.selectedNotFound.description"),
+          variant: "error",
+        },
+        { timeout: 10000 },
+      );
+    }
+  }, [selectedCvmError, isSharedSelection, enqueue, t]);
+
+  /*
+   * Center the map once to an optional shared CVM immediately
+   * after the component mounts.
+   */
+  useEffect(() => {
+    if (!!selectedCvm && isSharedSelection) {
+      map?.setView([selectedCvm.latitude, selectedCvm.longitude], 18);
+    }
+  }, [selectedCvm, isSharedSelection, map]);
 
   const onReady = useCallback((map: Leaflet.Map) => {
     const mapBounds = map.getBounds();
@@ -403,85 +439,6 @@ export function CvmMap(props: CvmMapProps) {
     ],
   );
 
-  /* ============ CVM-Selection - Start ============ */
-
-  const [selectedCvmId, setSelectedCvmId] = useState<string | null>(null);
-  const appliedSharedIdRef = useRef<string | null>(null);
-
-  // Sets the shared CVM once when rendering the map if a shared CVM link was followed
-  useEffect(() => {
-    if (props.sharedCvmId && appliedSharedIdRef.current !== props.sharedCvmId) {
-      setSelectedCvmId(props.sharedCvmId);
-      // Ensure that the sharedCvmId is only applied once
-      appliedSharedIdRef.current = props.sharedCvmId;
-    }
-  }, [props.sharedCvmId, map]);
-
-  const { data: selectedCvmData, error: selectedCvmError } = useSWR<
-    CvmDto,
-    AxiosError<ErrorDto>,
-    string | null
-  >(
-    selectedCvmId ? `/cvms/${selectedCvmId}` : null,
-    (url) => api.get(url).then((res) => res.data),
-    { shouldRetryOnError: false, revalidateOnFocus: false },
-  );
-
-  // Determine the selected CVM
-  const selectedCvm = useMemo(() => {
-    if (!selectedCvmId) {
-      return null;
-    }
-
-    return selectedCvmData || null;
-  }, [selectedCvmData, selectedCvmId]);
-
-  // Show a notification if the shared CVM is not found
-  useEffect(() => {
-    if (selectedCvmError) {
-      if (appliedSharedIdRef.current) {
-        enqueue(
-          {
-            title: t("Notifications.sharedNotFound.title"),
-            description: t("Notifications.sharedNotFound.description"),
-            variant: "error",
-          },
-          { timeout: 10000 },
-        );
-      } else {
-        enqueue(
-          {
-            title: t("Notifications.selectedNotFound.title"),
-            description: t("Notifications.selectedNotFound.description"),
-            variant: "error",
-          },
-          { timeout: 10000 },
-        );
-      }
-    }
-  }, [selectedCvmError, enqueue, t]);
-
-  // Center the map on the shared CVM, only for the first render of shared CVM
-  useEffect(() => {
-    /*
-     * It's important to check for the selectedCvm?.latitude and selectedCvm?.longitude
-     * because the selectedCvm object reference may change every time, the viewport is moved
-     * because the markers array change, which in turn causes a change of the selectedCvm reference.
-     * But this doesn't necessarily means that the selectedCvm itself has changed.
-     */
-
-    if (
-      selectedCvm?.latitude &&
-      selectedCvm?.longitude &&
-      appliedSharedIdRef.current &&
-      appliedSharedIdRef.current === selectedCvmId
-    ) {
-      map?.setView([selectedCvm.latitude, selectedCvm.longitude], 18);
-    }
-  }, [selectedCvm?.latitude, selectedCvm?.longitude, map, selectedCvmId]);
-
-  /* ============ CVM-Selection - End ============ */
-
   if (!mapView) {
     return null;
   }
@@ -522,7 +479,7 @@ export function CvmMap(props: CvmMapProps) {
           onDownvote={props.onDownvote}
           onUpvote={props.onUpvote}
           onReport={props.onReport}
-          onSelectCvm={setSelectedCvmId}
+          onSelectCvm={selectCvmId}
         />
       )}
       {isRegistering && (
