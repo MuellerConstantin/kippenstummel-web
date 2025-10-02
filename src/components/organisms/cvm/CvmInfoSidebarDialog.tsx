@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import Leaflet from "leaflet";
+import { useCallback, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
   ChevronUp,
@@ -139,13 +138,6 @@ export function CvmInfoSidebarDialog(props: CvmInfoSidebarDialogProps) {
   }, [locate, onReport]);
 
   const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (containerRef.current) {
-      Leaflet.DomEvent.disableClickPropagation(containerRef.current);
-      Leaflet.DomEvent.disableScrollPropagation(containerRef.current);
-    }
-  }, []);
 
   return (
     <motion.div

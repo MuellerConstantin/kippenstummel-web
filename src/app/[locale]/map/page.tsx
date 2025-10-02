@@ -1,23 +1,15 @@
 "use client";
 
 import { useCallback } from "react";
-import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { CvmOptInMap } from "@/components/organisms/map/CvmOptInMap";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import useApi from "@/hooks/useApi";
 import { AxiosError } from "axios";
 import { useSWRConfig } from "swr";
 import { Link } from "@/components/atoms/Link";
 import { GeoCoordinates } from "@/lib/types/geo";
-
-const CvmOptInMap = dynamic(
-  () =>
-    import("@/components/organisms/map/CvmOptInMap").then(
-      (module) => module.CvmOptInMap,
-    ),
-  { ssr: false },
-);
 
 export default function Map() {
   const t = useTranslations();

@@ -1,16 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
-import { createPortal } from "react-dom";
-import { useMap } from "react-leaflet";
-import Leaflet from "leaflet";
-import { Navigation, LoaderCircle } from "lucide-react";
 import useLocate from "@/hooks/useLocate";
+import {
+  LocateFixed as LocateFixedIcon,
+  LoaderCircle as LoaderCircleIcon,
+} from "lucide-react";
+import { useCallback, useState } from "react";
+import { createPortal } from "react-dom";
+import { useControl, useMap } from "react-map-gl/maplibre";
 
-interface LocateControlComponentProps {
-  map: Leaflet.Map;
-}
-
-export function LocateControlComponent(props: LocateControlComponentProps) {
-  const { map } = props;
+export function LocateControlComponent() {
+  const { current: map } = useMap();
   const locate = useLocate();
 
   const [locating, setLocating] = useState(false);
@@ -20,7 +18,10 @@ export function LocateControlComponent(props: LocateControlComponentProps) {
 
     locate()
       .then((position) =>
-        map.flyTo(Leaflet.latLng(position.latitude, position.longitude), 15),
+        map?.flyTo({
+          center: [position.longitude, position.latitude],
+          zoom: 15,
+        }),
       )
       .finally(() => {
         setLocating(false);
@@ -28,47 +29,49 @@ export function LocateControlComponent(props: LocateControlComponentProps) {
   }, [locate, map]);
 
   return (
-    <a
-      className="leaflet-bar-part leaflet-bar-part-single cursor-pointer"
+    <button
       onClick={onClick}
+      type="button"
+      className="maplibregl-ctrl-geolocate flex! items-center! justify-center!"
     >
-      <div className="flex h-full w-full items-center justify-center">
-        {locating ? (
-          <LoaderCircle className="h-5 w-5 animate-spin" />
-        ) : (
-          <Navigation className="h-5 w-5" />
-        )}
-      </div>
-    </a>
+      {locating ? (
+        <LoaderCircleIcon className="h-5 w-5 animate-spin" />
+      ) : (
+        <LocateFixedIcon className="h-5 w-5" />
+      )}
+    </button>
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface LocateControlPluginProps extends Leaflet.ControlOptions {}
+interface LocateControlProps {
+  position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+}
 
-export function LocateControlPlugin(props: LocateControlPluginProps) {
-  const map = useMap();
+export function LocateControl({ position = "top-right" }: LocateControlProps) {
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    if (!map) return;
+  useControl(
+    () => {
+      class LocateControlWrapper {
+        private _container: HTMLDivElement | null = null;
 
-    const control = new Leaflet.Control(props);
-    const div = Leaflet.DomUtil.create("div", "leaflet-bar leaflet-control");
-    Leaflet.DomEvent.disableClickPropagation(div);
+        onAdd() {
+          this._container = document.createElement("div");
+          this._container.className = "maplibregl-ctrl maplibregl-ctrl-group";
 
-    control.onAdd = () => div;
-    map.addControl(control);
+          setContainer(this._container);
+          return this._container;
+        }
 
-    setContainer(div);
+        onRemove() {
+          this._container?.parentNode?.removeChild(this._container);
+        }
+      }
 
-    return () => {
-      map.removeControl(control);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [map, ...Object.values(props)]);
+      return new LocateControlWrapper();
+    },
+    { position },
+  );
 
-  return container
-    ? createPortal(<LocateControlComponent map={map!} />, container)
-    : null;
+  return container ? createPortal(<LocateControlComponent />, container) : null;
 }

@@ -1,11 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
   MapPinPlus,
   LoaderCircle,
   SlidersVertical,
   HelpCircle,
 } from "lucide-react";
-import Leaflet from "leaflet";
 import useLocate from "@/hooks/useLocate";
 import { useAppSelector } from "@/store";
 import { GeoCoordinates } from "@/lib/types/geo";
@@ -38,12 +37,6 @@ export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
         setRegisteringCvm(false);
       });
   }, [locate, onRegister]);
-
-  useEffect(() => {
-    if (containerRef.current) {
-      Leaflet.DomEvent.disableClickPropagation(containerRef.current);
-    }
-  }, []);
 
   return (
     <div className="h-16 w-full cursor-default">

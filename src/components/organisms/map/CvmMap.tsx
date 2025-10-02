@@ -1,33 +1,37 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
-import Leaflet from "leaflet";
-import { AttributionControl, ZoomControl } from "react-leaflet";
-import { LeafletMap } from "@/components/organisms/leaflet/LeafletMap";
-import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
-import { LocationMarker } from "@/components/molecules/map/LocationMarker";
-import { LocateMarker } from "@/components/molecules/map/LocateMarker";
-import { LocateControlPlugin } from "./LocateControl";
-import { HelpDialog } from "../navigation/HelpDialog";
-import { useAppDispatch, useAppSelector } from "@/store";
-import usabilitySlice from "@/store/slices/usability";
-import { MenuBottomNavigation } from "../navigation/MenuBottomNavigation";
-import { FilterDialog } from "../navigation/FilterDialog";
-import { AdjustableLocationMarker } from "@/components/molecules/map/AdjustableLocationMarker";
-import { ConfirmRegisterBottomNavigation } from "../navigation/ConfirmRegisterBottomNavigation";
-import { CvmInfoDialog } from "../cvm/CvmInfoDialog";
-import { CvmReportDialog } from "../cvm/CvmReportDialog";
-import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
-import { motion } from "framer-motion";
-import { MapLibreTileLayer } from "../leaflet/MapLibreTileLayer";
+import Map, {
+  AttributionControl,
+  MapRef,
+  NavigationControl,
+  ViewStateChangeEvent,
+} from "react-map-gl/maplibre";
+import "maplibre-gl/dist/maplibre-gl.css";
 import useMapCvmViewportData from "@/hooks/useMapCvmViewportData";
-import { CvmCluster, Cvm } from "@/lib/types/cvm";
-import { useMapCvmSelection } from "@/hooks/useMapCvmSelection";
-import { useNotifications } from "@/contexts/NotificationProvider";
-import { useTranslations } from "next-intl";
-import { useElementWidth } from "@/hooks/useElementWidth";
-import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useAppDispatch, useAppSelector } from "@/store";
 import { GeoCoordinates } from "@/lib/types/geo";
+import usabilitySlice from "@/store/slices/usability";
+import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
+import { HelpDialog } from "../navigation/HelpDialog";
+import { FilterDialog } from "../navigation/FilterDialog";
+import { CvmReportDialog } from "../cvm/CvmReportDialog";
+import { MenuBottomNavigation } from "../navigation/MenuBottomNavigation";
+import { CvmInfoDialog } from "../cvm/CvmInfoDialog";
+import { useElementWidth } from "@/hooks/useElementWidth";
+import { Cvm, CvmCluster } from "@/lib/types/cvm";
+import { LocationMarker } from "@/components/molecules/map/LocationMarker";
+import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
+import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
+import { useTranslations } from "next-intl";
+import { useNotifications } from "@/contexts/NotificationProvider";
+import { useMapCvmSelection } from "@/hooks/useMapCvmSelection";
+import { ConfirmRegisterBottomNavigation } from "../navigation/ConfirmRegisterBottomNavigation";
+import { AdjustableLocationMarker } from "@/components/molecules/map/AdjustableLocationMarker";
+import { MapLibreEvent } from "maplibre-gl";
+import { LocateControl } from "./LocateControl";
+import { LocateMarker } from "@/components/molecules/map/LocateMarker";
 
 interface CvmMapDefaultViewProps {
   markers: Cvm[];
@@ -82,10 +86,10 @@ export function CvmMapDefaultView(props: CvmMapDefaultViewProps) {
 
   return (
     <>
-      <div className="absolute flex h-full w-full">
+      <div className="pointer-events-none absolute flex h-full w-full">
         <div
           ref={sidebarRef}
-          className="z-[2000] h-full shrink-0 pt-3 pb-6 pl-3"
+          className="pointer-events-auto z-[2000] h-full shrink-0 pt-3 pb-6 pl-3"
         >
           <CvmInfoDialog
             open={!!selectedCvm}
@@ -110,7 +114,7 @@ export function CvmMapDefaultView(props: CvmMapDefaultViewProps) {
         </div>
         <div className="relative grow">
           <motion.div
-            className="fixed bottom-12 left-1/2 z-[2000] hidden h-fit w-fit -translate-x-1/2 px-2 md:block"
+            className="pointer-events-auto fixed bottom-12 left-1/2 z-[2000] hidden h-fit w-fit -translate-x-1/2 px-2 md:block"
             animate={{ x: !!selectedCvm ? sidebarWidth / 2 : 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
@@ -120,7 +124,7 @@ export function CvmMapDefaultView(props: CvmMapDefaultViewProps) {
               onRegister={onRegister}
             />
           </motion.div>
-          <div className="absolute bottom-6 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 md:hidden">
+          <div className="pointer-events-auto absolute bottom-6 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 md:hidden">
             <MenuBottomNavigation
               onHelp={onHelp}
               onFilter={onFilter}
@@ -235,6 +239,8 @@ export function CvmMap(props: CvmMapProps) {
   const dispatch = useAppDispatch();
   const { enqueue } = useNotifications();
 
+  const mapRef = useRef<MapRef>(null);
+
   const location = useAppSelector((state) => state.location.location);
   const locatedAt = useAppSelector((state) => state.location.locatedAt);
   const mapView = useAppSelector((state) => state.usability.mapView);
@@ -253,10 +259,9 @@ export function CvmMap(props: CvmMapProps) {
   const [repositioningCurrentPosition, setRepositioningCurrentPosition] =
     useState<GeoCoordinates>();
 
-  const [map, setMap] = useState<Leaflet.Map | null>(null);
-  const [zoom, setZoom] = useState<number>();
   const [bottomLeft, setBottomLeft] = useState<GeoCoordinates>();
   const [topRight, setTopRight] = useState<GeoCoordinates>();
+  const [zoom, setZoom] = useState<number>();
 
   const { markers, clusters } = useMapCvmViewportData({
     zoom: zoom!,
@@ -294,18 +299,9 @@ export function CvmMap(props: CvmMapProps) {
     }
   }, [selectedCvmError, isSharedSelection, enqueue, t]);
 
-  /*
-   * Center the map once to an optional shared CVM immediately
-   * after the component mounts.
-   */
-  useEffect(() => {
-    if (!!selectedCvm && isSharedSelection) {
-      map?.setView([selectedCvm.latitude, selectedCvm.longitude], 18);
-    }
-  }, [selectedCvm, isSharedSelection, map]);
-
-  const onReady = useCallback((map: Leaflet.Map) => {
-    const mapBounds = map.getBounds();
+  const onLoad = useCallback((event: MapLibreEvent) => {
+    const mapBounds = event.target.getBounds();
+    const mapZoom = Math.ceil(event.target.getZoom());
 
     setBottomLeft({
       latitude: mapBounds.getSouthWest().lat,
@@ -315,15 +311,13 @@ export function CvmMap(props: CvmMapProps) {
       latitude: mapBounds.getNorthEast().lat,
       longitude: mapBounds.getNorthEast().lng,
     });
-    setZoom(map.getZoom());
-
-    setMap(map);
+    setZoom(mapZoom);
   }, []);
 
-  const onViewportChange = useCallback(
-    (event: Leaflet.LeafletEvent) => {
-      const map = event.target as Leaflet.Map;
-      const mapBounds = map.getBounds();
+  const onViewStateChanged = useCallback(
+    (event: ViewStateChangeEvent) => {
+      const mapBounds = event.target.getBounds();
+      const mapZoom = Math.ceil(event.target.getZoom());
 
       setBottomLeft({
         latitude: mapBounds.getSouthWest().lat,
@@ -333,7 +327,7 @@ export function CvmMap(props: CvmMapProps) {
         latitude: mapBounds.getNorthEast().lat,
         longitude: mapBounds.getNorthEast().lng,
       });
-      setZoom(map.getZoom());
+      setZoom(mapZoom);
 
       dispatch(
         usabilitySlice.actions.setMapView({
@@ -341,22 +335,22 @@ export function CvmMap(props: CvmMapProps) {
             latitude: mapBounds.getCenter().lat,
             longitude: mapBounds.getCenter().lng,
           },
-          zoom: map.getZoom(),
+          zoom: mapZoom,
         }),
       );
     },
     [dispatch],
   );
 
-  const onRegister = useCallback(
-    (position: GeoCoordinates) => {
-      setIsRegistering(true);
-      setRegisteringCurrentPosition(position);
-      setRegisteringOrigPosition(position);
-      map?.flyTo(Leaflet.latLng(position.latitude, position.longitude), 19);
-    },
-    [map],
-  );
+  const onRegister = useCallback((position: GeoCoordinates) => {
+    setIsRegistering(true);
+    setRegisteringCurrentPosition(position);
+    setRegisteringOrigPosition(position);
+    mapRef.current?.flyTo({
+      center: [position.longitude, position.latitude],
+      zoom: 18,
+    });
+  }, []);
 
   const onReposition = useCallback(
     (id: string, position: GeoCoordinates, editorPosition: GeoCoordinates) => {
@@ -364,9 +358,12 @@ export function CvmMap(props: CvmMapProps) {
       setRepositioningEditorPosition(editorPosition);
       setRepositioningCurrentPosition(position);
       setRepositioningOrigPosition(position);
-      map?.flyTo(Leaflet.latLng(position.latitude, position.longitude), 19);
+      mapRef.current?.flyTo({
+        center: [position.longitude, position.latitude],
+        zoom: 18,
+      });
     },
-    [map],
+    [],
   );
 
   if (!mapView) {
@@ -374,19 +371,25 @@ export function CvmMap(props: CvmMapProps) {
   }
 
   return (
-    <LeafletMap
-      center={[mapView.center.latitude, mapView.center.longitude]}
-      zoom={mapView.zoom}
+    <Map
+      ref={mapRef}
+      initialViewState={{
+        longitude: mapView.center.longitude,
+        latitude: mapView.center.latitude,
+        zoom: mapView.zoom,
+      }}
+      style={{ flexGrow: 1 }}
+      mapStyle="/tiles/default.json"
       minZoom={8}
       maxZoom={19}
-      onReady={onReady}
-      onMoveEnd={onViewportChange}
-      onZoomEnd={onViewportChange}
+      attributionControl={false}
+      onLoad={onLoad}
+      onZoomEnd={onViewStateChanged}
+      onMoveEnd={onViewStateChanged}
     >
-      <MapLibreTileLayer url="/tiles/default.json" />
-      <AttributionControl prefix={false} />
-      <ZoomControl position="topright" zoomInTitle="" zoomOutTitle="" />
-      <LocateControlPlugin position="topright" />
+      <AttributionControl compact />
+      <NavigationControl />
+      <LocateControl />
       {location && (
         <LocateMarker
           position={location}
@@ -445,6 +448,6 @@ export function CvmMap(props: CvmMapProps) {
           currentPosition={repositioningCurrentPosition!}
         />
       )}
-    </LeafletMap>
+    </Map>
   );
 }

@@ -1,9 +1,7 @@
-import Leaflet from "leaflet";
-import { Marker } from "react-leaflet";
-import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
 import { useMemo } from "react";
 import { LOCATION_TTL } from "@/lib/constants";
 import { GeoCoordinates } from "@/lib/types/geo";
+import { Marker } from "react-map-gl/maplibre";
 
 interface LocateMarkerProps {
   position: GeoCoordinates;
@@ -29,25 +27,17 @@ export function LocateMarker(props: LocateMarkerProps) {
 
   return (
     <Marker
-      position={Leaflet.latLng(
-        props.position.latitude,
-        props.position.longitude,
-      )}
-      icon={LeafletDivIcon({
-        source: (
-          <div className="relative !z-[2000] flex h-[20px] w-[20px]">
-            <div
-              className={`absolute inline-flex h-full w-full animate-[ping_1.5s_linear_infinite] rounded-full ${outlineClass} opacity-75`}
-            />
-            <div
-              className={`relative inline-flex h-full w-full rounded-full border-2 border-white ${highlightClass}`}
-            />
-          </div>
-        ),
-        size: Leaflet.point(20, 20),
-        anchor: Leaflet.point(10, 10),
-        className: "!z-[2000]",
-      })}
-    />
+      latitude={props.position.latitude}
+      longitude={props.position.longitude}
+    >
+      <div className="relative !z-[2000] flex h-[20px] w-[20px]">
+        <div
+          className={`absolute inline-flex h-full w-full animate-[ping_1.5s_linear_infinite] rounded-full ${outlineClass} opacity-75`}
+        />
+        <div
+          className={`relative inline-flex h-full w-full rounded-full border-2 border-white ${highlightClass}`}
+        />
+      </div>
+    </Marker>
   );
 }

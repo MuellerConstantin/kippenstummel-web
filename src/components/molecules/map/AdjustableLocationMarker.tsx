@@ -1,9 +1,16 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import Leaflet from "leaflet";
-import { Circle, Marker, Tooltip } from "react-leaflet";
-import LeafletDivIcon from "@/components/organisms/leaflet/LeafletDivIcon";
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import {
+  Marker,
+  Popup,
+  Source,
+  Layer,
+  MarkerDragEvent,
+} from "react-map-gl/maplibre";
 import { MapPinPlusInside } from "lucide-react";
 import { useTranslations } from "next-intl";
+import * as turf from "@turf/turf";
 import { GeoCoordinates } from "@/lib/types/geo";
 
 interface AdjustableLocationMarkerProps {
@@ -19,63 +26,40 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
   const { reference, onAdapt } = props;
   const t = useTranslations("AdjustableLocationMarker");
 
-  const markerRef = useRef<Leaflet.Marker>(null);
-
   const [position, setPosition] = useState<GeoCoordinates>(props.position);
   const [tooltipOpen, setTooltipOpen] = useState(true);
 
-  const eventHandlers = useMemo(
-    () => ({
-      drag() {
-        const marker = markerRef.current;
-        if (marker && reference) {
-          const newPosition = marker.getLatLng();
+  const circleGeoJSON = useMemo(() => {
+    if (!reference) return null;
+    const center = [reference.position.longitude, reference.position.latitude];
+    const circle = turf.circle(center, reference.maxDistance / 1000, {
+      steps: 64,
+      units: "kilometers",
+    });
+    return circle;
+  }, [reference]);
 
-          const distance = Leaflet.latLng(
-            reference.position.latitude,
-            reference.position.longitude,
-          ).distanceTo(newPosition);
+  const handleDragEnd = (event: MarkerDragEvent) => {
+    const lngLat = event.lngLat;
 
-          if (distance > reference.maxDistance) {
-            marker.setLatLng(newPosition);
-          }
-        }
-      },
-      dragend() {
-        const marker = markerRef.current;
-        if (marker && reference) {
-          const newPosition = marker.getLatLng();
+    if (reference) {
+      const distance = turf.distance(
+        [reference.position.longitude, reference.position.latitude],
+        [lngLat.lng, lngLat.lat],
+        { units: "meters" },
+      );
 
-          if (reference) {
-            const distance = Leaflet.latLng(
-              reference.position.latitude,
-              reference.position.longitude,
-            ).distanceTo(newPosition);
+      if (distance <= reference.maxDistance) {
+        setPosition({ latitude: lngLat.lat, longitude: lngLat.lng });
+      } else {
+        setPosition((prev) => ({ ...prev }));
+      }
+    } else {
+      setPosition({ latitude: lngLat.lat, longitude: lngLat.lng });
+    }
 
-            if (distance <= reference.maxDistance) {
-              setPosition({
-                latitude: newPosition.lat,
-                longitude: newPosition.lng,
-              });
-            } else {
-              marker.setLatLng(
-                Leaflet.latLng(position.latitude, position.longitude),
-              );
-            }
-          } else {
-            setPosition({
-              latitude: newPosition.lat,
-              longitude: newPosition.lng,
-            });
-          }
-        }
-      },
-      mousedown() {
-        setTooltipOpen(false);
-      },
-    }),
-    [reference, position],
-  );
+    setTooltipOpen(false);
+  };
 
   useEffect(() => {
     if (onAdapt) {
@@ -86,36 +70,48 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
   return (
     <>
       <Marker
-        eventHandlers={eventHandlers}
-        draggable={true}
-        ref={markerRef}
-        position={Leaflet.latLng(position.latitude, position.longitude)}
-        icon={LeafletDivIcon({
-          source: (
-            <div className="relative h-fit w-fit">
-              <MapPinPlusInside className="h-[36px] w-[36px] fill-green-600 text-white dark:text-slate-600" />
-            </div>
-          ),
-          size: Leaflet.point(36, 36),
-          anchor: Leaflet.point(18, 26),
-          className: "!z-[3000]",
-        })}
+        longitude={position.longitude}
+        latitude={position.latitude}
+        draggable
+        onDragEnd={handleDragEnd}
       >
-        {tooltipOpen && (
-          <Tooltip permanent offset={[0, -26]} direction="top">
-            {t("tooltip")}
-          </Tooltip>
-        )}
+        <div
+          className="relative h-fit w-fit cursor-pointer"
+          onMouseDown={() => setTooltipOpen(false)}
+        >
+          <MapPinPlusInside className="h-[36px] w-[36px] fill-green-600 text-white dark:text-slate-600" />
+        </div>
       </Marker>
-      {reference && (
-        <Circle
-          radius={reference.maxDistance}
-          center={Leaflet.latLng(
-            reference.position.latitude,
-            reference.position.longitude,
-          )}
-          pathOptions={{ color: "#16a34a", fillColor: "#16a34a" }}
-        />
+      {tooltipOpen && (
+        <Popup
+          longitude={position.longitude}
+          latitude={position.latitude}
+          closeButton={false}
+          offset={18}
+          anchor="bottom-right"
+        >
+          {t("tooltip")}
+        </Popup>
+      )}
+      {circleGeoJSON && (
+        <Source id="reference-circle" type="geojson" data={circleGeoJSON}>
+          <Layer
+            id="circle-fill"
+            type="fill"
+            paint={{
+              "fill-color": "#16a34a",
+              "fill-opacity": 0.2,
+            }}
+          />
+          <Layer
+            id="circle-outline"
+            type="line"
+            paint={{
+              "line-color": "#16a34a",
+              "line-width": 2,
+            }}
+          />
+        </Source>
       )}
     </>
   );
