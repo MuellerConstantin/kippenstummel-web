@@ -26,7 +26,7 @@ import { AnimatePresence } from "framer-motion";
 
 const persistConfig = {
   key: "kippenstummel",
-  version: 1,
+  version: 2,
   storage,
   whitelist: ["usability", "ident", "privacy"],
 };
