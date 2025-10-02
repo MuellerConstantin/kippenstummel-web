@@ -138,3 +138,13 @@ body {
 .dark .maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip {
   @apply !border-t-slate-900;
 }
+
+body:has(details.maplibregl-ctrl-attrib.maplibregl-compact-show)
+  .menu-bottom-navigation-wrapper {
+  @apply bottom-18 xl:!bottom-9;
+}
+
+body:has(details.maplibregl-ctrl-attrib:not(.maplibregl-compact-show))
+  .menu-bottom-navigation-wrapper {
+  @apply !bottom-9;
+}
