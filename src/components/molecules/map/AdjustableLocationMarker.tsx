@@ -8,7 +8,7 @@ import {
   Layer,
   MarkerDragEvent,
 } from "react-map-gl/maplibre";
-import { MapPinPlusInside } from "lucide-react";
+import { MapPinPlusInside, Move } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as turf from "@turf/turf";
 import { GeoCoordinates } from "@/lib/types/geo";
@@ -74,6 +74,7 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
         latitude={position.latitude}
         draggable
         onDragEnd={handleDragEnd}
+        anchor="bottom"
       >
         <div
           className="relative h-fit w-fit cursor-pointer"
@@ -87,10 +88,13 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
           longitude={position.longitude}
           latitude={position.latitude}
           closeButton={false}
-          offset={18}
+          offset={[-12, -32]}
           anchor="bottom-right"
         >
-          {t("tooltip")}
+          <div className="flex items-center justify-center gap-2">
+            <Move className="h-4 w-4" />
+            <span className="font-semibold">{t("tooltip")}</span>
+          </div>
         </Popup>
       )}
       {circleGeoJSON && (
