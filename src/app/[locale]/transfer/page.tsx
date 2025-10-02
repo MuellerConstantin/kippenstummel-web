@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { Button } from "@/components/atoms/Button";
 import { Link } from "@/components/atoms/Link";
 import useApi from "@/hooks/useApi";
-import { decryptWithPassword } from "@/lib";
+import { decryptWithPassword } from "@/lib/encrypt";
 import { AxiosError } from "axios";
 import { TextField } from "@/components/atoms/TextField";
 import { Formik } from "formik";
