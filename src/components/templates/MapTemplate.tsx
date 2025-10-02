@@ -11,7 +11,7 @@ export function MapTemplate({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex h-full min-h-screen flex-col">
+    <div className="flex h-full min-h-[100dvh] flex-col">
       <header>
         <Navbar />
         <PreReleaseBanner />
