@@ -3,11 +3,13 @@ import {
   LocateFixed as LocateFixedIcon,
   LoaderCircle as LoaderCircleIcon,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import { createPortal } from "react-dom";
 import { useControl, useMap } from "react-map-gl/maplibre";
 
 export function LocateControlComponent() {
+  const t = useTranslations();
   const { current: map } = useMap();
   const locate = useLocate();
 
@@ -30,6 +32,7 @@ export function LocateControlComponent() {
 
   return (
     <button
+      title={t("MapLibreControls.GeolocateControl.FindMyLocation")}
       onClick={onClick}
       type="button"
       className="maplibregl-ctrl-geolocate flex! items-center! justify-center!"

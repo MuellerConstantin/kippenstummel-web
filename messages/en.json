@@ -567,5 +567,56 @@
     "title": "Pre-Release Information",
     "description": "This is a preview version of the software. Please note that features and content may still change during further development. Possible effects:<br></br><br></br><ul><li>New features may be added or removed.</li><li>Data, settings, or accounts may be lost.</li><li>Stability and performance may be limited.</li></ul><br></br>We recommend using this version for testing purposes only and creating regular backups of your data.",
     "close": "Close"
+  },
+  "MapLibreControls": {
+    "AttributionControl": {
+      "ToggleAttribution": "Toggle attribution",
+      "MapFeedback": "Map feedback"
+    },
+    "FullscreenControl": {
+      "Enter": "Enter fullscreen",
+      "Exit": "Exit fullscreen"
+    },
+    "GeolocateControl": {
+      "FindMyLocation": "Find my location",
+      "LocationNotAvailable": "Could not find my location"
+    },
+    "LogoControl": {
+      "Title": "MapLibre logo"
+    },
+    "Map": {
+      "Title": "Map"
+    },
+    "Marker": {
+      "Title": "Map marker"
+    },
+    "NavigationControl": {
+      "ResetBearing": "Reset bearing",
+      "ZoomIn": "Zoom in",
+      "ZoomOut": "Zoom out"
+    },
+    "Popup": {
+      "Close": "Close"
+    },
+    "ScaleControl": {
+      "Feet": "ft",
+      "Meters": "m",
+      "Miles": "mi",
+      "Kilometers": "km",
+      "NauticalMiles": "nm"
+    },
+    "GlobeControl": {
+      "Enable": "Enable globe mode",
+      "Disable": "Disable globe mode"
+    },
+    "TerrainControl": {
+      "Enable": "Enable terrain mode",
+      "Disable": "Disable terrain mode"
+    },
+    "CooperativeGesturesHandler": {
+      "WindowsHelpText": "Use Ctrl + scroll to zoom",
+      "MacHelpText": "Use ⌘ + scroll to zoom",
+      "MobileHelpText": "Use two fingers to zoom"
+    }
   }
 }

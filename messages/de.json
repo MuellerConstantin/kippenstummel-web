@@ -566,5 +566,56 @@
     "title": "Pre-Release Information",
     "description": "Dies ist eine Vorabversion der Software. Bitte beachten Sie, dass sich Funktionen und Inhalte während der weiteren Entwicklung noch ändern können. Mögliche Auswirkungen:<br></br><br></br><ul><li>Neue Features können hinzukommen oder wieder entfernt werden.</li><li>Daten, Einstellungen oder Accounts können verloren gehen.</li><li>Stabilität und Performance sind möglicherweise eingeschränkt.</li></ul><br></br>Wir empfehlen, diese Version nur zu Testzwecken zu verwenden und regelmäßig Sicherungen Ihrer Daten anzulegen.",
     "close": "Schließen"
+  },
+  "MapLibreControls": {
+    "AttributionControl": {
+      "ToggleAttribution": "Attribution ein-/ausschalten",
+      "MapFeedback": "Karte Feedback"
+    },
+    "FullscreenControl": {
+      "Enter": "Vollbild einschalten",
+      "Exit": "Vollbild ausschalten"
+    },
+    "GeolocateControl": {
+      "FindMyLocation": "Meine Position finden",
+      "LocationNotAvailable": "Meine Position konnte nicht gefunden werden"
+    },
+    "LogoControl": {
+      "Title": "MapLibre Logo"
+    },
+    "Map": {
+      "Title": "Karte"
+    },
+    "Marker": {
+      "Title": "Map Marker"
+    },
+    "NavigationControl": {
+      "ResetBearing": "Richtung zurücksetzen",
+      "ZoomIn": "Hereinzoomen",
+      "ZoomOut": "Herauszoomen"
+    },
+    "Popup": {
+      "Close": "Schließen"
+    },
+    "ScaleControl": {
+      "Feet": "ft",
+      "Meters": "m",
+      "Miles": "mi",
+      "Kilometers": "km",
+      "NauticalMiles": "nm"
+    },
+    "GlobeControl": {
+      "Enable": "Globus-Modus aktivieren",
+      "Disable": "Globus-Modus deaktivieren"
+    },
+    "TerrainControl": {
+      "Enable": "Terrain-Modus aktivieren",
+      "Disable": "Terrain-Modus deaktivieren"
+    },
+    "CooperativeGesturesHandler": {
+      "WindowsHelpText": "Benutze Strg + Scrollrad um zu zoomen",
+      "MacHelpText": "Benutze ⌘ + Scrollrad um zu zoomen",
+      "MobileHelpText": "Benutze zwei Finger um zu zoomen"
+    }
   }
 }

@@ -289,6 +289,59 @@ export function CvmMap(props: CvmMapProps) {
     }
   }, [locale]);
 
+  const mapLocale = useMemo(
+    () => ({
+      "AttributionControl.ToggleAttribution": t(
+        "MapLibreControls.AttributionControl.ToggleAttribution",
+      ),
+      "AttributionControl.MapFeedback": t(
+        "MapLibreControls.AttributionControl.MapFeedback",
+      ),
+      "FullscreenControl.Enter": t("MapLibreControls.FullscreenControl.Enter"),
+      "FullscreenControl.Exit": t("MapLibreControls.FullscreenControl.Exit"),
+      "GeolocateControl.FindMyLocation": t(
+        "MapLibreControls.GeolocateControl.FindMyLocation",
+      ),
+      "GeolocateControl.LocationNotAvailable": t(
+        "MapLibreControls.GeolocateControl.LocationNotAvailable",
+      ),
+      "LogoControl.Title": t("MapLibreControls.LogoControl.Title"),
+      "Map.Title": t("MapLibreControls.Map.Title"),
+      "Marker.Title": t("MapLibreControls.Marker.Title"),
+      "NavigationControl.ResetBearing": t(
+        "MapLibreControls.NavigationControl.ResetBearing",
+      ),
+      "NavigationControl.ZoomIn": t(
+        "MapLibreControls.NavigationControl.ZoomIn",
+      ),
+      "NavigationControl.ZoomOut": t(
+        "MapLibreControls.NavigationControl.ZoomOut",
+      ),
+      "Popup.Close": t("MapLibreControls.Popup.Close"),
+      "ScaleControl.Feet": t("MapLibreControls.ScaleControl.Feet"),
+      "ScaleControl.Meters": t("MapLibreControls.ScaleControl.Meters"),
+      "ScaleControl.Kilometers": t("MapLibreControls.ScaleControl.Kilometers"),
+      "ScaleControl.Miles": t("MapLibreControls.ScaleControl.Miles"),
+      "ScaleControl.NauticalMiles": t(
+        "MapLibreControls.ScaleControl.NauticalMiles",
+      ),
+      "GlobeControl.Enable": t("MapLibreControls.GlobeControl.Enable"),
+      "GlobeControl.Disable": t("MapLibreControls.GlobeControl.Disable"),
+      "TerrainControl.Enable": t("MapLibreControls.TerrainControl.Enable"),
+      "TerrainControl.Disable": t("MapLibreControls.TerrainControl.Disable"),
+      "CooperativeGesturesHandler.WindowsHelpText": t(
+        "MapLibreControls.CooperativeGesturesHandler.WindowsHelpText",
+      ),
+      "CooperativeGesturesHandler.MacHelpText": t(
+        "MapLibreControls.CooperativeGesturesHandler.MacHelpText",
+      ),
+      "CooperativeGesturesHandler.MobileHelpText": t(
+        "MapLibreControls.CooperativeGesturesHandler.MobileHelpText",
+      ),
+    }),
+    [t],
+  );
+
   /**
    * Show a notification when the selected CVM is not found. This
    * happens mostly when the shared CVM is not found.
@@ -397,6 +450,7 @@ export function CvmMap(props: CvmMapProps) {
       onLoad={onLoad}
       onZoomEnd={onViewStateChanged}
       onMoveEnd={onViewStateChanged}
+      locale={mapLocale}
     >
       <AttributionControl compact />
       <NavigationControl />
