@@ -149,7 +149,7 @@ export function CvmInfoSidebarDialog(props: CvmInfoSidebarDialogProps) {
       exit={{ opacity: 0, x: -200 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
-      <div className="flex h-full w-full flex-col overflow-y-auto rounded-md border-2 border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-900 dark:text-white">
+      <div className="flex h-full w-full flex-col overflow-y-auto rounded-md bg-white text-slate-900 shadow-[0_0_0_2px_#0000001a] dark:bg-slate-900 dark:text-white dark:shadow-[0_0_0_2px_#ffffff1a]">
         <div className="relative">
           <div className="flex aspect-video w-full items-center justify-center bg-[#5bc15c] p-4 dark:bg-[#267528]">
             <div className="relative h-1/2 w-1/2 -rotate-15 overflow-hidden">

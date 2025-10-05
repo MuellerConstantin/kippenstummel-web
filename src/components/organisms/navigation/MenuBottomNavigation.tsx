@@ -42,7 +42,7 @@ export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
     <div className="h-16 w-full cursor-default">
       <div
         ref={containerRef}
-        className="mx-auto grid h-full max-w-fit grid-cols-3 rounded-md border-2 border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-900 dark:text-white"
+        className="mx-auto grid h-full max-w-fit grid-cols-3 rounded-md bg-white text-slate-900 shadow-[0_0_0_2px_#0000001a] dark:bg-slate-900 dark:text-white dark:shadow-[0_0_0_2px_#ffffff1a]"
       >
         <button
           type="button"

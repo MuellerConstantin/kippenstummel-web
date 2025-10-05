@@ -12,7 +12,7 @@ export function ConfirmRegisterBottomNavigation(
 
   return (
     <div className="absolute bottom-6 left-1/2 z-[2000] h-16 w-full -translate-x-1/2 px-2">
-      <div className="mx-auto grid h-full max-w-fit grid-cols-2 rounded-md border-2 border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-900 dark:text-white">
+      <div className="mx-auto grid h-full max-w-fit grid-cols-2 rounded-md bg-white text-slate-900 shadow-[0_0_0_2px_#0000001a] dark:bg-slate-900 dark:text-white dark:shadow-[0_0_0_2px_#ffffff1a]">
         <button
           type="button"
           onClick={() => onCancel?.()}
