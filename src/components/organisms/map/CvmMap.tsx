@@ -7,7 +7,7 @@ import Map, {
   ViewStateChangeEvent,
 } from "react-map-gl/maplibre";
 import useMapCvmViewportData from "@/hooks/useMapCvmViewportData";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { GeoCoordinates } from "@/lib/types/geo";
@@ -23,7 +23,7 @@ import { Cvm, CvmCluster } from "@/lib/types/cvm";
 import { LocationMarker } from "@/components/molecules/map/LocationMarker";
 import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
 import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import { useMapCvmSelection } from "@/hooks/useMapCvmSelection";
 import { ConfirmRegisterBottomNavigation } from "../navigation/ConfirmRegisterBottomNavigation";
@@ -236,6 +236,7 @@ export interface CvmMapProps {
 }
 
 export function CvmMap(props: CvmMapProps) {
+  const locale = useLocale();
   const t = useTranslations();
   const dispatch = useAppDispatch();
   const { enqueue } = useNotifications();
@@ -278,6 +279,15 @@ export function CvmMap(props: CvmMapProps) {
   } = useMapCvmSelection({
     sharedCvmId: props.sharedCvmId,
   });
+
+  const mapStylePath = useMemo(() => {
+    switch (locale) {
+      case "de":
+        return "/tiles/default-de.json";
+      default:
+        return "/tiles/default-en.json";
+    }
+  }, [locale]);
 
   /**
    * Show a notification when the selected CVM is not found. This
@@ -380,7 +390,7 @@ export function CvmMap(props: CvmMapProps) {
         zoom: mapView.zoom,
       }}
       style={{ flexGrow: 1 }}
-      mapStyle="/tiles/default.json"
+      mapStyle={mapStylePath}
       minZoom={8}
       maxZoom={19}
       attributionControl={false}
