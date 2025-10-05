@@ -559,13 +559,17 @@
     "tooltip": "Zum Verschieben greifen"
   },
   "PreReleaseBanner": {
-    "message": "<bold>Pre-Release:</bold> Es handelt sich um eine inoffizielle Vorabversion.",
+    "message": "Es handelt sich um eine inoffizielle Vorabversion.",
     "learnMore": "Mehr erfahren"
   },
   "PreReleaseInfoDialog": {
     "title": "Pre-Release Information",
     "description": "Dies ist eine Vorabversion der Software. Bitte beachten Sie, dass sich Funktionen und Inhalte während der weiteren Entwicklung noch ändern können. Mögliche Auswirkungen:<br></br><br></br><ul><li>Neue Features können hinzukommen oder wieder entfernt werden.</li><li>Daten, Einstellungen oder Accounts können verloren gehen.</li><li>Stabilität und Performance sind möglicherweise eingeschränkt.</li></ul><br></br>Wir empfehlen, diese Version nur zu Testzwecken zu verwenden und regelmäßig Sicherungen Ihrer Daten anzulegen.",
     "close": "Schließen"
+  },
+  "TestSystemBanner": {
+    "message": "Sie nutzen gerade eine Testversion dieser Anwendung.",
+    "redirect": "Zur Live-Version wechseln"
   },
   "MapLibreControls": {
     "AttributionControl": {

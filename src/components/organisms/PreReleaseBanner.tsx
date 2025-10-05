@@ -15,11 +15,12 @@ export default function PreReleaseBanner() {
 
   return (
     <>
-      <div className="bg-amber-600 text-white">
-        <div className="flex items-center justify-center p-1">
+      <div className="border-b border-b-amber-600 bg-amber-300 text-amber-600 dark:border-b-amber-200 dark:bg-amber-600 dark:text-amber-200">
+        <div className="flex items-center justify-center p-2">
           <div className="flex flex-wrap justify-center gap-1 text-center text-xs">
-            <TriangleAlertIcon className="h-4 w-4" />
             <div>
+              <TriangleAlertIcon className="inline-block h-4 w-4 align-text-bottom" />
+              &nbsp;
               {t.rich("message", {
                 bold: (chunks) => <span className="font-bold">{chunks}</span>,
               })}
