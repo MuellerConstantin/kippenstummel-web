@@ -12,7 +12,7 @@ import { X } from "lucide-react";
 export interface Toast {
   title: string;
   description?: string | React.ReactNode;
-  variant?: "default" | "success" | "error" | "info";
+  variant?: "default" | "success" | "error" | "info" | "warning";
 }
 
 export const ToastQueue = AriaToastQueue<Toast>;
@@ -29,6 +29,8 @@ const toast = tv({
       error:
         "bg-red-50 border-red-200 text-red-800 dark:bg-red-950 dark:border-red-800 dark:text-red-100",
       info: "bg-slate-50 border-slate-200 text-slate-800 dark:bg-slate-950 dark:border-slate-800 dark:text-slate-100",
+      warning:
+        "bg-amber-50 border-amber-200 text-amber-800 dark:bg-amber-950 dark:border-amber-800 dark:text-amber-100",
     },
   },
   defaultVariants: {

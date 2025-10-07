@@ -559,18 +559,17 @@
   "AdjustableLocationMarker": {
     "tooltip": "Drag to move"
   },
-  "PreReleaseBanner": {
-    "message": "This is an unofficial preview version.",
-    "learnMore": "Learn more"
-  },
-  "PreReleaseInfoDialog": {
-    "title": "Pre-Release Information",
-    "description": "This is a preview version of the software. Please note that features and content may still change during further development. Possible effects:<br></br><br></br><ul><li>New features may be added or removed.</li><li>Data, settings, or accounts may be lost.</li><li>Stability and performance may be limited.</li></ul><br></br>We recommend using this version for testing purposes only and creating regular backups of your data.",
-    "close": "Close"
-  },
-  "TestSystemBanner": {
-    "message": "You are currently using a test version of this application.",
-    "redirect": "Switch to Live Version"
+  "MessageBannerCarousel": {
+    "messages": {
+      "testSystem": {
+        "title": "Notice:",
+        "description": "This is a test environment. Any changes or inputs here will not affect the live system."
+      },
+      "preRelease": {
+        "title": "Pre-Release:",
+        "description": "This is a not officially released version. Changes and errors may occur."
+      }
+    }
   },
   "MapLibreControls": {
     "AttributionControl": {
