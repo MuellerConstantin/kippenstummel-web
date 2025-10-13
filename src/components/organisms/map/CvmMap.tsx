@@ -8,7 +8,6 @@ import Map, {
 } from "react-map-gl/maplibre";
 import useMapCvmViewportData from "@/hooks/useMapCvmViewportData";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { GeoCoordinates } from "@/lib/types/geo";
 import usabilitySlice from "@/store/slices/usability";
@@ -16,9 +15,7 @@ import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal"
 import { HelpDialog } from "../navigation/HelpDialog";
 import { FilterDialog } from "../navigation/FilterDialog";
 import { CvmReportDialog } from "../cvm/CvmReportDialog";
-import { MenuBottomNavigation } from "../navigation/MenuBottomNavigation";
-import { CvmInfoDialog } from "../cvm/CvmInfoDialog";
-import { useElementWidth } from "@/hooks/useElementWidth";
+import { CvmInfoOverlay } from "../cvm/CvmInfoOverlay";
 import { Cvm, CvmCluster } from "@/lib/types/cvm";
 import { LocationMarker } from "@/components/molecules/map/LocationMarker";
 import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
@@ -74,9 +71,6 @@ export function CvmMapDefaultView(props: CvmMapDefaultViewProps) {
   const [showReportDialog, setShowReportDialog] = useState(false);
   const [reporterPosition, setReporterPosition] = useState<GeoCoordinates>();
 
-  const sidebarRef = useRef<HTMLDivElement>(null);
-  const sidebarWidth = useElementWidth(sidebarRef);
-
   const onHelp = useCallback(() => {
     setShowHelpDialog(true);
   }, [setShowHelpDialog]);
@@ -87,53 +81,25 @@ export function CvmMapDefaultView(props: CvmMapDefaultViewProps) {
 
   return (
     <>
-      <div className="pointer-events-none absolute flex h-full w-full">
-        <div
-          ref={sidebarRef}
-          className="pointer-events-auto z-[2000] h-full shrink-0 pt-3 pb-3 pl-3"
-        >
-          <CvmInfoDialog
-            open={!!selectedCvm}
-            onOpenChange={(open) =>
-              onSelectCvm?.(open ? selectedCvm!.id : null)
-            }
-            cvm={selectedCvm!}
-            onUpvote={(voterPosition) =>
-              onUpvote?.(selectedCvm!.id, voterPosition)
-            }
-            onDownvote={(voterPosition) =>
-              onDownvote?.(selectedCvm!.id, voterPosition)
-            }
-            onReposition={(editorPosition) =>
-              onReposition?.(selectedCvm!.id, editorPosition)
-            }
-            onReport={(reporterPosition) => {
-              setShowReportDialog(true);
-              setReporterPosition(reporterPosition);
-            }}
-          />
-        </div>
-        <div className="relative grow">
-          <motion.div
-            className="menu-bottom-navigation-wrapper pointer-events-auto fixed bottom-9 left-1/2 z-[2000] hidden h-fit w-fit -translate-x-1/2 px-2 lg:block"
-            animate={{ x: !!selectedCvm ? sidebarWidth / 2 : 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-          >
-            <MenuBottomNavigation
-              onHelp={onHelp}
-              onFilter={onFilter}
-              onRegister={onRegister}
-            />
-          </motion.div>
-          <div className="menu-bottom-navigation-wrapper pointer-events-auto fixed bottom-9 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 lg:hidden">
-            <MenuBottomNavigation
-              onHelp={onHelp}
-              onFilter={onFilter}
-              onRegister={onRegister}
-            />
-          </div>
-        </div>
-      </div>
+      <CvmInfoOverlay
+        open={!!selectedCvm}
+        onOpenChange={(open) => onSelectCvm?.(open ? selectedCvm!.id : null)}
+        cvm={selectedCvm!}
+        onUpvote={(voterPosition) => onUpvote?.(selectedCvm!.id, voterPosition)}
+        onDownvote={(voterPosition) =>
+          onDownvote?.(selectedCvm!.id, voterPosition)
+        }
+        onReposition={(editorPosition) =>
+          onReposition?.(selectedCvm!.id, editorPosition)
+        }
+        onReport={(reporterPosition) => {
+          setShowReportDialog(true);
+          setReporterPosition(reporterPosition);
+        }}
+        onHelp={onHelp}
+        onFilter={onFilter}
+        onRegister={onRegister}
+      />
       <AnimatedDialogModal
         isOpen={showReportDialog}
         onOpenChange={setShowReportDialog}

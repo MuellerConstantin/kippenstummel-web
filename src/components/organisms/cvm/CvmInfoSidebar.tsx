@@ -75,7 +75,7 @@ function ReportedMessage({ cvm }: ReportedMessageProps) {
   );
 }
 
-export interface CvmInfoSidebarDialogProps {
+export interface CvmInfoSidebarProps {
   cvm: Cvm;
   onClose: () => void;
   onUpvote?: (voterPosition: GeoCoordinates) => void;
@@ -84,7 +84,7 @@ export interface CvmInfoSidebarDialogProps {
   onReport?: (reporterPosition: GeoCoordinates) => void;
 }
 
-export function CvmInfoSidebarDialog(props: CvmInfoSidebarDialogProps) {
+export function CvmInfoSidebar(props: CvmInfoSidebarProps) {
   const t = useTranslations("CvmInfoDialog");
   const locate = useLocate();
   const { onUpvote, onDownvote, onReposition, onReport } = props;
