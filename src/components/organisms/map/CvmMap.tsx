@@ -18,7 +18,7 @@ import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
 import { useLocale, useTranslations } from "next-intl";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import { useMapCvmSelection } from "@/hooks/useMapCvmSelection";
-import { ConfirmRegisterBottomNavigation } from "../navigation/ConfirmRegisterBottomNavigation";
+import { ConfirmBottomNavigation } from "../navigation/ConfirmBottomNavigation";
 import { AdjustableLocationMarker } from "@/components/molecules/map/AdjustableLocationMarker";
 import { MapLibreEvent } from "maplibre-gl";
 import { LocateControl } from "./LocateControl";
@@ -331,7 +331,7 @@ export function CvmMap(props: CvmMapProps) {
             position={registeringCurrentPosition!}
             onAdapt={setRegisteringCurrentPosition}
           />
-          <ConfirmRegisterBottomNavigation
+          <ConfirmBottomNavigation
             onCancel={() => setIsRegistering(false)}
             onConfirm={() => {
               props.onRegister?.(registeringCurrentPosition!);
@@ -350,7 +350,7 @@ export function CvmMap(props: CvmMapProps) {
             position={repositioningCurrentPosition!}
             onAdapt={setRepositioningCurrentPosition}
           />
-          <ConfirmRegisterBottomNavigation
+          <ConfirmBottomNavigation
             onCancel={() => setIsRepositioning(false)}
             onConfirm={() => {
               props.onReposition?.(
