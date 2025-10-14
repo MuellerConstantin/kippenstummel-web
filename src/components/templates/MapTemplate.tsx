@@ -44,7 +44,7 @@ export function MapTemplate({
   }, [isTestSystem, isPreRelease, t]);
 
   return (
-    <div className="flex h-full min-h-[100dvh] flex-col">
+    <div className="flex h-[100dvh] flex-col">
       <header>
         <Navbar />
         <MessageBannerCarousel messages={messages} />
