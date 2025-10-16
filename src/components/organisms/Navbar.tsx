@@ -239,11 +239,18 @@ function NavbarAuthenticatedOptionsMenu() {
 export function NavbarOptionsMenu() {
   const isAuthenticated =
     useAppSelector((state) => state.ident.identity) !== null;
+  const identity = useAppSelector((state) => state.ident.identity);
 
   return (
     <MenuTrigger>
       <Button variant="icon">
-        <EllipsisVertical className="h-6 w-6" />
+        {isAuthenticated ? (
+          <div className="h-6 w-6 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-900">
+            <IdentIcon value={identity || ""} />
+          </div>
+        ) : (
+          <EllipsisVertical className="h-6 w-6" />
+        )}
       </Button>
       {isAuthenticated ? (
         <NavbarAuthenticatedOptionsMenu />
