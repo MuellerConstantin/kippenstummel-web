@@ -569,7 +569,8 @@
         "title": "Pre-Release:",
         "description": "Dies ist eine nicht offiziell freigegebene Version. Änderungen und Fehler sind möglich."
       }
-    }
+    },
+    "hide": "Ausblenden"
   },
   "MapLibreControls": {
     "AttributionControl": {

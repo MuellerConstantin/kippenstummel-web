@@ -570,7 +570,8 @@
         "title": "Pre-Release:",
         "description": "This is a not officially released version. Changes and errors may occur."
       }
-    }
+    },
+    "hide": "Hide"
   },
   "MapLibreControls": {
     "AttributionControl": {
