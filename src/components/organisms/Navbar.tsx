@@ -12,6 +12,7 @@ import {
   Copy,
   IdCard,
   Signature,
+  User,
 } from "lucide-react";
 import { MenuTrigger } from "react-aria-components";
 import { Button } from "@/components/atoms/Button";
@@ -239,15 +240,12 @@ function NavbarAuthenticatedOptionsMenu() {
 export function NavbarOptionsMenu() {
   const isAuthenticated =
     useAppSelector((state) => state.ident.identity) !== null;
-  const identity = useAppSelector((state) => state.ident.identity);
 
   return (
     <MenuTrigger>
       <Button variant="icon">
         {isAuthenticated ? (
-          <div className="h-6 w-6 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-900">
-            <IdentIcon value={identity || ""} />
-          </div>
+          <User className="h-6 w-6" />
         ) : (
           <EllipsisVertical className="h-6 w-6" />
         )}
