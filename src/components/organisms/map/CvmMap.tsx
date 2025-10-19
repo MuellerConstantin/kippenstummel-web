@@ -12,19 +12,18 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { GeoCoordinates } from "@/lib/types/geo";
 import usabilitySlice from "@/store/slices/usability";
 import { CvmMapDefaultOverlay } from "./CvmMapDefaultOverlay";
-import { LocationMarker } from "@/components/molecules/map/LocationMarker";
-import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
-import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
 import { useLocale, useTranslations } from "next-intl";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import { useMapCvmSelection } from "@/hooks/useMapCvmSelection";
-import { ConfirmBottomNavigation } from "../navigation/ConfirmBottomNavigation";
-import { AdjustableLocationMarker } from "@/components/molecules/map/AdjustableLocationMarker";
 import { MapLibreEvent } from "maplibre-gl";
 import { LocateControl } from "./LocateControl";
 import { LocateMarker } from "@/components/molecules/map/LocateMarker";
 
 import "maplibre-gl/dist/maplibre-gl.css";
+import { CvmMapRegisterOverlay } from "./CvmMapRegisterOverlay";
+import { CvmMapRepositionOverlay } from "./CvmMapRepositionOverlay";
+
+type MapMode = "default" | "register" | "reposition";
 
 export interface CvmMapProps {
   onRegister?: (position: GeoCoordinates) => void;
@@ -43,31 +42,19 @@ export interface CvmMapProps {
   sharedCvmId: string | null;
 }
 
-export function CvmMap(props: CvmMapProps) {
+export function CvmMap({ onRegister, onReposition, ...props }: CvmMapProps) {
   const locale = useLocale();
   const t = useTranslations();
   const dispatch = useAppDispatch();
   const { enqueue } = useNotifications();
 
   const mapRef = useRef<MapRef>(null);
+  const [mode, setMode] = useState<MapMode>("default");
 
   const location = useAppSelector((state) => state.location.location);
   const locatedAt = useAppSelector((state) => state.location.locatedAt);
   const mapView = useAppSelector((state) => state.usability.mapView);
-
-  const [isRegistering, setIsRegistering] = useState(false);
-  const [registeringOrigPosition, setRegisteringOrigPosition] =
-    useState<GeoCoordinates>();
-  const [registeringCurrentPosition, setRegisteringCurrentPosition] =
-    useState<GeoCoordinates>();
-
-  const [isRepositioning, setIsRepositioning] = useState(false);
-  const [repositioningEditorPosition, setRepositioningEditorPosition] =
-    useState<GeoCoordinates>();
-  const [repositioningOrigPosition, setRepositioningOrigPosition] =
-    useState<GeoCoordinates>();
-  const [repositioningCurrentPosition, setRepositioningCurrentPosition] =
-    useState<GeoCoordinates>();
+  const [editorPosition, setEditorPosition] = useState<GeoCoordinates>();
 
   const [bottomLeft, setBottomLeft] = useState<GeoCoordinates>();
   const [topRight, setTopRight] = useState<GeoCoordinates>();
@@ -87,6 +74,17 @@ export function CvmMap(props: CvmMapProps) {
   } = useMapCvmSelection({
     sharedCvmId: props.sharedCvmId,
   });
+
+  const selectedCvmPosition = useMemo(() => {
+    if (!selectedCvm) {
+      return null;
+    }
+
+    return {
+      latitude: selectedCvm.latitude,
+      longitude: selectedCvm.longitude,
+    };
+  }, [selectedCvm]);
 
   const mapStylePath = useMemo(() => {
     switch (locale) {
@@ -217,28 +215,43 @@ export function CvmMap(props: CvmMapProps) {
     [dispatch],
   );
 
-  const onRegister = useCallback((position: GeoCoordinates) => {
-    setIsRegistering(true);
-    setRegisteringCurrentPosition(position);
-    setRegisteringOrigPosition(position);
+  const onRegisterStart = useCallback((position: GeoCoordinates) => {
+    setMode("register");
+    setEditorPosition(position);
+
     mapRef.current?.flyTo({
       center: [position.longitude, position.latitude],
       zoom: 18,
     });
   }, []);
 
-  const onReposition = useCallback(
-    (id: string, position: GeoCoordinates, editorPosition: GeoCoordinates) => {
-      setIsRepositioning(true);
-      setRepositioningEditorPosition(editorPosition);
-      setRepositioningCurrentPosition(position);
-      setRepositioningOrigPosition(position);
+  const onRepositionStart = useCallback(
+    (editorPosition: GeoCoordinates) => {
+      setMode("reposition");
+      setEditorPosition(editorPosition);
+
       mapRef.current?.flyTo({
-        center: [position.longitude, position.latitude],
+        center: [selectedCvm!.longitude, selectedCvm!.latitude],
         zoom: 18,
       });
     },
-    [],
+    [selectedCvm],
+  );
+
+  const onRegisterEnd = useCallback(
+    (newPosition: GeoCoordinates) => {
+      onRegister?.(newPosition!);
+      setMode("default");
+    },
+    [onRegister],
+  );
+
+  const onRepositionEnd = useCallback(
+    (newPosition: GeoCoordinates) => {
+      onReposition?.(selectedCvm!.id, newPosition!, editorPosition!);
+      setMode("default");
+    },
+    [selectedCvm, onReposition, editorPosition],
   );
 
   if (!mapView) {
@@ -272,96 +285,39 @@ export function CvmMap(props: CvmMapProps) {
           lastUpdatedAgo={new Date().getTime() - new Date(locatedAt!).getTime()}
         />
       )}
-      {!isRegistering && !isRepositioning && (
-        <>
-          <CvmMapDefaultOverlay
-            open={!!selectedCvm}
-            onOpenChange={(open) => selectCvmId(open ? selectedCvm!.id : null)}
-            cvm={selectedCvm!}
-            onUpvote={(voterPosition) =>
-              props.onUpvote?.(selectedCvm!.id, voterPosition)
-            }
-            onDownvote={(voterPosition) =>
-              props.onDownvote?.(selectedCvm!.id, voterPosition)
-            }
-            onReposition={(editorPosition) => {
-              onReposition(
-                selectedCvm!.id,
-                {
-                  latitude: selectedCvm!.latitude,
-                  longitude: selectedCvm!.longitude,
-                },
-                editorPosition,
-              );
-            }}
-            onReport={(reporterPosition, type) => {
-              props.onReport?.(selectedCvm!.id, reporterPosition!, type);
-            }}
-            onRegister={onRegister}
-          />
-          {markers
-            ?.filter((marker) => marker.id !== selectedCvm?.id)
-            .map((marker) => (
-              <LocationMarker
-                key={marker.id}
-                cvm={marker}
-                onSelect={() => selectCvmId(marker.id)}
-              />
-            ))}
-          {clusters?.map((marker, index) => (
-            <ClusterMarker
-              key={index}
-              position={{
-                latitude: marker.latitude,
-                longitude: marker.longitude,
-              }}
-              count={marker.count}
-            />
-          ))}
-          {!!selectedCvm && <SelectedMarker cvm={selectedCvm} />}
-        </>
+      {mode === "default" && (
+        <CvmMapDefaultOverlay
+          onSelect={(cvmId) => selectCvmId(cvmId)}
+          onDeselect={() => selectCvmId(null)}
+          selectedCvm={selectedCvm!}
+          markers={markers || []}
+          clusters={clusters || []}
+          onUpvote={(voterPosition) =>
+            props.onUpvote?.(selectedCvm!.id, voterPosition)
+          }
+          onDownvote={(voterPosition) =>
+            props.onDownvote?.(selectedCvm!.id, voterPosition)
+          }
+          onReport={(reporterPosition, type) => {
+            props.onReport?.(selectedCvm!.id, reporterPosition!, type);
+          }}
+          onReposition={onRepositionStart}
+          onRegister={onRegisterStart}
+        />
       )}
-      {isRegistering && (
-        <>
-          <AdjustableLocationMarker
-            reference={{
-              position: registeringOrigPosition!,
-              maxDistance: 25,
-            }}
-            position={registeringCurrentPosition!}
-            onAdapt={setRegisteringCurrentPosition}
-          />
-          <ConfirmBottomNavigation
-            onCancel={() => setIsRegistering(false)}
-            onConfirm={() => {
-              props.onRegister?.(registeringCurrentPosition!);
-              setIsRegistering(false);
-            }}
-          />
-        </>
+      {mode === "register" && (
+        <CvmMapRegisterOverlay
+          originalPosition={editorPosition!}
+          onRegister={onRegisterEnd}
+          onCancel={() => setMode("default")}
+        />
       )}
-      {isRepositioning && (
-        <>
-          <AdjustableLocationMarker
-            reference={{
-              position: repositioningOrigPosition!,
-              maxDistance: 25,
-            }}
-            position={repositioningCurrentPosition!}
-            onAdapt={setRepositioningCurrentPosition}
-          />
-          <ConfirmBottomNavigation
-            onCancel={() => setIsRepositioning(false)}
-            onConfirm={() => {
-              props.onReposition?.(
-                selectedCvm!.id,
-                repositioningCurrentPosition!,
-                repositioningEditorPosition!,
-              );
-              setIsRepositioning(false);
-            }}
-          />
-        </>
+      {mode === "reposition" && (
+        <CvmMapRepositionOverlay
+          originalPosition={selectedCvmPosition!}
+          onReposition={onRepositionEnd}
+          onCancel={() => setMode("default")}
+        />
       )}
     </Map>
   );
