@@ -170,9 +170,6 @@ export function CvmMap({ onRegister, onReposition, ...props }: CvmMapProps) {
   }, [selectedCvmError, isSharedSelection, enqueue, t]);
 
   const onLoad = useCallback((event: MapLibreEvent) => {
-    const attrib = document.querySelector(".maplibregl-ctrl-attrib");
-    attrib?.classList.remove("maplibregl-compact-show");
-
     const mapBounds = event.target.getBounds();
     const mapZoom = Math.ceil(event.target.getZoom());
 
