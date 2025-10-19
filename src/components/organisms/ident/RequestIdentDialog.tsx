@@ -152,6 +152,15 @@ export function RequestIdentDialog({
                       />
                     </div>
                   )}
+                  <div className="flex justify-center">
+                    <Link
+                      onPress={fetchCaptcha}
+                      variant="secondary"
+                      className="!cursor-pointer !text-xs"
+                    >
+                      {t("reload")}
+                    </Link>
+                  </div>
                   {submitError && (
                     <span className="text-red-500">{error || submitError}</span>
                   )}

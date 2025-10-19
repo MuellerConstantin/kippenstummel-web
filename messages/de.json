@@ -323,6 +323,7 @@
     "title": "Identität anlegen",
     "description": "Um unsere Plattform sicher zu halten, ist für das aktive Mitwirken eine registrierte Identität erforderlich. Diese wird anonym und individuell je Benutzer ausgestellt. Mit deiner Identität sind deine Interaktionen, Errungenschaften und deine persönliche Einstellungen verknüpft. Bitte fülle das CAPTCHA unten aus um fortzufahren und deine Persönliche Identität zu erstellen.",
     "captchaPlaceholder": "CAPTCHA eingeben",
+    "reload": "Captcha neu laden?",
     "confirm": "Bestätigen",
     "cancel": "Abbrechen",
     "disclaimer": "Durch die Bestätigung akzeptierst du unsere <tos>Nutzungsbedingungen</tos> und unsere <pp>Datenschutzerklärung</pp>.",

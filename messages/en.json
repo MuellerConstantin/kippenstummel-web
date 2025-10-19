@@ -323,6 +323,7 @@
     "title": "Create Identity",
     "description": "To keep our platform secure, a registered identity is required for active participation. This identity is issued anonymously and individually for each user. Your interactions, achievements, and personal preferences are linked to your identity. Please complete the CAPTCHA below to proceed and create your Personal Identity.",
     "captchaPlaceholder": "Enter CAPTCHA",
+    "reload": "Reload CAPTCHA?",
     "confirm": "Confirm",
     "cancel": "Cancel",
     "disclaimer": "By confirming, you agree to our <tos>Terms of Service</tos> and <pp>Privacy Policy</pp>.",
