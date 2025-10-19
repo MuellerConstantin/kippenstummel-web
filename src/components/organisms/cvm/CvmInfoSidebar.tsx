@@ -137,7 +137,7 @@ export function CvmInfoSidebar(props: CvmInfoSidebarProps) {
   }, [locate, onReport]);
 
   return (
-    <div className="flex h-full w-full flex-col overflow-y-auto rounded-md bg-white text-slate-900 shadow-[0_0_0_2px_#0000001a] dark:bg-slate-900 dark:text-white dark:shadow-[0_0_0_2px_#ffffff1a]">
+    <div className="flex h-full w-full flex-col overflow-y-auto rounded-md bg-white/70 text-slate-900 shadow-lg backdrop-blur-md dark:bg-slate-900/60 dark:text-white dark:shadow-lg">
       <div className="relative">
         <div className="flex aspect-video w-full items-center justify-center bg-[#5bc15c] p-4 dark:bg-[#267528]">
           <div className="relative h-1/2 w-1/2 -rotate-15 overflow-hidden">

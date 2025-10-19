@@ -1,6 +1,6 @@
 import useLocate from "@/hooks/useLocate";
 import {
-  LocateFixed as LocateFixedIcon,
+  Navigation as NavigationIcon,
   LoaderCircle as LoaderCircleIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -40,7 +40,7 @@ export function LocateControlComponent() {
       {locating ? (
         <LoaderCircleIcon className="h-5 w-5 animate-spin" />
       ) : (
-        <LocateFixedIcon className="h-5 w-5" />
+        <NavigationIcon className="h-5 w-5" />
       )}
     </button>
   );
