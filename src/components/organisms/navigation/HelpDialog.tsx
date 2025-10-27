@@ -52,6 +52,22 @@ export function HelpDialog(props: HelpDialogProps) {
               </div>
             </div>
             <div className="space-y-2">
+              <div className="font-semibold">{t("headlines.identity")}</div>
+              <div className="text-sm">
+                {t.rich("description.identity", {
+                  br: () => <br />,
+                })}
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="font-semibold">{t("headlines.karma")}</div>
+              <div className="text-sm">
+                {t.rich("description.karma", {
+                  br: () => <br />,
+                })}
+              </div>
+            </div>
+            <div className="space-y-2">
               <div className="font-semibold">{t("headlines.register")}</div>
               <div className="text-sm">
                 {t.rich("description.register", {

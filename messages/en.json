@@ -460,14 +460,18 @@
       "register": "Register machines",
       "reposition": "Reposition machines",
       "vote": "Vote machines",
-      "report": "Report machines"
+      "report": "Report machines",
+      "karma": "Karma",
+      "identity": "Identity"
     },
     "description": {
       "general": "The map in front of you shows the locations of the cigarette vending machines. Depending on the zoom level, the machines are grouped together for clarity. At higher zoom levels, the locations are displayed individually. Selecting an individual cigarette vending machine will open its menu with further information.<br></br><br></br>Each cigarette vending machine has a score, which can range from -10 to 10. The score is calculated from user ratings. A negative score means that users have had frequent problems with the machine; the location may be incorrect, or the machine may be defective. A positive score means that several users appear to have used the machine successfully.<br></br><br></br>Each cigarette vending machine is also provided with a badge that indicates its trust level. A different badge is used depending on the score. The following badges are available:",
       "register": "You can also easily register the locations of new CVMs yourself. You'll find the corresponding button <interfaceIcon></interfaceIcon> in the map's menu at the bottom. Simply follow the instructions. Please check first to see if the CVM has already been registered at your current location.",
       "reposition": "Sometimes, the location of a machine on the map may not exactly match the actual location. Although we allow you to adjust the exact location when registering machines, regardless of the location of the person reporting it, such scenarios can occur. In this case, you don't need to report the machine again; you can move/correct its location via the machine's menu.",
       "vote": "The locations of vending machines are verified using swarm intelligence. You can vote positively <upIcon></upIcon> for vending machines that were actually in the right place and were working, or negatively <downIcon></downIcon> for missing or non-functioning machines. You can vote via the menu for each vending machine. Select the machine's marker on the map to open its menu. Alternatively, you can report machines that have been reported as being misused or are no longer available.",
-      "report": "In particularly serious cases, such as obvious abuse, spam, or incorrect positioning, it is also possible to report vending machines to our moderators, thereby also warning other users against visiting them. Reporting a vending machine is also possible via its menu. Please only use this option as a last resort in particularly serious cases; our moderators will then review the location more closely! Generally, the quality of the vending machines should and will be determined by the ratings."
+      "report": "In particularly serious cases, such as obvious abuse, spam, or incorrect positioning, it is also possible to report vending machines to our moderators, thereby also warning other users against visiting them. Reporting a vending machine is also possible via its menu. Please only use this option as a last resort in particularly serious cases; our moderators will then review the location more closely! Generally, the quality of the vending machines should and will be determined by the ratings.",
+      "karma": "Every user with their own user account (identity) collects karma through their interactions. You accumulate karma based on your interactions and their impact. For example, if you register many vending machines that other users consider good, your karma will increase. However, if you register locations that don't exist, your karma will decrease as a result of other users' downvotes. Bad karma negatively impacts your permissions and ability to act within the community.",
+      "identity": "A user account is required for active participation in the Kippenstummel community. To keep the platform anonymous, you don't register with a traditional email address or phone number. Instead, you are issued an anonymous but personal identity that is linked to all your interactions."
     },
     "general": {
       "r5p": "Top Rated (Score von +5 bis +10)",
@@ -493,7 +497,8 @@
     "tabs": {
       "profile": "Profile",
       "credentials": "Credentials",
-      "transfer": "Transfer"
+      "transfer": "Transfer",
+      "karma": "My Karma"
     },
     "authentication": {
       "spoiler": "My authentication credentials",
@@ -521,6 +526,20 @@
       },
       "share": "Share to other devices",
       "disclaimer": "This is your personal identity, which is used for authentication and linked to all your interactions. Please keep it confidential and do not share it with third parties."
+    },
+    "karma": {
+      "description": "This section shows your karma score, which is based on your interactions with other users.",
+      "myKarma": "My Karma",
+      "noEvents": "You don't seem to have collected any karma yet.",
+      "messages": {
+        "registration": "You have registered a <link>machine</link>.",
+        "upvote_received": "You received an upvote for a <link>machine</link> you registered.",
+        "downvote_received": "You received a downvote for a <link>machine</link> you registered.",
+        "upvote_cast": "You gave a <link>machine</link> an upvote.",
+        "downvote_cast": "You gave a <link>machine</link> a downvote.",
+        "report_cast": "You reported a <link>machine</link>.",
+        "report_received": "A <link>machine</link> you registered has been reported."
+      }
     }
   },
   "PrivacySettingsDialog": {

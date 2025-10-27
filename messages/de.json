@@ -460,14 +460,18 @@
       "register": "Automaten registrieren",
       "reposition": "Automaten neu positionieren",
       "vote": "Automaten bewerten",
-      "report": "Automaten melden"
+      "report": "Automaten melden",
+      "karma": "Karma",
+      "identity": "Identität"
     },
     "description": {
       "general": "Die Karte vor dir zeigt dir die Standorte der Zigarettenautomaten an. Je nach Zoom-Stufe werden die Automaten aus Gründen der Übersicht in Clustern zusammengefasst. Bei höherer Zoom-Stufe werden die Standorte dann einzeln angezeigt. Durch Anwählen eines einzelnen Zigarattenautomaten erscheint dessen Menü mit weitere Informationen.<br></br><br></br>Jeder Zigarettenautomat verfügt über einen Score, welcher von -10 bis 10 gehen kann. Der Score wird aus den Bewertungen der Benutzer errechnet. Ein negativer Score bedeutet, das Benutzer vermehrt Probleme mit dem Automaten hatten, der Standort könnte falsch oder der Automat defekt sein. Ein positiver Score bedeutete mehrere Benutzer scheinen den Automaten erfolgreich genutzt zu haben.<br></br><br></br>Jeder Automat ist außerdem mit einem Badge versehen, welches die Güte des Automaten anzeigt. Je nach Score wird ein anderes Badge verwendet. Die folgenden Badges gibt es:",
       "register": "Du kannst auch selber ganz einfach die Standorte noch nicht erfasster Automaten registrieren. Hierfür findest du unten im Menü der Karte die entsprechende Schaltfläche <interfaceIcon></interfaceIcon>. Folge einfach den Anweisungen. Bitte überprüfe zuvor, ob der Automat an deiner aktuellen Position nicht vielleicht schon erfasst wurde.",
       "reposition": "Manchmal kann es vorkommen, dass die Position eines Automaten auf der Karte nicht exakt mit der Wirklichkeit übereinstimmt. Obwohl wir beim Registrieren von Automaten ein Justieren der exakten Position unabhängig der Position des Meldenden zulassen, kann es zu diesen Szenarien kommen. In diesem Fall musst du den Automaten nicht erneut melden, sondern kannst über das Menü des Automaten dessen Position verschieben/korrigieren.",
       "vote": "Die Standorte von Automaten werden via Schwarmintelligenz verifiziert. Du kannst für Automaten positiv <upIcon></upIcon> abstimmen, welche funktionstüchtig tatsächlich an der ansprechenden Stelle standen oder auch negativ <downIcon></downIcon> abstimmen für fehlende oder nicht funktionierende Automaten. Abstimmen kannst du über das Menü der einzelnen Automaten. Um das Menü eines Automaten zu öffnen, wähle diesen auf der Karte aus. Alternativ kannst du Automaten welche missbräuchlich gemeldet wurden oder nicht mehr länger vorhanden sind, melden.",
-      "report": "In besonders schweren Fällen, bspw. bei offensichtlichem Missbrauch, Spam oder Fehlpositionierung, ist es auch möglich Automaten unseren Moderatoren zu melden und durch die Meldung zusätzlich andere Benutzer vor dem Aufsuchen zu warnen. Das Melden eines Automaten ist ebenfalls über dessen Menü möglich. Bitte nutze das Melden nur als letzte Option in besonders schwerwiegenden Fällen, unsere Moderatoren überprüfen den Standort dann genauer! Grundsätzlich soll und wird die Qulität der Automaten über die Bewertungen gesteuert."
+      "report": "In besonders schweren Fällen, bspw. bei offensichtlichem Missbrauch, Spam oder Fehlpositionierung, ist es auch möglich Automaten unseren Moderatoren zu melden und durch die Meldung zusätzlich andere Benutzer vor dem Aufsuchen zu warnen. Das Melden eines Automaten ist ebenfalls über dessen Menü möglich. Bitte nutze das Melden nur als letzte Option in besonders schwerwiegenden Fällen, unsere Moderatoren überprüfen den Standort dann genauer! Grundsätzlich soll und wird die Qulität der Automaten über die Bewertungen gesteuert.",
+      "karma": "Jeder Benutzer mit einem eigenen Benutzeraccount (Identität) sammelt durch seine Interaktionen Karma. Das Karma sammelst du entsprechend deiner Interaktionen und deren Auswirkungen. Registrierst du beispielsweise viele Automaten, die von anderen Benutzer als gut erachtet werden, steigt dein Karma. Registrierst du hingegen Standorte die nicht existieren wird dein Karma in Folge der Downvotes anderer Benutzer sinken. Schlechtes Karma wirkt sich negativ auf deine Berechtigungen und Handlungsmöglichkeiten innerhalb der Community aus.",
+      "identity": "Für eine aktive Beteiligung in der Community von Kippenstummel ist ein Benutzeraccount erforderlich. Um die Plattform anonym zu halten registrierst du dich nicht klassisch mit einer E-Mail Adresse oder Telefonnummer. Stattdessen wird dir eine anonyme aber persönliche Identität ausgestellt, die mit all deinen Interkationen verknüpft wird."
     },
     "general": {
       "r5p": "Bestbewertet (Score von +5 bis +10)",
@@ -492,7 +496,8 @@
     "tabs": {
       "profile": "Profil",
       "credentials": "Anmeldeinformationen",
-      "transfer": "Identität übertragen"
+      "transfer": "Identität übertragen",
+      "karma": "Mein Karma"
     },
     "authentication": {
       "spoiler": "Meine Anmeldeinformationen",
@@ -520,6 +525,20 @@
       },
       "share": "Mit anderen Geräten teilen",
       "disclaimer": "Hierbei handelt es sich um deine persönliche Identität, welche der Authentifzierung dient und mit all deinen Interaktionen verknüpft wird. Behandle sie vertraulich und gebe sie nicht an Dritte weiter."
+    },
+    "karma": {
+      "description": "Dieser Abschnitt zeigt dir das gesammelte Karma deiner Interaktionen und Errungenschaften.",
+      "myKarma": "Mein Karma",
+      "noEvents": "Du scheintst noch kein Karma gesammelt zu haben.",
+      "messages": {
+        "registration": "Du hast einen <link>Automaten</link> registriert.",
+        "upvote_received": "Du hast für einen von dir registrierten <link>Automaten</link> ein Upvote bekommen.",
+        "downvote_received": "Du hast für einen von dir registrierten <link>Automaten</link> ein Downvote bekommen.",
+        "upvote_cast": "Du hast einem <link>Automaten</link> ein Upvote gegeben.",
+        "downvote_cast": "Du hast einem <link>Automaten</link> ein Downvote gegeben.",
+        "report_cast": "Du hast einen <link>Automaten</link> gemeldet.",
+        "report_received": "Ein von dir registrierter <link>Automaten</link> wurde gemeldet."
+      }
     }
   },
   "PrivacySettingsDialog": {
