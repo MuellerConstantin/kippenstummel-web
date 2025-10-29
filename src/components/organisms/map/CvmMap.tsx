@@ -169,6 +169,15 @@ export function CvmMap({ onRegister, onReposition, ...props }: CvmMapProps) {
     }
   }, [selectedCvmError, isSharedSelection, enqueue, t]);
 
+  useEffect(() => {
+    if (isSharedSelection && selectedCvmPosition) {
+      mapRef.current?.flyTo({
+        center: [selectedCvmPosition.longitude, selectedCvmPosition.latitude],
+        zoom: 18,
+      });
+    }
+  }, [isSharedSelection, selectedCvmPosition]);
+
   const onLoad = useCallback((event: MapLibreEvent) => {
     const mapBounds = event.target.getBounds();
     const mapZoom = Math.ceil(event.target.getZoom());
