@@ -160,7 +160,9 @@ function NavbarAuthenticatedOptionsMenu() {
     IdentInfo,
     AxiosError<ApiError>,
     string
-  >("/ident/me", (url) => api.get(url).then((res) => res.data));
+  >("/ident/me", (url) => api.get(url).then((res) => res.data), {
+    refreshInterval: 300000, // 5 minutes
+  });
 
   return (
     <Popover className="entering:animate-in entering:fade-in entering:placement-bottom:slide-in-from-top-1 entering:placement-top:slide-in-from-bottom-1 exiting:animate-out exiting:fade-out exiting:placement-bottom:slide-out-to-top-1 exiting:placement-top:slide-out-to-bottom-1 fill-mode-forwards origin-top-left overflow-auto rounded-lg bg-white shadow-lg ring-1 ring-black/10 outline-hidden dark:bg-slate-950 dark:ring-white/15">

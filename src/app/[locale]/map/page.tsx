@@ -31,6 +31,7 @@ export default function Map() {
         mutate(
           (key) => typeof key === "string" && /^\/cvms(\b|\/|\?).*/.test(key),
         );
+        mutate("/ident/me");
       } catch (err) {
         if (err instanceof AxiosError) {
           if (
@@ -94,6 +95,7 @@ export default function Map() {
         mutate(
           (key) => typeof key === "string" && /^\/cvms(\b|\/|\?).*/.test(key),
         );
+        mutate("/ident/me");
       } catch (err) {
         if (err instanceof AxiosError) {
           if (
@@ -164,6 +166,7 @@ export default function Map() {
         mutate(
           (key) => typeof key === "string" && /^\/cvms(\b|\/|\?).*/.test(key),
         );
+        mutate("/ident/me");
       } catch (err) {
         if (err instanceof AxiosError) {
           if (
@@ -216,6 +219,7 @@ export default function Map() {
         mutate(
           (key) => typeof key === "string" && /^\/cvms(\b|\/|\?).*/.test(key),
         );
+        mutate("/ident/me");
       } catch (err) {
         if (err instanceof AxiosError) {
           if (
@@ -273,6 +277,7 @@ export default function Map() {
         mutate(
           (key) => typeof key === "string" && /^\/cvms(\b|\/|\?).*/.test(key),
         );
+        mutate("/ident/me");
       } catch (err) {
         if (err instanceof AxiosError) {
           if (
