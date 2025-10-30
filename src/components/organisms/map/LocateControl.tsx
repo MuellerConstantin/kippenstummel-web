@@ -16,6 +16,10 @@ export function LocateControlComponent() {
   const [locating, setLocating] = useState(false);
 
   const onClick = useCallback(() => {
+    if (locating) {
+      return;
+    }
+
     setLocating(true);
 
     locate()
@@ -28,12 +32,13 @@ export function LocateControlComponent() {
       .finally(() => {
         setLocating(false);
       });
-  }, [locate, map]);
+  }, [locate, map, locating]);
 
   return (
     <button
       title={t("MapLibreControls.GeolocateControl.FindMyLocation")}
       onClick={onClick}
+      disabled={locating}
       type="button"
       className="maplibregl-ctrl-geolocate flex! items-center! justify-center!"
     >
