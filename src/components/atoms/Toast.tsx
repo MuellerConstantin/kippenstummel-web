@@ -6,6 +6,7 @@ import {
   UNSTABLE_ToastQueue as AriaToastQueue,
   UNSTABLE_ToastRegion as AriaToastRegion,
 } from "react-aria-components";
+import { motion, AnimatePresence } from "framer-motion";
 import { tv } from "tailwind-variants";
 import { X } from "lucide-react";
 
@@ -58,24 +59,41 @@ export function ToastRegion({ queue }: ToastRegionProps) {
   return (
     <AriaToastRegion
       queue={queue}
-      className="absolute top-0 right-0 flex max-w-full flex-col items-end justify-end gap-4 overflow-hidden p-4"
+      className="pointer-events-none absolute inset-y-0 right-0 z-[1000] flex max-h-screen max-w-full flex-col items-end gap-4 overflow-y-auto p-4"
     >
       {({ toast: t }) => (
-        <AriaToast toast={t} className={toast({ variant: t.content.variant })}>
-          <AriaToastContent className="flex flex-1 flex-col gap-2 overflow-hidden">
-            <Text slot="title" className={toastTitle()}>
-              {t.content.title}
-            </Text>
-            {t.content.description && (
-              <Text slot="description" className={toastDescription()}>
-                {t.content.description}
-              </Text>
-            )}
-          </AriaToastContent>
-          <Button slot="close" className={toastCloseButton()}>
-            <X className="h-4 w-4" />
-          </Button>
-        </AriaToast>
+        <AnimatePresence>
+          <motion.div
+            key={t.key}
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            layout
+          >
+            <AriaToast
+              toast={t}
+              className={`${toast({ variant: t.content.variant })} pointer-events-auto`}
+            >
+              <AriaToastContent className="flex flex-1 flex-col gap-2 overflow-hidden">
+                <Text slot="title" className={toastTitle()}>
+                  {t.content.title}
+                </Text>
+                {t.content.description && (
+                  <Text slot="description" className={toastDescription()}>
+                    {t.content.description}
+                  </Text>
+                )}
+              </AriaToastContent>
+              <Button
+                slot="close"
+                className={`${toastCloseButton()} cursor-pointer`}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </AriaToast>
+          </motion.div>
+        </AnimatePresence>
       )}
     </AriaToastRegion>
   );
