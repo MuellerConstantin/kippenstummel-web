@@ -168,14 +168,14 @@ function NavbarAuthenticatedOptionsMenu() {
     <Popover className="entering:animate-in entering:fade-in entering:placement-bottom:slide-in-from-top-1 entering:placement-top:slide-in-from-bottom-1 exiting:animate-out exiting:fade-out exiting:placement-bottom:slide-out-to-top-1 exiting:placement-top:slide-out-to-bottom-1 fill-mode-forwards origin-top-left overflow-auto rounded-lg bg-white shadow-lg ring-1 ring-black/10 outline-hidden dark:bg-slate-950 dark:ring-white/15">
       <div>
         <div className="relative mb-4 flex justify-end bg-green-600 p-2">
-          <div className="flex h-fit w-fit flex-col items-center gap-1 rounded-md bg-white p-1 dark:bg-slate-900">
+          <div className="flex h-fit w-fit flex-col items-center rounded-md bg-white p-1 dark:bg-slate-900">
             {isLoading ? (
               <div className="h-5 w-12 animate-pulse truncate rounded-lg bg-slate-300 dark:bg-slate-700" />
             ) : error ? (
               <div className="h-5 w-12 truncate rounded-lg bg-red-300 dark:bg-red-800" />
             ) : (
               data && (
-                <div className="w-fit truncate rounded-lg text-sm text-green-600">
+                <div className="w-fit truncate text-[0.8rem] font-bold text-green-600">
                   {data.karma >= 0 ? `+${data.karma}` : data.karma}
                 </div>
               )
