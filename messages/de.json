@@ -491,13 +491,15 @@
   },
   "IdentityDialog": {
     "title": "Identität",
-    "uniqueId": "Öffentliche ID",
     "close": "Schließen",
     "tabs": {
       "profile": "Profil",
       "credentials": "Anmeldeinformationen",
       "transfer": "Identität übertragen",
       "karma": "Mein Karma"
+    },
+    "profile": {
+      "uniqueId": "Öffentliche ID"
     },
     "authentication": {
       "spoiler": "Meine Anmeldeinformationen",

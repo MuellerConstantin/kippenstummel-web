@@ -163,30 +163,32 @@ function NavbarAuthenticatedOptionsMenu() {
   >("/ident/me", (url) => api.get(url).then((res) => res.data));
 
   return (
-    <Popover className="entering:animate-in entering:fade-in entering:placement-bottom:slide-in-from-top-1 entering:placement-top:slide-in-from-bottom-1 exiting:animate-out exiting:fade-out exiting:placement-bottom:slide-out-to-top-1 exiting:placement-top:slide-out-to-bottom-1 fill-mode-forwards origin-top-left overflow-auto rounded-lg bg-white p-2 shadow-lg ring-1 ring-black/10 outline-hidden dark:bg-slate-950 dark:ring-white/15">
-      <div className="flex w-[15rem] flex-col gap-4 overflow-hidden p-2">
-        <div className="flex items-center justify-between gap-4 overflow-hidden">
-          <div>
-            <div className="h-12 w-12 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-900">
-              <IdentIcon value={identity || ""} />
-            </div>
-          </div>
-          <div className="flex flex-col items-center gap-1">
+    <Popover className="entering:animate-in entering:fade-in entering:placement-bottom:slide-in-from-top-1 entering:placement-top:slide-in-from-bottom-1 exiting:animate-out exiting:fade-out exiting:placement-bottom:slide-out-to-top-1 exiting:placement-top:slide-out-to-bottom-1 fill-mode-forwards origin-top-left overflow-auto rounded-lg bg-white shadow-lg ring-1 ring-black/10 outline-hidden dark:bg-slate-950 dark:ring-white/15">
+      <div>
+        <div className="relative mb-4 flex justify-end bg-green-600 p-2">
+          <div className="flex h-fit w-fit flex-col items-center gap-1 rounded-md bg-white p-1 dark:bg-slate-900">
             {isLoading ? (
               <div className="h-5 w-12 animate-pulse truncate rounded-lg bg-slate-300 dark:bg-slate-700" />
             ) : error ? (
               <div className="h-5 w-12 truncate rounded-lg bg-red-300 dark:bg-red-800" />
             ) : (
               data && (
-                <div className="w-fit truncate rounded-lg bg-green-600 p-1 text-xs text-white">
+                <div className="w-fit truncate rounded-lg text-sm text-green-600">
                   {data.karma >= 0 ? `+${data.karma}` : data.karma}
                 </div>
               )
             )}
-            <div className="text-xs">{t("myKarma")}</div>
+            <div className="text-[0.6rem]">{t("myKarma")}</div>
+          </div>
+          <div className="absolute bottom-0 left-1/6 translate-x-[-50%] translate-y-1/2 rounded-full border-4 border-white dark:border-slate-900">
+            <div className="h-12 w-12 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
+              <IdentIcon value={identity || ""} />
+            </div>
           </div>
         </div>
-        <hr className="border-slate-200 dark:border-slate-800" />
+        <div className="h-6" />
+      </div>
+      <div className="flex w-[15rem] flex-col gap-4 overflow-hidden px-2 pb-2">
         <div className="flex flex-col gap-4">
           <Switch
             isSelected={darkMode}

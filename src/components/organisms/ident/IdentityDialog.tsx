@@ -60,6 +60,30 @@ function CopyButton(props: CopyButtonProps) {
   );
 }
 
+function MyIdentityDataSection() {
+  const t = useTranslations("IdentityDialog.profile");
+  const identity = useAppSelector((state) => state.ident.identity);
+
+  return (
+    <div className="flex w-full flex-col items-center gap-4">
+      <div className="h-32 w-32 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
+        <IdentIcon value={identity || ""} />
+      </div>
+      <div className="brorder-slate-200 w-full space-y-2 rounded-md border p-4 dark:border-slate-600">
+        <div className="font-semibold">{t("uniqueId")}</div>
+        <div className="flex items-center gap-2">
+          <div className="overflow-x-auto pb-2 text-xs whitespace-nowrap">
+            {identity || "Anonymous"}
+          </div>
+          <div className="pb-2">
+            <CopyButton text={identity || ""} disabled={!identity} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 interface MyAuthenticationDataSectionProps {
   close: () => void;
 }
@@ -433,8 +457,6 @@ interface IdentityDialogProps extends Omit<DialogProps, "children"> {}
 export function IdentityDialog(props: IdentityDialogProps) {
   const t = useTranslations("IdentityDialog");
 
-  const identity = useAppSelector((state) => state.ident.identity);
-
   return (
     <Dialog {...props}>
       {({ close }) => (
@@ -462,25 +484,7 @@ export function IdentityDialog(props: IdentityDialogProps) {
                 </Tab>
               </TabList>
               <TabPanel id="identity-tab-overview" className="p-0">
-                <div className="flex w-full flex-col items-center gap-4">
-                  <div className="h-32 w-32 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-900">
-                    <IdentIcon value={identity || ""} />
-                  </div>
-                  <div className="brorder-slate-200 w-full space-y-2 rounded-md border p-4 dark:border-slate-600">
-                    <div className="font-semibold">{t("uniqueId")}</div>
-                    <div className="flex items-center gap-2">
-                      <div className="overflow-x-auto pb-2 text-xs whitespace-nowrap">
-                        {identity || "Anonymous"}
-                      </div>
-                      <div className="pb-2">
-                        <CopyButton
-                          text={identity || ""}
-                          disabled={!identity}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <MyIdentityDataSection />
               </TabPanel>
               <TabPanel id="identity-tab-credentials" className="p-0">
                 <MyAuthenticationDataSection close={close} />

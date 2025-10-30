@@ -491,14 +491,15 @@
   },
   "IdentityDialog": {
     "title": "Identity",
-    "uniqueId": "Public ID",
-    "info": "This is your personal identity, used for authentication and linked to all your interactions. Please keep it confidential. For more information, see our <link1>Terms of Use</link1> and <link2>Privacy Policy</link2>.",
     "close": "Close",
     "tabs": {
       "profile": "Profile",
       "credentials": "Credentials",
       "transfer": "Transfer",
       "karma": "My Karma"
+    },
+    "profile": {
+      "uniqueId": "Public ID"
     },
     "authentication": {
       "spoiler": "My authentication credentials",
