@@ -20,7 +20,7 @@ export const ToastQueue = AriaToastQueue<Toast>;
 export type ToastQueue = AriaToastQueue<Toast>;
 
 const toast = tv({
-  base: "flex items-start gap-4 rounded-xl shadow-lg p-4 border w-sm max-w-full transition-all z-[1000]",
+  base: "flex items-start gap-4 rounded-xl shadow-lg p-4 border w-xs lg:w-sm transition-all z-[1000]",
   variants: {
     variant: {
       default:
