@@ -28,6 +28,15 @@ body {
   font-family: var(--font-lato), sans-serif;
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .dark .preview {
   filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }
