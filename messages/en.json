@@ -448,6 +448,11 @@
     "selectedNotFound": {
       "title": "Selected Vending Machine not found",
       "description": "Something went wrong, the selected vending machine could not be found."
+    },
+    "installRequest": {
+      "title": "Install App now!",
+      "description": "Find the nearest cigarette vending machine even faster now. Install the app and get started.",
+      "install": "Install App"
     }
   },
   "Validation": {

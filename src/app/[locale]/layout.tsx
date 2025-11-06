@@ -14,6 +14,7 @@ import { PWAInstallProvider } from "@/contexts/PWAInstallProvider";
 import { OfflineHandler } from "@/components/organisms/OfflineHandler";
 
 import "./globals.css";
+import { InstallRequestNotificationHandler } from "@/components/organisms/InstallRequestNotificationHandler";
 
 const lato = Lato({
   variable: "--font-lato",
@@ -86,6 +87,7 @@ export default async function RootLayout({
                     <NotificationView />
                     <AckeeTracker />
                     <OfflineHandler />
+                    <InstallRequestNotificationHandler />
                   </RuntimeConfigProvider>
                 </RequireIdentInterceptor>
               </PWAInstallProvider>

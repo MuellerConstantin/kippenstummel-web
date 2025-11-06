@@ -448,6 +448,11 @@
     "selectedNotFound": {
       "title": "Ausgewählter Automat nicht gefunden",
       "description": "Etwas ging schief, der gewählte Automat konnte nicht gefunden werden."
+    },
+    "installRequest": {
+      "title": "Jetzt die App installieren!",
+      "description": "Den nächsten Zigarettenautomaten jetzt noch schneller finde. Die App installieren und loslegen.",
+      "install": "App installieren"
     }
   },
   "Validation": {

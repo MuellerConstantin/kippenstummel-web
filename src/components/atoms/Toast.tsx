@@ -44,7 +44,7 @@ const toastTitle = tv({
 });
 
 const toastDescription = tv({
-  base: "text-sm opacity-80 line-clamp-4",
+  base: "text-sm opacity-80 max-h-24 overflow-y-auto",
 });
 
 const toastCloseButton = tv({
@@ -76,21 +76,23 @@ export function ToastRegion({ queue }: ToastRegionProps) {
               className={`${toast({ variant: t.content.variant })} pointer-events-auto`}
             >
               <AriaToastContent className="flex flex-1 flex-col gap-2 overflow-hidden">
-                <Text slot="title" className={toastTitle()}>
-                  {t.content.title}
-                </Text>
+                <div className="flex items-center justify-between gap-2">
+                  <Text slot="title" className={toastTitle()}>
+                    {t.content.title}
+                  </Text>
+                  <Button
+                    slot="close"
+                    className={`${toastCloseButton()} cursor-pointer`}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
                 {t.content.description && (
                   <Text slot="description" className={toastDescription()}>
                     {t.content.description}
                   </Text>
                 )}
               </AriaToastContent>
-              <Button
-                slot="close"
-                className={`${toastCloseButton()} cursor-pointer`}
-              >
-                <X className="h-4 w-4" />
-              </Button>
             </AriaToast>
           </motion.div>
         </AnimatePresence>

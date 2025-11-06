@@ -20,9 +20,8 @@ import { Link } from "@/components/atoms/Link";
 import { usePWAInstallPrompt } from "@/contexts/PWAInstallProvider";
 import { TooltipTrigger } from "react-aria-components";
 import { Tooltip } from "@/components/atoms/Tooltip";
-import { AnimatePresence } from "motion/react";
-import { Modal } from "@/components/atoms/Modal";
 import { IOSInstallInstructionsDialog } from "@/components/organisms/IOSInstallInstructionsDialog";
+import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
 
 function InstallAppButton() {
   const t = useTranslations("HomePage");
@@ -90,21 +89,17 @@ function InstallAppButton() {
           {t("cta.install.button")}
         </Button>
       </div>
-      <AnimatePresence>
-        {isIOSInstallInstructionDialogOpen && (
-          <Modal
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            isOpen={isIOSInstallInstructionDialogOpen}
-            onOpenChange={setIsIOSInstallInstructionDialogOpen}
-            className="max-w-xl"
-          >
-            <IOSInstallInstructionsDialog />
-          </Modal>
-        )}
-      </AnimatePresence>
+      <AnimatedDialogModal
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        isOpen={isIOSInstallInstructionDialogOpen}
+        onOpenChange={setIsIOSInstallInstructionDialogOpen}
+        className="max-w-xl"
+      >
+        <IOSInstallInstructionsDialog />
+      </AnimatedDialogModal>
     </>
   );
 }

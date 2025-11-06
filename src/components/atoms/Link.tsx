@@ -13,7 +13,7 @@ interface LinkProps extends AriaLinkProps {
 
 const styles = tv({
   extend: focusRing,
-  base: "hover:underline aria-disabled:no-underline disabled:pointer-events-none disabled:cursor-default forced-colors:disabled:text-[GrayText] transition rounded-xs",
+  base: "hover:underline cursor-pointer aria-disabled:no-underline disabled:pointer-events-none disabled:cursor-default forced-colors:disabled:text-[GrayText] transition rounded-xs",
   variants: {
     variant: {
       primary:
