@@ -5,6 +5,7 @@ import * as ackeeTracker from "ackee-tracker";
 import type { AckeeTrackingReturn } from "ackee-tracker";
 import { usePathname } from "next/navigation";
 import { useEnv } from "@/contexts/RuntimeConfigProvider";
+import { useAppSelector } from "@/store";
 
 export function AckeeTracker() {
   const ackeeServer = useEnv("NEXT_PUBLIC_ACKEE_SERVER");
@@ -13,10 +14,14 @@ export function AckeeTracker() {
   const pathname = usePathname();
   const trackerRef = useRef<AckeeTrackingReturn | null>(null);
 
+  const allowAnalyticsCookies = useAppSelector(
+    (state) => state.privacy.allowAnalyticsCookies,
+  );
+
   useEffect(() => {
     if (ackeeServer && ackeeDomain) {
       const tracker = ackeeTracker.create(ackeeServer, {
-        detailed: false,
+        detailed: allowAnalyticsCookies,
         ignoreLocalhost: true,
         ignoreOwnVisits: true,
       });
@@ -33,7 +38,7 @@ export function AckeeTracker() {
         }
       };
     }
-  }, [pathname, ackeeServer, ackeeDomain]);
+  }, [pathname, ackeeServer, ackeeDomain, allowAnalyticsCookies]);
 
   return null;
 }
