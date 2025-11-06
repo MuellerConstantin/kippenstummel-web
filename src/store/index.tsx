@@ -20,9 +20,8 @@ import usabilitySlice from "@/store/slices/usability";
 import identSlice from "./slices/ident";
 import privacySlice from "./slices/privacy";
 import locationSlice from "./slices/location";
-import { Modal } from "@/components/atoms/Modal";
 import { PrivacySettingsDialog } from "@/components/organisms/PrivacySettingsDialog";
-import { AnimatePresence } from "framer-motion";
+import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
 
 const persistConfig = {
   key: "kippenstummel",
@@ -107,20 +106,12 @@ export default function PrivacyCompliantPersistGate({
   return (
     <PersistGate persistor={persistor} loading={loading}>
       {children}
-      <AnimatePresence>
-        {!cookieSettingsSelected && (
-          <Modal
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            isOpen={!cookieSettingsSelected}
-            className="max-w-xl"
-          >
-            <PrivacySettingsDialog />
-          </Modal>
-        )}
-      </AnimatePresence>
+      <AnimatedDialogModal
+        isOpen={!cookieSettingsSelected}
+        className="max-w-xl"
+      >
+        <PrivacySettingsDialog />
+      </AnimatedDialogModal>
     </PersistGate>
   );
 }

@@ -1,5 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { Modal } from "@/components/atoms/Modal";
+import { AnimatePresence, motion } from "motion/react";
 import useIsMobile from "@/hooks/useIsMobile";
 import { CvmInfoSidebar } from "../cvm/CvmInfoSidebar";
 import { CvmInfoDialog } from "../cvm/CvmInfoDialog";
@@ -56,29 +55,21 @@ export function CvmMapDefaultOverlay({
     <>
       {isMobile && (
         <div className="pointer-events-none absolute flex h-full w-full">
-          <AnimatePresence>
-            {!!selectedCvm && (
-              <Modal
-                initial={{ opacity: 0, y: 200 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 200 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                isOpen={!!selectedCvm}
-                onOpenChange={() => props.onDeselect?.()}
-                placement="bottom"
-                isDismissable
-              >
-                <CvmInfoDialog
-                  {...props}
-                  cvm={selectedCvm}
-                  onReport={(reporterPosition) => {
-                    setShowReportDialog(true);
-                    setReporterPosition(reporterPosition);
-                  }}
-                />
-              </Modal>
-            )}
-          </AnimatePresence>
+          <AnimatedDialogModal
+            isOpen={!!selectedCvm}
+            onOpenChange={() => props.onDeselect?.()}
+            placement="bottom"
+            isDismissable
+          >
+            <CvmInfoDialog
+              {...props}
+              cvm={selectedCvm!}
+              onReport={(reporterPosition) => {
+                setShowReportDialog(true);
+                setReporterPosition(reporterPosition);
+              }}
+            />
+          </AnimatedDialogModal>
           <div className="relative grow">
             <div className="pointer-events-auto absolute bottom-9 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 lg:hidden">
               <MenuBottomNavigation

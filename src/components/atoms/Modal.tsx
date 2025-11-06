@@ -5,7 +5,7 @@ import {
   Modal as RACModal,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { motion, HTMLMotionProps } from "framer-motion";
+import { motion, HTMLMotionProps } from "motion/react";
 
 const MotionModal = motion(RACModal);
 

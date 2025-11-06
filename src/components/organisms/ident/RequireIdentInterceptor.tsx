@@ -2,14 +2,13 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { AxiosRequestConfig } from "axios";
-import { DialogTrigger } from "react-aria-components";
-import { Modal } from "@/components/atoms/Modal";
 import { RequestIdentDialog } from "@/components/organisms/ident/RequestIdentDialog";
 import useApi from "@/hooks/useApi";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import { useTranslations } from "next-intl";
 import { useAppStore } from "@/store";
 import identSlice from "@/store/slices/ident";
+import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
 
 export function RequireIdentInterceptor({
   children,
@@ -174,11 +173,9 @@ export function RequireIdentInterceptor({
   return (
     <>
       {children}
-      <DialogTrigger isOpen={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <Modal>
-          <RequestIdentDialog onConfirm={onConfirm} onCancel={onCancel} />
-        </Modal>
-      </DialogTrigger>
+      <AnimatedDialogModal isOpen={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <RequestIdentDialog onConfirm={onConfirm} onCancel={onCancel} />
+      </AnimatedDialogModal>
     </>
   );
 }

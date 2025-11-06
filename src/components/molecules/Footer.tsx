@@ -2,9 +2,8 @@ import React, { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import NextLink from "next/link";
 import { Link } from "@/components/atoms/Link";
-import { Modal } from "@/components/atoms/Modal";
 import { PrivacySettingsDialog } from "@/components/organisms/PrivacySettingsDialog";
-import { AnimatePresence } from "framer-motion";
+import { AnimatedDialogModal } from "./AnimatedDialogModal";
 
 export function Footer() {
   const t = useTranslations("Footer");
@@ -55,21 +54,13 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <AnimatePresence>
-        {isPrivacySettingsDialogOpen && (
-          <Modal
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            isOpen={isPrivacySettingsDialogOpen}
-            onOpenChange={setIsPrivacySettingsDialogOpen}
-            className="max-w-xl"
-          >
-            <PrivacySettingsDialog variant="details" />
-          </Modal>
-        )}
-      </AnimatePresence>
+      <AnimatedDialogModal
+        isOpen={isPrivacySettingsDialogOpen}
+        onOpenChange={setIsPrivacySettingsDialogOpen}
+        className="max-w-xl"
+      >
+        <PrivacySettingsDialog variant="details" />
+      </AnimatedDialogModal>
     </>
   );
 }

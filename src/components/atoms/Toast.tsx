@@ -6,7 +6,7 @@ import {
   UNSTABLE_ToastQueue as AriaToastQueue,
   UNSTABLE_ToastRegion as AriaToastRegion,
 } from "react-aria-components";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { tv } from "tailwind-variants";
 import { X } from "lucide-react";
 

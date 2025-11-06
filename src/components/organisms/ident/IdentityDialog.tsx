@@ -460,16 +460,16 @@ export function IdentityDialog(props: IdentityDialogProps) {
   return (
     <Dialog {...props}>
       {({ close }) => (
-        <>
+        <div className="flex h-[70vh] flex-col">
           <Heading
             slot="title"
-            className="my-0 text-xl leading-6 font-semibold"
+            className="my-0 shrink-0 text-xl leading-6 font-semibold"
           >
             {t("title")}
           </Heading>
-          <div className="mt-4 flex flex-col items-start gap-4">
-            <Tabs orientation="horizontal" className="w-full">
-              <TabList className="overflow-x-auto pb-2">
+          <div className="mt-4 flex min-h-0 grow flex-col items-start gap-4">
+            <Tabs orientation="horizontal" className="min-h-0 w-full grow">
+              <TabList className="shrink-0 overflow-x-auto pb-2">
                 <Tab className="w-fit min-w-fit" id="identity-tab-overview">
                   {t("tabs.profile")}
                 </Tab>
@@ -483,26 +483,28 @@ export function IdentityDialog(props: IdentityDialogProps) {
                   {t("tabs.karma")}
                 </Tab>
               </TabList>
-              <TabPanel id="identity-tab-overview" className="p-0">
-                <MyIdentityDataSection />
-              </TabPanel>
-              <TabPanel id="identity-tab-credentials" className="p-0">
-                <MyAuthenticationDataSection close={close} />
-              </TabPanel>
-              <TabPanel id="identity-tab-transfer" className="p-0">
-                <TransferIdentitySection />
-              </TabPanel>
-              <TabPanel id="identity-tab-karma" className="p-0">
-                <KarmaSection />
-              </TabPanel>
+              <div className="min-h-0 grow overflow-y-auto pr-2">
+                <TabPanel id="identity-tab-overview" className="p-0">
+                  <MyIdentityDataSection />
+                </TabPanel>
+                <TabPanel id="identity-tab-credentials" className="p-0">
+                  <MyAuthenticationDataSection close={close} />
+                </TabPanel>
+                <TabPanel id="identity-tab-transfer" className="p-0">
+                  <TransferIdentitySection />
+                </TabPanel>
+                <TabPanel id="identity-tab-karma" className="p-0">
+                  <KarmaSection />
+                </TabPanel>
+              </div>
             </Tabs>
-            <div className="flex w-full justify-start gap-4">
+            <div className="flex w-full shrink-0 justify-start gap-4">
               <Button onPress={close} className="w-full">
                 {t("close")}
               </Button>
             </div>
           </div>
-        </>
+        </div>
       )}
     </Dialog>
   );

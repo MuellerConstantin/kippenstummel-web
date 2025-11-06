@@ -20,18 +20,17 @@ import { Menu, MenuItem } from "@/components/molecules/Menu";
 import { Popover } from "@/components/atoms/Popover";
 import { IdentIcon } from "@/components/atoms/IdentIcon";
 import { ListBox, ListBoxItem } from "@/components/atoms/ListBox";
-import { Modal } from "@/components/atoms/Modal";
 import { IdentityDialog } from "./ident/IdentityDialog";
 import { useAppSelector, useAppDispatch } from "@/store";
 import usabilitySlice from "@/store/slices/usability";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { RequestIdentDialog } from "./ident/RequestIdentDialog";
-import { AnimatePresence } from "framer-motion";
 import { IdentInfo } from "@/lib/types/ident";
 import { AxiosError } from "axios";
 import { ApiError } from "next/dist/server/api-utils";
 import useSWR from "swr";
 import useApi from "@/hooks/useApi";
+import { AnimatedDialogModal } from "../molecules/AnimatedDialogModal";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
@@ -134,12 +133,12 @@ export function NavbarUnauthenticatedOptionsMenu() {
               </div>
             </ListBoxItem>
           </ListBox>
-          <Modal
+          <AnimatedDialogModal
             isOpen={showNewIdentityDialog}
             onOpenChange={setShowNewIdentityDialog}
           >
             <RequestIdentDialog />
-          </Modal>
+          </AnimatedDialogModal>
         </div>
       </div>
     </Popover>
@@ -209,21 +208,13 @@ function NavbarAuthenticatedOptionsMenu() {
             </ListBoxItem>
           </ListBox>
         </div>
-        <AnimatePresence>
-          {showIdentityDialog && (
-            <Modal
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              isOpen={showIdentityDialog}
-              onOpenChange={setShowIdentityDialog}
-              className="max-w-xl"
-            >
-              <IdentityDialog />
-            </Modal>
-          )}
-        </AnimatePresence>
+        <AnimatedDialogModal
+          isOpen={showIdentityDialog}
+          onOpenChange={setShowIdentityDialog}
+          className="max-w-xl"
+        >
+          <IdentityDialog />
+        </AnimatedDialogModal>
       </div>
     </Popover>
   );

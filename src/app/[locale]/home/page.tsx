@@ -20,7 +20,7 @@ import { Link } from "@/components/atoms/Link";
 import { usePWAInstallPrompt } from "@/contexts/PWAInstallProvider";
 import { TooltipTrigger } from "react-aria-components";
 import { Tooltip } from "@/components/atoms/Tooltip";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "motion/react";
 import { Modal } from "@/components/atoms/Modal";
 import { IOSInstallInstructionsDialog } from "@/components/organisms/IOSInstallInstructionsDialog";
 
