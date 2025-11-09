@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useNotifications } from "@/contexts/NotificationProvider";
@@ -12,6 +12,8 @@ import { IOSInstallInstructionsDialog } from "./IOSInstallInstructionsDialog";
 export function InstallRequestNotificationHandler() {
   const t = useTranslations("Notifications.installRequest");
   const { enqueue } = useNotifications();
+
+  const shownRef = useRef(false);
 
   const [
     isIOSInstallInstructionDialogOpen,
@@ -34,10 +36,12 @@ export function InstallRequestNotificationHandler() {
   }, [promptInstall, isInstallable, isIOSInstallable]);
 
   useEffect(() => {
-    if (isInstallable || isIOSInstallable) {
+    if ((isInstallable || isIOSInstallable) && shownRef.current === false) {
+      shownRef.current = true;
+
       enqueue({
         title: t("title"),
-        description: (
+        description: ({ close }) => (
           <div className="flex gap-4">
             <div className="w-fit shrink-0">
               <div className="relative flex aspect-square w-fit items-center justify-center rounded-md bg-slate-200 px-1 dark:bg-slate-700">
@@ -52,7 +56,14 @@ export function InstallRequestNotificationHandler() {
             </div>
             <div className="flex flex-col gap-1">
               <div>{t("description")}</div>
-              <Link onPress={triggerInstall}>{t("install")}</Link>
+              <Link
+                onPress={() => {
+                  triggerInstall();
+                  close();
+                }}
+              >
+                {t("install")}
+              </Link>
             </div>
           </div>
         ),

@@ -2,12 +2,9 @@
 
 import { createContext, useContext, useMemo } from "react";
 import { ToastQueue } from "@/components/atoms/Toast";
+import type { Toast } from "@/components/atoms/Toast";
 
-export interface Notification {
-  title: string;
-  description: string | React.ReactNode;
-  variant?: "default" | "success" | "error" | "info";
-}
+export type Notification = Toast;
 
 const notificationContext = createContext<{
   queue: ToastQueue;

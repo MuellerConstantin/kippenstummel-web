@@ -12,7 +12,10 @@ import { X } from "lucide-react";
 
 export interface Toast {
   title: string;
-  description?: string | React.ReactNode;
+  description?:
+    | string
+    | React.ReactNode
+    | ((props: { close: () => void }) => React.ReactNode);
   variant?: "default" | "success" | "error" | "info" | "warning";
 }
 
@@ -61,42 +64,48 @@ export function ToastRegion({ queue }: ToastRegionProps) {
       queue={queue}
       className="pointer-events-none absolute inset-y-0 right-0 z-[1000] flex max-h-screen max-w-full flex-col items-end gap-4 overflow-y-auto p-4"
     >
-      {({ toast: t }) => (
-        <AnimatePresence>
-          <motion.div
-            key={t.key}
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            layout
-          >
-            <AriaToast
-              toast={t}
-              className={`${toast({ variant: t.content.variant })} pointer-events-auto`}
+      {({ toast: t }) => {
+        const close = () => queue.close(t.key);
+
+        return (
+          <AnimatePresence>
+            <motion.div
+              key={t.key}
+              initial={{ opacity: 0, y: -20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              layout
             >
-              <AriaToastContent className="flex flex-1 flex-col gap-2 overflow-hidden">
-                <div className="flex items-center justify-between gap-2">
-                  <Text slot="title" className={toastTitle()}>
-                    {t.content.title}
-                  </Text>
-                  <Button
-                    slot="close"
-                    className={`${toastCloseButton()} cursor-pointer`}
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
-                {t.content.description && (
-                  <Text slot="description" className={toastDescription()}>
-                    {t.content.description}
-                  </Text>
-                )}
-              </AriaToastContent>
-            </AriaToast>
-          </motion.div>
-        </AnimatePresence>
-      )}
+              <AriaToast
+                toast={t}
+                className={`${toast({ variant: t.content.variant })} pointer-events-auto`}
+              >
+                <AriaToastContent className="flex flex-1 flex-col gap-2 overflow-hidden">
+                  <div className="flex items-center justify-between gap-2">
+                    <Text slot="title" className={toastTitle()}>
+                      {t.content.title}
+                    </Text>
+                    <Button
+                      slot="close"
+                      className={`${toastCloseButton()} cursor-pointer`}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  {t.content.description && (
+                    <Text slot="description" className={toastDescription()}>
+                      {typeof t.content.description === "function"
+                        ? t.content.description({ close })
+                        : t.content.description}
+                    </Text>
+                  )}
+                </AriaToastContent>
+              </AriaToast>
+            </motion.div>
+          </AnimatePresence>
+        );
+      }}
     </AriaToastRegion>
   );
 }
