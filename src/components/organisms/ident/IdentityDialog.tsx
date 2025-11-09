@@ -54,7 +54,7 @@ function CopyButton(props: CopyButtonProps) {
   return (
     <Button variant="icon" onPress={handleClick} className={props.className}>
       <div className="transition-all duration-300 ease-in-out">
-        {copied ? <Check className="h-5 w-5" /> : <Copy className="h-4 w-4" />}
+        {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
       </div>
     </Button>
   );
