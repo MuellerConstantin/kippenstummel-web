@@ -1,8 +1,18 @@
 {
+  "id": "/app",
+  "version": "0.1.0-beta.5",
   "name": "Kippenstummel",
   "short_name": "Kippel",
   "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - diese App hilft Rauchern, Zigarettenautomaten in der Nähe zu finden.",
-  "start_url": "/de",
+  "categories": [
+    "Werkzeuge",
+    "Karten",
+    "Standort",
+    "Lifestyle",
+    "Dienstprogramme"
+  ],
+  "start_url": "/de?source=pwa",
+  "scope": "/de/",
   "lang": "de",
   "icons": [
     {
