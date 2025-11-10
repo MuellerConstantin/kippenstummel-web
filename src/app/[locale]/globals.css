@@ -45,8 +45,40 @@ body {
   filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }
 
+.maplibregl-ctrl button {
+  outline: none;
+  box-shadow: none;
+}
+
+.maplibregl-ctrl button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.maplibregl-ctrl button:focus-visible {
+  outline: 2px solid #16a34a !important;
+  outline-offset: 0px;
+  box-shadow: none !important;
+}
+
+.maplibregl-ctrl a {
+  outline: none;
+  box-shadow: none;
+}
+
+.maplibregl-ctrl a:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.maplibregl-ctrl a:focus-visible {
+  outline: 2px solid #16a34a !important;
+  outline-offset: 0px;
+  box-shadow: none !important;
+}
+
 .dark .maplibregl-ctrl-group {
-  @apply overflow-hidden bg-slate-900 text-white;
+  @apply bg-slate-900 text-white;
 }
 
 .dark .maplibregl-ctrl-group:not(:empty) {

@@ -47,7 +47,7 @@ export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
         <button
           type="button"
           onClick={() => onHelp?.()}
-          className="flex cursor-pointer flex-col items-center justify-center rounded-l-md px-5 hover:bg-slate-50 dark:hover:bg-slate-800"
+          className="flex cursor-pointer flex-col items-center justify-center rounded-l-md px-5 hover:bg-slate-50 focus:outline-2 focus:outline-green-600 dark:hover:bg-slate-800"
         >
           <HelpCircle className="h-6 w-6" />
         </button>
@@ -67,7 +67,7 @@ export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
         <button
           type="button"
           onClick={() => onFilter?.()}
-          className="flex cursor-pointer flex-col items-center justify-center rounded-r-md px-5 hover:bg-slate-50 dark:hover:bg-slate-800"
+          className="flex cursor-pointer flex-col items-center justify-center rounded-r-md px-5 hover:bg-slate-50 focus:outline-2 focus:outline-green-600 dark:hover:bg-slate-800"
         >
           <div className="relative">
             {!!numberOfActiveFilters && (

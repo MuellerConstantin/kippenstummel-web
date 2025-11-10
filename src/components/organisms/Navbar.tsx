@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useCallback, useMemo, useState } from "react";
-import { Link as NextLink } from "@/i18n/navigation";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import {
@@ -66,7 +65,7 @@ export function Navbar() {
           </MenuTrigger>
         </div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:static md:top-auto md:left-auto md:translate-x-0 md:translate-y-0">
-          <NextLink href="/home">
+          <Link href="/home" className="!no-underline">
             <div className="relative flex w-fit items-center justify-center md:space-x-4">
               <Image
                 src="/images/logo.svg"
@@ -79,7 +78,7 @@ export function Navbar() {
                 Kippenstummel
               </span>
             </div>
-          </NextLink>
+          </Link>
         </div>
         <div className="flex items-center space-x-4">
           <div className="hidden space-x-4 md:flex">

@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import NextLink from "next/link";
 import { Link } from "@/components/atoms/Link";
 import { PrivacySettingsDialog } from "@/components/organisms/PrivacySettingsDialog";
 import { AnimatedDialogModal } from "./AnimatedDialogModal";
@@ -40,16 +39,14 @@ export function Footer() {
               </li>
             ))}
             <li>
-              <NextLink
-                href="#"
+              <Link
                 className="rounded-xs text-green-600 decoration-green-600/60 transition hover:underline hover:decoration-green-600 disabled:pointer-events-none disabled:cursor-default aria-disabled:no-underline dark:text-green-500 dark:decoration-green-500/60 dark:hover:decoration-green-500 forced-colors:disabled:text-[GrayText]"
-                onClick={(event) => {
-                  event.preventDefault();
+                onPress={() => {
                   setIsPrivacySettingsDialogOpen(true);
                 }}
               >
                 {t("privacySettings")}
-              </NextLink>
+              </Link>
             </li>
           </ul>
         </div>
