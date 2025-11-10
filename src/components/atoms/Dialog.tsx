@@ -7,7 +7,7 @@ export function Dialog(props: DialogProps) {
     <RACDialog
       {...props}
       className={twMerge(
-        "relative max-h-[inherit] overflow-auto p-6 outline-0 [[data-placement]>&]:p-4",
+        "relative max-h-[inherit] overflow-auto p-4 outline-0 [[data-placement]>&]:p-4",
         props.className,
       )}
       style={{ scrollbarGutter: "stable both-edges" }}
