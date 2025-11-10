@@ -306,7 +306,8 @@
     "no-identity": "Noch keine Identität? Jetzt anlegen!",
     "options": {
       "identity": "Meine Identität",
-      "new-identity": "Identität anlegen"
+      "new-identity": "Identität anlegen",
+      "about": "Über uns"
     },
     "languages": {
       "de": "Deutsch",
@@ -484,6 +485,11 @@
       "rN8p": "Schlecht (Score von -8 bis -1)",
       "rN10p": "Zu löschen (Score von -10 bis -9)"
     },
+    "close": "Schließen"
+  },
+  "AboutDialog": {
+    "title": "Über Kippenstummel",
+    "description": "Kippenstummel<br></br>Version {version}<br></br>© 2025 <copyright-link>Constantin Müller</copyright-link><br></br><br></br>Diese Anwendung ist freie Software unter der <license-link>GNU Affero General Public License Version 3 (AGPL-3.0)</license-link> lizenziert. Sie darf frei genutzt, verändert und weitergegeben werden, sofern die Lizenzbedingungen der AGPL-3.0 eingehalten werden.<br></br><br></br>Der vollständige Quellcode ist öffentlich verfügbar unter:<br></br><ul><li><web-code-link>Kippenstummel Web (Frontend)</web-code-link></li><li><api-code-link>Kippenstummel API (Backend)</api-code-link></li><li><kmc-code-link>Kippenstummel KMC (Admin-Panel)</kmc-code-link></li></ul><br></br>Für die Nutzung dieser Anwendung als Online-Dienst (SaaS) gelten zusätzlich unsere <terms-link>Nutzungsbedingungen</terms-link> sowie die <privacy-link>Datenschutzerklärung</privacy-link>.",
     "close": "Schließen"
   },
   "FilterDialog": {

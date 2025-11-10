@@ -11,6 +11,7 @@ import {
   IdCard,
   Signature,
   User,
+  Info,
 } from "lucide-react";
 import { MenuTrigger } from "react-aria-components";
 import { Button } from "@/components/atoms/Button";
@@ -31,6 +32,7 @@ import { ApiError } from "next/dist/server/api-utils";
 import useSWR from "swr";
 import useApi from "@/hooks/useApi";
 import { AnimatedDialogModal } from "../molecules/AnimatedDialogModal";
+import { AboutDialog } from "./navigation/AboutDialog";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
@@ -109,6 +111,7 @@ export function NavbarUnauthenticatedOptionsMenu() {
   const darkMode = useAppSelector((state) => state.usability.darkMode);
 
   const [showNewIdentityDialog, setShowNewIdentityDialog] = useState(false);
+  const [showAboutDialog, setShowAboutDialog] = useState(false);
 
   return (
     <Popover className="entering:animate-in entering:fade-in entering:placement-bottom:slide-in-from-top-1 entering:placement-top:slide-in-from-bottom-1 exiting:animate-out exiting:fade-out exiting:placement-bottom:slide-out-to-top-1 exiting:placement-top:slide-out-to-bottom-1 fill-mode-forwards origin-top-left overflow-auto rounded-lg bg-white p-2 shadow-lg ring-1 ring-black/10 outline-hidden dark:bg-slate-950 dark:ring-white/15">
@@ -132,12 +135,25 @@ export function NavbarUnauthenticatedOptionsMenu() {
                 <span>{t("options.new-identity")}</span>
               </div>
             </ListBoxItem>
+            <ListBoxItem onAction={() => setShowAboutDialog(true)}>
+              <div className="flex w-full items-center gap-2">
+                <Info className="h-4 w-4" />
+                <span>{t("options.about")}</span>
+              </div>
+            </ListBoxItem>
           </ListBox>
           <AnimatedDialogModal
             isOpen={showNewIdentityDialog}
             onOpenChange={setShowNewIdentityDialog}
           >
             <RequestIdentDialog />
+          </AnimatedDialogModal>
+          <AnimatedDialogModal
+            isOpen={showAboutDialog}
+            onOpenChange={setShowAboutDialog}
+            className="max-w-xl"
+          >
+            <AboutDialog />
           </AnimatedDialogModal>
         </div>
       </div>
@@ -154,6 +170,7 @@ function NavbarAuthenticatedOptionsMenu() {
   const identity = useAppSelector((state) => state.ident.identity);
 
   const [showIdentityDialog, setShowIdentityDialog] = useState(false);
+  const [showAboutDialog, setShowAboutDialog] = useState(false);
 
   const { data, error, isLoading } = useSWR<
     IdentInfo,
@@ -206,6 +223,12 @@ function NavbarAuthenticatedOptionsMenu() {
                 <span>{t("options.identity")}</span>
               </div>
             </ListBoxItem>
+            <ListBoxItem onAction={() => setShowAboutDialog(true)}>
+              <div className="flex w-full items-center gap-2">
+                <Info className="h-4 w-4" />
+                <span>{t("options.about")}</span>
+              </div>
+            </ListBoxItem>
           </ListBox>
         </div>
         <AnimatedDialogModal
@@ -214,6 +237,13 @@ function NavbarAuthenticatedOptionsMenu() {
           className="max-w-xl"
         >
           <IdentityDialog />
+        </AnimatedDialogModal>
+        <AnimatedDialogModal
+          isOpen={showAboutDialog}
+          onOpenChange={setShowAboutDialog}
+          className="max-w-xl"
+        >
+          <AboutDialog />
         </AnimatedDialogModal>
       </div>
     </Popover>
