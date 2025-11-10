@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -8,6 +8,7 @@ import { Dialog } from "@/components/atoms/Dialog";
 import { Button } from "@/components/atoms/Button";
 import { IdentIcon } from "@/components/atoms/IdentIcon";
 import { Checkbox } from "@/components/atoms/Checkbox";
+import { Collection } from "react-aria-components";
 import { useAppDispatch, useAppSelector } from "@/store";
 import {
   Check,
@@ -457,6 +458,34 @@ interface IdentityDialogProps extends Omit<DialogProps, "children"> {}
 export function IdentityDialog(props: IdentityDialogProps) {
   const t = useTranslations("IdentityDialog");
 
+  const tabs = useMemo(
+    () => [
+      {
+        id: "identity-tab-overview",
+        label: t("tabs.profile"),
+        component: <MyIdentityDataSection />,
+      },
+      {
+        id: "identity-tab-credentials",
+        label: t("tabs.credentials"),
+        component: ({ close }: { close: () => void }) => (
+          <MyAuthenticationDataSection close={close} />
+        ),
+      },
+      {
+        id: "identity-tab-transfer",
+        label: t("tabs.transfer"),
+        component: <TransferIdentitySection />,
+      },
+      {
+        id: "identity-tab-karma",
+        label: t("tabs.karma"),
+        component: <KarmaSection />,
+      },
+    ],
+    [t],
+  );
+
   return (
     <Dialog {...props}>
       {({ close }) => (
@@ -469,33 +498,26 @@ export function IdentityDialog(props: IdentityDialogProps) {
           </Heading>
           <div className="mt-4 flex min-h-0 grow flex-col items-start gap-4">
             <Tabs orientation="horizontal" className="min-h-0 w-full grow">
-              <TabList className="scrollbar-hide shrink-0 overflow-x-auto">
-                <Tab className="w-fit min-w-fit" id="identity-tab-overview">
-                  {t("tabs.profile")}
-                </Tab>
-                <Tab className="w-fit min-w-fit" id="identity-tab-credentials">
-                  {t("tabs.credentials")}
-                </Tab>
-                <Tab className="w-fit min-w-fit" id="identity-tab-transfer">
-                  {t("tabs.transfer")}
-                </Tab>
-                <Tab className="w-fit min-w-fit" id="identity-tab-karma">
-                  {t("tabs.karma")}
-                </Tab>
+              <TabList
+                className="scrollbar-hide shrink-0 overflow-x-auto"
+                items={tabs}
+              >
+                {(tab) => (
+                  <Tab className="w-fit min-w-fit" id={tab.id}>
+                    {tab.label}
+                  </Tab>
+                )}
               </TabList>
               <div className="min-h-0 grow overflow-y-auto">
-                <TabPanel id="identity-tab-overview" className="p-0">
-                  <MyIdentityDataSection />
-                </TabPanel>
-                <TabPanel id="identity-tab-credentials" className="p-0">
-                  <MyAuthenticationDataSection close={close} />
-                </TabPanel>
-                <TabPanel id="identity-tab-transfer" className="p-0">
-                  <TransferIdentitySection />
-                </TabPanel>
-                <TabPanel id="identity-tab-karma" className="p-0">
-                  <KarmaSection />
-                </TabPanel>
+                <Collection items={tabs}>
+                  {(tab) => (
+                    <TabPanel id={tab.id} className="p-0">
+                      {typeof tab.component === "function"
+                        ? tab.component({ close })
+                        : tab.component}
+                    </TabPanel>
+                  )}
+                </Collection>
               </div>
             </Tabs>
             <div className="flex w-full shrink-0 justify-start gap-4">
