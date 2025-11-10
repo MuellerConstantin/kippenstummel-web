@@ -526,7 +526,7 @@ export function IdentityDialog(props: IdentityDialogProps) {
                   </Tab>
                 )}
               </TabList>
-              <div className="relative min-h-0 grow overflow-y-auto">
+              <div className="relative min-h-0 grow overflow-x-hidden overflow-y-auto">
                 <AnimatePresence mode="wait" custom={direction}>
                   {tabs.map(
                     (tab) =>
@@ -557,7 +557,7 @@ export function IdentityDialog(props: IdentityDialogProps) {
                           transition={{ duration: 0.25, ease: "easeInOut" }}
                           className="absolute inset-0 p-0"
                         >
-                          <TabPanel id={tab.id}>
+                          <TabPanel id={tab.id} shouldForceMount>
                             {typeof tab.component === "function"
                               ? tab.component({ close })
                               : tab.component}
