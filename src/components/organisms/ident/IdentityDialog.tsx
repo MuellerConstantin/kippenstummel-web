@@ -2,13 +2,13 @@ import React, { useCallback, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { DialogProps, Heading } from "react-aria-components";
+import { DialogProps, Heading, Key } from "react-aria-components";
+import { motion, AnimatePresence } from "motion/react";
 import QRCode from "react-qr-code";
 import { Dialog } from "@/components/atoms/Dialog";
 import { Button } from "@/components/atoms/Button";
 import { IdentIcon } from "@/components/atoms/IdentIcon";
 import { Checkbox } from "@/components/atoms/Checkbox";
-import { Collection } from "react-aria-components";
 import { useAppDispatch, useAppSelector } from "@/store";
 import {
   Check,
@@ -486,6 +486,19 @@ export function IdentityDialog(props: IdentityDialogProps) {
     [t],
   );
 
+  const [selectedKey, setSelectedKey] = useState<Key>(tabs[0].id);
+  const [direction, setDirection] = useState(0);
+
+  const onSelectionChange = useCallback(
+    (newKey: Key) => {
+      const oldIndex = tabs.findIndex((t) => t.id === selectedKey);
+      const newIndex = tabs.findIndex((t) => t.id === newKey);
+      setDirection(newIndex > oldIndex ? 1 : -1);
+      setSelectedKey(newKey);
+    },
+    [selectedKey, tabs],
+  );
+
   return (
     <Dialog {...props}>
       {({ close }) => (
@@ -497,7 +510,12 @@ export function IdentityDialog(props: IdentityDialogProps) {
             {t("title")}
           </Heading>
           <div className="mt-4 flex min-h-0 grow flex-col items-start gap-4">
-            <Tabs orientation="horizontal" className="min-h-0 w-full grow">
+            <Tabs
+              orientation="horizontal"
+              className="min-h-0 w-full grow"
+              selectedKey={selectedKey}
+              onSelectionChange={onSelectionChange}
+            >
               <TabList
                 className="scrollbar-hide shrink-0 overflow-x-auto"
                 items={tabs}
@@ -508,16 +526,46 @@ export function IdentityDialog(props: IdentityDialogProps) {
                   </Tab>
                 )}
               </TabList>
-              <div className="min-h-0 grow overflow-y-auto">
-                <Collection items={tabs}>
-                  {(tab) => (
-                    <TabPanel id={tab.id} className="p-0">
-                      {typeof tab.component === "function"
-                        ? tab.component({ close })
-                        : tab.component}
-                    </TabPanel>
+              <div className="relative min-h-0 grow overflow-y-auto">
+                <AnimatePresence mode="wait" custom={direction}>
+                  {tabs.map(
+                    (tab) =>
+                      tab.id === selectedKey && (
+                        <motion.div
+                          key={tab.id}
+                          custom={direction}
+                          variants={{
+                            enter: (dir) => ({
+                              x: dir > 0 ? 50 : -50,
+                              opacity: 0,
+                              position: "absolute",
+                            }),
+                            center: {
+                              x: 0,
+                              opacity: 1,
+                              position: "relative",
+                            },
+                            exit: (dir) => ({
+                              x: dir > 0 ? -50 : 50,
+                              opacity: 0,
+                              position: "absolute",
+                            }),
+                          }}
+                          initial="enter"
+                          animate="center"
+                          exit="exit"
+                          transition={{ duration: 0.25, ease: "easeInOut" }}
+                          className="absolute inset-0 p-0"
+                        >
+                          <TabPanel id={tab.id}>
+                            {typeof tab.component === "function"
+                              ? tab.component({ close })
+                              : tab.component}
+                          </TabPanel>
+                        </motion.div>
+                      ),
                   )}
-                </Collection>
+                </AnimatePresence>
               </div>
             </Tabs>
             <div className="flex w-full shrink-0 justify-start gap-4">
