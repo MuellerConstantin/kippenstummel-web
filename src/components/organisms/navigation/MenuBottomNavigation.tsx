@@ -47,7 +47,7 @@ export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
         <button
           type="button"
           onClick={() => onHelp?.()}
-          className="flex cursor-pointer flex-col items-center justify-center rounded-l-md px-5 hover:bg-slate-50 focus:outline-2 focus:outline-green-600 dark:hover:bg-slate-800"
+          className="flex cursor-pointer flex-col items-center justify-center rounded-l-md px-5 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-green-600 dark:hover:bg-slate-800"
         >
           <HelpCircle className="h-6 w-6" />
         </button>
@@ -55,7 +55,7 @@ export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
           <button
             type="button"
             onClick={onRegisterCvm}
-            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-green-600 font-medium hover:bg-green-700 focus:ring-4 focus:ring-green-300 focus:outline-none dark:focus:ring-green-800"
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-green-600 font-medium hover:bg-green-700 focus-visible:ring-4 focus-visible:ring-green-300 focus-visible:outline-none dark:focus-visible:ring-green-800"
           >
             {registeringCvm ? (
               <LoaderCircle className="h-5 w-5 animate-spin text-white" />
@@ -67,7 +67,7 @@ export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
         <button
           type="button"
           onClick={() => onFilter?.()}
-          className="flex cursor-pointer flex-col items-center justify-center rounded-r-md px-5 hover:bg-slate-50 focus:outline-2 focus:outline-green-600 dark:hover:bg-slate-800"
+          className="flex cursor-pointer flex-col items-center justify-center rounded-r-md px-5 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-green-600 dark:hover:bg-slate-800"
         >
           <div className="relative">
             {!!numberOfActiveFilters && (

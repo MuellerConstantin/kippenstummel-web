@@ -39,7 +39,7 @@ function CopyButton(props: CopyButtonProps) {
 
   return (
     <button
-      className="cursor-pointer text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed"
+      className="cursor-pointer text-slate-600 hover:text-slate-800 focus-visible:outline-2 focus-visible:outline-green-600 disabled:cursor-not-allowed"
       disabled={props.disabled}
       onClick={handleClick}
     >
@@ -192,7 +192,7 @@ export function CvmInfoDialog(props: CvmInfoMobileDialogProps) {
                 <div className="flex items-start gap-4">
                   <div className="flex flex-col items-center gap-1">
                     <button
-                      className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed disabled:text-slate-400 dark:hover:!text-slate-200 ${props.cvm.alreadyVoted === "upvote" ? "border-green-600 bg-green-100 !text-green-600 dark:bg-green-900" : "border-slate-400 dark:border-slate-600"}`}
+                      className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border text-slate-600 hover:text-slate-800 focus-visible:outline-2 focus-visible:outline-green-600 disabled:cursor-not-allowed disabled:text-slate-400 dark:hover:!text-slate-200 ${props.cvm.alreadyVoted === "upvote" ? "border-green-600 bg-green-100 !text-green-600 dark:bg-green-900" : "border-slate-400 dark:border-slate-600"}`}
                       onClick={onUpvoteRequest}
                       onMouseDown={(e) => e.stopPropagation()}
                       disabled={
@@ -209,7 +209,7 @@ export function CvmInfoDialog(props: CvmInfoMobileDialogProps) {
                     </button>
                     <div className="text-xl font-bold">{props.cvm.score}</div>
                     <button
-                      className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border text-slate-600 hover:text-slate-800 disabled:cursor-not-allowed disabled:text-slate-400 dark:hover:!text-slate-200 ${props.cvm.alreadyVoted === "downvote" ? "border-green-600 bg-green-100 !text-green-600 dark:bg-green-900" : "border-slate-400 dark:border-slate-600"}`}
+                      className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border text-slate-600 hover:text-slate-800 focus-visible:outline-2 focus-visible:outline-green-600 disabled:cursor-not-allowed disabled:text-slate-400 dark:hover:!text-slate-200 ${props.cvm.alreadyVoted === "downvote" ? "border-green-600 bg-green-100 !text-green-600 dark:bg-green-900" : "border-slate-400 dark:border-slate-600"}`}
                       onClick={onDownvoteRequest}
                       onMouseDown={(e) => e.stopPropagation()}
                       disabled={
@@ -258,7 +258,7 @@ export function CvmInfoDialog(props: CvmInfoMobileDialogProps) {
                         <Link
                           href={`https://www.google.com.sa/maps/search/${props.cvm.latitude},${props.cvm.longitude}`}
                           target="_blank"
-                          className="flex h-8 items-center justify-center rounded-full bg-slate-200 p-2 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700"
+                          className="flex h-8 items-center justify-center rounded-full bg-slate-200 p-2 hover:bg-slate-300 focus-visible:outline-2 focus-visible:outline-green-600 dark:bg-slate-800 dark:hover:bg-slate-700"
                         >
                           <div className="relative h-4 w-4 overflow-hidden">
                             <Image
@@ -273,7 +273,7 @@ export function CvmInfoDialog(props: CvmInfoMobileDialogProps) {
                         <Link
                           href={`whatsapp://send?text=${encodeURI(`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`)}`}
                           target="_blank"
-                          className="flex h-8 items-center justify-center rounded-full bg-slate-200 p-2 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700"
+                          className="flex h-8 items-center justify-center rounded-full bg-slate-200 p-2 hover:bg-slate-300 focus-visible:outline-2 focus-visible:outline-green-600 dark:bg-slate-800 dark:hover:bg-slate-700"
                         >
                           <div className="relative h-4 w-4 overflow-hidden">
                             <Image
@@ -292,7 +292,7 @@ export function CvmInfoDialog(props: CvmInfoMobileDialogProps) {
                                 url: `${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`,
                               })
                             }
-                            className="flex h-8 items-center justify-center rounded-full bg-slate-200 p-2 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700"
+                            className="flex h-8 items-center justify-center rounded-full bg-slate-200 p-2 hover:bg-slate-300 focus-visible:outline-2 focus-visible:outline-green-600 dark:bg-slate-800 dark:hover:bg-slate-700"
                           >
                             <Share2 className="h-4 w-4 text-slate-800 dark:text-slate-200" />
                           </Link>
@@ -305,7 +305,7 @@ export function CvmInfoDialog(props: CvmInfoMobileDialogProps) {
               </div>
               <div className="flex justify-end gap-2">
                 <button
-                  className="flex cursor-pointer items-center gap-1 text-xs text-slate-500 hover:underline disabled:cursor-not-allowed disabled:text-slate-300 dark:text-slate-400 dark:hover:text-slate-200"
+                  className="flex cursor-pointer items-center gap-1 text-xs text-slate-500 hover:underline focus-visible:outline-2 focus-visible:outline-green-600 disabled:cursor-not-allowed disabled:text-slate-300 dark:text-slate-400 dark:hover:text-slate-200"
                   onClick={onReportRequest}
                   disabled={isReporting || isRepositioning || voting !== false}
                 >
@@ -313,7 +313,7 @@ export function CvmInfoDialog(props: CvmInfoMobileDialogProps) {
                   {isReporting && <Spinner size={14} />}
                 </button>
                 <button
-                  className="flex cursor-pointer items-center gap-1 text-xs text-slate-500 hover:underline disabled:cursor-not-allowed disabled:text-slate-300 dark:text-slate-400 dark:hover:text-slate-200"
+                  className="flex cursor-pointer items-center gap-1 text-xs text-slate-500 hover:underline focus-visible:outline-2 focus-visible:outline-green-600 disabled:cursor-not-allowed disabled:text-slate-300 dark:text-slate-400 dark:hover:text-slate-200"
                   onClick={onRepositionRequest}
                   disabled={isRepositioning || voting !== false}
                 >
