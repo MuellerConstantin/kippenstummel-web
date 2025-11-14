@@ -14,20 +14,29 @@ import {
   REGISTER,
 } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import storage from "redux-persist/lib/storage";
+import localStorage from "redux-persist/lib/storage";
+import sessionStorage from "redux-persist/lib/storage/session";
 import { injectStore } from "@/api";
 import usabilitySlice from "@/store/slices/usability";
 import identSlice from "./slices/ident";
 import privacySlice from "./slices/privacy";
 import locationSlice from "./slices/location";
+import sessionSlice from "./slices/session";
 import { PrivacySettingsDialog } from "@/components/organisms/PrivacySettingsDialog";
 import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
 
-const persistConfig = {
+const rootPersistConfig = {
   key: "kippenstummel",
   version: 2,
-  storage,
+  storage: localStorage,
   whitelist: ["usability", "ident", "privacy"],
+  blacklist: ["session"],
+};
+
+const sessionPersistConfig = {
+  key: "kippenstummel-session",
+  version: 1,
+  storage: sessionStorage,
 };
 
 export const rootReducer = combineReducers({
@@ -35,9 +44,10 @@ export const rootReducer = combineReducers({
   ident: identSlice.reducer,
   privacy: privacySlice.reducer,
   location: locationSlice.reducer,
+  session: persistReducer(sessionPersistConfig, sessionSlice.reducer),
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
 
 export const makeStore = () => {
   const store = configureStore({

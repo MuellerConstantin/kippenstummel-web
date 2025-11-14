@@ -3,6 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import { tv } from "tailwind-variants";
 import { Link } from "../atoms/Link";
 import { useTranslations } from "next-intl";
+import { useAppSelector, useAppDispatch } from "@/store";
+import sessionSlice from "@/store/slices/session";
 
 interface MessageBannerProps {
   title: string;
@@ -69,9 +71,10 @@ export interface MessageBannerCarouselProps {
 }
 
 export function MessageBannerCarousel(props: MessageBannerCarouselProps) {
+  const dispatch = useAppDispatch();
   const t = useTranslations("MessageBannerCarousel");
 
-  const [visible, setVisible] = useState(true);
+  const visible = useAppSelector((state) => state.session.showMessageBanner);
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -172,7 +175,9 @@ export function MessageBannerCarousel(props: MessageBannerCarouselProps) {
         <Link
           variant="secondary"
           className="!cursor-pointer !text-xs"
-          onPress={() => setVisible(false)}
+          onPress={() =>
+            dispatch(sessionSlice.actions.setMessageBannerVisibility(false))
+          }
         >
           {t("hide")}
         </Link>
