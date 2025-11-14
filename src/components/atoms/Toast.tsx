@@ -62,7 +62,7 @@ export function ToastRegion({ queue }: ToastRegionProps) {
   return (
     <AriaToastRegion
       queue={queue}
-      className="pointer-events-none absolute inset-y-0 right-0 z-[1000] flex max-h-screen max-w-full flex-col items-end gap-4 overflow-y-auto p-4"
+      className="pointer-events-none fixed inset-y-0 right-0 z-[1000] flex max-h-screen max-w-full flex-col items-end gap-4 overflow-y-auto p-4"
     >
       {({ toast: t }) => {
         const close = () => queue.close(t.key);
