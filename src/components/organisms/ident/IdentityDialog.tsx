@@ -556,6 +556,35 @@ export function IdentityDialog(props: IdentityDialogProps) {
                           exit="exit"
                           transition={{ duration: 0.25, ease: "easeInOut" }}
                           className="absolute inset-0 p-0"
+                          drag="x"
+                          dragConstraints={{ left: 0, right: 0 }}
+                          dragElastic={0.2}
+                          onDragEnd={(_, info) => {
+                            const offset = info.offset.x;
+                            const velocity = info.velocity.x;
+
+                            const currentIndex = tabs.findIndex(
+                              (t) => t.id === selectedKey,
+                            );
+
+                            // Swipe to right -> previous tab
+                            if (offset > 120 || velocity > 800) {
+                              const prev = currentIndex - 1;
+                              if (prev >= 0) {
+                                setDirection(-1);
+                                setSelectedKey(tabs[prev].id);
+                              }
+                            }
+
+                            // Swipe to left → next tab
+                            if (offset < -120 || velocity < -800) {
+                              const next = currentIndex + 1;
+                              if (next < tabs.length) {
+                                setDirection(1);
+                                setSelectedKey(tabs[next].id);
+                              }
+                            }
+                          }}
                         >
                           <TabPanel id={tab.id} shouldForceMount>
                             {typeof tab.component === "function"
