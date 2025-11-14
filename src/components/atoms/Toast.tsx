@@ -62,7 +62,7 @@ export function ToastRegion({ queue }: ToastRegionProps) {
   return (
     <AriaToastRegion
       queue={queue}
-      className="pointer-events-none fixed inset-y-0 right-0 z-[1000] flex max-h-screen max-w-full flex-col items-end gap-4 overflow-y-auto p-4"
+      className="pointer-events-none fixed inset-y-0 right-0 z-[1000] flex max-h-screen max-w-full flex-col items-end gap-4 overflow-x-hidden overflow-y-auto p-4"
     >
       {({ toast: t }) => {
         const close = () => queue.close(t.key);
@@ -76,6 +76,17 @@ export function ToastRegion({ queue }: ToastRegionProps) {
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
               layout
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={{ right: 0.5 }}
+              onDragEnd={(_, info) => {
+                const offset = info.offset.x;
+                const velocity = info.velocity.x;
+
+                if (offset > 200 || velocity > 1000) {
+                  queue.close(t.key);
+                }
+              }}
             >
               <AriaToast
                 toast={t}
