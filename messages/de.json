@@ -510,21 +510,17 @@
       "karma": "Mein Karma"
     },
     "profile": {
-      "uniqueId": "Öffentliche ID"
-    },
-    "authentication": {
-      "spoiler": "Meine Anmeldeinformationen",
-      "description": "Deine Anmeldeinformationen bestehen aus einer öffentlichen ID (UUID) und einem geheimen Secret. Diese Daten werden lokal in deinem Browser gespeichert und ermöglichen die anonyme Nutzung der Anwendung. <b>Bitte beachte:</b> Das Secret ist vertraulich und darf nicht an Dritte weitergegeben werden, da damit auf deine Daten zugegriffen werden kann.",
-      "form": {
-        "id": "ID",
-        "secret": "Secret"
-      },
-      "reset": {
-        "spoiler": "Anmeldeinformationen zurücksetzen",
-        "description": "Hier kannst du deine Anmeldeinformationen zurücksetzen. Deine Anmeldedaten werden unwiderruflich von deinem Gerät bzw. Browser entfernt. Solltest du deine Identität zuvor nicht auf ein anderes Gerät übertragen haben, geht dein Zugriff auf deine Identität unwiderruflich verloren.",
-        "disclaimer": "Diese Option löscht deine Identität nicht vollständig sondern entzieht diesem Gerät lediglich den Zugriff. Deine Identität bleibt gemäß der <link1>Nutzungsbedingungen</link1> und <link2>Datenschutzerklärung</link2> weiter bestehen. Für eine vollständige Löschung im Sinne des Art. 17 DSGVO, wende dich bitte an den Support und setze deine Anmeldeinformationen <b>keinesfalls</b> zurück.",
-        "confirm": "Ich habe den Hinweis gelesen und verstanden.",
-        "submit": "Jetzt zurücksetzen"
+      "uniqueId": "Öffentliche ID",
+      "authentication": {
+        "title": "Anmeldeinformationen",
+        "description": "Deine Anmeldeinformationen bestehen aus einer öffentlichen ID (UUID) und einem geheimen Secret. Diese Daten werden lokal in deinem Browser gespeichert und ermöglichen die anonyme Nutzung der Anwendung. <b>Bitte beachte:</b> Das Secret ist vertraulich und darf nicht an Dritte weitergegeben werden, da damit auf deine Daten zugegriffen werden kann.",
+        "secret": "Secret",
+        "reset": {
+          "title": "Abmelden",
+          "description": "Du kannst dich hier von diesem Gerät abmelden. Dabei werden die Anmeldedaten nur auf diesem Gerät gelöscht. Auf anderen Geräten bleibst du weiterhin angemeldet. Wenn du deine anonyme Identität nicht vorher auf ein anderes Gerät übertragen hast, kann der Zugriff dauerhaft verloren gehen.",
+          "confirm": "Ich habe den Hinweis gelesen und verstanden.",
+          "submit": "Jetzt abmelden"
+        }
       }
     },
     "transfer": {
@@ -536,8 +532,7 @@
         "error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
         "submit": "Jetzt übertragen"
       },
-      "share": "Mit anderen Geräten teilen",
-      "disclaimer": "Hierbei handelt es sich um deine persönliche Identität, welche der Authentifzierung dient und mit all deinen Interaktionen verknüpft wird. Behandle sie vertraulich und gebe sie nicht an Dritte weiter."
+      "share": "Auf andere Geräte übertragen"
     },
     "karma": {
       "description": "Dieser Abschnitt zeigt dir das gesammelte Karma deiner Interaktionen und Errungenschaften.",

@@ -10,15 +10,7 @@ import { Button } from "@/components/atoms/Button";
 import { IdentIcon } from "@/components/atoms/IdentIcon";
 import { Checkbox } from "@/components/atoms/Checkbox";
 import { useAppDispatch, useAppSelector } from "@/store";
-import {
-  Check,
-  Copy,
-  TriangleAlert,
-  Eye,
-  EyeOff,
-  ChevronUp,
-  ChevronDown,
-} from "lucide-react";
+import { Check, Copy, Eye, EyeOff, ChevronUp, ChevronDown } from "lucide-react";
 import { Link } from "@/components/atoms/Link";
 import { TextField } from "@/components/atoms/TextField";
 import { Form } from "@/components/atoms/Form";
@@ -61,42 +53,19 @@ function CopyButton(props: CopyButtonProps) {
   );
 }
 
-function MyIdentityDataSection() {
-  const t = useTranslations("IdentityDialog.profile");
-  const identity = useAppSelector((state) => state.ident.identity);
-
-  return (
-    <div className="flex w-full flex-col items-center gap-4">
-      <div className="h-32 w-32 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
-        <IdentIcon value={identity || ""} />
-      </div>
-      <div className="brorder-slate-200 w-full space-y-2 rounded-md border p-4 dark:border-slate-600">
-        <div className="font-semibold">{t("uniqueId")}</div>
-        <div className="flex items-center gap-2">
-          <div className="overflow-x-auto pb-2 text-xs whitespace-nowrap">
-            {identity || "Anonymous"}
-          </div>
-          <div className="pb-2">
-            <CopyButton text={identity || ""} disabled={!identity} />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-interface MyAuthenticationDataSectionProps {
+interface MyIdentityDataSectionProps {
   close: () => void;
 }
 
-function MyAuthenticationDataSection(props: MyAuthenticationDataSectionProps) {
-  const { close } = props;
-
-  const t = useTranslations("IdentityDialog.authentication");
+function MyIdentityDataSection({ close }: MyIdentityDataSectionProps) {
   const dispatch = useAppDispatch();
+  const t = useTranslations("IdentityDialog.profile");
 
   const [showSecret, setShowSecret] = useState(false);
-  const [showResetSection, setShowResetSection] = useState(false);
+  const [
+    showAuthenticationDetailsSection,
+    setShowAuthenticationDetailsSection,
+  ] = useState(false);
   const [resetConfirmed, setResetConfirmed] = useState(false);
 
   const identity = useAppSelector((state) => state.ident.identity);
@@ -108,103 +77,98 @@ function MyAuthenticationDataSection(props: MyAuthenticationDataSectionProps) {
   }, [dispatch, close]);
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-4">
-        <div className="text-sm">
-          {t.rich("description", {
-            b: (chunks) => <span className="font-semibold">{chunks}</span>,
-          })}
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="flex items-end gap-1">
-            <TextField
-              label={t("form.id")}
-              className="grow"
-              value={identity || ""}
-              isReadOnly
-            />
-            <CopyButton
-              text={identity || ""}
-              disabled={!identity}
-              className="h-9"
-            />
+    <div className="flex w-full flex-col items-center gap-4">
+      <div className="h-32 w-32 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
+        <IdentIcon value={identity || ""} />
+      </div>
+      <div className="w-full space-y-2 rounded-md border border-slate-200 p-4 dark:border-slate-600">
+        <div className="font-semibold">{t("uniqueId")}</div>
+        <div className="flex items-center gap-2">
+          <div className="overflow-x-auto pb-2 text-xs whitespace-nowrap">
+            {identity || "Anonymous"}
           </div>
-          <div className="flex items-end gap-1">
-            <TextField
-              label={t("form.secret")}
-              className="grow"
-              value={secret || ""}
-              type={showSecret ? "text" : "password"}
-              isReadOnly
-            />
-            <Button
-              variant="icon"
-              className="h-9"
-              onPress={() => setShowSecret(!showSecret)}
-            >
-              {showSecret ? (
-                <EyeOff className="h-5 w-5" />
-              ) : (
-                <Eye className="h-5 w-5" />
-              )}
-            </Button>
-            <CopyButton
-              text={secret || ""}
-              disabled={!secret}
-              className="h-9"
-            />
+          <div className="pb-2">
+            <CopyButton text={identity || ""} disabled={!identity} />
           </div>
         </div>
       </div>
-      <div className="flex w-full flex-col gap-3">
+      <div className="flex w-full flex-col gap-4">
         <button
-          className="w-fit cursor-pointer text-sm text-red-500 hover:underline"
-          onClick={() => setShowResetSection(!showResetSection)}
+          className="w-fit cursor-pointer text-sm hover:underline"
+          onClick={() =>
+            setShowAuthenticationDetailsSection(
+              !showAuthenticationDetailsSection,
+            )
+          }
         >
-          {showResetSection ? (
+          {showAuthenticationDetailsSection ? (
             <div className="flex items-center gap-1">
-              {t("reset.spoiler")} <ChevronUp className="h-4 w-4" />
+              {t("authentication.title")} <ChevronUp className="h-4 w-4" />
             </div>
           ) : (
             <div className="flex items-center gap-1">
-              {t("reset.spoiler")} <ChevronDown className="h-4 w-4" />
+              {t("authentication.title")} <ChevronDown className="h-4 w-4" />
             </div>
           )}
         </button>
-        {showResetSection && (
+        {showAuthenticationDetailsSection && (
           <div className="flex flex-col gap-4">
-            <div className="text-sm">{t("reset.description")}</div>
-            <div className="flex flex-col gap-4">
-              <Checkbox
-                isSelected={resetConfirmed}
-                onChange={(isSelected) => setResetConfirmed(isSelected)}
-              >
-                {t("reset.confirm")}
-              </Checkbox>
-              <Button
-                isDisabled={!resetConfirmed}
-                className="w-fit"
-                variant="secondary"
-                onPress={onReset}
-              >
-                {t("reset.submit")}
-              </Button>
+            <div className="text-sm">
+              {t.rich("authentication.description", {
+                b: (chunks) => <span className="font-semibold">{chunks}</span>,
+              })}
             </div>
-            <div className="flex w-full gap-2">
-              <TriangleAlert className="h-4 w-4 shrink-0 text-red-500" />
-              <p className="text-xs">
-                {t.rich("reset.disclaimer", {
-                  link1: (chunks) => (
-                    <Link href="/terms-of-service">{chunks}</Link>
-                  ),
-                  link2: (chunks) => (
-                    <Link href="/privacy-policy">{chunks}</Link>
-                  ),
-                  b: (chunks) => (
-                    <span className="font-semibold">{chunks}</span>
-                  ),
-                })}
-              </p>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-end gap-1">
+                <TextField
+                  label={t("authentication.secret")}
+                  className="grow"
+                  value={secret || ""}
+                  type={showSecret ? "text" : "password"}
+                  isReadOnly
+                />
+                <Button
+                  variant="icon"
+                  className="h-9"
+                  onPress={() => setShowSecret(!showSecret)}
+                >
+                  {showSecret ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </Button>
+                <CopyButton
+                  text={secret || ""}
+                  disabled={!secret}
+                  className="h-9"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 rounded-md border border-red-500 p-4">
+              <div className="text-sm text-red-500">
+                {t("authentication.reset.title")}
+              </div>
+              <div className="text-sm">
+                {t("authentication.reset.description")}
+              </div>
+              <div className="flex flex-col gap-4">
+                <Checkbox
+                  isSelected={resetConfirmed}
+                  onChange={(isSelected) => setResetConfirmed(isSelected)}
+                  className="!text-sm"
+                >
+                  {t("authentication.reset.confirm")}
+                </Checkbox>
+                <Button
+                  isDisabled={!resetConfirmed}
+                  className="w-fit"
+                  variant="secondary"
+                  onPress={onReset}
+                >
+                  {t("authentication.reset.submit")}
+                </Button>
+              </div>
             </div>
           </div>
         )}
@@ -325,10 +289,6 @@ function TransferIdentitySection() {
           </div>
         </div>
       )}
-      <div className="flex w-full gap-2">
-        <TriangleAlert className="h-4 w-4 shrink-0 text-green-600" />
-        <p className="text-xs">{t("disclaimer")}</p>
-      </div>
     </div>
   );
 }
@@ -463,24 +423,19 @@ export function IdentityDialog(props: IdentityDialogProps) {
       {
         id: "identity-tab-overview",
         label: t("tabs.profile"),
-        component: <MyIdentityDataSection />,
-      },
-      {
-        id: "identity-tab-credentials",
-        label: t("tabs.credentials"),
         component: ({ close }: { close: () => void }) => (
-          <MyAuthenticationDataSection close={close} />
+          <MyIdentityDataSection close={close} />
         ),
-      },
-      {
-        id: "identity-tab-transfer",
-        label: t("tabs.transfer"),
-        component: <TransferIdentitySection />,
       },
       {
         id: "identity-tab-karma",
         label: t("tabs.karma"),
         component: <KarmaSection />,
+      },
+      {
+        id: "identity-tab-transfer",
+        label: t("tabs.transfer"),
+        component: <TransferIdentitySection />,
       },
     ],
     [t],
