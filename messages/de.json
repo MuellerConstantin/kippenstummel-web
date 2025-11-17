@@ -457,7 +457,8 @@
     }
   },
   "Validation": {
-    "required": "Dieses Feld ist erforderlich."
+    "required": "Dieses Feld ist erforderlich.",
+    "invalidUsername": "Benutzername muss 4-8 alphanumerische, sowie - und _, Zeichen lang sein, mit einem Buchstaben beginnen und darf nicht mit _ oder - enden."
   },
   "HelpDialog": {
     "title": "Hilfe",
@@ -511,6 +512,11 @@
     },
     "profile": {
       "uniqueId": "Öffentliche ID",
+      "displayName": "Anzeigename",
+      "displayNameDescription": "Dein Anzeigename besteht aus dem von dir gewählten Benutzernamen und einem Zufallscode.",
+      "error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
+      "usernameAlreadyInUse": "Der gewünschte Benutzername ist bereits vergeben.",
+      "noUsername": "Kein Benutzername angegeben.",
       "authentication": {
         "title": "Anmeldeinformationen",
         "description": "Deine Anmeldeinformationen bestehen aus einer öffentlichen ID (UUID) und einem geheimen Secret. Diese Daten werden lokal in deinem Browser gespeichert und ermöglichen die anonyme Nutzung der Anwendung. <b>Bitte beachte:</b> Das Secret ist vertraulich und darf nicht an Dritte weitergegeben werden, da damit auf deine Daten zugegriffen werden kann.",

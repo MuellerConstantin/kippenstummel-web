@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Formik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import * as yup from "yup";
 import { DialogProps, Heading, Key } from "react-aria-components";
 import { motion, AnimatePresence } from "motion/react";
@@ -53,6 +53,116 @@ function CopyButton(props: CopyButtonProps) {
   );
 }
 
+function DisplayNameInput() {
+  const t = useTranslations("IdentityDialog.profile");
+  const validationT = useTranslations("Validation");
+  const api = useApi();
+  const [globalError, setGlobalError] = useState<string | null>(null);
+
+  const schema = yup.object().shape({
+    currentUsername: yup
+      .string()
+      .required(validationT("required"))
+      .matches(
+        /^[A-Za-z](?:[A-Za-z0-9_-]{2,6}[A-Za-z0-9])$/,
+        validationT("invalidUsername"),
+      ),
+  });
+
+  const { data, mutate } = useSWR<IdentInfo, AxiosError<ApiError>, string>(
+    "/ident/me",
+    (url) => api.get(url).then((res) => res.data),
+  );
+
+  const [username, suffix] = useMemo(() => {
+    if (!data?.displayName) return ["", ""];
+    return data.displayName.split("#");
+  }, [data]);
+
+  const changeUsername = useCallback(
+    async (
+      { currentUsername }: { currentUsername: string },
+      formikHelpers: FormikHelpers<{ currentUsername: string }>,
+    ) => {
+      setGlobalError(null);
+
+      try {
+        await api.patch("/ident/me", {
+          username: currentUsername === "" ? null : currentUsername,
+        });
+        await mutate();
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          if (
+            error.response?.status === 409 &&
+            error.response.data.code === "USERNAME_ALREADY_EXISTS_ERROR"
+          ) {
+            formikHelpers.setFieldError(
+              "currentUsername",
+              t("usernameAlreadyInUse"),
+            );
+            return;
+          }
+        }
+
+        setGlobalError(t("error"));
+      } finally {
+        formikHelpers.setSubmitting(false);
+      }
+    },
+    [api, mutate, t],
+  );
+
+  return (
+    <div className="flex flex-col gap-2">
+      {globalError && <div className="text-sm text-red-500">{globalError}</div>}
+      <Formik
+        enableReinitialize
+        initialValues={{ currentUsername: username }}
+        validationSchema={schema}
+        onSubmit={changeUsername}
+      >
+        {(props) => (
+          <Form onSubmit={props.handleSubmit} validationBehavior="aria">
+            <div className="flex items-start gap-1">
+              <TextField
+                className="grow"
+                placeholder={t("noUsername")}
+                value={props.values.currentUsername}
+                onBlur={props.handleBlur}
+                onChange={(value) => {
+                  props.setFieldValue("currentUsername", value);
+                  props.setFieldTouched("currentUsername", true, false);
+                }}
+                isInvalid={
+                  !!props.touched.currentUsername &&
+                  !!props.errors.currentUsername
+                }
+                errorMessage={props.errors.currentUsername}
+                isDisabled={props.isSubmitting}
+                description={t("displayNameDescription")}
+              />
+              {username && suffix && (
+                <div className="flex h-9 items-center">#{suffix}</div>
+              )}
+              {props.touched.currentUsername &&
+                props.values.currentUsername !== username && (
+                  <Button variant="icon" className="h-9" type="submit">
+                    {props.isSubmitting ? (
+                      <Spinner size={16} />
+                    ) : (
+                      <Check className="h-4 w-4" />
+                    )}
+                  </Button>
+                )}
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </div>
+  );
+}
+
 interface MyIdentityDataSectionProps {
   close: () => void;
 }
@@ -81,16 +191,18 @@ function MyIdentityDataSection({ close }: MyIdentityDataSectionProps) {
       <div className="h-32 w-32 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
         <IdentIcon value={identity || ""} />
       </div>
-      <div className="w-full space-y-2 rounded-md border border-slate-200 p-4 dark:border-slate-600">
+      <div className="w-full space-y-2 rounded-md md:border md:border-slate-200 md:p-4 dark:md:border-slate-600">
         <div className="font-semibold">{t("uniqueId")}</div>
         <div className="flex items-center gap-2">
-          <div className="overflow-x-auto pb-2 text-xs whitespace-nowrap">
-            {identity || "Anonymous"}
-          </div>
-          <div className="pb-2">
-            <CopyButton text={identity || ""} disabled={!identity} />
-          </div>
+          <TextField
+            className="grow"
+            isReadOnly
+            value={identity || "Anonymous"}
+          />
+          <CopyButton text={identity || ""} disabled={!identity} />
         </div>
+        <div className="font-semibold">{t("displayName")}</div>
+        <DisplayNameInput />
       </div>
       <div className="flex w-full flex-col gap-4">
         <button

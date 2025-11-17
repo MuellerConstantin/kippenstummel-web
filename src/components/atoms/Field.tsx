@@ -33,7 +33,7 @@ export function Description(props: TextProps) {
     <Text
       {...props}
       slot="description"
-      className={twMerge("text-sm text-slate-600", props.className)}
+      className={twMerge("text-xs text-slate-600", props.className)}
     />
   );
 }

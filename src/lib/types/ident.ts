@@ -1,5 +1,6 @@
 export interface IdentInfo {
   identity: string;
+  displayName?: string;
   createdAt: string;
   updatedAt: string;
   credibility: number;
