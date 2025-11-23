@@ -102,6 +102,24 @@ function DisplayNameInput() {
               t("usernameAlreadyInUse"),
             );
             return;
+          } else if (
+            error.response?.status === 422 &&
+            error.response.data.code === "INVALID_PAYLOAD_ERROR"
+          ) {
+            const isForbiddenUsername = error.response.data.details?.some(
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (detail: any) =>
+                detail.property === "username" &&
+                detail.constraint === "isCleanUsername",
+            );
+
+            if (isForbiddenUsername) {
+              formikHelpers.setFieldError(
+                "currentUsername",
+                t("forbiddenUsername"),
+              );
+              return;
+            }
           }
         }
 

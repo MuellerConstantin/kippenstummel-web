@@ -516,6 +516,7 @@
       "displayNameDescription": "Dein Anzeigename besteht aus dem von dir gewählten Benutzernamen und einem Zufallscode.",
       "error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
       "usernameAlreadyInUse": "Der gewünschte Benutzername ist bereits vergeben.",
+      "forbiddenUsername": "Der gewünschte Benutzername enthält unzulässige Begriffe.",
       "noUsername": "Kein Benutzername angegeben.",
       "authentication": {
         "title": "Anmeldeinformationen",

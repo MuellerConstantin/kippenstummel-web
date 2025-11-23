@@ -516,6 +516,7 @@
       "displayNameDescription": "Your display name consists of your chosen username and a random code.",
       "error": "An unexpected error occurred. Please try again.",
       "usernameAlreadyInUse": "The desired username is already in use.",
+      "forbiddenUsername": "The desired username contains forbidden terms.",
       "noUsername": "No username given.",
       "authentication": {
         "title": "Authentication credentials",
