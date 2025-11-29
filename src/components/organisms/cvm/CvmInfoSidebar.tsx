@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
   ChevronUp,
@@ -8,6 +8,7 @@ import {
   Check,
   X,
   Share2,
+  MapPin,
 } from "lucide-react";
 import { Link } from "@/components/atoms/Link";
 import { Spinner } from "@/components/atoms/Spinner";
@@ -17,6 +18,8 @@ import Image from "next/image";
 import { REPORT_THRESHOLD } from "@/lib/constants";
 import { Cvm } from "@/lib/types/cvm";
 import { GeoCoordinates } from "@/lib/types/geo";
+import { useAppSelector } from "@/store";
+import { calculateDistanceInKm } from "@/lib/geo";
 
 interface CopyButtonProps {
   text: string;
@@ -91,6 +94,24 @@ export function CvmInfoSidebar(props: CvmInfoSidebarProps) {
   const [voting, setVoting] = useState<"up" | "down" | false>(false);
   const [isRepositioning, setIsRepositioning] = useState(false);
   const [isReporting, setIsReporting] = useState(false);
+
+  const location = useAppSelector((state) => state.location.location);
+
+  const distanceToUser = useMemo(() => {
+    if (!location) return null;
+
+    const distance = calculateDistanceInKm(location, {
+      latitude: props.cvm.latitude,
+      longitude: props.cvm.longitude,
+    });
+
+    if (distance < 1) {
+      const meters = Math.round(distance * 1000);
+      return `${meters} m`;
+    }
+
+    return `${distance.toFixed(1)} km`;
+  }, [location, props.cvm]);
 
   const onUpvoteRequest = useCallback(() => {
     setVoting("up");
@@ -227,6 +248,16 @@ export function CvmInfoSidebar(props: CvmInfoSidebarProps) {
                     {props.cvm.latitude.toFixed(7)} /{" "}
                     {props.cvm.longitude.toFixed(7)} (lat/lng)
                   </div>
+                  {distanceToUser && (
+                    <div className="flex items-center gap-2 text-sm">
+                      <div className="flex items-center gap-1">
+                        <div className="inline-flex h-4 w-4 rounded-full border-2 border-white bg-blue-500" />
+                        <div>&bull;&bull;&bull;</div>
+                        <MapPin className="h-[20px] w-[20px] fill-green-600 text-white dark:text-slate-600" />
+                      </div>
+                      <div>{distanceToUser}</div>
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-col gap-3">
                   <div className="flex flex-col gap-2">
