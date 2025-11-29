@@ -30,7 +30,7 @@ export function LocateMarker(props: LocateMarkerProps) {
       latitude={props.position.latitude}
       longitude={props.position.longitude}
     >
-      <div className="relative !z-[2000] flex h-[20px] w-[20px]">
+      <div className="relative flex h-[15px] w-[15px]">
         <div
           className={`absolute inline-flex h-full w-full animate-[ping_1.5s_linear_infinite] rounded-full ${outlineClass} opacity-75`}
         />

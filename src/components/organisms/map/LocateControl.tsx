@@ -1,4 +1,5 @@
 import useLocate from "@/hooks/useLocate";
+import useLocateWatcher from "@/hooks/useLocateWatcher";
 import {
   Navigation as NavigationIcon,
   LoaderCircle as LoaderCircleIcon,
@@ -12,10 +13,16 @@ export function LocateControlComponent() {
   const t = useTranslations();
   const { current: map } = useMap();
   const locate = useLocate();
+  const { startWatching, stopWatching, isWatching } = useLocateWatcher();
 
   const [locating, setLocating] = useState(false);
 
   const onClick = useCallback(() => {
+    if (isWatching) {
+      stopWatching();
+      return;
+    }
+
     if (locating) {
       return;
     }
@@ -29,10 +36,11 @@ export function LocateControlComponent() {
           zoom: 15,
         }),
       )
+      .then(() => startWatching())
       .finally(() => {
         setLocating(false);
       });
-  }, [locate, map, locating]);
+  }, [locate, map, locating, startWatching, isWatching, stopWatching]);
 
   return (
     <button
@@ -45,7 +53,9 @@ export function LocateControlComponent() {
       {locating ? (
         <LoaderCircleIcon className="h-5 w-5 animate-spin" />
       ) : (
-        <NavigationIcon className="h-5 w-5" />
+        <NavigationIcon
+          className={`h-5 w-5 ${isWatching ? "text-green-600" : ""}`}
+        />
       )}
     </button>
   );

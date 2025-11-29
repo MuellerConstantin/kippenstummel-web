@@ -1,0 +1,90 @@
+import { useCallback, useRef, useState } from "react";
+import { useAppDispatch } from "@/store";
+import locationSlice from "@/store/slices/location";
+import { useTranslations } from "next-intl";
+import { useNotifications } from "@/contexts/NotificationProvider";
+
+export default function useLocateWatcher() {
+  const dispatch = useAppDispatch();
+  const t = useTranslations();
+  const { enqueue } = useNotifications();
+
+  const watchIdRef = useRef<number | null>(null);
+  const [isWatching, setIsWatching] = useState(false);
+
+  const startWatching = useCallback(
+    (options?: PositionOptions) => {
+      if (watchIdRef.current !== null) {
+        return;
+      }
+
+      const id = navigator.geolocation.watchPosition(
+        (pos) => {
+          const location = {
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+          };
+          dispatch(locationSlice.actions.setLocation(location));
+        },
+        (err) => {
+          let title = "";
+          let description = "";
+
+          switch (err.code) {
+            case err.PERMISSION_DENIED:
+              title = t(
+                "Notifications.locationDeterminationFailed.permissionDenied.title",
+              );
+              description = t(
+                "Notifications.locationDeterminationFailed.permissionDenied.description",
+              );
+              break;
+            case err.POSITION_UNAVAILABLE:
+              title = t(
+                "Notifications.locationDeterminationFailed.unavailable.title",
+              );
+              description = t(
+                "Notifications.locationDeterminationFailed.unavailable.description",
+              );
+              break;
+            case err.TIMEOUT:
+              title = t(
+                "Notifications.locationDeterminationFailed.timeout.title",
+              );
+              description = t(
+                "Notifications.locationDeterminationFailed.timeout.description",
+              );
+              break;
+            default:
+              title = t(
+                "Notifications.locationDeterminationFailed.default.title",
+              );
+              description = t(
+                "Notifications.locationDeterminationFailed.default.description",
+              );
+              break;
+          }
+
+          enqueue({ title, description, variant: "error" }, { timeout: 10000 });
+          dispatch(locationSlice.actions.clearLocation());
+          throw err;
+        },
+        { enableHighAccuracy: true, maximumAge: 0, ...options },
+      );
+
+      watchIdRef.current = id;
+      setIsWatching(true);
+    },
+    [dispatch, enqueue, t],
+  );
+
+  const stopWatching = useCallback(() => {
+    if (watchIdRef.current !== null) {
+      navigator.geolocation.clearWatch(watchIdRef.current);
+      watchIdRef.current = null;
+      setIsWatching(false);
+    }
+  }, []);
+
+  return { startWatching, stopWatching, isWatching };
+}
