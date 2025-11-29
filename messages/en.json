@@ -347,6 +347,7 @@
   "CvmInfoDialog": {
     "title": "Cigarette Vending Machine",
     "location": "Location",
+    "directions": "Directions",
     "share": "Share",
     "copyLink": "Copy Link",
     "openInGoogleMaps": "Open in Google Maps",

@@ -347,6 +347,7 @@
   "CvmInfoDialog": {
     "title": "Zigarettenautomat",
     "location": "Standort",
+    "directions": "Routenplaner",
     "share": "Teilen",
     "copyLink": "Link kopieren",
     "openInGoogleMaps": "In Google Maps öffnen",

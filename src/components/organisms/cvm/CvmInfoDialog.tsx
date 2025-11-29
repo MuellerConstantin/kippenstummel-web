@@ -9,6 +9,7 @@ import {
   X,
   Share2,
   MapPin,
+  Route,
 } from "lucide-react";
 import { Link } from "@/components/atoms/Link";
 import { Spinner } from "@/components/atoms/Spinner";
@@ -266,6 +267,14 @@ export function CvmInfoDialog(props: CvmInfoMobileDialogProps) {
                             <div>{distanceToUser}</div>
                           </div>
                         )}
+                        <Link
+                          href={`https://www.google.com/maps/dir/?api=1&destination=${props.cvm.latitude},${props.cvm.longitude}&travelmode=driving`}
+                          target="_blank"
+                          className="flex items-center gap-2 text-sm"
+                        >
+                          <Route className="h-4 w-4" />
+                          <span>{t("directions")}</span>
+                        </Link>
                       </div>
                     </div>
                     <div className="flex flex-col gap-3">
@@ -287,7 +296,7 @@ export function CvmInfoDialog(props: CvmInfoMobileDialogProps) {
                       </div>
                       <div className="flex flex-wrap gap-2">
                         <Link
-                          href={`https://www.google.com.sa/maps/search/${props.cvm.latitude},${props.cvm.longitude}`}
+                          href={`https://www.google.com.sa/maps/search/?api=1&query=${props.cvm.latitude},${props.cvm.longitude}`}
                           target="_blank"
                           className="flex h-8 items-center justify-center rounded-full bg-slate-200 p-2 hover:bg-slate-300 focus-visible:outline-2 focus-visible:outline-green-600 dark:bg-slate-800 dark:hover:bg-slate-700"
                         >
