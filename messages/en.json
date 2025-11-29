@@ -657,5 +657,11 @@
       "MacHelpText": "Use ⌘ + scroll to zoom",
       "MobileHelpText": "Use two fingers to zoom"
     }
+  },
+  "CvmMapRegisterOverlay": {
+    "description": "Register vending machine"
+  },
+  "CvmMapRepositionOverlay": {
+    "description": "Reposition vending machine"
   }
 }

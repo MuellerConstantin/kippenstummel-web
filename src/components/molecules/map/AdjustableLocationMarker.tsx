@@ -80,7 +80,7 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
           className="relative h-fit w-fit cursor-pointer"
           onMouseDown={() => setTooltipOpen(false)}
         >
-          <MapPinPlusInside className="h-[36px] w-[36px] fill-green-600 text-white dark:text-slate-600" />
+          <MapPinPlusInside className="h-[32px] w-[32px] fill-green-600 text-white dark:text-slate-600" />
         </div>
       </Marker>
       {tooltipOpen && (

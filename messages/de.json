@@ -657,5 +657,11 @@
       "MacHelpText": "Benutze ⌘ + Scrollrad um zu zoomen",
       "MobileHelpText": "Benutze zwei Finger um zu zoomen"
     }
+  },
+  "CvmMapRegisterOverlay": {
+    "description": "Automat registrieren"
+  },
+  "CvmMapRepositionOverlay": {
+    "description": "Automat neu positionieren"
   }
 }
