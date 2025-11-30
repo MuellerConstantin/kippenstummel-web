@@ -121,6 +121,7 @@ export function NavbarUnauthenticatedOptionsMenu() {
             onChange={(newDarkMode) =>
               dispatch(usabilitySlice.actions.setDarkMode(newDarkMode))
             }
+            className="w-fit"
           >
             Dark Mode
           </Switch>
@@ -225,6 +226,7 @@ function NavbarAuthenticatedOptionsMenu() {
             onChange={(newDarkMode) =>
               dispatch(usabilitySlice.actions.setDarkMode(newDarkMode))
             }
+            className="w-fit"
           >
             Dark Mode
           </Switch>

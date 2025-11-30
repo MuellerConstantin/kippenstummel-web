@@ -270,7 +270,7 @@ export function CvmInfoDialog(props: CvmInfoMobileDialogProps) {
                         <Link
                           href={`https://www.google.com/maps/dir/?api=1&destination=${props.cvm.latitude},${props.cvm.longitude}&travelmode=driving`}
                           target="_blank"
-                          className="flex items-center gap-2 text-sm"
+                          className="flex w-fit items-center gap-2 text-sm"
                         >
                           <Route className="h-4 w-4" />
                           <span>{t("directions")}</span>
