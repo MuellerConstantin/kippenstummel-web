@@ -73,6 +73,7 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
         longitude={position.longitude}
         latitude={position.latitude}
         draggable
+        onDragStart={() => setTooltipOpen(false)}
         onDragEnd={handleDragEnd}
         anchor="bottom"
       >
