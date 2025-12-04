@@ -58,6 +58,7 @@ export function MapSettingsDialog(props: MapSettingsDialogProps) {
                       usabilitySlice.actions.setAutoLocation(newAutoLocation),
                     )
                   }
+                  className="w-fit"
                 >
                   {t("options.autoLocation.label")}
                 </Switch>
