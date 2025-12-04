@@ -12,11 +12,11 @@ import { GeoCoordinates } from "@/lib/types/geo";
 interface MenuBottomNavigationProps {
   onRegister?: (position: GeoCoordinates) => void;
   onHelp?: () => void;
-  onFilter?: () => void;
+  onSettings?: () => void;
 }
 
 export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
-  const { onRegister, onHelp, onFilter } = props;
+  const { onRegister, onHelp, onSettings } = props;
   const locate = useLocate();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -66,7 +66,7 @@ export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
         </div>
         <button
           type="button"
-          onClick={() => onFilter?.()}
+          onClick={() => onSettings?.()}
           className="flex cursor-pointer flex-col items-center justify-center rounded-r-md px-5 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-green-600 dark:hover:bg-slate-800"
         >
           <div className="relative">

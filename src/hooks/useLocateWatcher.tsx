@@ -1,5 +1,5 @@
-import { useCallback, useRef, useState } from "react";
-import { useAppDispatch } from "@/store";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store";
 import locationSlice from "@/store/slices/location";
 import { useTranslations } from "next-intl";
 import { useNotifications } from "@/contexts/NotificationProvider";
@@ -11,6 +11,8 @@ export default function useLocateWatcher() {
 
   const watchIdRef = useRef<number | null>(null);
   const [isWatching, setIsWatching] = useState(false);
+
+  const autoLocation = useAppSelector((state) => state.usability.autoLocation);
 
   const startWatching = useCallback(
     (options?: PositionOptions) => {
@@ -84,6 +86,13 @@ export default function useLocateWatcher() {
       watchIdRef.current = null;
       setIsWatching(false);
     }
+  }, []);
+
+  useEffect(() => {
+    if (autoLocation) {
+      startWatching();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { startWatching, stopWatching, isWatching };

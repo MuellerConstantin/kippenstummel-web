@@ -14,6 +14,7 @@ interface UsabilityState {
       max?: number;
     };
   };
+  autoLocation?: boolean;
 }
 
 const initialState: UsabilityState = {
@@ -53,6 +54,12 @@ const usabilitySlice = createSlice({
       action: PayloadAction<{ center: GeoCoordinates; zoom: number }>,
     ) => {
       state.mapView = action.payload;
+    },
+    toggleAutoLocation: (state) => {
+      state.autoLocation = !state.autoLocation;
+    },
+    setAutoLocation: (state, action: PayloadAction<boolean>) => {
+      state.autoLocation = action.payload;
     },
   },
 });

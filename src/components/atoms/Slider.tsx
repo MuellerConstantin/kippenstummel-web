@@ -62,7 +62,7 @@ export function Slider<T extends number | number[]>({
           state.values.map((_, i) => state.getThumbValueLabel(i)).join(" – ")
         }
       </SliderOutput>
-      <SliderTrack className="group orientation-horizontal:h-6 orientation-vertical:w-6 orientation-vertical:h-64 relative col-span-2 flex items-center">
+      <SliderTrack className="group orientation-horizontal:h-6 orientation-vertical:w-6 orientation-vertical:h-64 orientation-horizontal:mx-auto orientation-horizontal:w-[calc(100%-24px)] relative col-span-2 flex items-center">
         {({ state, ...renderProps }) => (
           <>
             <div className={trackStyles(renderProps)} />

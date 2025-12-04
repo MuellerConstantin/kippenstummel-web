@@ -494,12 +494,22 @@
     "description": "Kippenstummel<br></br>Version {version}<br></br>© 2025 <copyright-link>Constantin Müller</copyright-link><br></br><br></br>This application is free software licensed under the <license-link>GNU Affero General Public License Version 3 (AGPL-3.0)</license-link>. It may be used, modified, and redistributed freely, provided that the terms of the AGPL-3.0 license are respected.<br></br><br></br>The complete source code is publicly available at:<br></br><ul><li><web-code-link>Kippenstummel Web (Frontend)</web-code-link></li><li><api-code-link>Kippenstummel API (Backend)</api-code-link></li><li><kmc-code-link>Kippenstummel KMC (Admin Panel)</kmc-code-link></li></ul><br></br>For the use of this application as an online service (SaaS), our <terms-link>Terms of Service</terms-link> and <privacy-link>Privacy Policy</privacy-link> also apply.",
     "close": "Close"
   },
-  "FilterDialog": {
-    "title": "Filter",
+  "MapSettingsDialog": {
+    "title": "Map Settings",
     "close": "Close",
-    "reset": "Reset filters",
-    "score": {
-      "label": "Score"
+    "options": {
+      "title": "Map Functions",
+      "autoLocation": {
+        "label": "Automatic Location Determination",
+        "description": "„Automatic Location Determination“ allows your location to be recorded automatically and conveniently when using the app. Your location is never accessed in the background."
+      }
+    },
+    "filter": {
+      "title": "Filter",
+      "reset": "Reset filters",
+      "score": {
+        "label": "Score"
+      }
     }
   },
   "IdentityDialog": {

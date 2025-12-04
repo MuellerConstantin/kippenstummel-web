@@ -8,7 +8,7 @@ import { useCallback, useState } from "react";
 import { MenuBottomNavigation } from "../navigation/MenuBottomNavigation";
 import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
 import { HelpDialog } from "../navigation/HelpDialog";
-import { FilterDialog } from "../navigation/FilterDialog";
+import { MapSettingsDialog } from "../navigation/MapSettingsDialog";
 import { CvmReportDialog } from "../cvm/CvmReportDialog";
 import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
 import { LocationMarker } from "@/components/molecules/map/LocationMarker";
@@ -39,7 +39,7 @@ export function CvmMapDefaultOverlay({
   const isMobile = useIsMobile();
 
   const [showHelpDialog, setShowHelpDialog] = useState(false);
-  const [showFilterDialog, setShowFilterDialog] = useState(false);
+  const [showMapSettingsDialog, setShowMapSettingsDialog] = useState(false);
   const [showReportDialog, setShowReportDialog] = useState(false);
   const [reporterPosition, setReporterPosition] = useState<GeoCoordinates>();
 
@@ -47,9 +47,9 @@ export function CvmMapDefaultOverlay({
     setShowHelpDialog(true);
   }, [setShowHelpDialog]);
 
-  const onFilter = useCallback(() => {
-    setShowFilterDialog(true);
-  }, [setShowFilterDialog]);
+  const onSettings = useCallback(() => {
+    setShowMapSettingsDialog(true);
+  }, [setShowMapSettingsDialog]);
 
   return (
     <>
@@ -74,7 +74,7 @@ export function CvmMapDefaultOverlay({
             <div className="pointer-events-auto absolute bottom-9 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 lg:hidden">
               <MenuBottomNavigation
                 onHelp={onHelp}
-                onFilter={onFilter}
+                onSettings={onSettings}
                 onRegister={props.onRegister}
               />
             </div>
@@ -114,7 +114,7 @@ export function CvmMapDefaultOverlay({
             >
               <MenuBottomNavigation
                 onHelp={onHelp}
-                onFilter={onFilter}
+                onSettings={onSettings}
                 onRegister={props.onRegister}
               />
             </motion.div>
@@ -160,10 +160,10 @@ export function CvmMapDefaultOverlay({
         <HelpDialog />
       </AnimatedDialogModal>
       <AnimatedDialogModal
-        isOpen={showFilterDialog}
-        onOpenChange={setShowFilterDialog}
+        isOpen={showMapSettingsDialog}
+        onOpenChange={setShowMapSettingsDialog}
       >
-        <FilterDialog />
+        <MapSettingsDialog />
       </AnimatedDialogModal>
     </>
   );
