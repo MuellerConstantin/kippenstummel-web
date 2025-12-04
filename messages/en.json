@@ -5,14 +5,6 @@
       "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
     },
     "slogan": "Zu einer Kippe habe ma noch nie nein gsait!",
-    "cta": {
-      "gettingStarted": "Find a cigarette vending machine now!",
-      "install": {
-        "or": "or",
-        "button": "Add to Home Screen",
-        "tooltip": "Save this app on your device for quick and easy access."
-      }
-    },
     "features": {
       "slogan": "Find the nearest cigarette vending machine near you",
       "title": "The cigarette vending machine map of your choice",
@@ -674,5 +666,13 @@
   },
   "CvmMapRepositionOverlay": {
     "description": "Reposition vending machine"
+  },
+  "JumbotronCta": {
+    "gettingStarted": "Find a cigarette vending machine now!",
+    "install": {
+      "or": "or",
+      "button": "Add to Home Screen",
+      "tooltip": "Save this app on your device for quick and easy access."
+    }
   }
 }

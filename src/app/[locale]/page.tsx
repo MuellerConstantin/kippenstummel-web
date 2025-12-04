@@ -1,16 +1,13 @@
-"use client";
-
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { useAppSelector } from "@/store";
 
-export default function Root() {
-  const recurringUser = useAppSelector(
-    (state) => state.usability.recurringUser,
-  );
+export default async function RootPage() {
+  const cookieStore = await cookies();
+  const recurring = cookieStore.get("kippenstummel-recurring-user");
 
-  if (recurringUser) {
+  if (recurring?.value === "1") {
     redirect("/map");
-  } else {
-    redirect("/home");
   }
+
+  redirect("/home");
 }

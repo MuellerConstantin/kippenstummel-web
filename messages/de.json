@@ -5,14 +5,6 @@
       "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
     },
     "slogan": "Zu einer Kippe habe ma noch nie nein gsait!",
-    "cta": {
-      "gettingStarted": "Jetzt Zigarettenautomat finden!",
-      "install": {
-        "or": "oder",
-        "button": "Zum Home-Bildschirm hinzufügen",
-        "tooltip": "Speichere diese App auf deinem Gerät, um sie schnell und einfach zu öffnen."
-      }
-    },
     "features": {
       "slogan": "Finden den nächsten Zigarettenautomaten in deiner Nähe",
       "title": "Die Zigarettenautomatenkarte deiner Wahl",
@@ -674,5 +666,13 @@
   },
   "CvmMapRepositionOverlay": {
     "description": "Automat neu positionieren"
+  },
+  "JumbotronCta": {
+    "gettingStarted": "Jetzt Zigarettenautomat finden!",
+    "install": {
+      "or": "oder",
+      "button": "Zum Home-Bildschirm hinzufügen",
+      "tooltip": "Speichere diese App auf deinem Gerät, um sie schnell und einfach zu öffnen."
+    }
   }
 }

@@ -6,6 +6,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
+  createMigrate,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -13,6 +14,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import Cookies from "js-cookie";
 import { PersistGate } from "redux-persist/integration/react";
 import localStorage from "redux-persist/lib/storage";
 import sessionStorage from "redux-persist/lib/storage/session";
@@ -25,12 +27,30 @@ import sessionSlice from "./slices/session";
 import { PrivacySettingsDialog } from "@/components/organisms/PrivacySettingsDialog";
 import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
 
+const migrations = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  3: (state: any) => {
+    if (state?.usability?.recurringUser === true) {
+      if (typeof window !== "undefined") {
+        Cookies.set("kippenstummel-recurring-user", "1", {
+          expires: 365,
+          sameSite: "lax",
+          path: "/",
+        });
+      }
+    }
+
+    return state;
+  },
+};
+
 const rootPersistConfig = {
   key: "kippenstummel",
-  version: 2,
+  version: 3,
   storage: localStorage,
   whitelist: ["usability", "ident", "privacy"],
   blacklist: ["session"],
+  migrate: createMigrate(migrations, { debug: false }),
 };
 
 const sessionPersistConfig = {
