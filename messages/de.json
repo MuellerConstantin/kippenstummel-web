@@ -562,8 +562,8 @@
         "downvote_received": "Du hast für einen von dir registrierten <link>Automaten</link> ein Downvote bekommen.",
         "upvote_cast": "Du hast einem <link>Automaten</link> ein Upvote gegeben.",
         "downvote_cast": "Du hast einem <link>Automaten</link> ein Downvote gegeben.",
-        "report_cast": "Du hast einen <link>Automaten</link> gemeldet.",
-        "report_received": "Ein von dir registrierter <link>Automaten</link> wurde gemeldet."
+        "report_cast": "Du hast ein Problem mit einem <link>Automaten</link> gemeldet.",
+        "report_received": "Ein von dir eingetragener <link>Automat</link> wurde als problematisch gemeldet."
       }
     }
   },

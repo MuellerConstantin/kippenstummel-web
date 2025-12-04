@@ -506,10 +506,18 @@ function KarmaSection() {
               >
                 <div
                   className={`font-semibold ${
-                    event.delta > 0 ? "text-green-600" : "text-red-600"
+                    event.delta > 0
+                      ? "text-green-600"
+                      : event.delta < 0
+                        ? "text-red-600"
+                        : "text-slate-600 dark:text-slate-400"
                   }`}
                 >
-                  {event.delta > 0 ? `+${event.delta}` : event.delta}
+                  {event.delta > 0
+                    ? `+${event.delta}`
+                    : event.delta < 0
+                      ? `${event.delta}`
+                      : `±${event.delta}`}
                 </div>
                 <div className="flex flex-col text-right">
                   <span className="text-sm font-medium">
