@@ -1,11 +1,12 @@
 import useLocate from "@/hooks/useLocate";
 import useLocateWatcher from "@/hooks/useLocateWatcher";
+import { useAppSelector } from "@/store";
 import {
   Navigation as NavigationIcon,
   LoaderCircle as LoaderCircleIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useControl, useMap } from "react-map-gl/maplibre";
 
@@ -16,6 +17,24 @@ export function LocateControlComponent() {
   const { startWatching, stopWatching, isWatching } = useLocateWatcher();
 
   const [locating, setLocating] = useState(false);
+
+  const autoLocateDoneRef = useRef(false);
+  const autoLocation = useAppSelector((state) => state.usability.autoLocation);
+  const location = useAppSelector((state) => state.location.location);
+
+  useEffect(() => {
+    if (!map) return;
+    if (!autoLocation) return;
+    if (autoLocateDoneRef.current) return;
+    if (!location) return;
+
+    autoLocateDoneRef.current = true;
+
+    map?.flyTo({
+      center: [location.longitude, location.latitude],
+      zoom: 15,
+    });
+  }, [map, autoLocation, location]);
 
   const onClick = useCallback(() => {
     if (isWatching) {
