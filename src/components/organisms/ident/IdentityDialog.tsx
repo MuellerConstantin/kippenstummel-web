@@ -502,10 +502,10 @@ function KarmaSection() {
             {data.content.map((event, index) => (
               <li
                 key={index}
-                className="flex items-center justify-between px-2 py-1"
+                className="flex items-center justify-between gap-4 px-2 py-1"
               >
                 <div
-                  className={`font-semibold ${
+                  className={`shrink-0 font-semibold ${
                     event.delta > 0
                       ? "text-green-600"
                       : event.delta < 0
@@ -519,8 +519,8 @@ function KarmaSection() {
                       ? `${event.delta}`
                       : `±${event.delta}`}
                 </div>
-                <div className="flex flex-col text-right">
-                  <span className="text-sm font-medium">
+                <div className="flex grow flex-col text-right">
+                  <span className="text-left text-xs font-medium">
                     {t.rich(`messages.${event.type}`, {
                       link: (chunks) => (
                         <Link href={`/map?shared=${event.cvmId}`}>
