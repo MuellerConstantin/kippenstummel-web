@@ -1,6 +1,6 @@
 async function deriveKeyFromPassword(
   password: string,
-  salt: Uint8Array,
+  salt: ArrayBuffer,
 ): Promise<CryptoKey> {
   const enc = new TextEncoder();
   const passwordKey = await crypto.subtle.importKey(
@@ -43,7 +43,7 @@ export async function encryptWithPassword(
   password: string,
 ): Promise<string> {
   const salt = crypto.getRandomValues(new Uint8Array(16));
-  const key = await deriveKeyFromPassword(password, salt);
+  const key = await deriveKeyFromPassword(password, salt.buffer);
   const iv = crypto.getRandomValues(new Uint8Array(12));
 
   const encoded = new TextEncoder().encode(plainText);
@@ -73,7 +73,7 @@ export async function decryptWithPassword(
   const iv = combined.slice(16, 28);
   const cipherText = combined.slice(28);
 
-  const key = await deriveKeyFromPassword(password, salt);
+  const key = await deriveKeyFromPassword(password, salt.buffer);
   const decrypted = await crypto.subtle.decrypt(
     { name: "AES-GCM", iv },
     key,
