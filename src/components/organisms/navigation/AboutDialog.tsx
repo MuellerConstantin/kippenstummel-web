@@ -6,12 +6,16 @@ import { Button } from "@/components/atoms/Button";
 import { Link } from "@/components/atoms/Link";
 
 import manifest from "@/../public/manifest.de.json";
+import { useEnv } from "@/contexts/RuntimeConfigProvider";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface AboutDialogProps extends Omit<DialogProps, "children"> {}
 
 export function AboutDialog(props: AboutDialogProps) {
   const t = useTranslations("AboutDialog");
+
+  const isPreRelease = useEnv("NEXT_PUBLIC_IS_PRE_RELEASE") === "true";
+
   return (
     <Dialog {...props}>
       {({ close }) => (
@@ -23,7 +27,24 @@ export function AboutDialog(props: AboutDialogProps) {
             {t("title")}
           </Heading>
           <div className="mt-4 flex flex-col gap-4">
-            <div className="space-y-2">
+            <div className="space-y-4">
+              <div className="flex flex-col gap-1 text-sm">
+                <div>Kippenstummel</div>
+                <div>Version {manifest.version}</div>
+                {isPreRelease && (
+                  <div className="flex">
+                    <div className="rounded-md bg-slate-600 px-1 py-0.5 text-xs text-white">
+                      Pre-Release
+                    </div>
+                  </div>
+                )}
+                <div>
+                  &copy; {new Date().getFullYear()}{" "}
+                  <Link href="https://github.com/MuellerConstantin">
+                    Constantin Müller
+                  </Link>
+                </div>
+              </div>
               <div className="text-sm">
                 {t.rich("description", {
                   br: () => <br />,
@@ -31,11 +52,6 @@ export function AboutDialog(props: AboutDialogProps) {
                   li: (chunks) => <li className="ml-4">{chunks}</li>,
                   "license-link": (chunks) => (
                     <Link href="https://www.gnu.org/licenses/agpl-3.0.en.html">
-                      {chunks}
-                    </Link>
-                  ),
-                  "copyright-link": (chunks) => (
-                    <Link href="https://github.com/MuellerConstantin">
                       {chunks}
                     </Link>
                   ),
@@ -60,7 +76,6 @@ export function AboutDialog(props: AboutDialogProps) {
                   "terms-link": (chunks) => (
                     <Link href="/terms-of-service">{chunks}</Link>
                   ),
-                  version: manifest.version,
                 })}
               </div>
             </div>

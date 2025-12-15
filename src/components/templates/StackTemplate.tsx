@@ -15,7 +15,6 @@ export function StackTemplate({
   const t = useTranslations();
 
   const isTestSystem = useEnv("NEXT_PUBLIC_IS_TEST_SYSTEM") === "true";
-  const isPreRelease = useEnv("NEXT_PUBLIC_IS_PRE_RELEASE") === "true";
 
   const messages = useMemo(() => {
     const messages: {
@@ -32,16 +31,8 @@ export function StackTemplate({
       });
     }
 
-    if (isPreRelease) {
-      messages.push({
-        title: t("MessageBannerCarousel.messages.preRelease.title"),
-        description: t("MessageBannerCarousel.messages.preRelease.description"),
-        variant: "warning",
-      });
-    }
-
     return messages;
-  }, [isTestSystem, isPreRelease, t]);
+  }, [isTestSystem, t]);
 
   return (
     <div className="flex h-full min-h-[100dvh] flex-col">
