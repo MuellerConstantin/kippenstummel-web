@@ -81,6 +81,13 @@
       "title": "Map"
     }
   },
+  "SharePage": {
+    "meta": {
+      "title": "Shared location",
+      "ogTitle": "Shared cigarette vending machine location",
+      "ogDescription": "A specific cigarette vending machine location has been shared. Open the map to view it directly."
+    }
+  },
   "ImprintPage": {
     "meta": {
       "title": "Imprint"

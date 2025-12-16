@@ -285,11 +285,11 @@ export function CvmInfoDialog(props: CvmInfoMobileDialogProps) {
                         <div className="flex items-center gap-2">
                           <input
                             readOnly
-                            value={`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`}
+                            value={`${window.location.protocol}//${window.location.host}/map/share/${props.cvm.id}`}
                             className="min-w-0 flex-1 rounded-md border-2 border-gray-300 bg-white px-1 py-0.5 text-xs text-gray-800 outline outline-0 focus:border-green-600 disabled:text-gray-200 dark:border-slate-500 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-slate-300 dark:disabled:text-slate-600"
                           />
                           <CopyButton
-                            text={`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`}
+                            text={`${window.location.protocol}//${window.location.host}/map/share/${props.cvm.id}`}
                             disabled={voting !== false}
                           />
                         </div>
@@ -311,7 +311,7 @@ export function CvmInfoDialog(props: CvmInfoMobileDialogProps) {
                           </div>
                         </Link>
                         <Link
-                          href={`whatsapp://send?text=${encodeURI(`${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`)}`}
+                          href={`whatsapp://send?text=${encodeURI(`${window.location.protocol}//${window.location.host}/map/share/${props.cvm.id}`)}`}
                           target="_blank"
                           className="flex h-8 items-center justify-center rounded-full bg-slate-200 p-2 hover:bg-slate-300 focus-visible:outline-2 focus-visible:outline-green-600 dark:bg-slate-800 dark:hover:bg-slate-700"
                         >
@@ -329,7 +329,7 @@ export function CvmInfoDialog(props: CvmInfoMobileDialogProps) {
                           <Link
                             onPress={() =>
                               navigator.share({
-                                url: `${window.location.protocol}//${window.location.host}/map?shared=${props.cvm.id}`,
+                                url: `${window.location.protocol}//${window.location.host}/map/share/${props.cvm.id}`,
                               })
                             }
                             className="flex h-8 items-center justify-center rounded-full bg-slate-200 p-2 hover:bg-slate-300 focus-visible:outline-2 focus-visible:outline-green-600 dark:bg-slate-800 dark:hover:bg-slate-700"

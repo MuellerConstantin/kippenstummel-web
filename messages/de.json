@@ -81,6 +81,13 @@
       "title": "Karte"
     }
   },
+  "SharePage": {
+    "meta": {
+      "title": "Geteilter Standort",
+      "ogTitle": "Geteilter Zigarettenautomaten-Standort",
+      "ogDescription": "Hier wurde ein konkreter Standort eines Zigarettenautomaten geteilt. Öffne die Karte, um ihn dir direkt anzusehen."
+    }
+  },
   "ImprintPage": {
     "meta": {
       "title": "Impressum"

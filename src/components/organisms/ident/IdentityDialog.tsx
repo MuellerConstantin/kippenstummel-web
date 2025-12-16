@@ -523,9 +523,7 @@ function KarmaSection() {
                   <span className="text-left text-xs font-medium">
                     {t.rich(`messages.${event.type}`, {
                       link: (chunks) => (
-                        <Link href={`/map?shared=${event.cvmId}`}>
-                          {chunks}
-                        </Link>
+                        <Link href={`/map/share/${event.cvmId}`}>{chunks}</Link>
                       ),
                     })}
                   </span>
