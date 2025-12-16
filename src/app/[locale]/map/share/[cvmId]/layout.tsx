@@ -4,14 +4,11 @@ import { getTranslations } from "next-intl/server";
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kippenstummel.de";
 
 type Props = {
-  params: {
-    locale: string;
-    cvmId: string;
-  };
+  params: Promise<{ locale: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = params;
+  const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "SharePage" });
 
   return {
@@ -53,11 +50,5 @@ export default function ShareLayout({
 }: {
   children: React.ReactNode;
 }) {
-  /**
-   * Wichtig:
-   * - KEIN HTML
-   * - KEIN Body
-   * - nur Wrapper
-   */
   return <>{children}</>;
 }

@@ -1,14 +1,11 @@
 import { redirect } from "next/navigation";
 
 type Props = {
-  params: {
-    locale: string;
-    cvmId: string;
-  };
+  params: Promise<{ locale: string; cvmId: string }>;
 };
 
-export default function SharePage({ params }: Props) {
-  const { locale, cvmId } = params;
+export default async function SharePage({ params }: Props) {
+  const { locale, cvmId } = await params;
 
   redirect(`/${locale}/map?shared=${cvmId}`);
 }
