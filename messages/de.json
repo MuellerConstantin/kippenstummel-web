@@ -1,8 +1,13 @@
 {
+  "Seo": {
+    "title": "Kippenstummel",
+    "ogTitle": "Kippenstummel - Zigarettenautomaten finden",
+    "ogDescription": "Finde Zigarettenautomaten in deiner Nähe - überall und jederzeit.",
+    "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+  },
   "HomePage": {
     "meta": {
-      "title": "Kippenstummel | Startseite",
-      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+      "title": "Startseite"
     },
     "slogan": "Zu einer Kippe habe ma noch nie nein gsait!",
     "features": {
@@ -73,14 +78,12 @@
   },
   "MapPage": {
     "meta": {
-      "title": "Kippenstummel | Karte",
-      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+      "title": "Karte"
     }
   },
   "ImprintPage": {
     "meta": {
-      "title": "Kippenstummel | Impressum",
-      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+      "title": "Impressum"
     },
     "headline": "Impressum",
     "declaration": "Angaben gemäß § 5 TMG",
@@ -97,8 +100,7 @@
   },
   "PrivacyPolicyPage": {
     "meta": {
-      "title": "Kippenstummel | Datenschutzerklärung",
-      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+      "title": "Datenschutzerklärung"
     },
     "headline": "Datenschutzerklärung",
     "disclaimer": "Aus Gründen der Rechtssicherheit liegt die rechtliche Auskunft bezüglich der Datenschutzerklärung nur in deutscher Fassung vor. Es ist uns derzeit leider nicht möglich Varianten in anderen Sprachen zur Verfügung zu stellen. Wir bitten um Entschuldigung.",
@@ -198,8 +200,7 @@
   },
   "TermsOfServicePage": {
     "meta": {
-      "title": "Kippenstummel | Nutzungsbedingungen",
-      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+      "title": "Nutzungsbedingungen"
     },
     "headline": "Nutzungsbedingungen",
     "disclaimer": "Aus Gründen der Rechtssicherheit liegt die rechtliche Auskunft bezüglich der Nutzungsbedingungen nur in deutscher Fassung vor. Es ist uns derzeit leider nicht möglich Varianten in anderen Sprachen zur Verfügung zu stellen. Wir bitten um Entschuldigung.",
@@ -258,8 +259,7 @@
   },
   "NotFoundPage": {
     "meta": {
-      "title": "Kippenstummel | Seite nicht gefunden",
-      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+      "title": "Seite nicht gefunden"
     },
     "headline": "Seite nicht gefunden",
     "description": "Die Seite, die du suchst, konnte nicht gefunden werden.",
@@ -267,8 +267,7 @@
   },
   "OfflinePage": {
     "meta": {
-      "title": "Kippenstummel | Du bist offline",
-      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+      "title": "Du bist offline"
     },
     "headline": "Du bist offline",
     "description": "Die scheinst im Moment keine Internetverbindung zu haben. Die Seite konnte nicht geladen werden.",
@@ -276,8 +275,7 @@
   },
   "TransferPage": {
     "meta": {
-      "title": "Kippenstummel | Identität übertragen",
-      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
+      "title": "Identität übertragen"
     },
     "headline": "Identität übertragen",
     "descriptionEmpty": "Du bist im Begriff eine Identität auf dieses Gerät zu übertragen. Falls du den Vorgang abbrechen willst, klicke <link>hier</link>. Möchtest du fortfahren?<br></br><br></br>Zu deiner Sicherheit wurden die zu übertragenden Informationen verschlüsselt. Du benötigst das Transportpasswort um die Übertragung abzuschließen.",

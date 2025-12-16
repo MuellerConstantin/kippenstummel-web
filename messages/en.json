@@ -1,8 +1,13 @@
 {
+  "Seo": {
+    "title": "Kippenstummel",
+    "ogTitle": "Kippenstummel - Find cigarette vending machines",
+    "ogDescription": "Find cigarette vending machines near you anytime, anywhere.",
+    "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+  },
   "HomePage": {
     "meta": {
-      "title": "Kippenstummel | Homepage",
-      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+      "title": "Homepage"
     },
     "slogan": "Zu einer Kippe habe ma noch nie nein gsait!",
     "features": {
@@ -73,14 +78,12 @@
   },
   "MapPage": {
     "meta": {
-      "title": "Kippenstummel | Map",
-      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+      "title": "Map"
     }
   },
   "ImprintPage": {
     "meta": {
-      "title": "Kippenstummel | Imprint",
-      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+      "title": "Imprint"
     },
     "headline": "Impressum",
     "declaration": "Angaben gemäß § 5 TMG",
@@ -97,8 +100,7 @@
   },
   "PrivacyPolicyPage": {
     "meta": {
-      "title": "Kippenstummel | Privacy Policy",
-      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+      "title": "Privacy Policy"
     },
     "headline": "Datenschutzerklärung",
     "disclaimer": "For reasons of legal certainty, the legal information regarding the data privacy policy is only available in German. Unfortunately, we are currently unable to provide versions in other languages. We apologize for the inconvenience.",
@@ -198,8 +200,7 @@
   },
   "TermsOfServicePage": {
     "meta": {
-      "title": "Kippenstummel | Terms of Service",
-      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+      "title": "Terms of Service"
     },
     "headline": "Nutzungsbedingungen",
     "disclaimer": "For reasons of legal certainty, the legal information regarding the terms of service is only available in German. Unfortunately, we are currently unable to provide versions in other languages. We apologize for the inconvenience.",
@@ -258,8 +259,7 @@
   },
   "NotFoundPage": {
     "meta": {
-      "title": "Kippenstummel | Page not found",
-      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+      "title": "Page not found"
     },
     "headline": "Page not found",
     "description": "Sorry, we can't find that page. You'll find lots to explore on the home page.",
@@ -267,8 +267,7 @@
   },
   "OfflinePage": {
     "meta": {
-      "title": "Kippenstummel | You are offline",
-      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+      "title": "You are offline"
     },
     "headline": "You are offline",
     "description": "It seems like you're offline. We can't find that page.",
@@ -276,8 +275,7 @@
   },
   "TransferPage": {
     "meta": {
-      "title": "Kippenstummel | Transfer identity",
-      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
+      "title": "Transfer identity"
     },
     "headline": "Transfer identity",
     "descriptionEmpty": "You are about to transfer an identity to this device. If you want to cancel the process, click <link>here</link>. Do you want to continue?<br></br><br></br>For your security, the information being transmitted has been encrypted. You will need the transport password to complete the transfer.",

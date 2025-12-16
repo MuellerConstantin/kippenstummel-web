@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Lato } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { StoreProvider } from "@/store";
@@ -12,9 +12,11 @@ import { AckeeTracker } from "@/components/organisms/AckeeTracker";
 import { RuntimeConfigProvider } from "@/contexts/RuntimeConfigProvider";
 import { PWAInstallProvider } from "@/contexts/PWAInstallProvider";
 import { OfflineHandler } from "@/components/organisms/OfflineHandler";
+import { InstallRequestNotificationHandler } from "@/components/organisms/InstallRequestNotificationHandler";
 
 import "./globals.css";
-import { InstallRequestNotificationHandler } from "@/components/organisms/InstallRequestNotificationHandler";
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kippenstummel.de";
 
 const lato = Lato({
   variable: "--font-lato",
@@ -22,15 +24,65 @@ const lato = Lato({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Kippenstummel",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Seo" });
+
+  return {
+    title: {
+      default: t("title"),
+      template: `%s · ${t("title")}`,
+    },
+    description: t("description"),
+    alternates: {
+      canonical: `${BASE_URL}/${locale}`,
+      languages: {
+        ...Object.fromEntries(
+          routing.locales.map((l) => [l, `${BASE_URL}/${l}`]),
+        ),
+        "x-default": `${BASE_URL}/de`,
+      },
+    },
+    openGraph: {
+      type: "website",
+      siteName: t("title"),
+      title: t("ogTitle"),
+      description: t("ogDescription"),
+      url: `${BASE_URL}/${locale}`,
+      locale: locale === "de" ? "de_DE" : "en_US",
+      images: [
+        {
+          url: `${BASE_URL}/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: t("ogTitle"),
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("ogTitle"),
+      description: t("ogDescription"),
+      images: [`${BASE_URL}/og-image.png`],
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+    metadataBase: new URL(BASE_URL),
+  };
+}
 
 export function generateViewport(): Viewport {
   return {
     width: "device-width",
     initialScale: 1,
     maximumScale: 1,
+    themeColor: "#16a34a",
   };
 }
 
@@ -63,7 +115,6 @@ export default async function RootLayout({
           href="/favicon-96.png"
           sizes="96x96"
         />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link
           rel="apple-touch-icon"
@@ -71,11 +122,18 @@ export default async function RootLayout({
           href="/apple-touch-icon.png"
         />
         <meta name="apple-mobile-web-app-title" content="Kippenstummel" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
         <link
           crossOrigin="use-credentials"
           rel="manifest"
           href={`/manifest.${locale}.json`}
         />
+        <meta name="color-scheme" content="light dark" />
+        <meta name="format-detection" content="telephone=no" />
       </head>
       <body className={`${lato.variable} bg-white dark:bg-slate-800`}>
         <NextIntlClientProvider>
