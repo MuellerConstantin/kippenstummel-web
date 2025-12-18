@@ -8,10 +8,10 @@ import { CvmMapDefaultOverlay } from "./CvmMapDefaultOverlay";
 import { useTranslations } from "next-intl";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import { useMapCvmSelection } from "@/hooks/useMapCvmSelection";
-import { BaseMap } from "./BaseMap";
 import { Map, MapLibreEvent } from "maplibre-gl";
 import { CvmMapRegisterOverlay } from "./CvmMapRegisterOverlay";
 import { CvmMapRepositionOverlay } from "./CvmMapRepositionOverlay";
+import { CvmMapTemplate } from "@/components/templates/cvm/CvmMapTemplate";
 
 type MapMode = "default" | "register" | "reposition";
 
@@ -176,7 +176,7 @@ export function CvmMap({ onRegister, onReposition, ...props }: CvmMapProps) {
   );
 
   return (
-    <BaseMap onLoad={onLoad} onViewChange={onViewStateChanged}>
+    <CvmMapTemplate onLoad={onLoad} onViewChange={onViewStateChanged}>
       {mode === "default" && (
         <CvmMapDefaultOverlay
           onSelect={(cvmId) => selectCvmId(cvmId)}
@@ -211,6 +211,6 @@ export function CvmMap({ onRegister, onReposition, ...props }: CvmMapProps) {
           onCancel={() => setMode("default")}
         />
       )}
-    </BaseMap>
+    </CvmMapTemplate>
   );
 }
