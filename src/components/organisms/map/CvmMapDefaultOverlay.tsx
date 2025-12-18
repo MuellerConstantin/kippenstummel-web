@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
-import useIsMobile from "@/hooks/useIsMobile";
 import { CvmInfoSidebar } from "../cvm/CvmInfoSidebar";
-import { CvmInfoDialog } from "../cvm/CvmInfoDialog";
+import { CvmInfoModalSheet } from "../cvm/CvmInfoModalSheet";
 import { Cvm, CvmCluster } from "@/lib/types/cvm";
 import { GeoCoordinates } from "@/lib/types/geo";
 import { useCallback, useState } from "react";
@@ -13,6 +12,9 @@ import { CvmReportDialog } from "../cvm/CvmReportDialog";
 import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
 import { LocationMarker } from "@/components/molecules/map/LocationMarker";
 import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
+import { useBreakpointUp } from "@/hooks/useBreakpointUp";
+import { CvmInfoDialog } from "../cvm/CvmInfoDialog";
+import { useBreakpointDown } from "@/hooks/useBreakpointDown";
 
 export interface CvmMapDefaultOverlayProps {
   selectedCvm: Cvm | null;
@@ -36,7 +38,8 @@ export function CvmMapDefaultOverlay({
   clusters,
   ...props
 }: CvmMapDefaultOverlayProps) {
-  const isMobile = useIsMobile();
+  const isLgUp = useBreakpointUp("lg");
+  const isSmDown = useBreakpointDown("sm");
 
   const [showHelpDialog, setShowHelpDialog] = useState(false);
   const [showMapSettingsDialog, setShowMapSettingsDialog] = useState(false);
@@ -53,7 +56,32 @@ export function CvmMapDefaultOverlay({
 
   return (
     <>
-      {isMobile && (
+      {isSmDown && (
+        <div className="pointer-events-none absolute flex h-full w-full">
+          {selectedCvm && (
+            <CvmInfoModalSheet
+              isOpen={!!selectedCvm}
+              onIsOpenChange={() => props.onDeselect?.()}
+              {...props}
+              cvm={selectedCvm!}
+              onReport={(reporterPosition) => {
+                setShowReportDialog(true);
+                setReporterPosition(reporterPosition);
+              }}
+            />
+          )}
+          <div className="relative grow">
+            <div className="pointer-events-auto absolute bottom-9 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 lg:hidden">
+              <MenuBottomNavigation
+                onHelp={onHelp}
+                onSettings={onSettings}
+                onRegister={props.onRegister}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+      {!isSmDown && !isLgUp && (
         <div className="pointer-events-none absolute flex h-full w-full">
           <AnimatedDialogModal
             isOpen={!!selectedCvm}
@@ -81,7 +109,7 @@ export function CvmMapDefaultOverlay({
           </div>
         </div>
       )}
-      {!isMobile && (
+      {isLgUp && (
         <div className="pointer-events-none absolute flex h-full w-full">
           <div className="pointer-events-auto z-[2000] h-full shrink-0 pt-3 pb-3 pl-3">
             <AnimatePresence>

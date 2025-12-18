@@ -679,8 +679,5 @@
       "button": "Add to Home Screen",
       "tooltip": "Save this app on your device for quick and easy access."
     }
-  },
-  "ModalSheet": {
-    "done": "Done"
   }
 }
