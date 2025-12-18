@@ -1,13 +1,13 @@
 "use client";
 
 import { ViewStateChangeEvent } from "react-map-gl/maplibre";
-import useMapCvmViewportData from "@/hooks/useMapCvmViewportData";
+import useMapCvmViewportData from "@/hooks/cvm/useMapCvmViewportData";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { GeoCoordinates } from "@/lib/types/geo";
 import { CvmMapDefaultOverlay } from "./CvmMapDefaultOverlay";
 import { useTranslations } from "next-intl";
 import { useNotifications } from "@/contexts/NotificationProvider";
-import { useMapCvmSelection } from "@/hooks/useMapCvmSelection";
+import { useMapCvmSelection } from "@/hooks/cvm/useMapCvmSelection";
 import { Map, MapLibreEvent } from "maplibre-gl";
 import { CvmMapRegisterOverlay } from "./CvmMapRegisterOverlay";
 import { CvmMapRepositionOverlay } from "./CvmMapRepositionOverlay";

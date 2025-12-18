@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import useSWR, { SWRConfiguration } from "swr";
 import { AxiosError } from "axios";
 import { latLonToTile, tileToLatLon } from "@/lib/geo";
-import useApi from "./useApi";
+import useApi from "../useApi";
 import { useAppSelector } from "@/store";
 import { CvmCluster, Cvm } from "@/lib/types/cvm";
 import { ApiError } from "@/lib/types/error";
