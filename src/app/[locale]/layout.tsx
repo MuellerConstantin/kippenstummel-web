@@ -127,11 +127,7 @@ export default async function RootLayout({
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
-        <link
-          crossOrigin="use-credentials"
-          rel="manifest"
-          href={`/manifest.${locale}.json`}
-        />
+        <link rel="manifest" href={`/manifest.${locale}.json`} />
         <meta name="color-scheme" content="light dark" />
         <meta name="format-detection" content="telephone=no" />
       </head>
