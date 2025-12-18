@@ -12,7 +12,8 @@ import {
 } from "motion/react";
 import { X } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { Dialog, ModalOverlay, Modal, Button } from "react-aria-components";
+import { Button } from "@/components/atoms/Button";
+import { Dialog, ModalOverlay, Modal } from "react-aria-components";
 
 const MotionModal = motion.create(Modal);
 const MotionModalOverlay = motion.create(ModalOverlay);
