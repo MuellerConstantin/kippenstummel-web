@@ -104,6 +104,7 @@ export function ModalSheet({
             maxHeight: `calc(100vh - ${SHEET_MARGIN}px)`,
           }}
           drag="y"
+          dragElastic={{ top: 0 }}
           dragConstraints={{ top: 0 }}
           onDragEnd={(e, { offset, velocity }) => {
             if (offset.y > window.innerHeight * 0.75 || velocity.y > 10) {
