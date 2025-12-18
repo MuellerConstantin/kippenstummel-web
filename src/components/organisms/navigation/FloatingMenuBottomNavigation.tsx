@@ -9,13 +9,15 @@ import useLocate from "@/hooks/useLocate";
 import { useAppSelector } from "@/store";
 import { GeoCoordinates } from "@/lib/types/geo";
 
-interface MenuBottomNavigationProps {
+interface FloatingMenuBottomNavigationProps {
   onRegister?: (position: GeoCoordinates) => void;
   onHelp?: () => void;
   onSettings?: () => void;
 }
 
-export function MenuBottomNavigation(props: MenuBottomNavigationProps) {
+export function FloatingMenuBottomNavigation(
+  props: FloatingMenuBottomNavigationProps,
+) {
   const { onRegister, onHelp, onSettings } = props;
   const locate = useLocate();
   const containerRef = useRef<HTMLDivElement>(null);

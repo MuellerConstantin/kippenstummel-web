@@ -4,7 +4,7 @@ import { CvmInfoModalSheet } from "../cvm/CvmInfoModalSheet";
 import { Cvm, CvmCluster } from "@/lib/types/cvm";
 import { GeoCoordinates } from "@/lib/types/geo";
 import { useCallback, useState } from "react";
-import { MenuBottomNavigation } from "../navigation/MenuBottomNavigation";
+import { FloatingMenuBottomNavigation } from "../navigation/FloatingMenuBottomNavigation";
 import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
 import { HelpDialog } from "../navigation/HelpDialog";
 import { MapSettingsDialog } from "../navigation/MapSettingsDialog";
@@ -72,7 +72,7 @@ export function CvmMapDefaultOverlay({
           )}
           <div className="relative grow">
             <div className="pointer-events-auto absolute bottom-9 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 lg:hidden">
-              <MenuBottomNavigation
+              <FloatingMenuBottomNavigation
                 onHelp={onHelp}
                 onSettings={onSettings}
                 onRegister={props.onRegister}
@@ -100,7 +100,7 @@ export function CvmMapDefaultOverlay({
           </AnimatedDialogModal>
           <div className="relative grow">
             <div className="pointer-events-auto absolute bottom-9 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 lg:hidden">
-              <MenuBottomNavigation
+              <FloatingMenuBottomNavigation
                 onHelp={onHelp}
                 onSettings={onSettings}
                 onRegister={props.onRegister}
@@ -140,7 +140,7 @@ export function CvmMapDefaultOverlay({
               layout
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              <MenuBottomNavigation
+              <FloatingMenuBottomNavigation
                 onHelp={onHelp}
                 onSettings={onSettings}
                 onRegister={props.onRegister}
