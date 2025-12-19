@@ -49,7 +49,9 @@ export type CvmMapViewState =
   | CvmMapRepositionViewState;
 
 type CvmMapViewAction =
-  | { type: "CHANGE_MODE"; mode: CvmMapViewMode }
+  | { type: "GOTO_DEFAULT_MODE" }
+  | { type: "GOTO_REGISTER_MODE" }
+  | { type: "GOTO_REPOSITION_MODE" }
   | DefaultViewStateAction;
 
 function cvmMapViewReducer(
@@ -57,18 +59,14 @@ function cvmMapViewReducer(
   action: CvmMapViewAction,
 ): CvmMapViewState {
   switch (action.type) {
-    case "CHANGE_MODE": {
-      switch (action.mode) {
-        case "default": {
-          return initialDefaultViewState;
-        }
-        case "register": {
-          return initialCvmMapRegisterViewState;
-        }
-        case "reposition": {
-          return initialCvmMapRepositionViewState;
-        }
-      }
+    case "GOTO_DEFAULT_MODE": {
+      return initialDefaultViewState;
+    }
+    case "GOTO_REGISTER_MODE": {
+      return initialCvmMapRegisterViewState;
+    }
+    case "GOTO_REPOSITION_MODE": {
+      return initialCvmMapRepositionViewState;
     }
     case "OPEN_HELP_DIALOG": {
       if (state.mode !== "default") return state;
@@ -107,7 +105,9 @@ function cvmMapViewReducer(
 export interface CvmMapController {
   state: CvmMapViewState & { mode: CvmMapViewMode };
   dispatch: React.Dispatch<CvmMapViewAction>;
-  changeMode: (mode: CvmMapViewMode) => void;
+  goToDefaultMode: () => void;
+  goToRegisterMode: () => void;
+  goToRepositionMode: () => void;
 }
 
 const cvmMapViewContext = createContext<CvmMapController | null>(null);
@@ -122,12 +122,28 @@ export function CvmMapViewProvider({
     initialDefaultViewState,
   );
 
-  const changeMode = useCallback((mode: CvmMapViewMode) => {
-    dispatch({ type: "CHANGE_MODE", mode });
+  const goToDefaultMode = useCallback(() => {
+    dispatch({ type: "GOTO_DEFAULT_MODE" });
+  }, []);
+
+  const goToRegisterMode = useCallback(() => {
+    dispatch({ type: "GOTO_REGISTER_MODE" });
+  }, []);
+
+  const goToRepositionMode = useCallback(() => {
+    dispatch({ type: "GOTO_REPOSITION_MODE" });
   }, []);
 
   return (
-    <cvmMapViewContext.Provider value={{ state, changeMode, dispatch }}>
+    <cvmMapViewContext.Provider
+      value={{
+        state,
+        goToDefaultMode,
+        goToRegisterMode,
+        goToRepositionMode,
+        dispatch,
+      }}
+    >
       {children}
     </cvmMapViewContext.Provider>
   );
