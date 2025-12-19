@@ -1,8 +1,15 @@
+import { GeoCoordinates } from "@/lib/types/geo";
 import { createContext, useCallback, useContext, useReducer } from "react";
 
 type CvmMapViewMode = "default" | "register" | "reposition";
 
-const initialDefaultViewState: DefaultViewState = { mode: "default" };
+const initialDefaultViewState: DefaultViewState = {
+  mode: "default",
+  showHelpDialog: false,
+  showMapSettingsDialog: false,
+  showReportDialog: false,
+  reporterPosition: null,
+};
 
 const initialCvmMapRegisterViewState: CvmMapRegisterViewState = {
   mode: "register",
@@ -14,7 +21,19 @@ const initialCvmMapRepositionViewState: CvmMapRepositionViewState = {
 
 export interface DefaultViewState {
   mode: "default";
+  showHelpDialog: boolean;
+  showMapSettingsDialog: boolean;
+  showReportDialog: boolean;
+  reporterPosition: GeoCoordinates | null;
 }
+
+type DefaultViewStateAction =
+  | { type: "OPEN_HELP_DIALOG" }
+  | { type: "CLOSE_HELP_DIALOG" }
+  | { type: "OPEN_MAP_SETTINGS_DIALOG" }
+  | { type: "CLOSE_MAP_SETTINGS_DIALOG" }
+  | { type: "OPEN_REPORT_DIALOG"; reporterPosition: GeoCoordinates }
+  | { type: "CLOSE_REPORT_DIALOG" };
 
 export interface CvmMapRegisterViewState {
   mode: "register";
@@ -29,7 +48,9 @@ export type CvmMapViewState =
   | CvmMapRegisterViewState
   | CvmMapRepositionViewState;
 
-type CvmMapViewAction = { type: "CHANGE_MODE"; mode: CvmMapViewMode };
+type CvmMapViewAction =
+  | { type: "CHANGE_MODE"; mode: CvmMapViewMode }
+  | DefaultViewStateAction;
 
 function cvmMapViewReducer(
   state: CvmMapViewState,
@@ -48,6 +69,34 @@ function cvmMapViewReducer(
           return initialCvmMapRepositionViewState;
         }
       }
+    }
+    case "OPEN_HELP_DIALOG": {
+      if (state.mode !== "default") return state;
+      return { ...state, showHelpDialog: true };
+    }
+    case "CLOSE_HELP_DIALOG": {
+      if (state.mode !== "default") return state;
+      return { ...state, showHelpDialog: false };
+    }
+    case "OPEN_MAP_SETTINGS_DIALOG": {
+      if (state.mode !== "default") return state;
+      return { ...state, showMapSettingsDialog: true };
+    }
+    case "CLOSE_MAP_SETTINGS_DIALOG": {
+      if (state.mode !== "default") return state;
+      return { ...state, showMapSettingsDialog: false };
+    }
+    case "OPEN_REPORT_DIALOG": {
+      if (state.mode !== "default") return state;
+      return {
+        ...state,
+        showReportDialog: true,
+        reporterPosition: action.reporterPosition,
+      };
+    }
+    case "CLOSE_REPORT_DIALOG": {
+      if (state.mode !== "default") return state;
+      return { ...state, showReportDialog: false, reporterPosition: null };
     }
     default: {
       return state;
@@ -95,13 +144,48 @@ export function useCvmMapView() {
 }
 
 export function useCvmMapDefaultView() {
-  const { state } = useCvmMapView();
+  const { state, dispatch } = useCvmMapView();
 
   if (state.mode !== "default") {
     throw new Error("useDefaultMapView can only be used in default view");
   }
 
-  return {};
+  const openHelpDialog = useCallback(() => {
+    dispatch({ type: "OPEN_HELP_DIALOG" });
+  }, [dispatch]);
+
+  const closeHelpDialog = useCallback(() => {
+    dispatch({ type: "CLOSE_HELP_DIALOG" });
+  }, [dispatch]);
+
+  const openMapSettingsDialog = useCallback(() => {
+    dispatch({ type: "OPEN_MAP_SETTINGS_DIALOG" });
+  }, [dispatch]);
+
+  const closeMapSettingsDialog = useCallback(() => {
+    dispatch({ type: "CLOSE_MAP_SETTINGS_DIALOG" });
+  }, [dispatch]);
+
+  const openReportDialog = useCallback(
+    (reporterPosition: GeoCoordinates) => {
+      dispatch({ type: "OPEN_REPORT_DIALOG", reporterPosition });
+    },
+    [dispatch],
+  );
+
+  const closeReportDialog = useCallback(() => {
+    dispatch({ type: "CLOSE_REPORT_DIALOG" });
+  }, [dispatch]);
+
+  return {
+    state: state as DefaultViewState & { mode: "default" },
+    openHelpDialog,
+    closeHelpDialog,
+    openMapSettingsDialog,
+    closeMapSettingsDialog,
+    openReportDialog,
+    closeReportDialog,
+  };
 }
 
 export function useCvmMapRegisterView() {

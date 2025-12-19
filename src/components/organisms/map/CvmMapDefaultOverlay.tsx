@@ -3,7 +3,6 @@ import { CvmInfoSidebar } from "../cvm/CvmInfoSidebar";
 import { CvmInfoModalSheet } from "../cvm/CvmInfoModalSheet";
 import { Cvm, CvmCluster } from "@/lib/types/cvm";
 import { GeoCoordinates } from "@/lib/types/geo";
-import { useCallback, useState } from "react";
 import { FloatingMenuBottomNavigation } from "../navigation/FloatingMenuBottomNavigation";
 import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
 import { HelpDialog } from "../navigation/HelpDialog";
@@ -15,6 +14,7 @@ import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
 import { useBreakpointUp } from "@/hooks/useBreakpointUp";
 import { CvmInfoDialog } from "../cvm/CvmInfoDialog";
 import { useBreakpointDown } from "@/hooks/useBreakpointDown";
+import { useCvmMapDefaultView } from "@/contexts/CvmMapViewContext";
 
 export interface CvmMapDefaultOverlayProps {
   selectedCvm: Cvm | null;
@@ -41,18 +41,15 @@ export function CvmMapDefaultOverlay({
   const isLgUp = useBreakpointUp("lg");
   const isSmDown = useBreakpointDown("sm");
 
-  const [showHelpDialog, setShowHelpDialog] = useState(false);
-  const [showMapSettingsDialog, setShowMapSettingsDialog] = useState(false);
-  const [showReportDialog, setShowReportDialog] = useState(false);
-  const [reporterPosition, setReporterPosition] = useState<GeoCoordinates>();
-
-  const onHelp = useCallback(() => {
-    setShowHelpDialog(true);
-  }, [setShowHelpDialog]);
-
-  const onSettings = useCallback(() => {
-    setShowMapSettingsDialog(true);
-  }, [setShowMapSettingsDialog]);
+  const {
+    state,
+    openHelpDialog,
+    closeHelpDialog,
+    openMapSettingsDialog,
+    closeMapSettingsDialog,
+    openReportDialog,
+    closeReportDialog,
+  } = useCvmMapDefaultView();
 
   return (
     <>
@@ -64,17 +61,14 @@ export function CvmMapDefaultOverlay({
               onIsOpenChange={() => props.onDeselect?.()}
               {...props}
               cvm={selectedCvm!}
-              onReport={(reporterPosition) => {
-                setShowReportDialog(true);
-                setReporterPosition(reporterPosition);
-              }}
+              onReport={openReportDialog}
             />
           )}
           <div className="relative grow">
             <div className="pointer-events-auto absolute bottom-9 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 lg:hidden">
               <FloatingMenuBottomNavigation
-                onHelp={onHelp}
-                onSettings={onSettings}
+                onHelp={openHelpDialog}
+                onSettings={openMapSettingsDialog}
                 onRegister={props.onRegister}
               />
             </div>
@@ -92,17 +86,14 @@ export function CvmMapDefaultOverlay({
             <CvmInfoDialog
               {...props}
               cvm={selectedCvm!}
-              onReport={(reporterPosition) => {
-                setShowReportDialog(true);
-                setReporterPosition(reporterPosition);
-              }}
+              onReport={openReportDialog}
             />
           </AnimatedDialogModal>
           <div className="relative grow">
             <div className="pointer-events-auto absolute bottom-9 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 lg:hidden">
               <FloatingMenuBottomNavigation
-                onHelp={onHelp}
-                onSettings={onSettings}
+                onHelp={openHelpDialog}
+                onSettings={openMapSettingsDialog}
                 onRegister={props.onRegister}
               />
             </div>
@@ -125,10 +116,7 @@ export function CvmMapDefaultOverlay({
                     {...props}
                     onClose={() => props.onDeselect?.()}
                     cvm={selectedCvm}
-                    onReport={(reporterPosition) => {
-                      setShowReportDialog(true);
-                      setReporterPosition(reporterPosition);
-                    }}
+                    onReport={openReportDialog}
                   />
                 </motion.div>
               )}
@@ -141,8 +129,8 @@ export function CvmMapDefaultOverlay({
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
               <FloatingMenuBottomNavigation
-                onHelp={onHelp}
-                onSettings={onSettings}
+                onHelp={openHelpDialog}
+                onSettings={openMapSettingsDialog}
                 onRegister={props.onRegister}
               />
             </motion.div>
@@ -170,26 +158,26 @@ export function CvmMapDefaultOverlay({
       ))}
       {!!selectedCvm && <SelectedMarker cvm={selectedCvm} />}
       <AnimatedDialogModal
-        isOpen={showReportDialog}
-        onOpenChange={setShowReportDialog}
+        isOpen={state.showReportDialog}
+        onOpenChange={closeReportDialog}
       >
         <CvmReportDialog
           onReport={(type) => {
-            props.onReport?.(reporterPosition!, type);
-            setShowReportDialog(false);
+            props.onReport?.(state.reporterPosition!, type);
+            closeReportDialog();
           }}
         />
       </AnimatedDialogModal>
       <AnimatedDialogModal
         className="!max-w-2xl"
-        isOpen={showHelpDialog}
-        onOpenChange={setShowHelpDialog}
+        isOpen={state.showHelpDialog}
+        onOpenChange={closeHelpDialog}
       >
         <HelpDialog />
       </AnimatedDialogModal>
       <AnimatedDialogModal
-        isOpen={showMapSettingsDialog}
-        onOpenChange={setShowMapSettingsDialog}
+        isOpen={state.showMapSettingsDialog}
+        onOpenChange={closeMapSettingsDialog}
       >
         <MapSettingsDialog />
       </AnimatedDialogModal>
