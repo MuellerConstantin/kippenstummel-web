@@ -1,24 +1,63 @@
-import { createContext, useCallback, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useReducer } from "react";
 
 type CvmMapViewMode = "default" | "register" | "reposition";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface DefaultViewState {}
+const initialDefaultViewState: DefaultViewState = { mode: "default" };
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface CvmMapRegisterViewState {}
+const initialCvmMapRegisterViewState: CvmMapRegisterViewState = {
+  mode: "register",
+};
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface CvmMapRepositionViewState {}
+const initialCvmMapRepositionViewState: CvmMapRepositionViewState = {
+  mode: "reposition",
+};
+
+export interface DefaultViewState {
+  mode: "default";
+}
+
+export interface CvmMapRegisterViewState {
+  mode: "register";
+}
+
+export interface CvmMapRepositionViewState {
+  mode: "reposition";
+}
 
 export type CvmMapViewState =
   | DefaultViewState
   | CvmMapRegisterViewState
   | CvmMapRepositionViewState;
 
+type CvmMapViewAction = { type: "CHANGE_MODE"; mode: CvmMapViewMode };
+
+function cvmMapViewReducer(
+  state: CvmMapViewState,
+  action: CvmMapViewAction,
+): CvmMapViewState {
+  switch (action.type) {
+    case "CHANGE_MODE": {
+      switch (action.mode) {
+        case "default": {
+          return initialDefaultViewState;
+        }
+        case "register": {
+          return initialCvmMapRegisterViewState;
+        }
+        case "reposition": {
+          return initialCvmMapRepositionViewState;
+        }
+      }
+    }
+    default: {
+      return state;
+    }
+  }
+}
+
 export interface CvmMapController {
-  mode: CvmMapViewMode;
-  state: CvmMapViewState;
+  state: CvmMapViewState & { mode: CvmMapViewMode };
+  dispatch: React.Dispatch<CvmMapViewAction>;
   changeMode: (mode: CvmMapViewMode) => void;
 }
 
@@ -29,17 +68,17 @@ export function CvmMapViewProvider({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [mode, setMode] = useState<CvmMapController["mode"]>("default");
-
-  const changeMode = useCallback(
-    (mode: CvmMapController["mode"]) => {
-      setMode(mode);
-    },
-    [setMode],
+  const [state, dispatch] = useReducer(
+    cvmMapViewReducer,
+    initialDefaultViewState,
   );
 
+  const changeMode = useCallback((mode: CvmMapViewMode) => {
+    dispatch({ type: "CHANGE_MODE", mode });
+  }, []);
+
   return (
-    <cvmMapViewContext.Provider value={{ mode, changeMode, state: {} }}>
+    <cvmMapViewContext.Provider value={{ state, changeMode, dispatch }}>
       {children}
     </cvmMapViewContext.Provider>
   );
@@ -56,9 +95,9 @@ export function useCvmMapView() {
 }
 
 export function useCvmMapDefaultView() {
-  const { mode } = useCvmMapView();
+  const { state } = useCvmMapView();
 
-  if (mode !== "default") {
+  if (state.mode !== "default") {
     throw new Error("useDefaultMapView can only be used in default view");
   }
 
@@ -66,9 +105,9 @@ export function useCvmMapDefaultView() {
 }
 
 export function useCvmMapRegisterView() {
-  const { mode } = useCvmMapView();
+  const { state } = useCvmMapView();
 
-  if (mode !== "register") {
+  if (state.mode !== "register") {
     throw new Error("useCvmMapRegisterView can only be used in register view");
   }
 
@@ -76,9 +115,9 @@ export function useCvmMapRegisterView() {
 }
 
 export function useCvmMapRepositionView() {
-  const { mode } = useCvmMapView();
+  const { state } = useCvmMapView();
 
-  if (mode !== "reposition") {
+  if (state.mode !== "reposition") {
     throw new Error(
       "useCvmMapRepositionView can only be used in reposition view",
     );

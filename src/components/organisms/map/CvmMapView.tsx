@@ -38,7 +38,7 @@ export function CvmMapView({
   const t = useTranslations();
   const { enqueue } = useNotifications();
 
-  const { mode, changeMode } = useCvmMapView();
+  const { state, changeMode } = useCvmMapView();
   const { zoom, bottomLeft, topRight, map, onLoad, onViewStateChanged } =
     useCvmMapViewport();
   const [editorPosition, setEditorPosition] = useState<GeoCoordinates>();
@@ -143,7 +143,7 @@ export function CvmMapView({
 
   return (
     <CvmMapTemplate onLoad={onLoad} onViewChange={onViewStateChanged}>
-      {mode === "default" && (
+      {state.mode === "default" && (
         <CvmMapDefaultOverlay
           onSelect={(cvmId) => selectCvmId(cvmId)}
           onDeselect={() => selectCvmId(null)}
@@ -163,14 +163,14 @@ export function CvmMapView({
           onRegister={onRegisterStart}
         />
       )}
-      {mode === "register" && (
+      {state.mode === "register" && (
         <CvmMapRegisterOverlay
           originalPosition={editorPosition!}
           onRegister={onRegisterEnd}
           onCancel={() => changeMode("default")}
         />
       )}
-      {mode === "reposition" && (
+      {state.mode === "reposition" && (
         <CvmMapRepositionOverlay
           originalPosition={selectedCvmPosition!}
           onReposition={onRepositionEnd}
