@@ -24,7 +24,7 @@ export const ToastQueue = AriaToastQueue<Toast>;
 export type ToastQueue = AriaToastQueue<Toast>;
 
 const toast = tv({
-  base: "flex items-start gap-4 rounded-xl shadow-lg p-4 border w-xs lg:w-sm transition-all z-[1000]",
+  base: "flex items-start gap-4 rounded-xl shadow-lg p-4 border w-xs lg:w-sm transition-all z-[150000]",
   variants: {
     variant: {
       default:
@@ -121,7 +121,7 @@ export function ToastRegion({ queue }: ToastRegionProps) {
     <AnimatePresence initial={false}>
       <AriaToastRegion
         queue={queue}
-        className="pointer-events-none fixed inset-y-0 right-0 z-[1000] flex max-h-screen max-w-full flex-col items-end gap-4 overflow-x-hidden overflow-y-auto p-4"
+        className="pointer-events-none fixed inset-y-0 right-0 z-[150000] flex max-h-screen max-w-full flex-col items-end gap-4 overflow-x-hidden overflow-y-auto p-4"
       >
         {({ toast: t }) => <Toast key={t.key} toast={t} queue={queue} />}
       </AriaToastRegion>

@@ -5,7 +5,7 @@ import { Cvm } from "@/lib/types/cvm";
 import { ApiError } from "@/lib/types/error";
 import useApi from "@/hooks/useApi";
 
-interface UseCvmSelectionProps {
+interface UseCvmMapSelectionProps {
   /**
    * An optional shared CVM id. This id is used to pre-select a CVM on the map
    * after loading the page.
@@ -19,7 +19,7 @@ interface UseCvmSelectionProps {
  * @param props The props passed to the hook.
  * @returns The CVM selection state.
  */
-export function useMapCvmSelection({ sharedCvmId }: UseCvmSelectionProps) {
+export function useCvmMapSelection({ sharedCvmId }: UseCvmMapSelectionProps) {
   const api = useApi();
 
   const [selectedCvmId, setSelectedCvmId] = useState<string | null>(null);

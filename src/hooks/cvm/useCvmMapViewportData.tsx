@@ -8,7 +8,7 @@ import { CvmCluster, Cvm } from "@/lib/types/cvm";
 import { ApiError } from "@/lib/types/error";
 import { GeoCoordinates } from "@/lib/types/geo";
 
-export interface UseMapViewportCvmDataProps {
+export interface UseCvmMapViewportDataProps {
   zoom: number;
   bottomLeft: GeoCoordinates;
   topRight: GeoCoordinates;
@@ -25,8 +25,8 @@ export interface UseMapViewportCvmDataProps {
  * @param props The props passed to the hook.
  * @returns The map viewport data.
  */
-export default function useMapCvmViewportData(
-  props: UseMapViewportCvmDataProps & SWRConfiguration,
+export function useCvmMapViewportData(
+  props: UseCvmMapViewportDataProps & SWRConfiguration,
 ) {
   const { zoom, bottomLeft, topRight } = props;
 
