@@ -11,12 +11,17 @@ const initialDefaultViewState: DefaultViewState = {
   reporterPosition: null,
 };
 
-const initialCvmMapRegisterViewState: CvmMapRegisterViewState = {
+const initialCvmMapRegisterViewState: RegisterViewState = {
   mode: "register",
+  currentPosition: null,
+  originalPosition: null,
 };
 
-const initialCvmMapRepositionViewState: CvmMapRepositionViewState = {
+const initialCvmMapRepositionViewState: RepositionViewState = {
   mode: "reposition",
+  currentPosition: null,
+  originalPosition: null,
+  editorPosition: null,
 };
 
 export interface DefaultViewState {
@@ -35,24 +40,45 @@ type DefaultViewStateAction =
   | { type: "OPEN_REPORT_DIALOG"; reporterPosition: GeoCoordinates }
   | { type: "CLOSE_REPORT_DIALOG" };
 
-export interface CvmMapRegisterViewState {
+export interface RegisterViewState {
   mode: "register";
+  currentPosition: GeoCoordinates | null;
+  originalPosition: GeoCoordinates | null;
 }
 
-export interface CvmMapRepositionViewState {
+type RegisterViewStateAction = {
+  type: "ADAPT_REGISTER_CURRENT_POSITION";
+  position: GeoCoordinates;
+};
+
+export interface RepositionViewState {
   mode: "reposition";
+  currentPosition: GeoCoordinates | null;
+  editorPosition: GeoCoordinates | null;
+  originalPosition: GeoCoordinates | null;
 }
+
+type RepositionViewStateAction = {
+  type: "ADAPT_REPOSITION_CURRENT_POSITION";
+  position: GeoCoordinates;
+};
 
 export type CvmMapViewState =
   | DefaultViewState
-  | CvmMapRegisterViewState
-  | CvmMapRepositionViewState;
+  | RegisterViewState
+  | RepositionViewState;
 
 type CvmMapViewAction =
   | { type: "GOTO_DEFAULT_MODE" }
-  | { type: "GOTO_REGISTER_MODE" }
-  | { type: "GOTO_REPOSITION_MODE" }
-  | DefaultViewStateAction;
+  | { type: "GOTO_REGISTER_MODE"; originalPosition: GeoCoordinates }
+  | {
+      type: "GOTO_REPOSITION_MODE";
+      originalPosition: GeoCoordinates;
+      editorPosition: GeoCoordinates;
+    }
+  | DefaultViewStateAction
+  | RegisterViewStateAction
+  | RepositionViewStateAction;
 
 function cvmMapViewReducer(
   state: CvmMapViewState,
@@ -63,10 +89,19 @@ function cvmMapViewReducer(
       return initialDefaultViewState;
     }
     case "GOTO_REGISTER_MODE": {
-      return initialCvmMapRegisterViewState;
+      return {
+        ...initialCvmMapRegisterViewState,
+        currentPosition: action.originalPosition,
+        originalPosition: action.originalPosition,
+      };
     }
     case "GOTO_REPOSITION_MODE": {
-      return initialCvmMapRepositionViewState;
+      return {
+        ...initialCvmMapRepositionViewState,
+        currentPosition: action.originalPosition,
+        editorPosition: action.editorPosition,
+        originalPosition: action.originalPosition,
+      };
     }
     case "OPEN_HELP_DIALOG": {
       if (state.mode !== "default") return state;
@@ -96,6 +131,14 @@ function cvmMapViewReducer(
       if (state.mode !== "default") return state;
       return { ...state, showReportDialog: false, reporterPosition: null };
     }
+    case "ADAPT_REGISTER_CURRENT_POSITION": {
+      if (state.mode !== "register") return state;
+      return { ...state, currentPosition: action.position };
+    }
+    case "ADAPT_REPOSITION_CURRENT_POSITION": {
+      if (state.mode !== "reposition") return state;
+      return { ...state, currentPosition: action.position };
+    }
     default: {
       return state;
     }
@@ -106,8 +149,11 @@ export interface CvmMapController {
   state: CvmMapViewState & { mode: CvmMapViewMode };
   dispatch: React.Dispatch<CvmMapViewAction>;
   goToDefaultMode: () => void;
-  goToRegisterMode: () => void;
-  goToRepositionMode: () => void;
+  goToRegisterMode: (editorPosition: GeoCoordinates) => void;
+  goToRepositionMode: (
+    originalPosition: GeoCoordinates,
+    editorPosition: GeoCoordinates,
+  ) => void;
 }
 
 const cvmMapViewContext = createContext<CvmMapController | null>(null);
@@ -126,13 +172,20 @@ export function CvmMapViewProvider({
     dispatch({ type: "GOTO_DEFAULT_MODE" });
   }, []);
 
-  const goToRegisterMode = useCallback(() => {
-    dispatch({ type: "GOTO_REGISTER_MODE" });
+  const goToRegisterMode = useCallback((originalPosition: GeoCoordinates) => {
+    dispatch({ type: "GOTO_REGISTER_MODE", originalPosition });
   }, []);
 
-  const goToRepositionMode = useCallback(() => {
-    dispatch({ type: "GOTO_REPOSITION_MODE" });
-  }, []);
+  const goToRepositionMode = useCallback(
+    (originalPosition: GeoCoordinates, editorPosition: GeoCoordinates) => {
+      dispatch({
+        type: "GOTO_REPOSITION_MODE",
+        originalPosition,
+        editorPosition,
+      });
+    },
+    [],
+  );
 
   return (
     <cvmMapViewContext.Provider
@@ -205,17 +258,27 @@ export function useCvmMapDefaultView() {
 }
 
 export function useCvmMapRegisterView() {
-  const { state } = useCvmMapView();
+  const { state, dispatch } = useCvmMapView();
 
   if (state.mode !== "register") {
     throw new Error("useCvmMapRegisterView can only be used in register view");
   }
 
-  return {};
+  const adaptRegisterCurrentPosition = useCallback(
+    (position: GeoCoordinates) => {
+      dispatch({ type: "ADAPT_REGISTER_CURRENT_POSITION", position });
+    },
+    [dispatch],
+  );
+
+  return {
+    state: state as RegisterViewState & { mode: "register" },
+    adaptRegisterCurrentPosition,
+  };
 }
 
 export function useCvmMapRepositionView() {
-  const { state } = useCvmMapView();
+  const { state, dispatch } = useCvmMapView();
 
   if (state.mode !== "reposition") {
     throw new Error(
@@ -223,5 +286,15 @@ export function useCvmMapRepositionView() {
     );
   }
 
-  return {};
+  const adaptRepositionCurrentPosition = useCallback(
+    (position: GeoCoordinates) => {
+      dispatch({ type: "ADAPT_REPOSITION_CURRENT_POSITION", position });
+    },
+    [dispatch],
+  );
+
+  return {
+    state: state as RepositionViewState & { mode: "reposition" },
+    adaptRepositionCurrentPosition,
+  };
 }

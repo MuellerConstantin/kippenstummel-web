@@ -1,24 +1,21 @@
 import { AdjustableLocationMarker } from "@/components/molecules/map/AdjustableLocationMarker";
 import { ConfirmBottomNavigation } from "../navigation/ConfirmBottomNavigation";
 import { GeoCoordinates } from "@/lib/types/geo";
-import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useCvmMapRegisterView } from "@/contexts/CvmMapViewContext";
 
 export interface CvmMapRegisterOverlayProps {
-  originalPosition: GeoCoordinates;
   onRegister?: (newPosition: GeoCoordinates) => void;
   onCancel?: () => void;
 }
 
 export function CvmMapRegisterOverlay({
-  originalPosition,
   onRegister,
   onCancel,
 }: CvmMapRegisterOverlayProps) {
   const t = useTranslations("CvmMapRegisterOverlay");
 
-  const [currentPosition, setCurrentPosition] =
-    useState<GeoCoordinates>(originalPosition);
+  const { state, adaptRegisterCurrentPosition } = useCvmMapRegisterView();
 
   return (
     <>
@@ -31,15 +28,15 @@ export function CvmMapRegisterOverlay({
       </div>
       <AdjustableLocationMarker
         reference={{
-          position: originalPosition,
+          position: state.originalPosition!,
           maxDistance: 25,
         }}
-        position={currentPosition}
-        onAdapt={setCurrentPosition}
+        position={state.currentPosition!}
+        onAdapt={adaptRegisterCurrentPosition}
       />
       <ConfirmBottomNavigation
         onCancel={onCancel}
-        onConfirm={() => onRegister?.(currentPosition)}
+        onConfirm={() => onRegister?.(state.currentPosition!)}
       />
     </>
   );

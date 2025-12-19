@@ -1,7 +1,7 @@
 "use client";
 
 import { useCvmMapViewportData } from "@/hooks/cvm/useCvmMapViewportData";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { GeoCoordinates } from "@/lib/types/geo";
 import { CvmMapDefaultOverlay } from "./CvmMapDefaultOverlay";
 import { useTranslations } from "next-intl";
@@ -42,7 +42,6 @@ export function CvmMapView({
     useCvmMapView();
   const { zoom, bottomLeft, topRight, map, onLoad, onViewStateChanged } =
     useCvmMapViewport();
-  const [editorPosition, setEditorPosition] = useState<GeoCoordinates>();
 
   const { markers, clusters } = useCvmMapViewportData({
     zoom: zoom!,
@@ -102,8 +101,7 @@ export function CvmMapView({
 
   const onRegisterStart = useCallback(
     (position: GeoCoordinates) => {
-      goToRegisterMode();
-      setEditorPosition(position);
+      goToRegisterMode(position);
 
       map?.flyTo({
         center: [position.longitude, position.latitude],
@@ -115,15 +113,14 @@ export function CvmMapView({
 
   const onRepositionStart = useCallback(
     (editorPosition: GeoCoordinates) => {
-      goToRepositionMode();
-      setEditorPosition(editorPosition);
+      goToRepositionMode(selectedCvmPosition!, editorPosition);
 
       map?.flyTo({
         center: [selectedCvm!.longitude, selectedCvm!.latitude],
         zoom: 18,
       });
     },
-    [selectedCvm, map, goToRepositionMode],
+    [selectedCvm, map, goToRepositionMode, selectedCvmPosition],
   );
 
   const onRegisterEnd = useCallback(
@@ -135,11 +132,11 @@ export function CvmMapView({
   );
 
   const onRepositionEnd = useCallback(
-    (newPosition: GeoCoordinates) => {
-      onReposition?.(selectedCvm!.id, newPosition!, editorPosition!);
+    (newPosition: GeoCoordinates, editorPosition: GeoCoordinates) => {
+      onReposition?.(selectedCvm!.id, newPosition, editorPosition!);
       goToDefaultMode();
     },
-    [selectedCvm, onReposition, editorPosition, goToDefaultMode],
+    [selectedCvm, onReposition, goToDefaultMode],
   );
 
   return (
@@ -166,14 +163,12 @@ export function CvmMapView({
       )}
       {state.mode === "register" && (
         <CvmMapRegisterOverlay
-          originalPosition={editorPosition!}
           onRegister={onRegisterEnd}
           onCancel={() => goToDefaultMode()}
         />
       )}
       {state.mode === "reposition" && (
         <CvmMapRepositionOverlay
-          originalPosition={selectedCvmPosition!}
           onReposition={onRepositionEnd}
           onCancel={() => goToDefaultMode()}
         />

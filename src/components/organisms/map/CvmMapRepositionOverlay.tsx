@@ -1,24 +1,24 @@
 import { AdjustableLocationMarker } from "@/components/molecules/map/AdjustableLocationMarker";
 import { ConfirmBottomNavigation } from "../navigation/ConfirmBottomNavigation";
 import { GeoCoordinates } from "@/lib/types/geo";
-import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useCvmMapRepositionView } from "@/contexts/CvmMapViewContext";
 
 export interface CvmMapRepositionOverlayProps {
-  originalPosition: GeoCoordinates;
-  onReposition?: (newPosition: GeoCoordinates) => void;
+  onReposition?: (
+    newPosition: GeoCoordinates,
+    editorPosition: GeoCoordinates,
+  ) => void;
   onCancel?: () => void;
 }
 
 export function CvmMapRepositionOverlay({
-  originalPosition,
   onReposition,
   onCancel,
 }: CvmMapRepositionOverlayProps) {
   const t = useTranslations("CvmMapRepositionOverlay");
 
-  const [currentPosition, setCurrentPosition] =
-    useState<GeoCoordinates>(originalPosition);
+  const { state, adaptRepositionCurrentPosition } = useCvmMapRepositionView();
 
   return (
     <>
@@ -31,15 +31,17 @@ export function CvmMapRepositionOverlay({
       </div>
       <AdjustableLocationMarker
         reference={{
-          position: originalPosition,
+          position: state.originalPosition!,
           maxDistance: 25,
         }}
-        position={currentPosition}
-        onAdapt={setCurrentPosition}
+        position={state.currentPosition!}
+        onAdapt={adaptRepositionCurrentPosition}
       />
       <ConfirmBottomNavigation
         onCancel={onCancel}
-        onConfirm={() => onReposition?.(currentPosition)}
+        onConfirm={() =>
+          onReposition?.(state.currentPosition!, state.editorPosition!)
+        }
       />
     </>
   );
