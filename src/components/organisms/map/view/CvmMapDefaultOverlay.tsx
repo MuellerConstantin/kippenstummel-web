@@ -1,18 +1,18 @@
 import { AnimatePresence, motion } from "motion/react";
-import { CvmInfoSidebar } from "../cvm/CvmInfoSidebar";
-import { CvmInfoModalSheet } from "../cvm/CvmInfoModalSheet";
+import { CvmInfoSidebar } from "../../cvm/CvmInfoSidebar";
+import { CvmInfoModalSheet } from "../../cvm/CvmInfoModalSheet";
 import { Cvm, CvmCluster } from "@/lib/types/cvm";
 import { GeoCoordinates } from "@/lib/types/geo";
-import { FloatingMenuBottomNavigation } from "../navigation/FloatingMenuBottomNavigation";
+import { FloatingMenuBottomNavigation } from "../../navigation/FloatingMenuBottomNavigation";
 import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
-import { HelpDialog } from "../navigation/HelpDialog";
-import { MapSettingsDialog } from "../navigation/MapSettingsDialog";
-import { CvmReportDialog } from "../cvm/CvmReportDialog";
+import { HelpDialog } from "../../navigation/HelpDialog";
+import { MapSettingsDialog } from "../../navigation/MapSettingsDialog";
+import { CvmReportDialog } from "../../cvm/CvmReportDialog";
 import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
 import { LocationMarker } from "@/components/molecules/map/LocationMarker";
 import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
 import { useBreakpointUp } from "@/hooks/useBreakpointUp";
-import { CvmInfoDialog } from "../cvm/CvmInfoDialog";
+import { CvmInfoDialog } from "../../cvm/CvmInfoDialog";
 import { useBreakpointDown } from "@/hooks/useBreakpointDown";
 import { useCvmMapDefaultView } from "@/contexts/CvmMapViewContext";
 

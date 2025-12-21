@@ -1,5 +1,5 @@
 import { AdjustableLocationMarker } from "@/components/molecules/map/AdjustableLocationMarker";
-import { ConfirmBottomNavigation } from "../navigation/ConfirmBottomNavigation";
+import { ConfirmBottomNavigation } from "../../navigation/ConfirmBottomNavigation";
 import { GeoCoordinates } from "@/lib/types/geo";
 import { useTranslations } from "next-intl";
 import { useCvmMapRegisterView } from "@/contexts/CvmMapViewContext";

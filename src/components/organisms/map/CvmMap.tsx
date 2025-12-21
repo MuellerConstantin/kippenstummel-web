@@ -2,7 +2,7 @@
 
 import { GeoCoordinates } from "@/lib/types/geo";
 import { CvmMapViewProvider } from "@/contexts/CvmMapViewContext";
-import { CvmMapView } from "./CvmMapView";
+import { CvmMapView } from "./view/CvmMapView";
 import { Button } from "@/components/atoms/Button";
 import { Link } from "@/components/atoms/Link";
 import { useTranslations } from "next-intl";
