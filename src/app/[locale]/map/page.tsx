@@ -3,13 +3,13 @@
 import { useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { CvmOptInMap } from "@/components/organisms/map/CvmOptInMap";
 import { useNotifications } from "@/contexts/NotificationProvider";
 import useApi from "@/hooks/useApi";
 import { AxiosError } from "axios";
 import { useSWRConfig } from "swr";
 import { Link } from "@/components/atoms/Link";
 import { GeoCoordinates } from "@/lib/types/geo";
+import { CvmMap } from "@/components/organisms/map/CvmMap";
 
 export default function Map() {
   const t = useTranslations();
@@ -321,7 +321,8 @@ export default function Map() {
 
   return (
     <div className="flex grow flex-col">
-      <CvmOptInMap
+      <CvmMap
+        enableOptIn
         onRegister={onRegister}
         onUpvote={onUpvote}
         onDownvote={onDownvote}

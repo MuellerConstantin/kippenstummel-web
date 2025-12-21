@@ -9,7 +9,7 @@ import { useNotifications } from "@/contexts/NotificationProvider";
 import { useCvmMapSelection } from "@/hooks/cvm/useCvmMapSelection";
 import { CvmMapRegisterOverlay } from "./CvmMapRegisterOverlay";
 import { CvmMapRepositionOverlay } from "./CvmMapRepositionOverlay";
-import { CvmMapTemplate } from "@/components/templates/cvm/CvmMapTemplate";
+import { CvmMapTemplate } from "@/components/templates/map/CvmMapTemplate";
 import { useCvmMapView } from "@/contexts/CvmMapViewContext";
 import { useCvmMapViewport } from "@/hooks/cvm/useMapCvmViewport";
 
