@@ -13,10 +13,12 @@ export function CvmMapTemplate({
   ...props
 }: CvmMapTemplateProps) {
   return (
-    <div className="relative h-full w-full overflow-hidden">
-      {north}
-      <BaseMap {...props}>{children}</BaseMap>
-      {south}
+    <div className="relative flex h-full w-full flex-col overflow-hidden">
+      <div className="shrink-0">{north}</div>
+      <div className="grow">
+        <BaseMap {...props}>{children}</BaseMap>
+      </div>
+      <div className="shrink-0">{south}</div>
     </div>
   );
 }

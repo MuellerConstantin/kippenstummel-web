@@ -65,7 +65,7 @@ export function CvmMapDefaultOverlay({
             />
           )}
           <div className="relative grow">
-            <div className="pointer-events-auto absolute bottom-9 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 lg:hidden">
+            <div className="pointer-events-auto absolute bottom-14 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 lg:hidden">
               <FloatingMenuBottomNavigation
                 onHelp={openHelpDialog}
                 onSettings={openMapSettingsDialog}
@@ -90,7 +90,7 @@ export function CvmMapDefaultOverlay({
             />
           </AnimatedDialogModal>
           <div className="relative grow">
-            <div className="pointer-events-auto absolute bottom-9 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 lg:hidden">
+            <div className="pointer-events-auto absolute bottom-9 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2">
               <FloatingMenuBottomNavigation
                 onHelp={openHelpDialog}
                 onSettings={openMapSettingsDialog}
@@ -124,7 +124,7 @@ export function CvmMapDefaultOverlay({
           </div>
           <div className="relative grow">
             <motion.div
-              className="pointer-events-auto absolute bottom-9 left-1/2 z-[2000] hidden h-fit w-fit -translate-x-1/2 px-2 lg:block xl:bottom-3"
+              className="pointer-events-auto absolute bottom-8 left-1/2 z-[2000] h-fit w-fit -translate-x-1/2 px-2"
               layout
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >

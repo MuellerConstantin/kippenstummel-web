@@ -3,7 +3,6 @@
 import Map, {
   MapRef,
   NavigationControl,
-  AttributionControl,
   ViewStateChangeEvent,
 } from "react-map-gl/maplibre";
 import { MapLibreEvent } from "maplibre-gl";
@@ -11,6 +10,7 @@ import { useRef, useMemo, useCallback } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { LocateControl } from "@/components/organisms/map/LocateControl";
 import { LocateMarker } from "@/components/molecules/map/LocateMarker";
+import { LegalAndAttributionControl } from "./LegalAndAttributionControl";
 import { useAppDispatch, useAppSelector } from "@/store";
 import usabilitySlice from "@/store/slices/usability";
 
@@ -141,7 +141,7 @@ export function BaseMap({ onLoad, onViewChange, children }: BaseMapProps) {
       onMoveEnd={handleViewStateChanged}
       onZoomEnd={handleViewStateChanged}
     >
-      <AttributionControl compact={false} />
+      <LegalAndAttributionControl position="bottom-right" />
       <NavigationControl />
       <LocateControl />
       {children}

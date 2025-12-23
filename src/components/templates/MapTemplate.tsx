@@ -2,7 +2,6 @@
 
 import React, { useMemo } from "react";
 import { Navbar } from "@/components/organisms/Navbar";
-import { MinimalFooter } from "@/components/molecules/MinimalFooter";
 import { useEnv } from "@/contexts/RuntimeConfigProvider";
 import { MessageBannerCarousel } from "../organisms/MessageBannerCarousel";
 import { useTranslations } from "next-intl";
@@ -43,9 +42,6 @@ export function MapTemplate({
       <main className="flex grow flex-col bg-white dark:bg-slate-800">
         {children}
       </main>
-      <footer>
-        <MinimalFooter />
-      </footer>
     </div>
   );
 }

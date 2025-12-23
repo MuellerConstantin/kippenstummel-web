@@ -94,6 +94,14 @@ body {
   filter: invert(1) brightness(2);
 }
 
+.maplibregl-ctrl-attrib {
+  font-size: 10px !important;
+}
+
+.maplibregl-ctrl-attrib {
+  @apply !bg-white/70 !text-slate-900;
+}
+
 .maplibregl-ctrl-attrib-inner a {
   @apply !text-green-600 !decoration-green-600/60 hover:!underline hover:!decoration-green-600;
 }
