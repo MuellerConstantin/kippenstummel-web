@@ -456,7 +456,7 @@
   },
   "Validation": {
     "required": "This field is required.",
-    "invalidUsername": "Username must be 4-8 alphanumeric characters, including - and _, start with a letter, and must not end with _ or -."
+    "invalidUsername": "Username must be 4-16 alphanumeric characters, including - and _, start with a letter, and must not end with _ or -."
   },
   "HelpDialog": {
     "title": "Help",

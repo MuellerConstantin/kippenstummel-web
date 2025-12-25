@@ -64,7 +64,7 @@ function DisplayNameInput() {
       .string()
       .required(validationT("required"))
       .matches(
-        /^[A-Za-z](?:[A-Za-z0-9_-]{2,6}[A-Za-z0-9])$/,
+        /^[A-Za-z](?:[A-Za-z0-9_-]{2,14}[A-Za-z0-9])$/,
         validationT("invalidUsername"),
       ),
   });
