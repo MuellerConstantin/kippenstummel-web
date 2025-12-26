@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Lato } from "next/font/google";
+import { Outfit } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -18,8 +18,8 @@ import "./globals.css";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kippenstummel.de";
 
-const lato = Lato({
-  variable: "--font-lato",
+const outfit = Outfit({
+  variable: "--font-outfit",
   weight: ["400", "700"],
   subsets: ["latin"],
 });
@@ -131,7 +131,7 @@ export default async function RootLayout({
         <meta name="color-scheme" content="light dark" />
         <meta name="format-detection" content="telephone=no" />
       </head>
-      <body className={`${lato.variable} bg-white dark:bg-slate-800`}>
+      <body className={`${outfit.variable} bg-white dark:bg-slate-800`}>
         <NextIntlClientProvider>
           <StoreProvider>
             <NotificationProvider>
