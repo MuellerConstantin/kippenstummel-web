@@ -32,6 +32,8 @@ import useSWR from "swr";
 import useApi from "@/hooks/useApi";
 import { AnimatedDialogModal } from "../molecules/AnimatedDialogModal";
 import { AboutDialog } from "./navigation/AboutDialog";
+import { useBreakpointDown } from "@/hooks/useBreakpointDown";
+import { IdentityModalSheet } from "./ident/IdentityModalSheet";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
@@ -170,6 +172,8 @@ function NavbarAuthenticatedOptionsMenu() {
   const dispatch = useAppDispatch();
   const api = useApi();
 
+  const isSmDown = useBreakpointDown("sm");
+
   const darkMode = useAppSelector((state) => state.usability.darkMode);
   const identity = useAppSelector((state) => state.ident.identity);
 
@@ -249,13 +253,21 @@ function NavbarAuthenticatedOptionsMenu() {
             </ListBoxItem>
           </ListBox>
         </div>
-        <AnimatedDialogModal
-          isOpen={showIdentityDialog}
-          onOpenChange={setShowIdentityDialog}
-          className="max-w-xl"
-        >
-          <IdentityDialog />
-        </AnimatedDialogModal>
+        {!isSmDown && (
+          <AnimatedDialogModal
+            isOpen={showIdentityDialog}
+            onOpenChange={setShowIdentityDialog}
+            className="max-w-xl"
+          >
+            <IdentityDialog />
+          </AnimatedDialogModal>
+        )}
+        {isSmDown && showIdentityDialog && (
+          <IdentityModalSheet
+            isOpen={showIdentityDialog}
+            onIsOpenChange={setShowIdentityDialog}
+          />
+        )}
         <AnimatedDialogModal
           isOpen={showAboutDialog}
           onOpenChange={setShowAboutDialog}
