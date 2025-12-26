@@ -82,7 +82,7 @@ export function Navbar() {
             </div>
           </Link>
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-center space-x-4">
           <div className="hidden space-x-2 md:flex">
             {navigation.map((item) => (
               <Link
@@ -94,7 +94,7 @@ export function Navbar() {
               </Link>
             ))}
           </div>
-          <div className="flex self-end">
+          <div className="flex">
             <MenuTrigger>
               <Button variant="icon">
                 <Languages className="h-6 w-6" />
