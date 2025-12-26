@@ -16,6 +16,7 @@ import { CvmInfoDialog } from "../../cvm/CvmInfoDialog";
 import { useBreakpointDown } from "@/hooks/useBreakpointDown";
 import { useCvmMapDefaultView } from "@/contexts/CvmMapViewContext";
 import { HelpModalSheet } from "../../navigation/HelpModalSheet";
+import { MapSettingsModalSheet } from "../../navigation/MapSettingsModalSheet";
 
 export interface CvmMapDefaultOverlayProps {
   selectedCvm: Cvm | null;
@@ -71,6 +72,12 @@ export function CvmMapDefaultOverlay({
               onIsOpenChange={closeHelpDialog}
             />
           )}
+          {state.showMapSettingsDialog && (
+            <MapSettingsModalSheet
+              isOpen={state.showMapSettingsDialog}
+              onIsOpenChange={closeMapSettingsDialog}
+            />
+          )}
           <div className="pointer-events-none absolute flex h-full w-full">
             <div className="relative grow">
               <div className="pointer-events-auto absolute bottom-14 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 lg:hidden">
@@ -92,6 +99,12 @@ export function CvmMapDefaultOverlay({
             onOpenChange={closeHelpDialog}
           >
             <HelpDialog />
+          </AnimatedDialogModal>
+          <AnimatedDialogModal
+            isOpen={state.showMapSettingsDialog}
+            onOpenChange={closeMapSettingsDialog}
+          >
+            <MapSettingsDialog />
           </AnimatedDialogModal>
           <AnimatedDialogModal
             isOpen={!!selectedCvm}
@@ -126,6 +139,12 @@ export function CvmMapDefaultOverlay({
             onOpenChange={closeHelpDialog}
           >
             <HelpDialog />
+          </AnimatedDialogModal>
+          <AnimatedDialogModal
+            isOpen={state.showMapSettingsDialog}
+            onOpenChange={closeMapSettingsDialog}
+          >
+            <MapSettingsDialog />
           </AnimatedDialogModal>
           <div className="pointer-events-none absolute flex h-full w-full">
             <div className="pointer-events-auto z-[2000] h-full shrink-0 pt-3 pb-3 pl-3">
@@ -194,12 +213,6 @@ export function CvmMapDefaultOverlay({
             closeReportDialog();
           }}
         />
-      </AnimatedDialogModal>
-      <AnimatedDialogModal
-        isOpen={state.showMapSettingsDialog}
-        onOpenChange={closeMapSettingsDialog}
-      >
-        <MapSettingsDialog />
       </AnimatedDialogModal>
     </>
   );
