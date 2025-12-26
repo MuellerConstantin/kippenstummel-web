@@ -15,6 +15,7 @@ import { useBreakpointUp } from "@/hooks/useBreakpointUp";
 import { CvmInfoDialog } from "../../cvm/CvmInfoDialog";
 import { useBreakpointDown } from "@/hooks/useBreakpointDown";
 import { useCvmMapDefaultView } from "@/contexts/CvmMapViewContext";
+import { HelpModalSheet } from "../../navigation/HelpModalSheet";
 
 export interface CvmMapDefaultOverlayProps {
   selectedCvm: Cvm | null;
@@ -54,7 +55,7 @@ export function CvmMapDefaultOverlay({
   return (
     <>
       {isSmDown && (
-        <div className="pointer-events-none absolute flex h-full w-full">
+        <>
           {selectedCvm && (
             <CvmInfoModalSheet
               isOpen={!!selectedCvm}
@@ -64,19 +65,34 @@ export function CvmMapDefaultOverlay({
               onReport={openReportDialog}
             />
           )}
-          <div className="relative grow">
-            <div className="pointer-events-auto absolute bottom-14 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 lg:hidden">
-              <FloatingMenuBottomNavigation
-                onHelp={openHelpDialog}
-                onSettings={openMapSettingsDialog}
-                onRegister={props.onRegister}
-              />
+          {state.showHelpDialog && (
+            <HelpModalSheet
+              isOpen={state.showHelpDialog}
+              onIsOpenChange={closeHelpDialog}
+            />
+          )}
+          <div className="pointer-events-none absolute flex h-full w-full">
+            <div className="relative grow">
+              <div className="pointer-events-auto absolute bottom-14 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2 lg:hidden">
+                <FloatingMenuBottomNavigation
+                  onHelp={openHelpDialog}
+                  onSettings={openMapSettingsDialog}
+                  onRegister={props.onRegister}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
       {!isSmDown && !isLgUp && (
-        <div className="pointer-events-none absolute flex h-full w-full">
+        <>
+          <AnimatedDialogModal
+            className="!max-w-2xl"
+            isOpen={state.showHelpDialog}
+            onOpenChange={closeHelpDialog}
+          >
+            <HelpDialog />
+          </AnimatedDialogModal>
           <AnimatedDialogModal
             isOpen={!!selectedCvm}
             onOpenChange={() => props.onDeselect?.()}
@@ -89,53 +105,64 @@ export function CvmMapDefaultOverlay({
               onReport={openReportDialog}
             />
           </AnimatedDialogModal>
-          <div className="relative grow">
-            <div className="pointer-events-auto absolute bottom-9 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2">
-              <FloatingMenuBottomNavigation
-                onHelp={openHelpDialog}
-                onSettings={openMapSettingsDialog}
-                onRegister={props.onRegister}
-              />
+          <div className="pointer-events-none absolute flex h-full w-full">
+            <div className="relative grow">
+              <div className="pointer-events-auto absolute bottom-9 left-1/2 z-[2000] block h-fit w-fit -translate-x-1/2 px-2">
+                <FloatingMenuBottomNavigation
+                  onHelp={openHelpDialog}
+                  onSettings={openMapSettingsDialog}
+                  onRegister={props.onRegister}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
       {isLgUp && (
-        <div className="pointer-events-none absolute flex h-full w-full">
-          <div className="pointer-events-auto z-[2000] h-full shrink-0 pt-3 pb-3 pl-3">
-            <AnimatePresence>
-              {!!selectedCvm && (
-                <motion.div
-                  className="h-full w-[25rem] cursor-default"
-                  initial={{ width: 0, opacity: 0 }}
-                  animate={{ width: "25rem", opacity: 1 }}
-                  exit={{ width: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                >
-                  <CvmInfoSidebar
-                    {...props}
-                    onClose={() => props.onDeselect?.()}
-                    cvm={selectedCvm}
-                    onReport={openReportDialog}
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
+        <>
+          <AnimatedDialogModal
+            className="!max-w-2xl"
+            isOpen={state.showHelpDialog}
+            onOpenChange={closeHelpDialog}
+          >
+            <HelpDialog />
+          </AnimatedDialogModal>
+          <div className="pointer-events-none absolute flex h-full w-full">
+            <div className="pointer-events-auto z-[2000] h-full shrink-0 pt-3 pb-3 pl-3">
+              <AnimatePresence>
+                {!!selectedCvm && (
+                  <motion.div
+                    className="h-full w-[25rem] cursor-default"
+                    initial={{ width: 0, opacity: 0 }}
+                    animate={{ width: "25rem", opacity: 1 }}
+                    exit={{ width: 0, opacity: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  >
+                    <CvmInfoSidebar
+                      {...props}
+                      onClose={() => props.onDeselect?.()}
+                      cvm={selectedCvm}
+                      onReport={openReportDialog}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+            <div className="relative grow">
+              <motion.div
+                className="pointer-events-auto absolute bottom-8 left-1/2 z-[2000] h-fit w-fit -translate-x-1/2 px-2"
+                layout
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                <FloatingMenuBottomNavigation
+                  onHelp={openHelpDialog}
+                  onSettings={openMapSettingsDialog}
+                  onRegister={props.onRegister}
+                />
+              </motion.div>
+            </div>
           </div>
-          <div className="relative grow">
-            <motion.div
-              className="pointer-events-auto absolute bottom-8 left-1/2 z-[2000] h-fit w-fit -translate-x-1/2 px-2"
-              layout
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            >
-              <FloatingMenuBottomNavigation
-                onHelp={openHelpDialog}
-                onSettings={openMapSettingsDialog}
-                onRegister={props.onRegister}
-              />
-            </motion.div>
-          </div>
-        </div>
+        </>
       )}
       {markers
         ?.filter((marker) => marker.id !== selectedCvm?.id)
@@ -167,13 +194,6 @@ export function CvmMapDefaultOverlay({
             closeReportDialog();
           }}
         />
-      </AnimatedDialogModal>
-      <AnimatedDialogModal
-        className="!max-w-2xl"
-        isOpen={state.showHelpDialog}
-        onOpenChange={closeHelpDialog}
-      >
-        <HelpDialog />
       </AnimatedDialogModal>
       <AnimatedDialogModal
         isOpen={state.showMapSettingsDialog}
