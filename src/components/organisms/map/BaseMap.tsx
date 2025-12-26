@@ -7,7 +7,7 @@ import Map, {
 } from "react-map-gl/maplibre";
 import { MapLibreEvent } from "maplibre-gl";
 import { useRef, useMemo, useCallback } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { LocateControl } from "@/components/organisms/map/LocateControl";
 import { LocateMarker } from "@/components/molecules/map/LocateMarker";
 import { LegalAndAttributionControl } from "./LegalAndAttributionControl";
@@ -25,21 +25,11 @@ export interface BaseMapProps {
 export function BaseMap({ onLoad, onViewChange, children }: BaseMapProps) {
   const mapRef = useRef<MapRef>(null);
   const dispatch = useAppDispatch();
-  const locale = useLocale();
   const t = useTranslations();
 
   const location = useAppSelector((state) => state.location.location);
   const locatedAt = useAppSelector((state) => state.location.locatedAt);
   const mapView = useAppSelector((state) => state.usability.mapView);
-
-  const mapStylePath = useMemo(() => {
-    switch (locale) {
-      case "de":
-        return "/tiles/default-de.json";
-      default:
-        return "/tiles/default-en.json";
-    }
-  }, [locale]);
 
   const mapLocale = useMemo(
     () => ({
@@ -131,7 +121,7 @@ export function BaseMap({ onLoad, onViewChange, children }: BaseMapProps) {
         latitude: mapView.center.latitude,
         zoom: mapView.zoom,
       }}
-      mapStyle={mapStylePath}
+      mapStyle={"/tiles/default.json"}
       style={{ width: "100%", height: "100%" }}
       minZoom={8}
       maxZoom={19}
