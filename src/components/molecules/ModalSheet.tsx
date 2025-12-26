@@ -20,9 +20,9 @@ const MotionModalOverlay = motion.create(ModalOverlay);
 
 const inertiaTransition = {
   type: "inertia" as const,
-  bounceStiffness: 300,
-  bounceDamping: 40,
-  timeConstant: 300,
+  bounceStiffness: 500,
+  bounceDamping: 45,
+  timeConstant: 220,
 };
 
 const staticTransition = {
@@ -45,6 +45,7 @@ export function ModalSheet({
   onIsOpenChange,
 }: ModalSheetProps) {
   const rootRef = useRef<HTMLElement | null>(null);
+  const sheetRef = useRef<HTMLDivElement | null>(null);
 
   const h = window.innerHeight - SHEET_MARGIN;
   const y = useMotionValue(h);
@@ -95,6 +96,7 @@ export function ModalSheet({
         style={{ backgroundColor: bg }}
       >
         <MotionModal
+          ref={sheetRef}
           className="absolute bottom-0 w-full rounded-t-xl bg-white font-sans shadow-lg will-change-transform dark:bg-slate-900 dark:text-white"
           initial={{ y: h }}
           animate={{ y: 0 }}
@@ -105,10 +107,16 @@ export function ModalSheet({
             maxHeight: `calc(100vh - ${SHEET_MARGIN}px)`,
           }}
           drag="y"
-          dragElastic={{ top: 0 }}
+          dragElastic={{ top: 0, bottom: 0.2 }}
           dragConstraints={{ top: 0 }}
           onDragEnd={(e, { offset, velocity }) => {
-            if (offset.y > window.innerHeight * 0.75 || velocity.y > 10) {
+            const sheetHeight =
+              sheetRef.current?.getBoundingClientRect().height ?? h;
+
+            const CLOSE_DISTANCE = Math.min(sheetHeight * 0.33, 180);
+            const CLOSE_VELOCITY = 900;
+
+            if (offset.y > CLOSE_DISTANCE || velocity.y > CLOSE_VELOCITY) {
               onIsOpenChange?.(false);
             } else {
               animate(y, 0, { ...inertiaTransition, min: 0, max: 0 });
@@ -118,11 +126,9 @@ export function ModalSheet({
           <div className="mx-auto mt-2 h-1.5 w-12 rounded-full bg-gray-400" />
           <Dialog className="relative flex max-h-[inherit] flex-col gap-2 p-4 outline-hidden outline-0 [[data-placement]>&]:p-4">
             <div className="flex shrink-0 justify-end">
-              <div>
-                <Button variant="icon" onPress={() => onIsOpenChange?.(false)}>
-                  <X className="h-6 w-6" />
-                </Button>
-              </div>
+              <Button variant="icon" onPress={() => onIsOpenChange?.(false)}>
+                <X className="h-6 w-6" />
+              </Button>
             </div>
             <div className="flex-1 overflow-y-auto overscroll-contain">
               {children}
