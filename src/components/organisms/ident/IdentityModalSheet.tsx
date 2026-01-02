@@ -689,11 +689,6 @@ export function IdentityModalSheet(props: IdentityModalSheetProps) {
               </AnimatePresence>
             </div>
           </Tabs>
-          <div className="flex w-full shrink-0 justify-start gap-4">
-            <Button onPress={close} className="w-full">
-              {t("close")}
-            </Button>
-          </div>
         </div>
       </div>
     </ModalSheet>
