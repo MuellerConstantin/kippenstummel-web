@@ -16,7 +16,10 @@ const locationSlice = createSlice({
   initialState,
   reducers: {
     setLocation: (state, action: PayloadAction<GeoCoordinates>) => {
-      state.location = action.payload;
+      state.location =
+        !action.payload || !action.payload.latitude || !action.payload.longitude
+          ? null
+          : action.payload;
       state.locatedAt = new Date().toISOString();
     },
     clearLocation: (state) => {
