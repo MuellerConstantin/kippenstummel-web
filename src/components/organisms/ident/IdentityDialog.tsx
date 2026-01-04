@@ -13,7 +13,7 @@ export function IdentityDialog(props: IdentityDialogProps) {
   return (
     <Dialog {...props}>
       {({ close }) => (
-        <div className="flex h-[70vh] flex-col">
+        <div className="flex h-[70vh] flex-col gap-4">
           <Heading
             slot="title"
             className="my-0 shrink-0 text-xl leading-6 font-semibold"

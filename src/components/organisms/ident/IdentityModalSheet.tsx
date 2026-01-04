@@ -12,7 +12,7 @@ export function IdentityModalSheet(props: IdentityModalSheetProps) {
 
   return (
     <ModalSheet isOpen={props.isOpen} onIsOpenChange={props.onIsOpenChange}>
-      <div className="flex h-[70vh] flex-col">
+      <div className="flex h-[70vh] flex-col gap-4">
         <h4
           slot="title"
           className="my-0 shrink-0 text-xl leading-6 font-semibold"

@@ -587,7 +587,7 @@ export function IdentityDialogContent() {
   );
 
   return (
-    <div className="mt-4 flex min-h-0 grow flex-col items-start gap-4">
+    <div className="flex min-h-0 grow flex-col items-start gap-4">
       <Tabs
         orientation="horizontal"
         className="min-h-0 w-full grow"
