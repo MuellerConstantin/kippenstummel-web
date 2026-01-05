@@ -80,7 +80,7 @@ function ReportedMessage({ cvm }: ReportedMessageProps) {
 
 export interface CvmInfoDialogContentProps {
   cvm: Cvm;
-  indented?: boolean;
+  withHeroImage?: boolean;
   onUpvote?: (voterPosition: GeoCoordinates) => void;
   onDownvote?: (voterPosition: GeoCoordinates) => void;
   onReposition?: (editorPosition: GeoCoordinates) => void;
@@ -160,7 +160,9 @@ export function CvmInfoDialogContent(props: CvmInfoDialogContentProps) {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex aspect-video w-full items-center justify-center rounded-md bg-[#5bc15c] p-4 dark:bg-[#267528]">
+      <div
+        className={`flex aspect-video w-full items-center justify-center bg-[#5bc15c] p-4 dark:bg-[#267528] ${props.withHeroImage ? "rounded-t-md" : "rounded-md"}`}
+      >
         <div className="relative h-1/2 w-1/2 -rotate-15 overflow-hidden">
           <Image
             src="/images/logo.svg"
@@ -172,7 +174,7 @@ export function CvmInfoDialogContent(props: CvmInfoDialogContentProps) {
         </div>
       </div>
       <div
-        className={`flex grow flex-col gap-4 ${props.indented ? "p-4" : "mt-4"}`}
+        className={`flex grow flex-col gap-4 ${props.withHeroImage ? "p-4" : "mt-4"}`}
       >
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 overflow-hidden">
@@ -201,7 +203,7 @@ export function CvmInfoDialogContent(props: CvmInfoDialogContentProps) {
             </Heading>
           </div>
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex h-full flex-col justify-between gap-4">
           <div className="flex flex-col gap-4">
             <div className="flex items-start gap-4">
               <div className="flex flex-col items-center gap-1">

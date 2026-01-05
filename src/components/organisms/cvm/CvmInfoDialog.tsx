@@ -23,7 +23,7 @@ export function CvmInfoDialog(props: CvmInfoMobileDialogProps) {
               <X className="h-6 w-6 text-white dark:text-slate-400" />
             </Button>
           </div>
-          <CvmInfoDialogContent {...props} indented />
+          <CvmInfoDialogContent {...props} withHeroImage />
         </div>
       )}
     </Dialog>
