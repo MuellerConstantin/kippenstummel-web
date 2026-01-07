@@ -34,6 +34,7 @@ import { AnimatedDialogModal } from "../molecules/AnimatedDialogModal";
 import { AboutDialog } from "./navigation/AboutDialog";
 import { useBreakpointDown } from "@/hooks/useBreakpointDown";
 import { IdentityModalSheet } from "./ident/IdentityModalSheet";
+import { AboutModalSheet } from "./navigation/AboutModalSheet";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
@@ -268,13 +269,21 @@ function NavbarAuthenticatedOptionsMenu() {
             onIsOpenChange={setShowIdentityDialog}
           />
         )}
-        <AnimatedDialogModal
-          isOpen={showAboutDialog}
-          onOpenChange={setShowAboutDialog}
-          className="max-w-xl"
-        >
-          <AboutDialog />
-        </AnimatedDialogModal>
+        {!isSmDown && (
+          <AnimatedDialogModal
+            isOpen={showAboutDialog}
+            onOpenChange={setShowAboutDialog}
+            className="max-w-xl"
+          >
+            <AboutDialog />
+          </AnimatedDialogModal>
+        )}
+        {isSmDown && showAboutDialog && (
+          <AboutModalSheet
+            isOpen={showAboutDialog}
+            onIsOpenChange={setShowAboutDialog}
+          />
+        )}
       </div>
     </Popover>
   );
