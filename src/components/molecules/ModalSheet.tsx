@@ -124,7 +124,7 @@ export function ModalSheet({
           }}
         >
           <div className="mx-auto mt-2 h-1.5 w-12 rounded-full bg-gray-400" />
-          <Dialog className="relative flex max-h-[inherit] flex-col gap-2 p-4 outline-hidden outline-0 [[data-placement]>&]:p-4">
+          <Dialog className="relative flex max-h-[90dvh] flex-col gap-2 p-4 outline-hidden outline-0 [[data-placement]>&]:p-4">
             <div className="flex shrink-0 justify-end">
               <Button variant="icon" onPress={() => onIsOpenChange?.(false)}>
                 <X className="h-6 w-6" />
