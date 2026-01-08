@@ -10,6 +10,7 @@ import {
 import { Link } from "@/components/atoms/Link";
 import { JumbotronCta } from "@/components/organisms/JumbotronCta";
 import { FaqItem } from "@/components/molecules/FaqItem";
+import { Leaderboard } from "@/components/organisms/Leaderboard";
 
 export default function Home() {
   const t = useTranslations("HomePage");
@@ -114,8 +115,8 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="mx-auto my-8 flex max-w-[80rem] flex-col items-center gap-16 p-4">
-        <section className="flex flex-col items-center gap-16 p-4 text-slate-800 dark:text-white">
+      <div className="mx-auto my-8 flex max-w-[80rem] flex-col items-center gap-12 p-4">
+        <section className="flex flex-col items-center gap-10 p-4 text-slate-800 dark:text-white">
           <div className="max-w-[40rem] space-y-4">
             <div className="text-center text-lg font-semibold text-green-600">
               {t("features.slogan")}
@@ -142,7 +143,7 @@ export default function Home() {
             ))}
           </div>
         </section>
-        <section className="flex w-full flex-col items-center gap-16 p-4 text-slate-800 dark:text-white">
+        <section className="flex w-full flex-col items-center gap-10 p-4 text-slate-800 dark:text-white">
           <div className="flex w-full max-w-[60rem] flex-col gap-4 rounded-md bg-green-50 p-4 dark:bg-green-900">
             <div className="font-semibold">{t("banner.title")}</div>
             <div>
@@ -161,7 +162,38 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="flex w-full flex-col items-center gap-16 p-4 text-slate-800 dark:text-white">
+        <section className="flex w-full flex-col items-center gap-10 p-4 text-slate-800 dark:text-white">
+          <div className="flex max-w-[40rem] flex-col items-center space-y-4">
+            <div className="flex items-center gap-1">
+              <div className="relative h-8 w-8 overflow-hidden">
+                <Image
+                  src="/icons/laurel-branch-left.svg"
+                  alt="Laurel Branch Left"
+                  fill
+                  objectFit="contain"
+                  layout="fill"
+                />
+              </div>
+              <div className="text-center text-2xl font-bold">
+                {t("leaderboard.title")}
+              </div>
+              <div className="relative h-8 w-8 overflow-hidden">
+                <Image
+                  src="/icons/laurel-branch-right.svg"
+                  alt="Laurel Branch Left"
+                  fill
+                  objectFit="contain"
+                  layout="fill"
+                />
+              </div>
+            </div>
+            <div className="text-center">{t("leaderboard.description")}</div>
+          </div>
+          <div className="w-full max-w-[60rem] space-y-4">
+            <Leaderboard />
+          </div>
+        </section>
+        <section className="flex w-full flex-col items-center gap-10 p-4 text-slate-800 dark:text-white">
           <div className="max-w-[40rem] space-y-4">
             <div className="text-center text-2xl font-bold">
               {t("faq.title")}

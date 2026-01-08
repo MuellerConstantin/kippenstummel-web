@@ -37,6 +37,10 @@
       "title": "Smoking can be fatal! Problems with smoking?",
       "description": "Help and advice is available, for example, from the Bundesinstitut für Öffentliche Gesundheit: <link1>www.rauchfrei-info.de</link1> or by phone at <link2>0800 8 31 31 31</link2> (free of charge and anonymously)."
     },
+    "leaderboard": {
+      "title": "Leaderboard",
+      "description": "Earn karma through active participation and secure your place on the leaderboard. The more you contribute, the higher you'll climb in the ranking."
+    },
     "faq": {
       "title": "Frequently Asked Questions",
       "description": "Your question wasn't answered or you have suggestions for improvement? Reach out to our developers directly via <link>email</link>.",

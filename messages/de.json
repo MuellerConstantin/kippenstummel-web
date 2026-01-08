@@ -37,6 +37,10 @@
       "title": "Rauchen kann tödlich sein! Probleme mit Rauchen?",
       "description": "Hilfe und Beratung bietet z.B. die Bundeszentrale für gesundheitliche Aufklärung: <link1>www.rauchfrei-info.de</link1> oder telefonisch unter <link2>0800 8 31 31 31</link2> (kostenfrei & anonym)."
     },
+    "leaderboard": {
+      "title": "Leaderboard",
+      "description": "Sammle Karma durch aktive Teilnahme und sichere dir einen Platz im Leaderboard. Je mehr du beiträgst, desto höher steigst du im Ranking."
+    },
     "faq": {
       "title": "Häufig gestellte Fragen",
       "description": "Deine Frage ist unbeantwortet geblieben oder du hast Verbesserungsvorschläge? Melde dich via <link>Email</link> direkt an unsere Entwickler.",

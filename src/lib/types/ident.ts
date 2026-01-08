@@ -20,3 +20,9 @@ export interface KarmaEvent {
   occurredAt: string;
   cvmId: string;
 }
+
+export interface LeaderboardMember {
+  identity: string;
+  displayName?: string;
+  karma: number;
+}
