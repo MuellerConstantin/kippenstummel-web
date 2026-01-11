@@ -39,7 +39,8 @@
     },
     "leaderboard": {
       "title": "Leaderboard",
-      "description": "Earn karma through active participation and secure your place on the leaderboard. The more you contribute, the higher you'll climb in the ranking."
+      "description": "Earn karma through active participation and secure your place on the leaderboard. The more you contribute, the higher you'll climb in the ranking.",
+      "completeList": "Complete leaderboard list"
     },
     "faq": {
       "title": "Frequently Asked Questions",
@@ -207,6 +208,11 @@
         "title": "OpenFreeMap",
         "description": "Auf dieser Website werden sogenannte Vector Tiles von OpenFreemap (<link1>https://openfreemap.org</link1>) verwendet, um interaktive Karten darzustellen. Die dafür notwendigen Kartendaten (z. B. Kartenausschnitte, Zoomstufen) werden beim Aufruf der Kartenansicht direkt von den Servern von OpenFreemap geladen. Dabei wird aus technischen Gründen eine Verbindung zu den Servern von OpenFreemap hergestellt. In diesem Zusammenhang können insbesondere folgende Informationen übermittelt werden:<br></br><br></br><ul><li>Ihre IP-Adresse,</li><li>Datum und Uhrzeit des Zugriffs,</li><li>Informationen zu Ihrem Browser und Betriebssystem,</li><li>die aufgerufene URL (Referrer).</li></ul><br></br>Diese Datenübertragung ist erforderlich, um die Kartendaten korrekt bereitzustellen. Die Nutzung der Kartendienste erfolgt im Interesse einer ansprechenden Darstellung unseres Online-Angebots und einer leichten Auffindbarkeit der von uns auf der Website angegebenen Orte. Damit stellt dies ein berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO dar. Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO und §25 Abs. 1 TDDDG, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen im Endgerät des Nutzers (z. B. Device-Fingerprinting) im Sinne des TDDDG umfasst. Die Einwilligung ist jederzeit widerrufbar.<br></br><br></br> Weitere Informationen zur Datenverarbeitung durch OpenFreemap entnehmen Sie bitte der Datenschutzerklärung von OpenFreemap unter: <link2>https://openfreemap.org/privacy</link2>."
       }
+    }
+  },
+  "LeaderboardPage": {
+    "meta": {
+      "title": "Leaderboard"
     }
   },
   "TermsOfServicePage": {

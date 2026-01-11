@@ -6,6 +6,7 @@ import {
   RefreshCw,
   HeartHandshake,
   MonitorSmartphone,
+  Trophy,
 } from "lucide-react";
 import { Link } from "@/components/atoms/Link";
 import { JumbotronCta } from "@/components/organisms/JumbotronCta";
@@ -191,6 +192,15 @@ export default function Home() {
           </div>
           <div className="w-full max-w-[60rem] space-y-4">
             <Leaderboard />
+            <div>
+              <Link
+                href="/leaderboard"
+                className="pressed:bg-green-800 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-black/10 bg-green-600 px-5 py-2 text-center text-sm text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] transition hover:bg-green-700 hover:no-underline dark:border-white/10 dark:text-white dark:shadow-none"
+              >
+                <Trophy className="h-4 w-4" />
+                {t("leaderboard.completeList")}
+              </Link>
+            </div>
           </div>
         </section>
         <section className="flex w-full flex-col items-center gap-10 p-4 text-slate-800 dark:text-white">
