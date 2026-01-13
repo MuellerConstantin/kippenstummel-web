@@ -251,7 +251,7 @@ export default function Leaderboard() {
         <div className="flex w-full flex-col rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800">
           {isLoading ? (
             <ul className="divide-y divide-slate-200 dark:divide-slate-700">
-              {Array.from(Array(2).keys()).map((key) => (
+              {Array.from(Array(10).keys()).map((key) => (
                 <li key={key} className="flex items-center gap-4 px-4 py-2">
                   <span className="h-6 w-6 text-center text-slate-400">
                     {key + 4}
@@ -288,6 +288,9 @@ export default function Leaderboard() {
                   <span className="h-6 w-6 text-center text-slate-400">
                     {(page - 1) * perPage + index + 4}
                   </span>
+                  <div className="h-6 w-6 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
+                    <IdentIcon value={member.identity} />
+                  </div>
                   <span className="flex-1 truncate text-slate-700 dark:text-slate-300">
                     {member.displayName || "Anonymous"}
                   </span>

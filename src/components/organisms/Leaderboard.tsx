@@ -8,6 +8,7 @@ import { Page } from "@/lib/types/pagination";
 import { LeaderboardMember } from "@/lib/types/ident";
 import { AxiosError } from "axios";
 import { ApiError } from "@/lib/types/error";
+import { IdentIcon } from "@/components/atoms/IdentIcon";
 
 export function Leaderboard() {
   const api = useApi();
@@ -162,6 +163,17 @@ export function Leaderboard() {
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-yellow-500 font-bold text-white dark:bg-yellow-600">
               <Medal className="h-4 w-4" />
             </span>
+            {firstPlace ? (
+              <div className="h-6 w-6 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
+                <IdentIcon value={firstPlace.identity} />
+              </div>
+            ) : (
+              <div className="h-6 w-6 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
+                <div className="flex h-full w-full items-center justify-center">
+                  ?
+                </div>
+              </div>
+            )}
             <span className="flex-1 truncate font-medium text-slate-800 dark:text-slate-100">
               {firstPlace ? firstPlace.displayName || "Anonymous" : "-"}
             </span>
@@ -174,6 +186,17 @@ export function Leaderboard() {
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-400 font-bold text-white dark:bg-slate-500">
               <Medal className="h-4 w-4" />
             </span>
+            {secondPlace ? (
+              <div className="h-6 w-6 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
+                <IdentIcon value={secondPlace.identity} />
+              </div>
+            ) : (
+              <div className="h-6 w-6 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
+                <div className="flex h-full w-full items-center justify-center">
+                  ?
+                </div>
+              </div>
+            )}
             <span className="flex-1 truncate font-medium text-slate-800 dark:text-slate-100">
               {secondPlace ? secondPlace.displayName || "Anonymous" : "-"}
             </span>
@@ -186,6 +209,17 @@ export function Leaderboard() {
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-amber-600 font-bold text-white dark:bg-amber-700">
               <Medal className="h-4 w-4" />
             </span>
+            {thirdPlace ? (
+              <div className="h-6 w-6 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
+                <IdentIcon value={thirdPlace.identity} />
+              </div>
+            ) : (
+              <div className="h-6 w-6 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
+                <div className="flex h-full w-full items-center justify-center">
+                  ?
+                </div>
+              </div>
+            )}
             <span className="flex-1 truncate font-medium text-slate-800 dark:text-slate-100">
               {thirdPlace ? thirdPlace.displayName || "Anonymous" : "-"}
             </span>
@@ -199,6 +233,9 @@ export function Leaderboard() {
               <span className="h-6 w-6 text-center text-slate-400">
                 {index + 4}
               </span>
+              <div className="h-6 w-6 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
+                <IdentIcon value={member.identity} />
+              </div>
               <span className="flex-1 truncate text-slate-700 dark:text-slate-300">
                 {member.displayName || "Anonymous"}
               </span>
