@@ -213,7 +213,9 @@
   "LeaderboardPage": {
     "meta": {
       "title": "Leaderboard"
-    }
+    },
+    "headline": "Leaderboard",
+    "description": "Sammle Karma durch aktive Teilnahme und sichere dir einen Platz im Leaderboard. Je mehr du beiträgst, desto höher steigst du im Ranking. Hier siehst du das Ranking unserer aktivsten Mitglieder."
   },
   "TermsOfServicePage": {
     "meta": {
