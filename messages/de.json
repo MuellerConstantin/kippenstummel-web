@@ -217,6 +217,14 @@
     "headline": "Leaderboard",
     "description": "Sammle Karma durch aktive Teilnahme und sichere dir einen Platz im Leaderboard. Je mehr du beiträgst, desto höher steigst du im Ranking. Hier siehst du das Ranking unserer aktivsten Mitglieder."
   },
+  "CvmRegionPage": {
+    "meta": {
+      "title": "Zigarettenautomaten in {region}"
+    },
+    "headline": "Zigarettenautomaten in {region}",
+    "description": "Finde Zigarettenautomaten in {region} und Umgebung. Auf der interaktiven Karte siehst du bekannte Standorte in {region} sowie angrenzenden Regionen. Die Daten werden regelmäßig aktualisiert und von der Community ergänzt.",
+    "openMap": "Karte öffnen"
+  },
   "TermsOfServicePage": {
     "meta": {
       "title": "Nutzungsbedingungen"

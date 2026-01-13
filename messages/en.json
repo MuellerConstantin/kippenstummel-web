@@ -217,6 +217,14 @@
     "headline": "Leaderboard",
     "description": "Earn karma through active participation and secure your place on the leaderboard. The more you contribute, the higher you'll climb in the ranking. Here you can see the ranking of our most active members."
   },
+  "CvmRegionPage": {
+    "meta": {
+      "title": "Cigarette vending machines in {region}"
+    },
+    "headline": "Cigarette vending machines in {region}",
+    "description": "Find cigarette vending machines in {region} and the surrounding area. The interactive map shows known locations in {region} and neighboring regions. The data is regularly updated and supplemented by the community.",
+    "openMap": "Open map"
+  },
   "TermsOfServicePage": {
     "meta": {
       "title": "Terms of Service"

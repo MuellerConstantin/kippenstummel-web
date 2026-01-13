@@ -192,3 +192,48 @@ body {
 .dark .maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip {
   @apply !border-t-slate-900;
 }
+
+.bg-map-pattern {
+  background-color: #fafafa;
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size:
+    160px 160px,
+    160px 160px,
+    32px 32px,
+    32px 32px;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, black 12%, black 88%, transparent),
+    linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+  -webkit-mask-composite: intersect;
+  mask-image:
+    linear-gradient(to right, transparent, black 12%, black 88%, transparent),
+    linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+  mask-composite: intersect;
+}
+
+.dark .bg-map-pattern {
+  background-color: #1e293b;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size:
+    160px 160px,
+    160px 160px,
+    32px 32px,
+    32px 32px;
+
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, black 12%, black 88%, transparent),
+    linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+  -webkit-mask-composite: intersect;
+  mask-image:
+    linear-gradient(to right, transparent, black 12%, black 88%, transparent),
+    linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+  mask-composite: intersect;
+}
