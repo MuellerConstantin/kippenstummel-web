@@ -43,6 +43,7 @@ export function Navbar() {
     return [
       { name: t("home"), href: "/home" },
       { name: t("map"), href: "/map" },
+      { name: t("leaderboard"), href: "/leaderboard" },
     ];
   }, [t]);
 

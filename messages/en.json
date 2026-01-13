@@ -310,6 +310,7 @@
   "Navbar": {
     "home": "Home",
     "map": "Map",
+    "leaderboard": "Leaderboard",
     "darkMode": "Dark Mode",
     "myKarma": "My Karma",
     "no-identity": "No identity? Create one now!",

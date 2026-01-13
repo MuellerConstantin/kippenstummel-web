@@ -310,6 +310,7 @@
   "Navbar": {
     "home": "Startseite",
     "map": "Karte",
+    "leaderboard": "Leaderboard",
     "darkMode": "Dunkler Modus",
     "myKarma": "Mein Karma",
     "no-identity": "Noch keine Identität? Jetzt anlegen!",
