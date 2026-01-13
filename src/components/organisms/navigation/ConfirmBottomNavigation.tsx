@@ -9,7 +9,7 @@ export function ConfirmBottomNavigation(props: ConfirmBottomNavigationProps) {
   const { onConfirm, onCancel } = props;
 
   return (
-    <div className="absolute bottom-9 left-1/2 z-[2000] h-16 w-full -translate-x-1/2 px-2 xl:bottom-3">
+    <div className="h-16 w-full cursor-default">
       <div className="mx-auto grid h-full max-w-fit grid-cols-2 rounded-md bg-white text-slate-900 shadow-[0_0_0_2px_#0000001a] dark:bg-slate-900 dark:text-white dark:shadow-[0_0_0_2px_#ffffff1a]">
         <button
           type="button"

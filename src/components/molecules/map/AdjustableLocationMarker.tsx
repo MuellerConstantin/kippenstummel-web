@@ -93,7 +93,7 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
           anchor="bottom-right"
         >
           <div className="flex items-center justify-center gap-2">
-            <Move className="h-4 w-4" />
+            <Move className="h-4 w-4 text-green-600" />
             <span className="font-semibold">{t("tooltip")}</span>
           </div>
         </Popup>
