@@ -707,6 +707,6 @@
   },
   "RegionCvmList": {
     "description": "List of cigarette vending machines in {region}. Each entry represents a known location of a cigarette vending machine.",
-    "empty": "No cigarette vending machines in {region} found."
+    "empty": "No cigarette vending machines found in {region}. Be the first and register a new cigarette vending machine now."
   }
 }

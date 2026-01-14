@@ -707,6 +707,6 @@
   },
   "RegionCvmList": {
     "description": "Liste von Zigarettenautomaten in {region}. Jeder Eintrag stellt einen bekannten Standort eines Zigarettenautomaten dar.",
-    "empty": "Keine Zigarettenautomaten in {region} gefunden."
+    "empty": "Keine Zigarettenautomaten in {region} gefunden. Sei der erste und registriere jetzt einen neuen Zigarettenautomaten."
   }
 }

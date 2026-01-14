@@ -156,8 +156,8 @@ export function RegionCvmList(props: RegionCvmListProps) {
           </div>
         </div>
       ) : (
-        <div className="max-h-[40rem] min-h-[20rem] w-full max-w-full">
-          <div className="text-sm italic">
+        <div className="flex max-h-[40rem] min-h-[20rem] w-full max-w-full flex-col items-center justify-center rounded-md border border-slate-200 bg-slate-100 p-4 dark:border-slate-600 dark:bg-slate-900">
+          <div className="text-center text-sm text-slate-400 italic md:max-w-2/3 lg:max-w-1/3">
             {t("empty", { region: region.name })}
           </div>
         </div>
