@@ -24,4 +24,28 @@ export const REGIONS: CvmRegion[] = [
       topRight: "11.722,48.248",
     },
   },
+  {
+    slug: "karlsruhe",
+    name: "Karlsruhe",
+    bbox: {
+      bottomLeft: "8.3150,48.9650",
+      topRight: "8.4800,49.0500",
+    },
+  },
+  {
+    slug: "stuttgart",
+    name: "Stuttgart",
+    bbox: {
+      bottomLeft: "9.0600,48.7200",
+      topRight: "9.3000,48.8600",
+    },
+  },
+  {
+    slug: "mannheim",
+    name: "Mannheim",
+    bbox: {
+      bottomLeft: "8.4200,49.4300",
+      topRight: "8.5500,49.5500",
+    },
+  },
 ];

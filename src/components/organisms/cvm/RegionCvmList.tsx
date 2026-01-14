@@ -18,6 +18,8 @@ export interface RegionCvmListProps {
 }
 
 export function RegionCvmList(props: RegionCvmListProps) {
+  const { region } = props;
+
   const t = useTranslations("RegionCvmList");
   const locale = useLocale();
   const searchParams = useSearchParams();
@@ -45,11 +47,12 @@ export function RegionCvmList(props: RegionCvmListProps) {
     const params = new URLSearchParams({
       perPage: String(perPage),
       page: String(apiPage),
+      filter: `bbox=="${region.bbox.bottomLeft},${region.bbox.topRight}"`,
       locale,
     });
 
     return `/cvms?${params.toString()}`;
-  }, [page, perPage, locale]);
+  }, [page, perPage, locale, region]);
 
   const { data, isLoading, error } = useSWR<Page<Cvm>, unknown, string | null>(
     url,
@@ -154,7 +157,9 @@ export function RegionCvmList(props: RegionCvmListProps) {
         </div>
       ) : (
         <div className="max-h-[40rem] min-h-[20rem] w-full max-w-full">
-          <div className="text-sm italic">{t("empty")}</div>
+          <div className="text-sm italic">
+            {t("empty", { region: region.name })}
+          </div>
         </div>
       )}
     </div>
