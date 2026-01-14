@@ -704,5 +704,9 @@
       "button": "Zum Home-Bildschirm hinzufügen",
       "tooltip": "Speichere diese App auf deinem Gerät, um sie schnell und einfach zu öffnen."
     }
+  },
+  "RegionCvmList": {
+    "description": "Liste von Zigarettenautomaten in {region}. Jeder Eintrag stellt einen bekannten Standort eines Zigarettenautomaten dar.",
+    "empty": "Keine Zigarettenautomaten in {region} gefunden."
   }
 }

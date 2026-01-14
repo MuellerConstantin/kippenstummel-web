@@ -1,4 +1,5 @@
 import { Link } from "@/components/atoms/Link";
+import { RegionCvmList } from "@/components/organisms/cvm/RegionCvmList";
 import { REGIONS } from "@/lib/regions";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
@@ -42,8 +43,8 @@ export default async function CvmRegionPage({ params }: Props) {
   }
 
   return (
-    <div>
-      <div className="relative mx-auto my-8 flex max-w-[80rem] flex-col items-center gap-12 overflow-hidden p-4">
+    <div className="my-8">
+      <div className="relative mx-auto flex max-w-[80rem] flex-col items-center gap-12 overflow-hidden px-4 py-8">
         <div className="bg-map-pattern pointer-events-none absolute inset-0" />
         <div className="relative z-10 flex w-full flex-col items-center gap-8 md:flex-row">
           <div className="flex w-full flex-col gap-4 text-slate-800 md:w-3/5 dark:text-white">
@@ -69,6 +70,9 @@ export default async function CvmRegionPage({ params }: Props) {
             </div>
           </div>
         </div>
+      </div>
+      <div className="relative mx-auto flex max-w-[80rem] flex-col items-center gap-12 overflow-hidden p-4">
+        <RegionCvmList region={region} />
       </div>
     </div>
   );

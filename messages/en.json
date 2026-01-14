@@ -704,5 +704,9 @@
       "button": "Add to Home Screen",
       "tooltip": "Save this app on your device for quick and easy access."
     }
+  },
+  "RegionCvmList": {
+    "description": "List of cigarette vending machines in {region}. Each entry represents a known location of a cigarette vending machine.",
+    "empty": "No cigarette vending machines in {region} found."
   }
 }
