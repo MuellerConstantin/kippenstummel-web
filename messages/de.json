@@ -510,6 +510,10 @@
   "AboutDialog": {
     "title": "Über Kippenstummel",
     "description": "Diese Anwendung ist freie Software unter der <license-link>GNU Affero General Public License Version 3 (AGPL-3.0)</license-link> lizenziert. Sie darf frei genutzt, verändert und weitergegeben werden, sofern die Lizenzbedingungen der AGPL-3.0 eingehalten werden.<br></br><br></br>Der vollständige Quellcode ist öffentlich verfügbar unter:<br></br><ul><li><web-code-link>Kippenstummel Web (Frontend)</web-code-link></li><li><api-code-link>Kippenstummel API (Backend)</api-code-link></li><li><kmc-code-link>Kippenstummel KMC (Admin-Panel)</kmc-code-link></li></ul><br></br>Für die Nutzung dieser Anwendung als Online-Dienst (SaaS) gelten zusätzlich unsere <terms-link>Nutzungsbedingungen</terms-link> sowie die <privacy-link>Datenschutzerklärung</privacy-link>.",
+    "thirdParty": {
+      "title": "Drittanbieter & Datenquellen",
+      "description": "Dieses Projekt ist nur dank freier Open-Source-Software möglich. Unser besonderer Dank gilt den Mitwirkenden der nachfolgend genannten Projekte sowie vielen weiteren, hier nicht einzeln aufgeführten Open-Source-Projekten. Durch die kostenlose Bereitstellung dieser Software und Dienste ermöglichen sie indirekt die Entwicklung und den Betrieb von Kippenstummel."
+    },
     "close": "Schließen"
   },
   "MapSettingsDialog": {

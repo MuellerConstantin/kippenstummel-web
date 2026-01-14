@@ -4,6 +4,7 @@ import { Link } from "@/components/atoms/Link";
 
 import manifest from "@/../public/manifest.de.json";
 import { useEnv } from "@/contexts/RuntimeConfigProvider";
+import Image from "next/image";
 
 export function AboutDialogContent() {
   const t = useTranslations("AboutDialog");
@@ -61,6 +62,44 @@ export function AboutDialogContent() {
             <Link href="/terms-of-service">{chunks}</Link>
           ),
         })}
+      </div>
+      <div className="flex flex-col gap-4 text-sm">
+        <h4 className="font-semibold">{t("thirdParty.title")}</h4>
+        <div>{t("thirdParty.description")}</div>
+        <div className="flex w-fit items-center gap-4 rounded-md border border-slate-400 p-2">
+          <div className="relative h-10 w-10 shrink-0 overflow-hidden">
+            <Image
+              src="/images/third-party/openstreetmap.png"
+              alt="OpenStreetMap"
+              fill
+              objectFit="contain"
+              layout="fill"
+            />
+          </div>
+          <div className="flex grow flex-col gap-1">
+            <h5 className="font-semibold">OpenStreetMap</h5>
+            <Link href="https://www.openstreetmap.org" target="_blank">
+              https://www.openstreetmap.org
+            </Link>
+          </div>
+        </div>
+        <div className="flex w-fit items-center gap-4 rounded-md border border-slate-400 p-2">
+          <div className="relative h-10 w-10 shrink-0 overflow-hidden">
+            <Image
+              src="/images/third-party/openfreemap.jpg"
+              alt="OpenFreeMap"
+              fill
+              objectFit="contain"
+              layout="fill"
+            />
+          </div>
+          <div className="flex grow flex-col gap-1">
+            <h5 className="font-semibold">OpenFreeMap</h5>
+            <Link href="https://openfreemap.org" target="_blank">
+              https://openfreemap.org
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
