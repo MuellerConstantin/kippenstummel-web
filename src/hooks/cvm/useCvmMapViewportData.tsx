@@ -124,7 +124,7 @@ export function useCvmMapViewportData(
     AxiosError<ApiError>,
     string | null
   >(
-    !!searchParams ? `/cvms?${searchParams.toString()}` : null,
+    !!searchParams ? `/cvms/within?${searchParams.toString()}` : null,
     (url) => api.get(url).then((res) => res.data),
     { keepPreviousData: true, ...props },
   );
