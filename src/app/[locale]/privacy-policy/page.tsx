@@ -154,6 +154,27 @@ export default function PrivacyPolicy() {
             li: (chunks) => <li className="ml-4">{chunks}</li>,
           })}
         </div>
+        <h3 className="text-xl font-bold">{t("thirdParty.nominatim.title")}</h3>
+        <div>
+          {t.rich("thirdParty.nominatim.description", {
+            link1: (chunks) => (
+              <Link target="_blank" href="https://nominatim.org/">
+                {chunks}
+              </Link>
+            ),
+            link2: (chunks) => (
+              <Link
+                target="_blank"
+                href="https://osmfoundation.org/wiki/Privacy_Policy"
+              >
+                {chunks}
+              </Link>
+            ),
+            br: () => <br />,
+            ul: (chunks) => <ul className="list-disc">{chunks}</ul>,
+            li: (chunks) => <li className="ml-4">{chunks}</li>,
+          })}
+        </div>
       </section>
     </div>
   );
