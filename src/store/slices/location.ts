@@ -4,11 +4,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface LocationState {
   location: GeoCoordinates | null;
   locatedAt: string | null;
+  isWatching?: boolean;
 }
 
 const initialState: LocationState = {
   location: null,
   locatedAt: null,
+  isWatching: false,
 };
 
 const locationSlice = createSlice({
@@ -25,6 +27,9 @@ const locationSlice = createSlice({
     clearLocation: (state) => {
       state.location = null;
       state.locatedAt = null;
+    },
+    setIsWatching: (state, action: PayloadAction<boolean>) => {
+      state.isWatching = action.payload;
     },
   },
 });

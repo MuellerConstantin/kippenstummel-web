@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import locationSlice from "@/store/slices/location";
 import { useTranslations } from "next-intl";
@@ -10,8 +10,8 @@ export default function useLocateWatcher() {
   const { enqueue } = useNotifications();
 
   const watchIdRef = useRef<number | null>(null);
-  const [isWatching, setIsWatching] = useState(false);
 
+  const isWatching = useAppSelector((state) => !!state.location.isWatching);
   const autoLocation = useAppSelector((state) => state.usability.autoLocation);
 
   const startWatching = useCallback(
@@ -75,7 +75,7 @@ export default function useLocateWatcher() {
       );
 
       watchIdRef.current = id;
-      setIsWatching(true);
+      dispatch(locationSlice.actions.setIsWatching(true));
     },
     [dispatch, enqueue, t],
   );
@@ -84,9 +84,9 @@ export default function useLocateWatcher() {
     if (watchIdRef.current !== null) {
       navigator.geolocation.clearWatch(watchIdRef.current);
       watchIdRef.current = null;
-      setIsWatching(false);
+      dispatch(locationSlice.actions.setIsWatching(false));
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (autoLocation) {

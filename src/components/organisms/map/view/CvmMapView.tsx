@@ -1,7 +1,7 @@
 "use client";
 
 import { useCvmMapViewportData } from "@/hooks/cvm/useCvmMapViewportData";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { GeoCoordinates } from "@/lib/types/geo";
 import { CvmMapDefaultOverlay } from "./CvmMapDefaultOverlay";
 import { useTranslations } from "next-intl";
@@ -12,6 +12,7 @@ import { CvmMapRepositionOverlay } from "./CvmMapRepositionOverlay";
 import { CvmMapTemplate } from "@/components/templates/map/CvmMapTemplate";
 import { useCvmMapView } from "@/contexts/CvmMapViewContext";
 import { useCvmMapViewport } from "@/hooks/cvm/useMapCvmViewport";
+import { useAppSelector } from "@/store";
 
 export interface CvmMapViewProps {
   onRegister?: (position: GeoCoordinates) => void;
@@ -37,6 +38,10 @@ export function CvmMapView({
 }: CvmMapViewProps) {
   const t = useTranslations();
   const { enqueue } = useNotifications();
+
+  const autoLocateDoneRef = useRef(false);
+  const autoLocation = useAppSelector((state) => state.usability.autoLocation);
+  const location = useAppSelector((state) => state.location.location);
 
   const { state, goToDefaultMode, goToRegisterMode, goToRepositionMode } =
     useCvmMapView();
@@ -130,6 +135,21 @@ export function CvmMapView({
     },
     [onRegister, goToDefaultMode],
   );
+
+  useEffect(() => {
+    if (!map) return;
+    if (!autoLocation) return;
+    if (autoLocateDoneRef.current) return;
+    if (!location) return;
+    if (props.sharedCvmId) return;
+
+    autoLocateDoneRef.current = true;
+
+    map?.flyTo({
+      center: [location.longitude, location.latitude],
+      zoom: 15,
+    });
+  }, [map, autoLocation, location, props.sharedCvmId]);
 
   const onRepositionEnd = useCallback(
     (newPosition: GeoCoordinates, editorPosition: GeoCoordinates) => {

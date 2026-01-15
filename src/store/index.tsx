@@ -49,7 +49,7 @@ const rootPersistConfig = {
   version: 3,
   storage: localStorage,
   whitelist: ["usability", "ident", "privacy"],
-  blacklist: ["session"],
+  blacklist: ["session", "location"],
   migrate: createMigrate(migrations, { debug: false }),
 };
 
