@@ -63,7 +63,7 @@ export function RegionCvmList(props: RegionCvmListProps) {
   );
 
   const fetchOsmAddress = useCallback(async (key: GeoCoordinates) => {
-    const url = "https://nominatim.openstreetmap.org/reverse";
+    const url = "/api/geocoding/reverse";
 
     return await axios.get<{
       place_id: number;
