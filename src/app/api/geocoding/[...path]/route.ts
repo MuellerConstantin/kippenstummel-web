@@ -1,6 +1,8 @@
 import { type NextRequest } from "next/server";
 import { LRUCache } from "lru-cache";
 
+export const runtime = "nodejs";
+
 const BASE_URL = "https://nominatim.openstreetmap.org";
 const USER_AGENT = "Kippenstummel/1.0 (info@mueller-constantin.de)";
 
@@ -52,15 +54,20 @@ async function proxyRequest(
     targetUrl.searchParams.append(key, value);
   });
 
+  targetUrl.searchParams.sort();
+
   const key = cacheKey(req, targetUrl);
 
-  if (req.method === "GET" || req.method === "HEAD") {
+  if (req.method === "GET") {
     const cached = geocodeCache.get(key);
 
     if (cached) {
-      return new Response(req.method === "HEAD" ? null : cached.body, {
+      const headers = new Headers(cached.headers);
+      headers.set("X-Cache", "HIT");
+
+      return new Response(cached.body, {
         status: cached.status,
-        headers: cached.headers,
+        headers,
       });
     }
   }
@@ -101,6 +108,7 @@ async function proxyRequest(
 
     upstreamHeaders.delete("content-encoding");
     upstreamHeaders.delete("content-length");
+    upstreamHeaders.set("X-Cache", "MISS");
 
     [
       "connection",
@@ -116,7 +124,7 @@ async function proxyRequest(
     const bodyBuffer =
       req.method === "HEAD" ? null : await upstream.arrayBuffer();
 
-    if (req.method === "GET" && bodyBuffer) {
+    if (req.method === "GET" && bodyBuffer && upstream.ok) {
       geocodeCache.set(key, {
         status: upstream.status,
         headers: [...upstreamHeaders.entries()],
