@@ -23,6 +23,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: t("meta.title", {
       region: region!.name,
     }),
+    description: t("meta.description", {
+      region: region!.name,
+    }),
+    alternates: {
+      canonical: `https://kippenstummel.de/${locale}/cvms/region/${regionSlug}`,
+    },
   };
 }
 

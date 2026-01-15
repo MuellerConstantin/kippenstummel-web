@@ -48,7 +48,7 @@ const toastTitle = tv({
 });
 
 const toastDescription = tv({
-  base: "text-sm opacity-80 max-h-24 overflow-y-auto",
+  base: "text-sm opacity-80 max-h-32 overflow-y-auto",
 });
 
 const toastCloseButton = tv({
