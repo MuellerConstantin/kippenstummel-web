@@ -1,7 +1,28 @@
 import { type NextRequest } from "next/server";
+import { LRUCache } from "lru-cache";
 
 const BASE_URL = "https://nominatim.openstreetmap.org";
 const USER_AGENT = "Kippenstummel/1.0 (info@mueller-constantin.de)";
+
+const geocodeCache = new LRUCache<
+  string,
+  {
+    status: number;
+    headers: [string, string][];
+    body: ArrayBuffer;
+  }
+>({
+  max: 1000,
+  ttl: 1000 * 60 * 60 * 24 * 30, // 30 days
+});
+
+function cacheKey(req: NextRequest, targetUrl: URL) {
+  return [
+    req.method,
+    targetUrl.toString(),
+    req.headers.get("accept") ?? "",
+  ].join("|");
+}
 
 export async function GET(
   req: NextRequest,
@@ -30,6 +51,19 @@ async function proxyRequest(
   req.nextUrl.searchParams.forEach((value, key) => {
     targetUrl.searchParams.append(key, value);
   });
+
+  const key = cacheKey(req, targetUrl);
+
+  if (req.method === "GET" || req.method === "HEAD") {
+    const cached = geocodeCache.get(key);
+
+    if (cached) {
+      return new Response(req.method === "HEAD" ? null : cached.body, {
+        status: cached.status,
+        headers: cached.headers,
+      });
+    }
+  }
 
   const requestHeaders = new Headers(req.headers);
 
@@ -79,7 +113,18 @@ async function proxyRequest(
       "trailers",
     ].forEach((header) => upstreamHeaders.delete(header));
 
-    return new Response(upstream.body, {
+    const bodyBuffer =
+      req.method === "HEAD" ? null : await upstream.arrayBuffer();
+
+    if (req.method === "GET" && bodyBuffer) {
+      geocodeCache.set(key, {
+        status: upstream.status,
+        headers: [...upstreamHeaders.entries()],
+        body: bodyBuffer,
+      });
+    }
+
+    return new Response(bodyBuffer, {
       status: upstream.status,
       headers: upstreamHeaders,
     });
