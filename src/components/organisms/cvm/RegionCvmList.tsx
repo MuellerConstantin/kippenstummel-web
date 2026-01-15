@@ -1,12 +1,15 @@
 "use client";
 
+import { Link } from "@/components/atoms/Link";
 import { ListBox, ListBoxItem } from "@/components/atoms/ListBox";
 import { Pagination } from "@/components/molecules/Pagination";
 import useApi from "@/hooks/useApi";
 import { useRouter } from "@/i18n/navigation";
 import { CvmRegion } from "@/lib/regions";
 import { Cvm } from "@/lib/types/cvm";
+import { GeoCoordinates } from "@/lib/types/geo";
 import { Page } from "@/lib/types/pagination";
+import axios from "axios";
 import { ChevronDown, ChevronUp, Equal, MapPin, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
@@ -59,6 +62,122 @@ export function RegionCvmList(props: RegionCvmListProps) {
     (url) => api.get(url).then((res) => res.data),
   );
 
+  const fetchOsmAddress = useCallback(async (key: GeoCoordinates) => {
+    const url = "https://nominatim.openstreetmap.org/reverse";
+
+    return await axios.get<{
+      place_id: number;
+      licence: string;
+      osm_type: "node" | "way" | "relation";
+      osm_id: number;
+      lat: string;
+      lon: string;
+      class: string;
+      type: string;
+      place_rank: number;
+      importance: number;
+      addresstype: string;
+      name: string;
+      display_name: string;
+      address: {
+        amenity?: string;
+        road?: string;
+        neighbourhood?: string;
+        suburb?: string;
+        city?: string;
+        town?: string;
+        village?: string;
+        state?: string;
+        ISO3166_2_lvl4?: string;
+        postcode?: string;
+        country?: string;
+        country_code?: string;
+      };
+      boundingbox: [
+        string, // south latitude
+        string, // north latitude
+        string, // west longitude
+        string, // east longitude
+      ];
+    }>(url, {
+      params: {
+        lat: key.latitude,
+        lon: key.longitude,
+        format: "json",
+      },
+      headers: {
+        Accept: "application/json",
+      },
+    });
+  }, []);
+
+  const { data: osmAddresses } = useSWR<
+    {
+      place_id: number;
+      licence: string;
+      osm_type: "node" | "way" | "relation";
+      osm_id: number;
+      lat: string;
+      lon: string;
+      class: string;
+      type: string;
+      place_rank: number;
+      importance: number;
+      addresstype: string;
+      name: string;
+      display_name: string;
+      address: {
+        amenity?: string;
+        road?: string;
+        neighbourhood?: string;
+        suburb?: string;
+        city?: string;
+        town?: string;
+        village?: string;
+        state?: string;
+        ISO3166_2_lvl4?: string;
+        postcode?: string;
+        country?: string;
+        country_code?: string;
+      };
+      boundingbox: [
+        string, // south latitude
+        string, // north latitude
+        string, // west longitude
+        string, // east longitude
+      ];
+    }[],
+    unknown,
+    ["osmAddresses", GeoCoordinates[]] | null
+  >(
+    data
+      ? [
+          "osmAddresses",
+          data?.content.map((cvm) => ({
+            latitude: cvm.latitude,
+            longitude: cvm.longitude,
+          })) || [],
+        ]
+      : null,
+    (key) =>
+      Promise.all(key[1].map(fetchOsmAddress)).then((responses) =>
+        responses.map((res) => res.data),
+      ),
+    {
+      revalidateOnFocus: false,
+      dedupingInterval: 1000 * 60 * 60 * 24, // 24h
+    },
+  );
+
+  const formattedAddresses = useMemo(() => {
+    return osmAddresses?.map((addr) => {
+      const { road, city, town, village, postcode } = addr.address ?? {};
+      return [road, postcode, city || town || village]
+        .filter(Boolean)
+        .join(", ");
+    });
+  }, [osmAddresses]);
+
   const handleSelect = useCallback((key: string) => {
     setSelected(key);
   }, []);
@@ -110,41 +229,66 @@ export function RegionCvmList(props: RegionCvmListProps) {
               handleSelect([...(keys as Set<string>)][0])
             }
           >
-            {data?.content.map((cvm) => (
-              <ListBoxItem id={`cvm-list-item-${cvm.id}`} key={cvm.id}>
-                <div className="flex cursor-pointer gap-2 overflow-hidden">
-                  <div className="relative z-[50] h-fit w-fit">
-                    {cvm.score < -8 ? (
-                      <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-800">
-                        <X className="h-2.5 w-2.5 text-white" />
+            {data?.content.map((cvm, index) => {
+              const formattedAddress = formattedAddresses?.[index];
+
+              return (
+                <ListBoxItem id={`cvm-list-item-${cvm.id}`} key={cvm.id}>
+                  <div className="flex h-full w-full justify-between gap-2">
+                    <div className="flex cursor-pointer gap-2 overflow-hidden">
+                      <div className="relative z-[50] h-fit w-fit">
+                        {cvm.score < -8 ? (
+                          <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-800">
+                            <X className="h-2.5 w-2.5 text-white" />
+                          </div>
+                        ) : cvm.score < 0 ? (
+                          <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-500">
+                            <ChevronDown className="h-2.5 w-2.5 text-white" />
+                          </div>
+                        ) : cvm.score >= 5 ? (
+                          <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-green-600">
+                            <ChevronUp className="h-2.5 w-2.5 text-white" />
+                          </div>
+                        ) : (
+                          <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-slate-500">
+                            <Equal className="h-2.5 w-2.5 text-white" />
+                          </div>
+                        )}
+                        <MapPin className="h-8 w-8 fill-green-600 text-white" />
                       </div>
-                    ) : cvm.score < 0 ? (
-                      <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-500">
-                        <ChevronDown className="h-2.5 w-2.5 text-white" />
+                      <div className="flex flex-col gap-1 overflow-hidden">
+                        <div className="truncate text-sm font-semibold text-nowrap">
+                          {t("cvm")}
+                        </div>
+                        <div>
+                          {formattedAddress && formattedAddress.length > 0 ? (
+                            <div className="truncate text-xs">
+                              {formattedAddress}
+                            </div>
+                          ) : (
+                            <div className="truncate text-xs">
+                              {cvm.latitude} / {cvm.longitude} (lat/lng)
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-1 text-xs">
+                          <div>Score:</div>
+                          <div>{cvm.score}</div>
+                        </div>
                       </div>
-                    ) : cvm.score >= 5 ? (
-                      <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-green-600">
-                        <ChevronUp className="h-2.5 w-2.5 text-white" />
-                      </div>
-                    ) : (
-                      <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-slate-500">
-                        <Equal className="h-2.5 w-2.5 text-white" />
-                      </div>
+                    </div>
+                    {selected === `cvm-list-item-${cvm.id}` && (
+                      <Link
+                        href={`/map/share/${cvm.id}`}
+                        className="pressed:bg-gray-300 dark:pressed:bg-slate-400 h-fit w-fit cursor-pointer self-center rounded-lg border border-black/10 bg-gray-100 px-5 py-2 text-center text-sm text-gray-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] transition hover:bg-gray-200 hover:no-underline dark:border-white/10 dark:bg-slate-600 dark:text-slate-100 dark:shadow-none dark:hover:bg-slate-500"
+                      >
+                        {t("show")}
+                      </Link>
                     )}
-                    <MapPin className="h-8 w-8 fill-green-600 text-white" />
                   </div>
-                  <div className="flex flex-col gap-1 overflow-hidden">
-                    <div className="truncate text-sm font-semibold text-nowrap">
-                      {cvm.id}
-                    </div>
-                    <div className="flex items-center gap-1 text-xs">
-                      <div>Score:</div>
-                      <div>{cvm.score}</div>
-                    </div>
-                  </div>
-                </div>
-              </ListBoxItem>
-            ))}
+                </ListBoxItem>
+              );
+            })}
           </ListBox>
           <div className="flex flex-col gap-2">
             <Pagination
