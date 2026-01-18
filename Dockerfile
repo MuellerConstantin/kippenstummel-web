@@ -9,6 +9,7 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY src ./src
+COPY data ./data
 COPY public ./public
 COPY next.config.ts ./
 COPY tailwind.config.mjs ./
@@ -32,6 +33,7 @@ VOLUME ["/usr/local/etc/kippenstummel/web"]
 COPY --from=builder /usr/local/src/kippenstummel/web/.next/standalone ./
 COPY --from=builder /usr/local/src/kippenstummel/web/.next/static ./.next/static
 COPY --from=builder /usr/local/src/kippenstummel/web/public ./public
+COPY --from=builder /usr/local/src/kippenstummel/web/data ./data
 
 EXPOSE 3000
 
