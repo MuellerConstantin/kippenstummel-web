@@ -38,6 +38,7 @@ requires a rebuild of the web client. These variables are loaded and hardcoded a
 | NEXT_PUBLIC_ACKEE_DOMAIN   | Domain of the Ackee analytics server.                                        | Yes      |
 | NEXT_PUBLIC_IS_TEST_SYSTEM | Indicates if the web client is running in a test system. Default is `false`. | No       |
 | NEXT_PUBLIC_IS_PRE_RELEASE | Indicates if the web client is a pre-release. Default is `false`.            | No       |
+| NEXT_PUBLIC_SITE_URL       | Url of the web client.                                                       | Yes      |
 
 ### Runtime configuration
 
