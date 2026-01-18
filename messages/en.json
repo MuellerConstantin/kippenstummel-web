@@ -227,7 +227,7 @@
       "description": "All known CVM locations in {region}, interactive map and location details."
     },
     "headline": "Cigarette vending machines in {region}",
-    "description": "Find cigarette vending machines in {region} and the surrounding area. The interactive map shows known locations in {region} and neighboring regions. The data is regularly updated and supplemented by the community.",
+    "description": "Find cigarette vending machines in {region} and the surrounding area. The interactive map shows known locations in {region} and neighboring regions. The data is regularly updated and supplemented by the community.<br></br><br></br>{amount} cigarette vending machines were found for the location {region} and surrounding area.",
     "openMap": "Open map"
   },
   "TermsOfServicePage": {

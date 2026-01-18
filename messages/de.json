@@ -227,7 +227,7 @@
       "description": "Alle bekannten CVM-Standorte in {region}, interaktive Karte und Standortdetails."
     },
     "headline": "Zigarettenautomaten in {region}",
-    "description": "Finde Zigarettenautomaten in {region} und Umgebung. Auf der interaktiven Karte siehst du bekannte Standorte in {region} sowie angrenzenden Regionen. Die Daten werden regelmäßig aktualisiert und von der Community ergänzt.",
+    "description": "Finde Zigarettenautomaten in {region} und Umgebung. Auf der interaktiven Karte siehst du bekannte Standorte in {region} sowie angrenzenden Regionen. Die Daten werden regelmäßig aktualisiert und von der Community ergänzt.<br></br><br></br>Für den Standort {region} und Umgebung wurden {amount} Zigarettenautomaten gefunden.",
     "openMap": "Karte öffnen"
   },
   "TermsOfServicePage": {

@@ -1,6 +1,8 @@
 import { Link } from "@/components/atoms/Link";
 import { RegionCvmList } from "@/components/organisms/cvm/RegionCvmList";
 import { REGIONS } from "@/lib/regions";
+import { Cvm } from "@/lib/types/cvm";
+import { Page } from "@/lib/types/pagination";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -48,6 +50,23 @@ export default async function CvmRegionPage({ params }: Props) {
     notFound();
   }
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
+  const res = await fetch(
+    `${baseUrl}/api/bff/cvms?page=0&filter=${encodeURIComponent(`bbox=="${region.bbox.bottomLeft},${region.bbox.topRight}`)}"`,
+    {
+      cache: "no-store",
+    },
+  );
+
+  if (!res.ok) {
+    throw new Error(
+      `Failed to fetch data: ${res.statusText} (${res.status}) ${await res.text()}`,
+    );
+  }
+
+  const data = (await res.json()) as Page<Cvm>;
+
   return (
     <div className="my-8">
       <div className="relative mx-auto flex max-w-[80rem] flex-col items-center gap-12 overflow-hidden px-4 py-8">
@@ -58,7 +77,11 @@ export default async function CvmRegionPage({ params }: Props) {
               {t("headline", { region: region.name })}
             </h1>
             <p className="text-slate-400">
-              {t("description", { region: region.name })}
+              {t.rich("description", {
+                region: region.name,
+                amount: data.info.totalElements,
+                br: () => <br />,
+              })}
             </p>
           </div>
           <div className="flex aspect-square w-full grow flex-col rounded-lg border-2 border-slate-200 bg-slate-100 p-2 md:w-fit dark:border-slate-600 dark:bg-slate-900">
