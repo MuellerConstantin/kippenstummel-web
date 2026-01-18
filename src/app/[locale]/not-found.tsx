@@ -1,4 +1,3 @@
-import { useTranslations } from "next-intl";
 import { StackTemplate } from "@/components/templates/StackTemplate";
 import { SearchX as SearchXIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
@@ -18,8 +17,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function NotFound() {
-  const t = useTranslations("NotFoundPage");
+export default async function NotFound() {
+  const t = await getTranslations("NotFoundPage");
 
   return (
     <StackTemplate>
