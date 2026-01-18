@@ -9,25 +9,37 @@ import { notFound } from "next/navigation";
 
 type Props = {
   params: Promise<{ locale: string; region: string }>;
+  searchParams: Promise<{ page: string }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Props): Promise<Metadata> {
   const { locale, region: regionSlug } = await params;
+  const { page } = await searchParams;
+
   const t = await getTranslations({ locale, namespace: "CvmRegionPage" });
+  const region = REGIONS.find((r) => r.slug === regionSlug);
 
-  const region = REGIONS.find((region) => region.slug === regionSlug);
+  if (!region) notFound();
 
-  if (!region) {
-    notFound();
-  }
+  const pageNumber = Number(page ?? "1");
+
+  const isPaginated = pageNumber > 1;
 
   return {
-    title: t("meta.title", {
-      region: region!.name,
-    }),
-    description: t("meta.description", {
-      region: region!.name,
-    }),
+    title: t("meta.title", { region: region.name }),
+    description: t("meta.description", { region: region.name }),
+    robots: isPaginated
+      ? {
+          index: false,
+          follow: true,
+        }
+      : {
+          index: true,
+          follow: true,
+        },
     alternates: {
       canonical: `https://kippenstummel.de/${locale}/cvms/region/${regionSlug}`,
     },
