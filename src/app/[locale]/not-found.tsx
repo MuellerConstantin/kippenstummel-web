@@ -1,22 +1,25 @@
-"use client";
-
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { StackTemplate } from "@/components/templates/StackTemplate";
-import { Button } from "@/components/atoms/Button";
 import { SearchX as SearchXIcon } from "lucide-react";
+import { getTranslations } from "next-intl/server";
+import { Metadata } from "next";
+import { Link } from "@/components/atoms/Link";
+
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "NotFoundPage" });
+
+  return {
+    title: t("meta.title"),
+  };
+}
 
 export default function NotFound() {
   const t = useTranslations("NotFoundPage");
-  const router = useRouter();
-
-  useEffect(() => {
-    document.title = t("meta.title");
-    document
-      .querySelector("meta[name='description']")
-      ?.setAttribute("content", t("meta.description"));
-  }, [t]);
 
   return (
     <StackTemplate>
@@ -33,13 +36,13 @@ export default function NotFound() {
               <p className="mb-4 text-center text-lg font-light text-gray-500 dark:text-gray-400">
                 {t("description")}
               </p>
-              <Button
+              <Link
                 variant="primary"
-                className="w-fit"
-                onPress={() => router.push("/")}
+                className="pressed:bg-green-800 cursor-pointer rounded-lg border border-black/10 bg-green-600 px-5 py-2 text-center text-sm text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] transition hover:bg-green-700 dark:border-white/10 dark:shadow-none"
+                href="/"
               >
                 {t("backToHomepage")}
-              </Button>
+              </Link>
             </div>
           </div>
         </section>
