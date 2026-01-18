@@ -297,6 +297,15 @@
     "description": "Sorry, we can't find that page. You'll find lots to explore on the home page.",
     "backToHomepage": "Back to home"
   },
+  "ErrorPage": {
+    "meta": {
+      "title": "Error"
+    },
+    "headline": "Error",
+    "description": "An unexpected error has occurred.",
+    "backToHomepage": "Back to home",
+    "retry": "Retry"
+  },
   "OfflinePage": {
     "meta": {
       "title": "You are offline"

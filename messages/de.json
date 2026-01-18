@@ -297,6 +297,15 @@
     "description": "Die Seite, die du suchst, konnte nicht gefunden werden.",
     "backToHomepage": "Zurück zur Startseite"
   },
+  "ErrorPage": {
+    "meta": {
+      "title": "Fehler"
+    },
+    "headline": "Fehler",
+    "description": "Es ist ein unerwarteter Fehler aufgetreten.",
+    "backToHomepage": "Zurück zur Startseite",
+    "retry": "Erneut versuchen"
+  },
   "OfflinePage": {
     "meta": {
       "title": "Du bist offline"
