@@ -19,7 +19,8 @@
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "generate:regions": "tsx scripts/generate-regions.ts"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.1",
@@ -82,6 +83,7 @@
     "serwist": "^9.2.0",
     "storybook": "^8.6.7",
     "tailwindcss": "^4.0.15",
+    "tsx": "^4.21.0",
     "typescript": "^5",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.9"

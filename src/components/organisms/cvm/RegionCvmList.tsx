@@ -5,7 +5,7 @@ import { ListBox, ListBoxItem } from "@/components/atoms/ListBox";
 import { Pagination } from "@/components/molecules/Pagination";
 import useApi from "@/hooks/useApi";
 import { useRouter } from "@/i18n/navigation";
-import { CvmRegion } from "@/lib/regions";
+import { Region } from "@/lib/regions";
 import { Cvm } from "@/lib/types/cvm";
 import { GeoCoordinates } from "@/lib/types/geo";
 import { Page } from "@/lib/types/pagination";
@@ -17,7 +17,7 @@ import { useCallback, useMemo, useState } from "react";
 import useSWR from "swr";
 
 export interface RegionCvmListProps {
-  region: CvmRegion;
+  region: Region;
 }
 
 export function RegionCvmList(props: RegionCvmListProps) {
