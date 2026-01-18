@@ -79,6 +79,9 @@
           "answer": "Grundsätzlich wollen wir Kippenstummel anonym anbieten. Trotzdem müssen bestimmt Interaktionen einem Benutzer zugeordnet werden können. Daher wird dir anstelle eines Benutzerkontos eine anonyme aber personalisierte Identität ausgestellt. Mit dieser werden all deine Interaktionen und Errungenschaften verknüpft. Die ermittelte Vertrauenswürdigkeit deiner Identität regelt außerdem wie viel Einfluss deine Interaktionen haben. Verlierst du Zugriff auf deine Geräte ist deine Identität, falls zuvor nicht übertragen oder gesichert, unwideruflich verloren."
         }
       }
+    },
+    "regions": {
+      "title": "Zigarettenautomaten in ausgewählten Städten"
     }
   },
   "MapPage": {

@@ -12,6 +12,7 @@ import { Link } from "@/components/atoms/Link";
 import { JumbotronCta } from "@/components/organisms/JumbotronCta";
 import { FaqItem } from "@/components/molecules/FaqItem";
 import { Leaderboard } from "@/components/organisms/Leaderboard";
+import { getTopRegionsGeoBalanced, REGIONS } from "@/lib/regions";
 
 export default function Home() {
   const t = useTranslations("HomePage");
@@ -40,6 +41,8 @@ export default function Home() {
       },
     ];
   }, [t]);
+
+  const TOP_REGIONS = getTopRegionsGeoBalanced(REGIONS, 8);
 
   return (
     <div>
@@ -122,9 +125,9 @@ export default function Home() {
             <div className="text-center text-lg font-semibold text-green-600">
               {t("features.slogan")}
             </div>
-            <div className="text-center text-2xl font-bold">
+            <h4 className="text-center text-2xl font-bold">
               {t("features.title")}
-            </div>
+            </h4>
             <div className="text-center">{t("features.description")}</div>
           </div>
           <div className="grid w-full max-w-[60rem] grid-cols-1 gap-8 md:grid-cols-2">
@@ -146,7 +149,7 @@ export default function Home() {
         </section>
         <section className="flex w-full flex-col items-center gap-10 p-4 text-slate-800 dark:text-white">
           <div className="flex w-full max-w-[60rem] flex-col gap-4 rounded-md bg-green-50 p-4 dark:bg-green-900">
-            <div className="font-semibold">{t("banner.title")}</div>
+            <h4 className="font-semibold">{t("banner.title")}</h4>
             <div>
               {t.rich("banner.description", {
                 link1: (chunks) => (
@@ -175,9 +178,9 @@ export default function Home() {
                   layout="fill"
                 />
               </div>
-              <div className="text-center text-2xl font-bold">
+              <h4 className="text-center text-2xl font-bold">
                 {t("leaderboard.title")}
-              </div>
+              </h4>
               <div className="relative h-8 w-8 overflow-hidden">
                 <Image
                   src="/icons/laurel-branch-right.svg"
@@ -205,9 +208,7 @@ export default function Home() {
         </section>
         <section className="flex w-full flex-col items-center gap-10 p-4 text-slate-800 dark:text-white">
           <div className="max-w-[40rem] space-y-4">
-            <div className="text-center text-2xl font-bold">
-              {t("faq.title")}
-            </div>
+            <h4 className="text-center text-2xl font-bold">{t("faq.title")}</h4>
             <div className="text-center">
               {t.rich("faq.description", {
                 link: (chunks) => (
@@ -268,6 +269,24 @@ export default function Home() {
               question={t("faq.items.8.question")}
               answer={t("faq.items.8.answer")}
             />
+          </div>
+        </section>
+        <section className="flex w-full flex-col items-center gap-10 p-4 text-slate-800 dark:text-white">
+          <div className="max-w-[40rem] space-y-4">
+            <h4 className="text-center text-2xl font-bold">
+              {t("regions.title")}
+            </h4>
+          </div>
+          <div className="mx-auto grid max-w-[40rem] grid-cols-2 gap-4 sm:grid-cols-4">
+            {TOP_REGIONS.map((region) => (
+              <Link
+                key={region.slug}
+                href={`/cvms/region/${region.slug}`}
+                className="text-center hover:underline"
+              >
+                {region.name}
+              </Link>
+            ))}
           </div>
         </section>
       </div>

@@ -79,6 +79,9 @@
           "answer": "Fundamentally, we want to offer Kippenstummel anonymously. However, certain interactions must be attributable to a user. Therefore, instead of a user account, you will be issued an anonymous but personalized identity. All your interactions and achievements will be linked to this identity. The trustworthiness of your identity also determines the influence your interactions have. If you lose access to your devices, your identity will be irretrievably lost unless previously transferred or secured."
         }
       }
+    },
+    "regions": {
+      "title": "Cigarette vending machines in selected cities"
     }
   },
   "MapPage": {
