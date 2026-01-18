@@ -41,7 +41,7 @@ export async function generateMetadata({
           follow: true,
         },
     alternates: {
-      canonical: `https://kippenstummel.de/${locale}/cvms/region/${regionSlug}`,
+      canonical: `https://kippenstummel.de/cvms/region/${regionSlug}`,
     },
   };
 }
