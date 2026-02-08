@@ -360,7 +360,9 @@ function TransferIdentitySection() {
         <>
           <div className="text-sm">{t("form.description")}</div>
           <div className="flex flex-col gap-2">
-            {error && <p className="text-center text-red-500">{error}</p>}
+            {error && (
+              <p className="text-center text-sm text-red-500">{error}</p>
+            )}
             <Formik<{ password: string }>
               initialValues={{ password: "" }}
               validationSchema={schema}

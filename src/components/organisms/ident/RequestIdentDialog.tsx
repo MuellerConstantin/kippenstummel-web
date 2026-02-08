@@ -162,7 +162,9 @@ export function RequestIdentDialog({
                     </Link>
                   </div>
                   {submitError && (
-                    <span className="text-red-500">{error || submitError}</span>
+                    <span className="text-sm text-red-500">
+                      {error || submitError}
+                    </span>
                   )}
                 </div>
               )}

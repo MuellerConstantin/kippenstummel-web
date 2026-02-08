@@ -160,7 +160,9 @@ export default function Tranfer() {
                   })}
             </div>
             <div className="flex flex-col gap-2">
-              {error && <p className="text-center text-red-500">{error}</p>}
+              {error && (
+                <p className="text-center text-sm text-red-500">{error}</p>
+              )}
               {isWrongPassword && (
                 <p className="text-center text-red-500">{t("wrongPassword")}</p>
               )}
