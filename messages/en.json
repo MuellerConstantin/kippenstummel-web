@@ -330,6 +330,7 @@
       "cancel": "Cancel"
     },
     "error": "An unexpected error occurred. Please try again.",
+    "alreadyUsed": "This transfer link has already been used and is no longer valid. Please request a new transfer to receive a new link.",
     "wrongPassword": "The transport password you entered is incorrect. Please try again."
   },
   "Navbar": {

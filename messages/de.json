@@ -330,6 +330,7 @@
       "cancel": "Abbrechen"
     },
     "error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
+    "alreadyUsed": "Dieser Übertragungslink wurde bereits verwendet und ist nicht mehr gültig. Bitte fordere eine neue Übertragung an, um einen neuen Link zu erhalten.",
     "wrongPassword": "Das Transportpasswort ist falsch. Bitte versuche es erneut."
   },
   "Navbar": {

@@ -62,6 +62,12 @@ export default function Tranfer() {
             if (err.response?.status === 404) {
               router.push("/not-found");
               return;
+            } else if (
+              err.response?.status === 409 &&
+              err.response?.data?.code === "TRANSFER_TOKEN_ALREADY_USED_ERROR"
+            ) {
+              setError(t("alreadyUsed"));
+              return;
             }
           }
 
@@ -119,7 +125,7 @@ export default function Tranfer() {
     <div className="relative flex grow flex-col items-center justify-center overflow-hidden px-4 py-12">
       <div className="absolute inset-0 z-0 bg-[url(/images/preview.png)] bg-cover" />
       <div className="absolute inset-0 z-10 bg-white/30 backdrop-blur-sm" />
-      <div className="relative z-20 flex w-full max-w-lg items-center justify-center rounded-lg bg-white/75 p-8 text-slate-700 shadow dark:bg-slate-700/90 dark:text-white">
+      <div className="relative z-20 flex w-full max-w-lg items-center justify-center rounded-lg bg-white/90 p-8 text-slate-700 shadow dark:bg-slate-700/90 dark:text-white">
         <div className="w-full max-w-sm space-y-8">
           <div className="flex flex-col space-y-4">
             <div className="flex items-center justify-center space-x-6">
