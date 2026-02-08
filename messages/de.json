@@ -519,8 +519,8 @@
     "general": {
       "r5p": "Bestbewertet (Score von +5 bis +10)",
       "r0P": "Neutral (Score von 0 bis +4)",
-      "rN8p": "Schlecht (Score von -8 bis -1)",
-      "rN10p": "Zu löschen (Score von -10 bis -9)"
+      "rN8p": "Schlecht (Score von -7 bis -1)",
+      "rN10p": "Zu löschen (Score von -10 bis -8)"
     },
     "close": "Schließen"
   },
