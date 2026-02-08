@@ -23,6 +23,7 @@
     "generate:regions": "tsx scripts/generate-regions.ts"
   },
   "dependencies": {
+    "@lglab/react-qr-code": "^1.4.9",
     "@reduxjs/toolkit": "^2.6.1",
     "@serwist/next": "^9.2.0",
     "@turf/turf": "^7.2.0",
@@ -42,7 +43,6 @@
     "react-aria-components": "^1.7.1",
     "react-dom": "^19.0.0",
     "react-map-gl": "^8.0.4",
-    "react-qr-code": "^2.0.15",
     "react-redux": "^9.2.0",
     "redux-persist": "^6.0.0",
     "swr": "^2.3.3",

@@ -4,7 +4,7 @@ import { Formik, FormikHelpers } from "formik";
 import * as yup from "yup";
 import { Key } from "react-aria-components";
 import { motion, AnimatePresence } from "motion/react";
-import QRCode from "react-qr-code";
+import { ReactQRCode } from "@lglab/react-qr-code";
 import { Button } from "@/components/atoms/Button";
 import { IdentIcon } from "@/components/atoms/IdentIcon";
 import { Checkbox } from "@/components/atoms/Checkbox";
@@ -399,7 +399,7 @@ function TransferIdentitySection() {
         </>
       )}
       {token && (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-8">
           <div className="text-sm font-semibold">{t("share")}</div>
           <div className="flex gap-2">
             <TextField
@@ -412,11 +412,20 @@ function TransferIdentitySection() {
               disabled={isLoading}
             />
           </div>
-          <div className="flex h-32 w-fit justify-start">
-            <QRCode
-              value={`${window.location.protocol}//${window.location.host}/transfer?token=${token}`}
-              className="h-full w-fit overflow-hidden"
-            />
+          <div className="flex w-full flex-col items-center gap-8 md:flex-row md:justify-start">
+            <div className="flex aspect-square h-[192px] shrink-0 justify-center overflow-hidden rounded-3xl border border-slate-400">
+              <ReactQRCode
+                value={`${window.location.protocol}//${window.location.host}/transfer?token=${token}`}
+                size={192}
+                background="#ffffff"
+                imageSettings={{
+                  src: "/images/logo.svg",
+                  width: 48,
+                  height: 19,
+                  excavate: true,
+                }}
+              />
+            </div>
           </div>
         </div>
       )}
