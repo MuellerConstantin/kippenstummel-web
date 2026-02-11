@@ -571,7 +571,7 @@
       "noUsername": "Kein Benutzername angegeben.",
       "authentication": {
         "title": "Anmeldeinformationen",
-        "description": "Deine Anmeldeinformationen bestehen aus einer öffentlichen ID (UUID) und einem geheimen Secret. Diese Daten werden lokal in deinem Browser gespeichert und ermöglichen die anonyme Nutzung der Anwendung. <b>Bitte beachte:</b> Das Secret ist vertraulich und darf nicht an Dritte weitergegeben werden, da damit auf deine Daten zugegriffen werden kann.",
+        "description": "Deine Anmeldeinformationen bestehen aus einer öffentlichen ID (UUID) und einem geheimen Secret. Diese Daten werden lokal in deinem Browser gespeichert und ermöglichen die anonyme Nutzung der Anwendung.",
         "secret": "Secret",
         "reset": {
           "title": "Abmelden",

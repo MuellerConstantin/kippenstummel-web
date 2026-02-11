@@ -571,7 +571,7 @@
       "noUsername": "No username given.",
       "authentication": {
         "title": "Authentication credentials",
-        "description": "Your login credentials consist of a public ID (UUID) and a secret key. These credentials are stored locally in your browser and allow anonymous use of the application. <b>Please note:</b> The secret is sensitive information and must not be shared with others, as it grants access to your data.",
+        "description": "Your login credentials consist of a public ID (UUID) and a secret key. These credentials are stored locally in your browser and allow anonymous use of the application.",
         "secret": "Secret",
         "reset": {
           "title": "Log out",

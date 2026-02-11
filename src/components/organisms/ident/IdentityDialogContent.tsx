@@ -9,7 +9,7 @@ import { Button } from "@/components/atoms/Button";
 import { IdentIcon } from "@/components/atoms/IdentIcon";
 import { Checkbox } from "@/components/atoms/Checkbox";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { Check, Copy, Eye, EyeOff, ChevronUp, ChevronDown } from "lucide-react";
+import { Check, Copy, ChevronUp, ChevronDown } from "lucide-react";
 import { Link } from "@/components/atoms/Link";
 import { TextField } from "@/components/atoms/TextField";
 import { Form } from "@/components/atoms/Form";
@@ -188,7 +188,6 @@ function MyIdentityDataSection({ close }: MyIdentityDataSectionProps) {
   const dispatch = useAppDispatch();
   const t = useTranslations("IdentityDialog.profile");
 
-  const [showSecret, setShowSecret] = useState(false);
   const [
     showAuthenticationDetailsSection,
     setShowAuthenticationDetailsSection,
@@ -196,7 +195,6 @@ function MyIdentityDataSection({ close }: MyIdentityDataSectionProps) {
   const [resetConfirmed, setResetConfirmed] = useState(false);
 
   const identity = useAppSelector((state) => state.ident.identity);
-  const secret = useAppSelector((state) => state.ident.secret);
 
   const onReset = useCallback(() => {
     dispatch(identSlice.actions.clearIdentity());
@@ -246,33 +244,6 @@ function MyIdentityDataSection({ close }: MyIdentityDataSectionProps) {
               {t.rich("authentication.description", {
                 b: (chunks) => <span className="font-semibold">{chunks}</span>,
               })}
-            </div>
-            <div className="flex flex-col gap-2">
-              <div className="flex items-end gap-1">
-                <TextField
-                  label={t("authentication.secret")}
-                  className="grow"
-                  value={secret || ""}
-                  type={showSecret ? "text" : "password"}
-                  isReadOnly
-                />
-                <Button
-                  variant="icon"
-                  className="h-9"
-                  onPress={() => setShowSecret(!showSecret)}
-                >
-                  {showSecret ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
-                </Button>
-                <CopyButton
-                  text={secret || ""}
-                  disabled={!secret}
-                  className="h-9"
-                />
-              </div>
             </div>
             <div className="flex flex-col gap-4 rounded-md border border-red-500 p-4">
               <div className="text-sm text-red-500">
