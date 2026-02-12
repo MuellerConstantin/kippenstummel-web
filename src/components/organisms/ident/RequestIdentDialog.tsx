@@ -46,7 +46,7 @@ export function RequestIdentDialog({
       const captchaRes = await api.get<
         unknown,
         AxiosResponse<{ id: string; content: string }>
-      >("/captcha");
+      >("/captcha", { params: { scope: "registration" } });
 
       setCaptcha(captchaRes.data);
     } catch {
@@ -62,7 +62,9 @@ export function RequestIdentDialog({
       setSubmitting(true);
 
       try {
-        const powRes = await api.get("/pow");
+        const powRes = await api.get("/pow", {
+          params: { scope: "registration" },
+        });
         const pow = powRes.headers["x-pow"];
 
         const powSolution = await solveChallenge(pow);
