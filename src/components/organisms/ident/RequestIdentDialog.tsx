@@ -140,7 +140,7 @@ export function RequestIdentDialog({
                 <div>
                   <Spinner size={32} />
                 </div>
-              ) : error ? (
+              ) : error || submitError ? (
                 <span className="text-red-500">{error || submitError}</span>
               ) : (
                 <div className="flex w-full flex-col items-center gap-2">

@@ -584,9 +584,12 @@
     "transfer": {
       "spoiler": "Transfer identity",
       "description": "Your identity is device-specific. To continue using the same identity on multiple devices or when changing devices, you have the option to transfer your identity. The transfer and multiple use must be in compliance with our <link>Terms of Use</link>.",
+      "beginTransfer": "Start transfer",
       "form": {
+        "reloadCaptcha": "Reload CAPTCHA?",
         "description": "Your identity will be transmitted encrypted. For this, you must choose a transport password, which must be re-entered on the target device.",
         "transportPassword": "Transport password",
+        "captcha": "CAPTCHA",
         "error": "An unexpected error occurred. Please try again.",
         "submit": "Transfer now"
       },

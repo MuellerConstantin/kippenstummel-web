@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Formik, FormikHelpers } from "formik";
 import * as yup from "yup";
@@ -20,10 +20,11 @@ import { Tab, TabList, TabPanel, Tabs } from "@/components/atoms/Tabs";
 import identSlice from "@/store/slices/ident";
 import { Page } from "@/lib/types/pagination";
 import { IdentInfo, KarmaEvent } from "@/lib/types/ident";
-import { AxiosError } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { ApiError } from "@/lib/types/error";
 import useSWR from "swr";
 import { Pagination } from "@/components/molecules/Pagination";
+import Image from "next/image";
 
 interface CopyButtonProps {
   text: string;
@@ -288,37 +289,80 @@ function TransferIdentitySection() {
 
   const schema = yup.object().shape({
     password: yup.string().required(validationT("required")),
+    captchaSolution: yup.string().required(validationT("required")),
   });
 
+  const [hasRequestedTransfer, setHasRequestedTransfer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [captcha, setCaptcha] = useState<
+    { id: string; content: string } | undefined
+  >(undefined);
+
+  const fetchCaptcha = useCallback(async () => {
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      const captchaRes = await api.get<
+        unknown,
+        AxiosResponse<{ id: string; content: string }>
+      >("/captcha", { params: { scope: "transfer" } });
+
+      setCaptcha(captchaRes.data);
+    } catch {
+      setError(t("form.error"));
+    } finally {
+      setIsLoading(false);
+    }
+  }, [t, api]);
 
   const onTransfer = useCallback(
-    async ({ password }: { password: string }) => {
-      setIsLoading(true);
-      setError(null);
+    async ({
+      password,
+      captchaSolution,
+    }: {
+      password: string;
+      captchaSolution: string;
+    }) => {
+      setSubmitting(true);
+      setSubmitError(null);
       setToken(null);
 
       const encrypted = await encryptWithPassword(secret!, password);
 
-      api
-        .post<{ identity: string; token: string }>("/ident/transfer", {
-          identity,
-          encryptedSecret: encrypted,
-        })
-        .then((res) => {
-          setToken(res.data.token);
-        })
-        .catch(() => {
-          setError(t("form.error"));
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+      try {
+        const res = await api.post<{ identity: string; token: string }>(
+          "/ident/transfer",
+          {
+            identity,
+            encryptedSecret: encrypted,
+          },
+          {
+            headers: {
+              "x-captcha": `${captcha!.id}:${captchaSolution}`,
+            },
+          },
+        );
+
+        setToken(res.data.token);
+      } catch {
+        setSubmitError(t("form.error"));
+      } finally {
+        setSubmitting(false);
+      }
     },
-    [secret, identity, api, t],
+    [secret, identity, api, t, captcha],
   );
+
+  useEffect(() => {
+    if (hasRequestedTransfer) {
+      fetchCaptcha();
+    }
+  }, [fetchCaptcha, hasRequestedTransfer]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -327,27 +371,85 @@ function TransferIdentitySection() {
           link: (chunks) => <Link href="/terms-of-service">{chunks}</Link>,
         })}
       </div>
-      {!token && (
+      {!hasRequestedTransfer ? (
+        <div>
+          <Button
+            variant="secondary"
+            className="flex w-fit justify-center"
+            onPress={() => setHasRequestedTransfer(true)}
+          >
+            <span>{t("beginTransfer")}</span>
+          </Button>
+        </div>
+      ) : !token ? (
         <>
           <div className="text-sm">{t("form.description")}</div>
           <div className="flex flex-col gap-2">
-            {error && (
-              <p className="text-center text-sm text-red-500">{error}</p>
+            {(error || submitError) && (
+              <p className="text-center text-sm text-red-500">
+                {error || submitError}
+              </p>
             )}
-            <Formik<{ password: string }>
-              initialValues={{ password: "" }}
+            <div className="flex justify-center">
+              {isLoading ? (
+                <div>
+                  <Spinner size={32} />
+                </div>
+              ) : (
+                !error && (
+                  <div className="flex w-full flex-col items-center gap-2">
+                    {captcha && (
+                      <div className="relative h-32 w-[80%]">
+                        <Image
+                          src={captcha?.content || ""}
+                          alt="Captcha"
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                    )}
+                    <div className="flex justify-center">
+                      <Link
+                        onPress={fetchCaptcha}
+                        variant="secondary"
+                        className="!cursor-pointer !text-xs"
+                      >
+                        {t("form.reloadCaptcha")}
+                      </Link>
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+            <Formik<{ password: string; captchaSolution: string }>
+              initialValues={{ password: "", captchaSolution: "" }}
               validationSchema={schema}
               onSubmit={(values) => onTransfer(values)}
             >
               {(props) => (
                 <Form onSubmit={props.handleSubmit} validationBehavior="aria">
                   <TextField
+                    label={t("form.captcha")}
+                    name="captchaSolution"
+                    value={props.values.captchaSolution}
+                    onBlur={props.handleBlur}
+                    isDisabled={isLoading || submitting}
+                    onChange={(value) =>
+                      props.setFieldValue("captchaSolution", value)
+                    }
+                    isInvalid={
+                      !!props.touched.captchaSolution &&
+                      !!props.errors.captchaSolution
+                    }
+                    errorMessage={props.errors.captchaSolution}
+                  />
+                  <TextField
                     label={t("form.transportPassword")}
                     name="password"
                     type="password"
                     value={props.values.password}
                     onBlur={props.handleBlur}
-                    isDisabled={isLoading}
+                    isDisabled={isLoading || submitting}
                     onChange={(value) => props.setFieldValue("password", value)}
                     isInvalid={
                       !!props.touched.password && !!props.errors.password
@@ -358,18 +460,19 @@ function TransferIdentitySection() {
                     type="submit"
                     variant="secondary"
                     className="flex w-fit justify-center"
-                    isDisabled={!(props.isValid && props.dirty) || isLoading}
+                    isDisabled={
+                      !(props.isValid && props.dirty) || submitting || isLoading
+                    }
                   >
-                    {!isLoading && <span>{t("form.submit")}</span>}
-                    {isLoading && <Spinner />}
+                    {!submitting && <span>{t("form.submit")}</span>}
+                    {submitting && <Spinner />}
                   </Button>
                 </Form>
               )}
             </Formik>
           </div>
         </>
-      )}
-      {token && (
+      ) : (
         <div className="flex flex-col gap-8">
           <div className="text-sm font-semibold">{t("share")}</div>
           <div className="flex gap-2">
