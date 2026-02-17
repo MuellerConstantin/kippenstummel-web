@@ -557,11 +557,11 @@
     "close": "Schließen",
     "tabs": {
       "profile": "Profil",
-      "credentials": "Anmeldeinformationen",
-      "transfer": "Identität übertragen",
+      "account": "Account",
       "karma": "Mein Karma"
     },
     "profile": {
+      "title": "Öffentliches Profil",
       "uniqueId": "Öffentliche ID",
       "displayName": "Anzeigename",
       "displayNameDescription": "Dein Anzeigename besteht aus dem von dir gewählten Benutzernamen und einem Zufallscode.",
@@ -577,7 +577,7 @@
       }
     },
     "transfer": {
-      "spoiler": "Identität übertragen",
+      "title": "Identität übertragen",
       "description": "Deine Identität ist gerätegebunden. Um dieselbe Identität auf mehreren Geräten oder bei einem Gerätewechsel weiter nutzen zu können, besteht die Möglichkeit deine Identität zu übertragen. Die Übertragung und Mehrfachnutzug muss unter Einhaltung unserer <link>Nutzungsbedingungen</link> erfolgen.",
       "beginTransfer": "Übertragung beginnen",
       "form": {
@@ -591,6 +591,7 @@
       "share": "Auf andere Geräte übertragen"
     },
     "karma": {
+      "title": "Mein Karma",
       "description": "Dieser Abschnitt zeigt dir das gesammelte Karma deiner Interaktionen und Errungenschaften.",
       "myKarma": "Mein Karma",
       "noEvents": "Du scheintst noch kein Karma gesammelt zu haben.",

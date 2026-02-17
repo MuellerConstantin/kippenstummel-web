@@ -35,7 +35,7 @@ export function Tabs(props: TabsProps) {
 }
 
 const tabListStyles = tv({
-  base: "flex gap-1",
+  base: "flex gap-1 min-w-[10rem]",
   variants: {
     orientation: {
       horizontal: "flex-row",

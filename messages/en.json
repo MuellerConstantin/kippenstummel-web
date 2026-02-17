@@ -557,11 +557,11 @@
     "close": "Close",
     "tabs": {
       "profile": "Profile",
-      "credentials": "Credentials",
-      "transfer": "Transfer",
+      "account": "Account",
       "karma": "My Karma"
     },
     "profile": {
+      "title": "Public profile",
       "uniqueId": "Public ID",
       "displayName": "Display name",
       "displayNameDescription": "Your display name consists of your chosen username and a random code.",
@@ -577,7 +577,7 @@
       }
     },
     "transfer": {
-      "spoiler": "Transfer identity",
+      "title": "Transfer identity",
       "description": "Your identity is device-specific. To continue using the same identity on multiple devices or when changing devices, you have the option to transfer your identity. The transfer and multiple use must be in compliance with our <link>Terms of Use</link>.",
       "beginTransfer": "Start transfer",
       "form": {
@@ -591,6 +591,7 @@
       "share": "Transfer to other devices"
     },
     "karma": {
+      "title": "My Karma",
       "description": "This section shows your karma score, which is based on your interactions with other users.",
       "myKarma": "My Karma",
       "noEvents": "You don't seem to have collected any karma yet.",
