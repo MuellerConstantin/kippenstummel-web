@@ -21,8 +21,8 @@ export function IdentityDialog(props: IdentityDialogProps) {
             {t("title")}
           </Heading>
           <IdentityDialogContent />
-          <div className="flex w-full shrink-0 justify-start gap-4">
-            <Button onPress={close} className="w-full">
+          <div className="flex w-full shrink-0 justify-end gap-4">
+            <Button onPress={close} className="md:w-fit">
               {t("close")}
             </Button>
           </div>

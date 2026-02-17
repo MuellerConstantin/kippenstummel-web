@@ -39,7 +39,7 @@ const tabListStyles = tv({
   variants: {
     orientation: {
       horizontal: "flex-row",
-      vertical: "flex-col items-start",
+      vertical: "flex-col items-stretch [&_[role=tab]]:w-full",
     },
   },
 });

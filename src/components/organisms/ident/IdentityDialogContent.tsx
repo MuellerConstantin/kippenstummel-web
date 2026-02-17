@@ -25,6 +25,7 @@ import { ApiError } from "@/lib/types/error";
 import useSWR from "swr";
 import { Pagination } from "@/components/molecules/Pagination";
 import Image from "next/image";
+import { useBreakpointDown } from "@/hooks/useBreakpointDown";
 
 interface CopyButtonProps {
   text: string;
@@ -189,10 +190,7 @@ function MyIdentityDataSection({ close }: MyIdentityDataSectionProps) {
   const dispatch = useAppDispatch();
   const t = useTranslations("IdentityDialog.profile");
 
-  const [
-    showAuthenticationDetailsSection,
-    setShowAuthenticationDetailsSection,
-  ] = useState(false);
+  const [showSignOutSection, setShowSignOutSection] = useState(false);
   const [resetConfirmed, setResetConfirmed] = useState(false);
 
   const identity = useAppSelector((state) => state.ident.identity);
@@ -223,43 +221,29 @@ function MyIdentityDataSection({ close }: MyIdentityDataSectionProps) {
       <div className="flex w-full flex-col gap-4">
         <button
           className="w-fit cursor-pointer text-sm hover:underline"
-          onClick={() =>
-            setShowAuthenticationDetailsSection(
-              !showAuthenticationDetailsSection,
-            )
-          }
+          onClick={() => setShowSignOutSection(!showSignOutSection)}
         >
-          {showAuthenticationDetailsSection ? (
-            <div className="flex items-center gap-1">
-              {t("authentication.title")} <ChevronUp className="h-4 w-4" />
+          {showSignOutSection ? (
+            <div className="flex items-center gap-1 text-sm text-red-500">
+              {t("signOut.title")} <ChevronUp className="h-4 w-4" />
             </div>
           ) : (
-            <div className="flex items-center gap-1">
-              {t("authentication.title")} <ChevronDown className="h-4 w-4" />
+            <div className="flex items-center gap-1 text-sm text-red-500">
+              {t("signOut.title")} <ChevronDown className="h-4 w-4" />
             </div>
           )}
         </button>
-        {showAuthenticationDetailsSection && (
+        {showSignOutSection && (
           <div className="flex flex-col gap-4">
-            <div className="text-sm">
-              {t.rich("authentication.description", {
-                b: (chunks) => <span className="font-semibold">{chunks}</span>,
-              })}
-            </div>
             <div className="flex flex-col gap-4 rounded-md border border-red-500 p-4">
-              <div className="text-sm text-red-500">
-                {t("authentication.reset.title")}
-              </div>
-              <div className="text-sm">
-                {t("authentication.reset.description")}
-              </div>
+              <div className="text-sm">{t("signOut.description")}</div>
               <div className="flex flex-col gap-4">
                 <Checkbox
                   isSelected={resetConfirmed}
                   onChange={(isSelected) => setResetConfirmed(isSelected)}
                   className="!text-sm"
                 >
-                  {t("authentication.reset.confirm")}
+                  {t("signOut.confirm")}
                 </Checkbox>
                 <Button
                   isDisabled={!resetConfirmed}
@@ -267,7 +251,7 @@ function MyIdentityDataSection({ close }: MyIdentityDataSectionProps) {
                   variant="secondary"
                   onPress={onReset}
                 >
-                  {t("authentication.reset.submit")}
+                  {t("signOut.submit")}
                 </Button>
               </div>
             </div>
@@ -634,6 +618,7 @@ function KarmaSection() {
 
 export function IdentityDialogContent() {
   const t = useTranslations("IdentityDialog");
+  const isSmDown = useBreakpointDown("sm");
 
   const tabs = useMemo(
     () => [
@@ -674,7 +659,7 @@ export function IdentityDialogContent() {
   return (
     <div className="flex min-h-0 grow flex-col items-start gap-4">
       <Tabs
-        orientation="horizontal"
+        orientation={isSmDown ? "horizontal" : "vertical"}
         className="min-h-0 w-full grow"
         selectedKey={selectedKey}
         onSelectionChange={onSelectionChange}

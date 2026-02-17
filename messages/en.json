@@ -569,16 +569,11 @@
       "usernameAlreadyInUse": "The desired username is already in use.",
       "forbiddenUsername": "The desired username contains forbidden terms.",
       "noUsername": "No username given.",
-      "authentication": {
-        "title": "Authentication credentials",
-        "description": "Your login credentials consist of a public ID (UUID) and a secret key. These credentials are stored locally in your browser and allow anonymous use of the application.",
-        "secret": "Secret",
-        "reset": {
-          "title": "Log out",
-          "description": "You can log out of this device here. This will only delete your login data on this device. You will remain logged in on other devices. If you have not transferred your anonymous identity to another device beforehand, you may permanently lose access.",
-          "confirm": "I have read and understood the notice.",
-          "submit": "Log out now"
-        }
+      "signOut": {
+        "title": "Sign out",
+        "description": "You can sign out of this device here. This will only delete your login data on this device. You will remain signed in on other devices. If you have not transferred your anonymous identity to another device beforehand, you may permanently lose access.",
+        "confirm": "I have read and understood the notice.",
+        "submit": "Sign out now"
       }
     },
     "transfer": {

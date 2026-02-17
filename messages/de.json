@@ -569,16 +569,11 @@
       "usernameAlreadyInUse": "Der gewünschte Benutzername ist bereits vergeben.",
       "forbiddenUsername": "Der gewünschte Benutzername enthält unzulässige Begriffe.",
       "noUsername": "Kein Benutzername angegeben.",
-      "authentication": {
-        "title": "Anmeldeinformationen",
-        "description": "Deine Anmeldeinformationen bestehen aus einer öffentlichen ID (UUID) und einem geheimen Secret. Diese Daten werden lokal in deinem Browser gespeichert und ermöglichen die anonyme Nutzung der Anwendung.",
-        "secret": "Secret",
-        "reset": {
-          "title": "Abmelden",
-          "description": "Du kannst dich hier von diesem Gerät abmelden. Dabei werden die Anmeldedaten nur auf diesem Gerät gelöscht. Auf anderen Geräten bleibst du weiterhin angemeldet. Wenn du deine anonyme Identität nicht vorher auf ein anderes Gerät übertragen hast, kann der Zugriff dauerhaft verloren gehen.",
-          "confirm": "Ich habe den Hinweis gelesen und verstanden.",
-          "submit": "Jetzt abmelden"
-        }
+      "signOut": {
+        "title": "Abmelden",
+        "description": "Du kannst dich hier von diesem Gerät abmelden. Dabei werden die Anmeldedaten nur auf diesem Gerät gelöscht. Auf anderen Geräten bleibst du weiterhin angemeldet. Wenn du deine anonyme Identität nicht vorher auf ein anderes Gerät übertragen hast, kann der Zugriff dauerhaft verloren gehen.",
+        "confirm": "Ich habe den Hinweis gelesen und verstanden.",
+        "submit": "Jetzt abmelden"
       }
     },
     "transfer": {

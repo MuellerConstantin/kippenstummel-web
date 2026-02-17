@@ -259,7 +259,7 @@ function NavbarAuthenticatedOptionsMenu() {
           <AnimatedDialogModal
             isOpen={showIdentityDialog}
             onOpenChange={setShowIdentityDialog}
-            className="max-w-xl"
+            className="!max-w-4xl"
           >
             <IdentityDialog />
           </AnimatedDialogModal>
