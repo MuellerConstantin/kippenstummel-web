@@ -14,7 +14,7 @@ import { tv } from "tailwind-variants";
 import { focusRing } from "@/components/utils";
 
 const tabsStyles = tv({
-  base: "flex gap-4",
+  base: "flex gap-6",
   variants: {
     orientation: {
       horizontal: "flex-col",

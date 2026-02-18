@@ -4,14 +4,12 @@ import { Formik, FormikHelpers } from "formik";
 import * as yup from "yup";
 import { Button } from "@/components/atoms/Button";
 import { IdentIcon } from "@/components/atoms/IdentIcon";
-import { Checkbox } from "@/components/atoms/Checkbox";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { Check, Copy, ChevronUp, ChevronDown } from "lucide-react";
+import { useAppSelector } from "@/store";
+import { Check, Copy } from "lucide-react";
 import { TextField } from "@/components/atoms/TextField";
 import { Form } from "@/components/atoms/Form";
 import { Spinner } from "@/components/atoms/Spinner";
 import useApi from "@/hooks/useApi";
-import identSlice from "@/store/slices/ident";
 import { IdentInfo } from "@/lib/types/ident";
 import { AxiosError } from "axios";
 import { ApiError } from "@/lib/types/error";
@@ -172,23 +170,10 @@ function DisplayNameInput() {
   );
 }
 
-interface ProfileSectionProps {
-  close: () => void;
-}
-
-export function ProfileSection({ close }: ProfileSectionProps) {
-  const dispatch = useAppDispatch();
+export function ProfileSection() {
   const t = useTranslations("IdentityDialog.profile");
 
-  const [showSignOutSection, setShowSignOutSection] = useState(false);
-  const [resetConfirmed, setResetConfirmed] = useState(false);
-
   const identity = useAppSelector((state) => state.ident.identity);
-
-  const onReset = useCallback(() => {
-    dispatch(identSlice.actions.clearIdentity());
-    close();
-  }, [dispatch, close]);
 
   return (
     <div className="flex w-full flex-col items-center gap-4">
@@ -207,46 +192,6 @@ export function ProfileSection({ close }: ProfileSectionProps) {
         </div>
         <div className="font-semibold">{t("displayName")}</div>
         <DisplayNameInput />
-      </div>
-      <div className="flex w-full flex-col gap-4">
-        <button
-          className="w-fit cursor-pointer text-sm hover:underline"
-          onClick={() => setShowSignOutSection(!showSignOutSection)}
-        >
-          {showSignOutSection ? (
-            <div className="flex items-center gap-1 text-sm text-red-500">
-              {t("signOut.title")} <ChevronUp className="h-4 w-4" />
-            </div>
-          ) : (
-            <div className="flex items-center gap-1 text-sm text-red-500">
-              {t("signOut.title")} <ChevronDown className="h-4 w-4" />
-            </div>
-          )}
-        </button>
-        {showSignOutSection && (
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-4 rounded-md border border-red-500 p-4">
-              <div className="text-sm">{t("signOut.description")}</div>
-              <div className="flex flex-col gap-4">
-                <Checkbox
-                  isSelected={resetConfirmed}
-                  onChange={(isSelected) => setResetConfirmed(isSelected)}
-                  className="!text-sm"
-                >
-                  {t("signOut.confirm")}
-                </Checkbox>
-                <Button
-                  isDisabled={!resetConfirmed}
-                  className="w-fit"
-                  variant="secondary"
-                  onPress={onReset}
-                >
-                  {t("signOut.submit")}
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

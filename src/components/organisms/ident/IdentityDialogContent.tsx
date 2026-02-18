@@ -7,32 +7,39 @@ import { useBreakpointDown } from "@/hooks/useBreakpointDown";
 import { ProfileSection } from "./ProfileSection";
 import { TransferIdentitySection } from "./TransferIdentitySection";
 import { KarmaSection } from "./KarmaSection";
+import { SignOutSection } from "./SignOutSection";
 
-interface ProfileTabProps {
-  close: () => void;
-}
-
-function ProfileTab({ close }: ProfileTabProps) {
+function ProfileTab() {
   const t = useTranslations("IdentityDialog");
 
   return (
     <div className="flex w-full flex-col items-center gap-4">
       <div className="w-full space-y-2">
         <h2 className="text-base font-bold">{t("profile.title")}</h2>
-        <ProfileSection close={close} />
+        <ProfileSection />
       </div>
     </div>
   );
 }
 
-function AccountTab() {
+interface AccountTabProps {
+  close: () => void;
+}
+
+function AccountTab({ close }: AccountTabProps) {
   const t = useTranslations("IdentityDialog");
 
   return (
-    <div className="flex w-full flex-col items-center gap-4">
+    <div className="flex w-full flex-col items-center gap-6">
       <div className="w-full space-y-2">
         <h2 className="text-base font-bold">{t("transfer.title")}</h2>
         <TransferIdentitySection />
+      </div>
+      <div className="w-full space-y-2">
+        <h2 className="text-base font-bold text-red-500">
+          {t("signOut.title")}
+        </h2>
+        <SignOutSection close={close} />
       </div>
     </div>
   );
@@ -60,9 +67,7 @@ export function IdentityDialogContent() {
       {
         id: "identity-tab-overview",
         label: t("tabs.profile"),
-        component: ({ close }: { close: () => void }) => (
-          <ProfileTab close={close} />
-        ),
+        component: <ProfileTab />,
       },
       {
         id: "identity-tab-karma",
@@ -72,7 +77,9 @@ export function IdentityDialogContent() {
       {
         id: "identity-tab-account",
         label: t("tabs.account"),
-        component: <AccountTab />,
+        component: ({ close }: { close: () => void }) => (
+          <AccountTab close={close} />
+        ),
       },
     ],
     [t],

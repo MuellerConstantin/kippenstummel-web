@@ -568,13 +568,13 @@
       "error": "An unexpected error occurred. Please try again.",
       "usernameAlreadyInUse": "The desired username is already in use.",
       "forbiddenUsername": "The desired username contains forbidden terms.",
-      "noUsername": "No username given.",
-      "signOut": {
-        "title": "Sign out",
-        "description": "You can sign out of this device here. This will only delete your login data on this device. You will remain signed in on other devices. If you have not transferred your anonymous identity to another device beforehand, you may permanently lose access.",
-        "confirm": "I have read and understood the notice.",
-        "submit": "Sign out now"
-      }
+      "noUsername": "No username given."
+    },
+    "signOut": {
+      "title": "Sign out",
+      "description": "You can sign out of this device here. This will only delete your login data on this device. You will remain signed in on other devices. If you have not transferred your anonymous identity to another device beforehand, you may permanently lose access.",
+      "confirm": "I have read and understood the notice.",
+      "submit": "Sign out now"
     },
     "transfer": {
       "title": "Transfer identity",
