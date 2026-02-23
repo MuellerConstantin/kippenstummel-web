@@ -16,7 +16,12 @@ import { Spinner } from "@/components/atoms/Spinner";
 import useLocate from "@/hooks/useLocate";
 import { Heading } from "react-aria-components";
 import Image from "next/image";
-import { REPORT_THRESHOLD } from "@/lib/constants";
+import {
+  REPORT_THRESHOLD,
+  SCORING_DELETION_UPPER_LIMIT,
+  SCORING_GOOD_LOWER_LIMIT,
+  SCORING_NEUTRAL_LOWER_LIMIT,
+} from "@/lib/constants";
 import { Cvm } from "@/lib/types/cvm";
 import { GeoCoordinates } from "@/lib/types/geo";
 import { useAppSelector } from "@/store";
@@ -178,15 +183,15 @@ export function CvmInfoDialogContent(props: CvmInfoDialogContentProps) {
       >
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 overflow-hidden">
-            {props.cvm.score < -8 ? (
+            {props.cvm.score <= SCORING_DELETION_UPPER_LIMIT ? (
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-800">
                 <X className="h-4 w-4 text-white" />
               </div>
-            ) : props.cvm.score < 0 ? (
+            ) : props.cvm.score < SCORING_NEUTRAL_LOWER_LIMIT ? (
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-500">
                 <ChevronDown className="h-4 w-4 text-white" />
               </div>
-            ) : props.cvm.score >= 5 ? (
+            ) : props.cvm.score >= SCORING_GOOD_LOWER_LIMIT ? (
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-600">
                 <ChevronUp className="h-4 w-4 text-white" />
               </div>

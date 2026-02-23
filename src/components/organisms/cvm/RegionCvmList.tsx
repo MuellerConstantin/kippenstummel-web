@@ -5,6 +5,11 @@ import { ListBox, ListBoxItem } from "@/components/atoms/ListBox";
 import { Pagination } from "@/components/molecules/Pagination";
 import useApi from "@/hooks/useApi";
 import { useRouter } from "@/i18n/navigation";
+import {
+  SCORING_DELETION_UPPER_LIMIT,
+  SCORING_GOOD_LOWER_LIMIT,
+  SCORING_NEUTRAL_LOWER_LIMIT,
+} from "@/lib/constants";
 import { Region } from "@/lib/regions";
 import { Cvm } from "@/lib/types/cvm";
 import { GeoCoordinates } from "@/lib/types/geo";
@@ -237,15 +242,15 @@ export function RegionCvmList(props: RegionCvmListProps) {
                   <div className="flex h-full w-full justify-between gap-2">
                     <div className="flex cursor-pointer gap-2 overflow-hidden">
                       <div className="relative z-[50] h-fit w-fit">
-                        {cvm.score < -8 ? (
+                        {cvm.score <= SCORING_DELETION_UPPER_LIMIT ? (
                           <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-800">
                             <X className="h-2.5 w-2.5 text-white" />
                           </div>
-                        ) : cvm.score < 0 ? (
+                        ) : cvm.score < SCORING_NEUTRAL_LOWER_LIMIT ? (
                           <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-500">
                             <ChevronDown className="h-2.5 w-2.5 text-white" />
                           </div>
-                        ) : cvm.score >= 5 ? (
+                        ) : cvm.score >= SCORING_GOOD_LOWER_LIMIT ? (
                           <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-green-600">
                             <ChevronUp className="h-2.5 w-2.5 text-white" />
                           </div>

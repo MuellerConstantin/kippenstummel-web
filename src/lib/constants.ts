@@ -1,3 +1,12 @@
 export const LOCATION_TTL = 30 * 1000;
 export const LOCATION_COOLDOWN = 10 * 1000;
 export const REPORT_THRESHOLD = 3;
+
+export const SCORING_GOOD_UPPER_LIMIT = 10;
+export const SCORING_GOOD_LOWER_LIMIT = 5;
+export const SCORING_NEUTRAL_UPPER_LIMIT = 4;
+export const SCORING_NEUTRAL_LOWER_LIMIT = 0;
+export const SCORING_BAD_UPPER_LIMIT = -1;
+export const SCORING_BAD_LOWER_LIMIT = -7;
+export const SCORING_DELETION_UPPER_LIMIT = -8;
+export const SCORING_DELETION_LOWER_LIMIT = -10;
