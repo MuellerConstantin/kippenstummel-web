@@ -12,6 +12,7 @@ export function SelectedMarker(props: SelectedMarkerProps) {
       anchor="bottom"
       latitude={props.cvm.latitude}
       longitude={props.cvm.longitude}
+      style={{ zIndex: 50000 }}
     >
       <div className="relative z-[50] h-fit w-fit">
         <MapPin className="h-[32px] w-[32px] fill-[#EA4335] text-[#A52714]" />
