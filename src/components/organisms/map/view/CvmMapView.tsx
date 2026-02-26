@@ -40,6 +40,7 @@ export function CvmMapView({
   const { enqueue } = useNotifications();
 
   const autoLocateDoneRef = useRef(false);
+  const userInteractedRef = useRef(false);
   const autoLocation = useAppSelector((state) => state.usability.autoLocation);
   const location = useAppSelector((state) => state.location.location);
 
@@ -104,6 +105,28 @@ export function CvmMapView({
     }
   }, [isSharedSelection, selectedCvmPosition, map]);
 
+  useEffect(() => {
+    if (!map) return;
+
+    const handleUserInteraction = (event: { originalEvent?: unknown }) => {
+      if (!event.originalEvent) return;
+
+      userInteractedRef.current = true;
+    };
+
+    map.on("movestart", handleUserInteraction);
+    map.on("zoomstart", handleUserInteraction);
+    map.on("rotatestart", handleUserInteraction);
+    map.on("pitchstart", handleUserInteraction);
+
+    return () => {
+      map.off("movestart", handleUserInteraction);
+      map.off("zoomstart", handleUserInteraction);
+      map.off("rotatestart", handleUserInteraction);
+      map.off("pitchstart", handleUserInteraction);
+    };
+  }, [map]);
+
   const onRegisterStart = useCallback(
     (position: GeoCoordinates) => {
       goToRegisterMode(position);
@@ -140,6 +163,7 @@ export function CvmMapView({
     if (!map) return;
     if (!autoLocation) return;
     if (autoLocateDoneRef.current) return;
+    if (userInteractedRef.current) return;
     if (!location) return;
     if (props.sharedCvmId) return;
 
