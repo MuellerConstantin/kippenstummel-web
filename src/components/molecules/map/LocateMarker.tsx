@@ -29,6 +29,7 @@ export function LocateMarker(props: LocateMarkerProps) {
     <Marker
       latitude={props.position.latitude}
       longitude={props.position.longitude}
+      style={{ zIndex: 1000000 }}
     >
       <div className="relative flex h-[15px] w-[15px]">
         <div
