@@ -35,6 +35,7 @@ import { AboutDialog } from "./navigation/AboutDialog";
 import { useBreakpointDown } from "@/hooks/useBreakpointDown";
 import { IdentityModalSheet } from "./ident/IdentityModalSheet";
 import { AboutModalSheet } from "./navigation/AboutModalSheet";
+import { RequestIdentModalSheet } from "./ident/RequestIdentModalSheet";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
@@ -114,6 +115,8 @@ export function Navbar() {
 export function NavbarUnauthenticatedOptionsMenu() {
   const t = useTranslations("Navbar");
 
+  const isSmDown = useBreakpointDown("sm");
+
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector((state) => state.usability.darkMode);
 
@@ -150,19 +153,35 @@ export function NavbarUnauthenticatedOptionsMenu() {
               </div>
             </ListBoxItem>
           </ListBox>
-          <AnimatedDialogModal
-            isOpen={showNewIdentityDialog}
-            onOpenChange={setShowNewIdentityDialog}
-          >
-            <RequestIdentDialog />
-          </AnimatedDialogModal>
-          <AnimatedDialogModal
-            isOpen={showAboutDialog}
-            onOpenChange={setShowAboutDialog}
-            className="max-w-xl"
-          >
-            <AboutDialog />
-          </AnimatedDialogModal>
+          {!isSmDown && (
+            <AnimatedDialogModal
+              isOpen={showNewIdentityDialog}
+              onOpenChange={setShowNewIdentityDialog}
+            >
+              <RequestIdentDialog />
+            </AnimatedDialogModal>
+          )}
+          {isSmDown && showNewIdentityDialog && (
+            <RequestIdentModalSheet
+              isOpen={showNewIdentityDialog}
+              onIsOpenChange={setShowNewIdentityDialog}
+            />
+          )}
+          {!isSmDown && (
+            <AnimatedDialogModal
+              isOpen={showAboutDialog}
+              onOpenChange={setShowAboutDialog}
+              className="max-w-xl"
+            >
+              <AboutDialog />
+            </AnimatedDialogModal>
+          )}
+          {isSmDown && showAboutDialog && (
+            <AboutModalSheet
+              isOpen={showAboutDialog}
+              onIsOpenChange={setShowAboutDialog}
+            />
+          )}
         </div>
       </div>
     </Popover>
