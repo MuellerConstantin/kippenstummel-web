@@ -9,9 +9,9 @@ import {
   Trophy,
 } from "lucide-react";
 import { Link } from "@/components/atoms/Link";
-import { JumbotronCta } from "@/components/organisms/JumbotronCta";
 import { FaqItem } from "@/components/molecules/FaqItem";
 import { Leaderboard } from "@/components/organisms/Leaderboard";
+import { HomeHero } from "@/components/molecules/HomeHero";
 import { getTopRegionsGeoBalanced, REGIONS } from "@/lib/regions";
 
 export default function Home() {
@@ -46,79 +46,7 @@ export default function Home() {
 
   return (
     <div>
-      <div className="relative w-full overflow-hidden pt-20 pb-32">
-        <div className="preview absolute inset-0 z-0 bg-[url(/images/preview.png)] bg-cover" />
-        <div className="absolute inset-0 z-10 bg-white/40 backdrop-blur-sm dark:bg-black/40" />
-        <div className="relative z-20 flex flex-col gap-12 lg:flex-row lg:justify-center">
-          <div className="flex flex-col items-center justify-center gap-8 p-4">
-            <div className="space-y-2">
-              <div className="flex flex-col items-center gap-2 text-center text-slate-600 md:flex-row md:gap-8 dark:text-slate-200">
-                <div className="relative h-20 w-20 -rotate-16">
-                  <Image
-                    src="/images/logo.svg"
-                    alt="Logo"
-                    fill
-                    objectFit="contain"
-                  />
-                </div>
-                <div className="text-4xl font-bold drop-shadow-lg md:text-6xl">
-                  Kippenstummel
-                </div>
-              </div>
-              <div className="text-center text-xl text-slate-500 drop-shadow-lg md:text-2xl dark:text-slate-400">
-                &ldquo;{t("slogan")}&rdquo;
-              </div>
-            </div>
-            <JumbotronCta />
-          </div>
-          <div className="flex justify-center pr-[5rem]">
-            <div className="relative">
-              <div className="w-[10rem]">
-                <figure className="mx-auto aspect-[0.4614] w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
-                  <div className="relative h-full w-full overflow-hidden rounded-lg bg-gray-800 p-0.5 shadow-[0_1rem_2rem_-1rem_rgb(45_55_75_/_20%),_0_1rem_2rem_-1rem_rgb(45_55_75_/_30%)] dark:bg-neutral-600 dark:shadow-[0_1rem_2rem_-1rem_rgb(0_0_0_/_20%),_0_1rem_2rem_-1rem_rgb(0_0_0_/_30%)]">
-                    <div className="h-full w-full overflow-hidden rounded-md bg-white dark:bg-slate-500">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        className="h-full w-full object-cover dark:hidden"
-                        src="/images/mockup/home-light.png"
-                        alt="Mockup"
-                      />
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        className="hidden h-full w-full object-cover dark:block"
-                        src="/images/mockup/home-dark.png"
-                        alt="Mockup"
-                      />
-                    </div>
-                  </div>
-                </figure>
-              </div>
-              <div className="absolute top-1/6 left-1/2">
-                <div className="w-[10rem]">
-                  <figure className="mx-auto aspect-[0.4614] w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
-                    <div className="relative h-full w-full overflow-hidden rounded-lg bg-gray-800 p-0.5 shadow-[0_1rem_2rem_-1rem_rgb(45_55_75_/_20%),_0_1rem_2rem_-1rem_rgb(45_55_75_/_30%)] dark:bg-neutral-600 dark:shadow-[0_1rem_2rem_-1rem_rgb(0_0_0_/_20%),_0_1rem_2rem_-1rem_rgb(0_0_0_/_30%)]">
-                      <div className="h-full w-full overflow-hidden rounded-md bg-white dark:bg-slate-500">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          className="h-full w-full object-cover dark:hidden"
-                          src="/images/mockup/map-light.png"
-                          alt="Mockup"
-                        />
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          className="hidden h-full w-full object-cover dark:block"
-                          src="/images/mockup/map-dark.png"
-                          alt="Mockup"
-                        />
-                      </div>
-                    </div>
-                  </figure>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <HomeHero slogan={t("slogan")} />
       <div className="mx-auto my-8 flex max-w-[80rem] flex-col items-center gap-12 p-4">
         <section className="flex flex-col items-center gap-10 p-4 text-slate-800 dark:text-white">
           <div className="max-w-[40rem] space-y-4">
@@ -134,10 +62,10 @@ export default function Home() {
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className="flex justify-start gap-4 rounded-md bg-slate-50 p-4 dark:bg-slate-900"
+                className="group flex justify-start gap-4 rounded-md bg-slate-50 p-4 transition-transform duration-300 hover:-translate-y-1 hover:shadow-md dark:bg-slate-900"
               >
                 <div>
-                  <feature.icon className="h-8 w-8 text-green-600" />
+                  <feature.icon className="h-8 w-8 text-green-600 transition-transform duration-300 group-hover:scale-110" />
                 </div>
                 <div className="space-y-2">
                   <div className="font-bold">{feature.title}</div>
