@@ -14,6 +14,30 @@ import { Leaderboard } from "@/components/organisms/Leaderboard";
 import { HomeHero } from "@/components/molecules/HomeHero";
 import { getTopRegionsGeoBalanced, REGIONS } from "@/lib/regions";
 
+interface FeatureItemProps {
+  title: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
+function FeatureItem({ title, description, icon: Icon }: FeatureItemProps) {
+  return (
+    <div className="group relative flex gap-6 rounded-2xl border border-slate-200/60 bg-gradient-to-br from-white to-slate-100 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_40px_-10px_rgba(34,197,94,0.35)] hover:shadow-xl dark:border-slate-800 dark:from-slate-900 dark:to-slate-950">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-green-100 text-green-600 transition-all duration-300 group-hover:bg-green-600 group-hover:text-white dark:bg-green-900/40">
+        <Icon className="h-6 w-6 transition-transform duration-300 group-hover:scale-110" />
+      </div>
+      <div className="space-y-2">
+        <div className="text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
+          {title}
+        </div>
+        <div className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+          {description}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const t = useTranslations("HomePage");
 
@@ -60,18 +84,12 @@ export default function Home() {
           </div>
           <div className="grid w-full max-w-[60rem] grid-cols-1 gap-8 md:grid-cols-2">
             {features.map((feature) => (
-              <div
+              <FeatureItem
                 key={feature.title}
-                className="group flex justify-start gap-4 rounded-md bg-slate-50 p-4 transition-transform duration-300 hover:-translate-y-1 hover:shadow-md dark:bg-slate-900"
-              >
-                <div>
-                  <feature.icon className="h-8 w-8 text-green-600 transition-transform duration-300 group-hover:scale-110" />
-                </div>
-                <div className="space-y-2">
-                  <div className="font-bold">{feature.title}</div>
-                  <div>{feature.description}</div>
-                </div>
-              </div>
+                title={feature.title}
+                description={feature.description}
+                icon={feature.icon}
+              />
             ))}
           </div>
         </section>
