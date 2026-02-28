@@ -163,7 +163,7 @@ export default function Home() {
               })}
             </div>
           </div>
-          <div className="flex w-full max-w-[60rem] flex-col gap-4">
+          <div className="flex w-full max-w-[60rem] flex-col gap-6">
             <FaqItem
               id="faq-1"
               question={t("faq.items.1.question")}
