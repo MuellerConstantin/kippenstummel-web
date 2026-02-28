@@ -92,24 +92,27 @@ export default function Home() {
               />
             ))}
           </div>
-        </section>
-        <section className="flex w-full flex-col items-center gap-10 p-4 text-slate-800 dark:text-white">
-          <div className="flex w-full max-w-[60rem] flex-col gap-4 rounded-md bg-green-50 p-4 dark:bg-green-900">
-            <h4 className="font-semibold">{t("banner.title")}</h4>
-            <div>
-              {t.rich("banner.description", {
-                link1: (chunks) => (
-                  <Link target="_blank" href="www.rauchfrei-info.de">
-                    {chunks}
-                  </Link>
-                ),
-                link2: (chunks) => (
-                  <Link target="_blank" href="tel:08008313131">
-                    {chunks}
-                  </Link>
-                ),
-              })}
-            </div>
+          <div className="max-w-[40rem] pt-4 text-center text-xs text-slate-500 dark:text-slate-400">
+            {t.rich("banner.description", {
+              link1: (chunks) => (
+                <Link
+                  target="_blank"
+                  href="https://www.rauchfrei-info.de"
+                  className="text-green-600 hover:underline dark:text-green-400"
+                >
+                  {chunks}
+                </Link>
+              ),
+              link2: (chunks) => (
+                <Link
+                  target="_blank"
+                  href="tel:08008313131"
+                  className="text-green-600 hover:underline dark:text-green-400"
+                >
+                  {chunks}
+                </Link>
+              ),
+            })}
           </div>
         </section>
         <section className="flex w-full flex-col items-center gap-10 p-4 text-slate-800 dark:text-white">
