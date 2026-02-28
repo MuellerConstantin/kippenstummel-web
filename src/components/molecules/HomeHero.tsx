@@ -149,6 +149,7 @@ export function HomeHero({ slogan }: HomeHeroProps) {
           </div>
         </motion.div>
       </div>
+      <div className="absolute inset-0 z-10 bg-gradient-to-b from-white/50 via-white/30 via-70% to-white dark:from-black/50 dark:via-black/30 dark:via-70% dark:to-slate-800" />
     </div>
   );
 }
