@@ -23,127 +23,130 @@ interface VictoryPodiumProps {
   error?: AxiosError<ApiError>;
 }
 
-function VictoryPodium(props: VictoryPodiumProps) {
-  const { firstPlace, secondPlace, thirdPlace, isLoading, error } = props;
+interface PodiumCardProps {
+  place: 1 | 2 | 3;
+  member: LeaderboardMember | null;
+  isLoading: boolean;
+  error?: AxiosError<ApiError>;
+}
+
+function PodiumCard({ place, member, isLoading, error }: PodiumCardProps) {
+  const gradient =
+    place === 1
+      ? "from-yellow-400 to-yellow-600"
+      : place === 2
+        ? "from-slate-300 to-slate-500"
+        : "from-amber-500 to-amber-700";
+
+  const height =
+    place === 1
+      ? "h-48 md:h-56"
+      : place === 2
+        ? "h-40 md:h-44"
+        : "h-36 md:h-40";
+
+  const badgeColor =
+    place === 1
+      ? "bg-yellow-500"
+      : place === 2
+        ? "bg-slate-500"
+        : "bg-amber-600";
 
   return (
-    <div className="grid w-full grid-cols-1 items-end gap-x-2 gap-y-6 md:grid-cols-3">
-      <div className="order-2 w-full md:order-1">
-        <div className="mb-4 flex flex-col items-center gap-2">
+    <div className="flex w-full flex-col items-center gap-4">
+      {/* Avatar + Name */}
+      <div className="flex flex-col items-center gap-4 text-center">
+        <div className="relative">
           {isLoading ? (
-            <div className="h-16 w-16 animate-pulse overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900" />
+            <div className="h-20 w-20 animate-pulse rounded-full bg-slate-200 dark:bg-slate-700" />
           ) : error ? (
-            <div className="h-16 w-16 overflow-hidden rounded-full border-2 border-slate-200 bg-red-300 dark:border-slate-600 dark:bg-red-800" />
-          ) : secondPlace ? (
-            <div className="h-16 w-16 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
-              <IdentIcon value={secondPlace!.identity} />
+            <div className="h-20 w-20 rounded-full bg-red-300 dark:bg-red-800" />
+          ) : member ? (
+            <div className="relative h-20 w-20 overflow-hidden rounded-full border-4 border-white shadow-xl dark:border-slate-900">
+              <IdentIcon value={member.identity} />
             </div>
           ) : (
-            <div className="h-16 w-16 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
-              <div className="flex h-full w-full items-center justify-center">
-                ?
-              </div>
+            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-slate-200 text-xl font-bold dark:bg-slate-700">
+              ?
             </div>
           )}
-          <div className="flex w-full flex-col items-center gap-1 px-4 text-center text-slate-800 dark:text-white">
-            {isLoading ? (
-              <div className="h-4 w-32 animate-pulse rounded-lg bg-slate-200 dark:bg-slate-900" />
-            ) : error ? (
-              <div className="h-4 w-32 rounded-lg bg-red-300 dark:bg-red-800" />
-            ) : (
-              <div className="truncate font-bold">
-                {secondPlace ? secondPlace.displayName || "Anonymous" : "-"}
-              </div>
-            )}
-            <div className="text-slate-400">{secondPlace?.karma}</div>
+          {/* Rank Badge */}
+          <div
+            className={`absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full px-3 py-1 text-xs font-bold text-white shadow-lg ${badgeColor}`}
+          >
+            #{place}
           </div>
         </div>
-        <div className="flex h-18 w-full justify-center rounded-t-lg bg-slate-400 p-4 md:h-32 md:rounded-tr-none dark:bg-slate-500">
-          <div>
-            <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-slate-400 font-bold text-white dark:bg-slate-500">
-              <Medal className="h-6 w-6" />
-            </span>
-          </div>
+        {/* Name */}
+        <div className="font-semibold text-slate-800 dark:text-white">
+          {isLoading ? (
+            <div className="h-4 w-24 animate-pulse rounded-md bg-slate-200 dark:bg-slate-700" />
+          ) : error ? (
+            <div className="h-4 w-24 rounded-md bg-red-300 dark:bg-red-800" />
+          ) : (
+            member?.displayName || "Anonymous"
+          )}
         </div>
-        <div className="h-10 bg-gradient-to-b from-slate-400 to-transparent dark:from-slate-500"></div>
+        {/* Karma Badge */}
+        <div>
+          {isLoading ? (
+            <div className="h-4 w-10 animate-pulse rounded-md bg-slate-200 text-xs font-medium dark:bg-slate-700" />
+          ) : error ? (
+            <div className="h-4 w-10 rounded-md bg-red-300 text-xs font-medium dark:bg-red-800" />
+          ) : (
+            <div className="rounded-md bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600 dark:bg-slate-700 dark:text-slate-300">
+              {member?.karma ?? "-"} Karma
+            </div>
+          )}
+        </div>
       </div>
-      <div className="order-1 w-full md:order-2">
-        <div className="mb-4 flex flex-col items-center gap-2">
-          {isLoading ? (
-            <div className="h-16 w-16 animate-pulse overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900" />
-          ) : error ? (
-            <div className="h-16 w-16 overflow-hidden rounded-full border-2 border-slate-200 bg-red-300 dark:border-slate-600 dark:bg-red-800" />
-          ) : firstPlace ? (
-            <div className="h-16 w-16 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
-              <IdentIcon value={firstPlace!.identity} />
-            </div>
-          ) : (
-            <div className="h-16 w-16 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
-              <div className="flex h-full w-full items-center justify-center">
-                ?
-              </div>
-            </div>
-          )}
-          <div className="flex w-full flex-col items-center gap-1 px-4 text-center text-slate-800 dark:text-white">
-            {isLoading ? (
-              <div className="h-4 w-32 animate-pulse rounded-lg bg-slate-200 dark:bg-slate-900" />
-            ) : error ? (
-              <div className="h-4 w-32 rounded-lg bg-red-300 dark:bg-red-800" />
-            ) : (
-              <div className="truncate font-bold">
-                {firstPlace ? firstPlace.displayName || "Anonymous" : "-"}
-              </div>
-            )}
-            <div className="text-slate-400">{firstPlace?.karma}</div>
-          </div>
+      {/* Podium Block */}
+      <div className="relative w-full">
+        <div
+          className={`relative flex w-full items-center justify-center rounded-t-2xl bg-gradient-to-b ${gradient} ${height}`}
+        >
+          <Medal className="h-8 w-8 text-white drop-shadow-lg" />
         </div>
-        <div className="flex h-18 w-full justify-center rounded-t-lg bg-yellow-500 p-4 md:h-42 dark:bg-yellow-600">
-          <div>
-            <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-yellow-500 font-bold text-white dark:bg-yellow-600">
-              <Medal className="h-6 w-6" />
-            </span>
-          </div>
-        </div>
-        <div className="h-10 bg-gradient-to-b from-yellow-500 to-transparent dark:from-yellow-600"></div>
       </div>
-      <div className="order-3 w-full">
-        <div className="mb-4 flex flex-col items-center gap-2">
-          {isLoading ? (
-            <div className="h-16 w-16 animate-pulse overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900" />
-          ) : error ? (
-            <div className="h-16 w-16 overflow-hidden rounded-full border-2 border-slate-200 bg-red-300 dark:border-slate-600 dark:bg-red-800" />
-          ) : thirdPlace ? (
-            <div className="h-16 w-16 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
-              <IdentIcon value={thirdPlace!.identity} />
-            </div>
-          ) : (
-            <div className="h-16 w-16 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
-              <div className="flex h-full w-full items-center justify-center">
-                ?
-              </div>
-            </div>
-          )}
-          <div className="flex w-full flex-col items-center gap-1 px-4 text-center text-slate-800 dark:text-white">
-            {isLoading ? (
-              <div className="h-4 w-32 animate-pulse rounded-lg bg-slate-200 dark:bg-slate-900" />
-            ) : error ? (
-              <div className="h-4 w-32 rounded-lg bg-red-300 dark:bg-red-800" />
-            ) : (
-              <div className="truncate font-bold">
-                {thirdPlace ? thirdPlace.displayName || "Anonymous" : "-"}
-              </div>
-            )}
-            <div className="text-slate-400">{thirdPlace?.karma}</div>
-          </div>
-        </div>
-        <div className="flex h-18 w-full justify-center rounded-t-lg bg-amber-600 p-4 md:rounded-tl-none dark:bg-amber-700">
-          <div>
-            <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-amber-600 font-bold text-white dark:bg-amber-700">
-              <Medal className="h-6 w-6" />
-            </span>
-          </div>
-        </div>
-        <div className="h-10 bg-gradient-to-b from-amber-600 to-transparent dark:from-amber-700"></div>
+    </div>
+  );
+}
+
+export function VictoryPodium({
+  firstPlace,
+  secondPlace,
+  thirdPlace,
+  isLoading,
+  error,
+}: VictoryPodiumProps) {
+  return (
+    <div className="grid w-full grid-cols-1 items-end gap-8 md:grid-cols-3">
+      {/* 2nd */}
+      <div className="order-2 flex justify-center md:order-1">
+        <PodiumCard
+          place={2}
+          member={secondPlace}
+          isLoading={isLoading}
+          error={error}
+        />
+      </div>
+      {/* 1st */}
+      <div className="order-1 flex justify-center md:order-2">
+        <PodiumCard
+          place={1}
+          member={firstPlace}
+          isLoading={isLoading}
+          error={error}
+        />
+      </div>
+      {/* 3rd */}
+      <div className="order-3 flex justify-center">
+        <PodiumCard
+          place={3}
+          member={thirdPlace}
+          isLoading={isLoading}
+          error={error}
+        />
       </div>
     </div>
   );
@@ -252,7 +255,7 @@ export default function Leaderboard() {
           {isLoading ? (
             <ul className="divide-y divide-slate-200 dark:divide-slate-700">
               {Array.from(Array(10).keys()).map((key) => (
-                <li key={key} className="flex items-center gap-4 px-4 py-2">
+                <li key={key} className="flex items-center gap-4 px-4 py-4">
                   <span className="h-6 w-6 text-center text-slate-400">
                     {key + 4}
                   </span>
@@ -267,8 +270,8 @@ export default function Leaderboard() {
             </ul>
           ) : error ? (
             <ul className="divide-y divide-slate-200 dark:divide-slate-700">
-              {Array.from(Array(2).keys()).map((key) => (
-                <li key={key} className="flex items-center gap-4 px-4 py-2">
+              {Array.from(Array(10).keys()).map((key) => (
+                <li key={key} className="flex items-center gap-4 px-4 py-4">
                   <span className="h-6 w-6 text-center text-slate-400">
                     {key + 4}
                   </span>
@@ -284,7 +287,7 @@ export default function Leaderboard() {
           ) : (
             <ul className="divide-y divide-slate-200 dark:divide-slate-700">
               {remainingPlaces.map((member, index) => (
-                <li key={index} className="flex items-center gap-4 px-4 py-2">
+                <li key={index} className="flex items-center gap-4 px-4 py-4">
                   <span className="h-6 w-6 text-center text-slate-400">
                     {(page - 1) * perPage + index + 4}
                   </span>

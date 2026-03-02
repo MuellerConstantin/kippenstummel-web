@@ -55,7 +55,7 @@ export function Leaderboard() {
       </div>
       {isLoading ? (
         <ul className="divide-y divide-slate-200 dark:divide-slate-700">
-          <li className="flex items-center gap-4 px-4 py-2">
+          <li className="flex items-center gap-4 px-4 py-4">
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-yellow-500 font-bold text-white dark:bg-yellow-600">
               <Medal className="h-4 w-4" />
             </span>
@@ -67,7 +67,7 @@ export function Leaderboard() {
             </span>
           </li>
 
-          <li className="flex items-center gap-4 px-4 py-2">
+          <li className="flex items-center gap-4 px-4 py-4">
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-400 font-bold text-white dark:bg-slate-500">
               <Medal className="h-4 w-4" />
             </span>
@@ -79,7 +79,7 @@ export function Leaderboard() {
             </span>
           </li>
 
-          <li className="flex items-center gap-4 px-4 py-2">
+          <li className="flex items-center gap-4 px-4 py-4">
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-amber-600 font-bold text-white dark:bg-amber-700">
               <Medal className="h-4 w-4" />
             </span>
@@ -92,7 +92,7 @@ export function Leaderboard() {
           </li>
 
           {Array.from(Array(2).keys()).map((key) => (
-            <li key={key} className="flex items-center gap-4 px-4 py-2">
+            <li key={key} className="flex items-center gap-4 px-4 py-4">
               <span className="h-6 w-6 text-center text-slate-400">
                 {key + 4}
               </span>
@@ -107,7 +107,7 @@ export function Leaderboard() {
         </ul>
       ) : error ? (
         <ul className="divide-y divide-slate-200 dark:divide-slate-700">
-          <li className="flex items-center gap-4 px-4 py-2">
+          <li className="flex items-center gap-4 px-4 py-4">
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-yellow-500 font-bold text-white dark:bg-yellow-600">
               <Medal className="h-4 w-4" />
             </span>
@@ -119,7 +119,7 @@ export function Leaderboard() {
             </span>
           </li>
 
-          <li className="flex items-center gap-4 px-4 py-2">
+          <li className="flex items-center gap-4 px-4 py-4">
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-400 font-bold text-white dark:bg-slate-500">
               <Medal className="h-4 w-4" />
             </span>
@@ -131,7 +131,7 @@ export function Leaderboard() {
             </span>
           </li>
 
-          <li className="flex items-center gap-4 px-4 py-2">
+          <li className="flex items-center gap-4 px-4 py-4">
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-amber-600 font-bold text-white dark:bg-amber-700">
               <Medal className="h-4 w-4" />
             </span>
@@ -144,7 +144,7 @@ export function Leaderboard() {
           </li>
 
           {Array.from(Array(2).keys()).map((key) => (
-            <li key={key} className="flex items-center gap-4 px-4 py-2">
+            <li key={key} className="flex items-center gap-4 px-4 py-4">
               <span className="h-6 w-6 text-center text-slate-400">
                 {key + 4}
               </span>
