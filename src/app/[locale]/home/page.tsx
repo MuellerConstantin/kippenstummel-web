@@ -143,7 +143,9 @@ export default function Home() {
             <div className="text-center">{t("leaderboard.description")}</div>
           </div>
           <div className="w-full max-w-[60rem] space-y-4">
-            <Leaderboard />
+            <div className="rounded-xl shadow-md">
+              <Leaderboard />
+            </div>
             <div>
               <Link
                 href="/leaderboard"
@@ -231,7 +233,7 @@ export default function Home() {
               <Link
                 key={region.slug}
                 href={`/cvms/region/${region.slug}`}
-                className="text-center hover:underline"
+                className="h-fit w-fit rounded-lg bg-green-600/10 px-2 py-1 text-center text-sm font-medium text-green-600 transition hover:bg-green-600 hover:text-white hover:no-underline dark:bg-green-400/10 dark:text-green-400 dark:text-slate-300"
               >
                 {region.name}
               </Link>
