@@ -14,11 +14,13 @@ import { solveChallenge } from "@/api/pow";
 interface RequestIdentDialogContentProps {
   onConfirm?: () => void;
   onCancel?: () => void;
+  formerIdentityRejected?: boolean;
 }
 
 export function RequestIdentDialogContent({
   onCancel,
   onConfirm,
+  formerIdentityRejected,
 }: RequestIdentDialogContentProps) {
   const t = useTranslations("RequestIdentDialog");
   const dispatch = useAppDispatch();
@@ -118,6 +120,11 @@ export function RequestIdentDialogContent({
 
   return (
     <div className="flex flex-col gap-4">
+      {formerIdentityRejected && (
+        <div className="text-center text-sm text-amber-500">
+          {t("formerIdentityRejected")}
+        </div>
+      )}
       <div className="text-sm">{t("description")}</div>
       <div className="flex justify-center">
         {loading ? (

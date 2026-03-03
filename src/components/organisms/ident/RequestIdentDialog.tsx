@@ -7,11 +7,13 @@ import { RequestIdentDialogContent } from "./RequestIdentDialogContent";
 interface RequestIdentDialogProps extends Omit<DialogProps, "children"> {
   onConfirm?: () => void;
   onCancel?: () => void;
+  formerIdentityRejected?: boolean;
 }
 
 export function RequestIdentDialog({
   onCancel,
   onConfirm,
+  formerIdentityRejected,
   ...props
 }: RequestIdentDialogProps) {
   const t = useTranslations("RequestIdentDialog");
@@ -29,6 +31,7 @@ export function RequestIdentDialog({
           <RequestIdentDialogContent
             onConfirm={chain(close, onConfirm)}
             onCancel={chain(close, onCancel)}
+            formerIdentityRejected={formerIdentityRejected}
           />
         </>
       )}

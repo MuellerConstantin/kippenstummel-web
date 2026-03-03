@@ -8,6 +8,7 @@ interface RequestIdentModalSheetProps {
   onIsOpenChange?: (isOpen: boolean) => void;
   onConfirm?: () => void;
   onCancel?: () => void;
+  formerIdentityRejected?: boolean;
 }
 
 export function RequestIdentModalSheet(props: RequestIdentModalSheetProps) {
@@ -28,6 +29,7 @@ export function RequestIdentModalSheet(props: RequestIdentModalSheetProps) {
             props.onConfirm,
           )}
           onCancel={chain(() => props.onIsOpenChange?.(false), props.onCancel)}
+          formerIdentityRejected={props.formerIdentityRejected}
         />
       </div>
     </ModalSheet>

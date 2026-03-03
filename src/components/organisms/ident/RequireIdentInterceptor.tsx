@@ -9,6 +9,8 @@ import { useTranslations } from "next-intl";
 import { useAppStore } from "@/store";
 import identSlice from "@/store/slices/ident";
 import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
+import { RequestIdentModalSheet } from "./RequestIdentModalSheet";
+import { useBreakpointDown } from "@/hooks/useBreakpointDown";
 
 type QueueItem = {
   resolve: (value: unknown) => void;
@@ -26,10 +28,13 @@ export function RequireIdentInterceptor({
   const { enqueue } = useNotifications();
   const t = useTranslations();
 
+  const isSmDown = useBreakpointDown("sm");
+
   const refreshPromiseRef = useRef<Promise<void> | null>(null);
   const pendingQueueRef = useRef<QueueItem[]>([]);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [formerIdentityRejected, setFormerIdentityRejected] = useState(false);
 
   const queueRequest = useCallback(
     (request: AxiosRequestConfig) =>
@@ -54,11 +59,13 @@ export function RequireIdentInterceptor({
   const onConfirm = useCallback(() => {
     flushQueue();
     setIsDialogOpen(false);
+    setFormerIdentityRejected(false);
   }, [flushQueue]);
 
   const onCancel = useCallback(() => {
     rejectQueue();
     setIsDialogOpen(false);
+    setFormerIdentityRejected(false);
 
     enqueue(
       {
@@ -94,6 +101,7 @@ export function RequireIdentInterceptor({
         // Present identity is unknown, require new identity creation
         if (code === "UNKNOWN_IDENTITY_ERROR") {
           setIsDialogOpen(true);
+          setFormerIdentityRejected(true);
           return queueRequest(originalRequest);
         }
 
@@ -104,6 +112,7 @@ export function RequireIdentInterceptor({
           // No identity or secret available, require identity creation
           if (!state.ident.identity || !state.ident.secret) {
             setIsDialogOpen(true);
+            setFormerIdentityRejected(false);
             return queueRequest(originalRequest);
           }
 
@@ -133,6 +142,7 @@ export function RequireIdentInterceptor({
               refreshError.response?.data?.code === "UNKNOWN_IDENTITY_ERROR"
             ) {
               setIsDialogOpen(true);
+              setFormerIdentityRejected(true);
               return queueRequest(originalRequest);
             }
 
@@ -152,9 +162,27 @@ export function RequireIdentInterceptor({
   return (
     <>
       {children}
-      <AnimatedDialogModal isOpen={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <RequestIdentDialog onConfirm={onConfirm} onCancel={onCancel} />
-      </AnimatedDialogModal>
+      {!isSmDown && (
+        <AnimatedDialogModal
+          isOpen={isDialogOpen}
+          onOpenChange={setIsDialogOpen}
+        >
+          <RequestIdentDialog
+            onConfirm={onConfirm}
+            onCancel={onCancel}
+            formerIdentityRejected={formerIdentityRejected}
+          />
+        </AnimatedDialogModal>
+      )}
+      {isSmDown && isDialogOpen && (
+        <RequestIdentModalSheet
+          isOpen={isDialogOpen}
+          onIsOpenChange={setIsDialogOpen}
+          onConfirm={onConfirm}
+          onCancel={onCancel}
+          formerIdentityRejected={formerIdentityRejected}
+        />
+      )}
     </>
   );
 }
