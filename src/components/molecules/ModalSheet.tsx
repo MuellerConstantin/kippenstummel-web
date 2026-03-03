@@ -92,7 +92,7 @@ export function ModalSheet({
       <MotionModalOverlay
         isOpen={isOpen}
         onOpenChange={onIsOpenChange}
-        className="fixed inset-0 z-[120000]"
+        className="fixed inset-0 z-[50000]"
         style={{ backgroundColor: bg }}
       >
         <MotionModal

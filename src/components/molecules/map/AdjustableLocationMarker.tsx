@@ -76,6 +76,7 @@ export function AdjustableLocationMarker(props: AdjustableLocationMarkerProps) {
         onDragStart={() => setTooltipOpen(false)}
         onDragEnd={handleDragEnd}
         anchor="bottom"
+        className="z-[15000]"
       >
         <div
           className="relative h-fit w-fit cursor-pointer"

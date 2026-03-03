@@ -146,7 +146,7 @@ export function CvmMapDefaultOverlay({
           >
             <MapSettingsDialog />
           </AnimatedDialogModal>
-          <div className="pointer-events-none absolute flex h-full w-full">
+          <div className="pointer-events-none absolute z-[50000] flex h-full w-full">
             <div className="pointer-events-auto z-[2000] h-full shrink-0 pt-3 pb-3 pl-3">
               <AnimatePresence>
                 {!!selectedCvm && (

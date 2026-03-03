@@ -61,7 +61,7 @@ export function ClusterMarker(props: ClusterMarkerProps) {
       latitude={props.position.latitude}
       longitude={props.position.longitude}
       onClick={handleClick}
-      className="cursor-pointer"
+      className="z-[10000] cursor-pointer"
     >
       <div
         className={`${outerClasses} box-border h-fit w-fit rounded-[20px] p-[3px]`}

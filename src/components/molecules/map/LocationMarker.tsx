@@ -18,7 +18,7 @@ export function LocationMarker(props: LocationMarkerProps) {
       latitude={props.cvm.latitude}
       longitude={props.cvm.longitude}
       onClick={props.onSelect}
-      className="cursor-pointer"
+      className="z-[15000] cursor-pointer"
       anchor="bottom"
     >
       <div className="relative z-[50] h-fit w-fit">
