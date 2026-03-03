@@ -112,7 +112,7 @@ function PodiumCard({ place, member, isLoading, error }: PodiumCardProps) {
   );
 }
 
-export function VictoryPodium({
+function VictoryPodium({
   firstPlace,
   secondPlace,
   thirdPlace,
