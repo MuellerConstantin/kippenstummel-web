@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { AxiosRequestConfig } from "axios";
 import { RequestIdentDialog } from "@/components/organisms/ident/RequestIdentDialog";
 import useApi from "@/hooks/useApi";
@@ -9,6 +9,12 @@ import { useTranslations } from "next-intl";
 import { useAppStore } from "@/store";
 import identSlice from "@/store/slices/ident";
 import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
+
+type QueueItem = {
+  resolve: (value: unknown) => void;
+  reject: (reason?: unknown) => void;
+  request: AxiosRequestConfig;
+};
 
 export function RequireIdentInterceptor({
   children,
@@ -20,33 +26,39 @@ export function RequireIdentInterceptor({
   const { enqueue } = useNotifications();
   const t = useTranslations();
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [pendingQueue, setPendingQueue] = useState<
-    {
-      resolve: (value: unknown) => void;
-      reject: (reason?: unknown) => void;
-      request: AxiosRequestConfig;
-    }[]
-  >([]);
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [isRequesting, setIsRequesting] = useState(false);
+  const refreshPromiseRef = useRef<Promise<void> | null>(null);
+  const pendingQueueRef = useRef<QueueItem[]>([]);
 
-  const onConfirm = useCallback(async () => {
-    pendingQueue.forEach(({ resolve, request }) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const queueRequest = useCallback(
+    (request: AxiosRequestConfig) =>
+      new Promise((resolve, reject) => {
+        pendingQueueRef.current.push({ resolve, reject, request });
+      }),
+    [],
+  );
+
+  const flushQueue = useCallback(() => {
+    pendingQueueRef.current.forEach(({ resolve, request }) => {
       resolve(api(request));
     });
+    pendingQueueRef.current = [];
+  }, [api]);
 
-    setPendingQueue([]);
-    setIsRequesting(false);
-  }, [pendingQueue, api]);
+  const rejectQueue = useCallback(() => {
+    pendingQueueRef.current.forEach(({ reject }) => reject());
+    pendingQueueRef.current = [];
+  }, []);
+
+  const onConfirm = useCallback(() => {
+    flushQueue();
+    setIsDialogOpen(false);
+  }, [flushQueue]);
 
   const onCancel = useCallback(() => {
-    pendingQueue.forEach(({ reject }) => {
-      reject();
-    });
-
-    setPendingQueue([]);
-    setIsRequesting(false);
+    rejectQueue();
+    setIsDialogOpen(false);
 
     enqueue(
       {
@@ -56,119 +68,86 @@ export function RequireIdentInterceptor({
       },
       { timeout: 10000 },
     );
-  }, [pendingQueue, enqueue, t]);
+  }, [enqueue, rejectQueue, t]);
 
   useEffect(() => {
     const responseInterceptor = api.interceptors.response.use(
       (res) => res,
       async (err) => {
-        const handleRefresh = async () => {
-          const { response, config } = err;
+        const { response, config } = err;
 
-          if (
-            response.status === 401 &&
-            response.data?.code === "INVALID_IDENT_TOKEN_ERROR" &&
-            !config._retryRefresh
-          ) {
-            // Try refresh only for non-ident requests
-            if (response && config.url !== "/ident") {
-              config._retryRefresh = true;
-              const state = store.getState();
-
-              // Refresh is only possible if identity and secret are available
-              if (state.ident.identity && state.ident.secret) {
-                if (!isRefreshing) {
-                  setIsRefreshing(true);
-
-                  try {
-                    const refreshRes = await api.post<{
-                      identity: string;
-                      token: string;
-                    }>("/ident", {
-                      identity: state.ident.identity,
-                      secret: state.ident.secret,
-                    });
-
-                    store.dispatch(
-                      identSlice.actions.setToken(refreshRes.data.token),
-                    );
-
-                    onConfirm();
-                    return api(config);
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  } catch (refeshError: any) {
-                    return Promise.reject(refeshError);
-                  } finally {
-                    setIsRefreshing(false);
-                  }
-                }
-
-                return new Promise((resolve, reject) => {
-                  setPendingQueue((queue) => [
-                    ...queue,
-                    {
-                      resolve,
-                      reject,
-                      request: config,
-                    },
-                  ]);
-                });
-              }
-            }
-          }
-
+        // Non-authentication error, reject immediately
+        if (!response || response.status !== 401) {
           return Promise.reject(err);
-        };
+        }
 
-        const handleRequest = async () => {
-          const originalRequest = err.config;
+        const code = response.data?.code;
+        const originalRequest = config;
 
-          if (
-            err.response &&
-            err.response?.status === 401 &&
-            (err.response.data?.code === "INVALID_IDENT_TOKEN_ERROR" ||
-              err.response.data?.code === "UNKNOWN_IDENTITY_ERROR") &&
-            !originalRequest._retryRequire
-          ) {
-            originalRequest._retryRequire = true;
+        // Already handled retry for this request and unexpected error occurred, reject to avoid infinite loop
+        if (originalRequest._retryHandled) {
+          return Promise.reject(err);
+        }
 
-            if (isRequesting && err.config.url !== "/ident") {
-              return new Promise((resolve, reject) => {
-                setPendingQueue((queue) => [
-                  ...queue,
-                  { resolve, reject, request: originalRequest },
-                ]);
-              });
-            }
+        originalRequest._retryHandled = true;
 
-            setIsRequesting(true);
+        // Present identity is unknown, require new identity creation
+        if (code === "UNKNOWN_IDENTITY_ERROR") {
+          setIsDialogOpen(true);
+          return queueRequest(originalRequest);
+        }
+
+        // Token is invalid (e.g. expired), attempt refresh if possible
+        if (code === "INVALID_IDENT_TOKEN_ERROR") {
+          const state = store.getState();
+
+          // No identity or secret available, require identity creation
+          if (!state.ident.identity || !state.ident.secret) {
             setIsDialogOpen(true);
-
-            if (err.config.url !== "/ident") {
-              return new Promise((resolve, reject) => {
-                setPendingQueue((queue) => [
-                  ...queue,
-                  {
-                    resolve,
-                    reject,
-                    request: originalRequest,
-                  },
-                ]);
-              });
-            }
+            return queueRequest(originalRequest);
           }
 
-          return Promise.reject(err);
-        };
+          try {
+            if (!refreshPromiseRef.current) {
+              refreshPromiseRef.current = api
+                .post("/ident", {
+                  identity: state.ident.identity,
+                  secret: state.ident.secret,
+                })
+                .then((res) => {
+                  store.dispatch(identSlice.actions.setToken(res.data.token));
+                })
+                .finally(() => {
+                  refreshPromiseRef.current = null;
+                });
+            }
 
-        return handleRefresh().catch(handleRequest);
+            await refreshPromiseRef.current;
+
+            return api(originalRequest);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } catch (refreshError: any) {
+            // If refresh fails due to unknown identity, require identity creation
+            if (
+              refreshError.response?.status === 401 &&
+              refreshError.response?.data?.code === "UNKNOWN_IDENTITY_ERROR"
+            ) {
+              setIsDialogOpen(true);
+              return queueRequest(originalRequest);
+            }
+
+            return Promise.reject(refreshError);
+          }
+        }
+
+        return Promise.reject(err);
       },
     );
 
     return () => {
       api.interceptors.response.eject(responseInterceptor);
     };
-  }, [isRequesting, isRefreshing, api, store, onConfirm]);
+  }, [queueRequest, api, store, onConfirm]);
 
   return (
     <>
