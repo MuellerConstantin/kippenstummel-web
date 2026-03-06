@@ -123,7 +123,6 @@ export function RegionCvmList(props: RegionCvmListProps) {
           >
             {data?.content.map((cvm, index) => {
               const formattedAddress = formattedAddresses?.[index];
-              console.log("formattedAddress", formattedAddress);
 
               return (
                 <ListBoxItem id={`cvm-list-item-${cvm.id}`} key={cvm.id}>
@@ -154,7 +153,7 @@ export function RegionCvmList(props: RegionCvmListProps) {
                           {t("cvm")}
                         </div>
                         <div>
-                          {formattedAddress && formattedAddress.length > 0 ? (
+                          {formattedAddress ? (
                             <div className="truncate text-xs">
                               {formattedAddress}
                             </div>
