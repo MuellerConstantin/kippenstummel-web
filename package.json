@@ -39,6 +39,7 @@
     "motion": "^12.23.3",
     "next": "^15.2.3",
     "next-intl": "^4.0.3",
+    "p-limit": "^7.3.0",
     "react": "^19.0.0",
     "react-aria-components": "^1.7.1",
     "react-dom": "^19.0.0",
