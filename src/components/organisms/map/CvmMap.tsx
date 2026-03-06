@@ -47,11 +47,11 @@ export function CvmMap(props: CvmMapProps) {
         <div className="preview absolute inset-0 z-0 bg-[url(/images/preview.png)] bg-cover" />
         <div className="absolute inset-0 z-10 bg-white/40 backdrop-blur-sm dark:bg-black/40" />
         <div className="relative z-20 flex grow flex-col items-center justify-center gap-12 lg:flex-row">
-          <div className="flex flex-col items-center justify-center gap-4 p-4">
-            <div className="max-w-sm text-center text-xl font-semibold text-slate-500 drop-shadow-lg">
+          <div className="flex flex-col items-center justify-center gap-4 rounded-xl bg-white/80 p-8 shadow-xl backdrop-blur-md dark:bg-black/60">
+            <div className="max-w-sm text-center text-xl font-semibold text-slate-700 dark:text-slate-200">
               {t("title")}
             </div>
-            <div className="max-w-sm text-center text-sm text-slate-400 drop-shadow-lg">
+            <div className="max-w-sm text-center text-sm text-slate-700 dark:text-slate-200">
               {t.rich("description", {
                 br: () => <br />,
                 tos: (chunks) => <Link href="/terms-of-service">{chunks}</Link>,
