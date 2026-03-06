@@ -1,4 +1,5 @@
 import { GeoCoordinates } from "@/lib/types/geo";
+import Cookies from "js-cookie";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UsabilityState {
@@ -63,5 +64,17 @@ const usabilitySlice = createSlice({
     },
   },
 });
+
+export const syncRecurringUserCookie = (recurringUser: boolean) => {
+  if (recurringUser) {
+    Cookies.set("kippenstummel-recurring-user", "1", {
+      expires: 365,
+      sameSite: "lax",
+      path: "/",
+    });
+  } else {
+    Cookies.remove("kippenstummel-recurring-user", { path: "/" });
+  }
+};
 
 export default usabilitySlice;

@@ -2,7 +2,11 @@
 
 import React, { useRef, useEffect } from "react";
 import { Provider, useDispatch, useSelector, useStore } from "react-redux";
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  combineReducers,
+  createListenerMiddleware,
+} from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
@@ -14,12 +18,13 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import Cookies from "js-cookie";
 import { PersistGate } from "redux-persist/integration/react";
 import localStorage from "redux-persist/lib/storage";
 import sessionStorage from "redux-persist/lib/storage/session";
 import { injectStore } from "@/api";
-import usabilitySlice from "@/store/slices/usability";
+import usabilitySlice, {
+  syncRecurringUserCookie,
+} from "@/store/slices/usability";
 import identSlice from "./slices/ident";
 import privacySlice from "./slices/privacy";
 import locationSlice from "./slices/location";
@@ -30,15 +35,7 @@ import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal"
 const migrations = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   3: (state: any) => {
-    if (state?.usability?.recurringUser === true) {
-      if (typeof window !== "undefined") {
-        Cookies.set("kippenstummel-recurring-user", "1", {
-          expires: 365,
-          sameSite: "lax",
-          path: "/",
-        });
-      }
-    }
+    syncRecurringUserCookie(state?.usability?.recurringUser === true);
 
     return state;
   },
@@ -67,6 +64,29 @@ export const rootReducer = combineReducers({
   session: persistReducer(sessionPersistConfig, sessionSlice.reducer),
 });
 
+const listenerMiddleware = createListenerMiddleware();
+
+listenerMiddleware.startListening({
+  actionCreator: usabilitySlice.actions.setRecurringUser,
+  effect: async (action) => {
+    // Syncs the recurring user state to a cookie to make it accessible in server components and on the initial page load
+    syncRecurringUserCookie(action.payload);
+  },
+});
+
+listenerMiddleware.startListening({
+  predicate: (action) => action.type === REHYDRATE,
+  effect: async (_action, listenerApi) => {
+    const state = listenerApi.getState() as {
+      usability?: { recurringUser?: boolean };
+      privacy?: { cookieSettingsSelected?: boolean };
+    };
+
+    // Renews the recurring user cookie on app start if the user is recurring, to prevent it from expiring while the user is active
+    syncRecurringUserCookie(state.usability?.recurringUser === true);
+  },
+});
+
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
 
 export const makeStore = () => {
@@ -77,7 +97,9 @@ export const makeStore = () => {
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }),
+      })
+        .concat()
+        .concat(listenerMiddleware.middleware),
   });
 
   const persistor = persistStore(store);
