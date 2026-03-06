@@ -3,6 +3,7 @@
 import { Link } from "@/components/atoms/Link";
 import { ListBox, ListBoxItem } from "@/components/atoms/ListBox";
 import { Pagination } from "@/components/molecules/Pagination";
+import { useOsmAddresses } from "@/hooks/cvm/useOsmAddresses";
 import useApi from "@/hooks/useApi";
 import { useRouter } from "@/i18n/navigation";
 import {
@@ -12,9 +13,7 @@ import {
 } from "@/lib/constants";
 import { Region } from "@/lib/regions";
 import { Cvm } from "@/lib/types/cvm";
-import { GeoCoordinates } from "@/lib/types/geo";
 import { Page } from "@/lib/types/pagination";
-import axios from "axios";
 import { ChevronDown, ChevronUp, Equal, MapPin, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
@@ -67,121 +66,9 @@ export function RegionCvmList(props: RegionCvmListProps) {
     (url) => api.get(url).then((res) => res.data),
   );
 
-  const fetchOsmAddress = useCallback(async (key: GeoCoordinates) => {
-    const url = "/api/geocoding/reverse";
-
-    return await axios.get<{
-      place_id: number;
-      licence: string;
-      osm_type: "node" | "way" | "relation";
-      osm_id: number;
-      lat: string;
-      lon: string;
-      class: string;
-      type: string;
-      place_rank: number;
-      importance: number;
-      addresstype: string;
-      name: string;
-      display_name: string;
-      address: {
-        amenity?: string;
-        road?: string;
-        neighbourhood?: string;
-        suburb?: string;
-        city?: string;
-        town?: string;
-        village?: string;
-        state?: string;
-        ISO3166_2_lvl4?: string;
-        postcode?: string;
-        country?: string;
-        country_code?: string;
-      };
-      boundingbox: [
-        string, // south latitude
-        string, // north latitude
-        string, // west longitude
-        string, // east longitude
-      ];
-    }>(url, {
-      params: {
-        lat: key.latitude,
-        lon: key.longitude,
-        format: "json",
-      },
-      headers: {
-        Accept: "application/json",
-      },
-    });
-  }, []);
-
-  const { data: osmAddresses } = useSWR<
-    {
-      place_id: number;
-      licence: string;
-      osm_type: "node" | "way" | "relation";
-      osm_id: number;
-      lat: string;
-      lon: string;
-      class: string;
-      type: string;
-      place_rank: number;
-      importance: number;
-      addresstype: string;
-      name: string;
-      display_name: string;
-      address: {
-        amenity?: string;
-        road?: string;
-        neighbourhood?: string;
-        suburb?: string;
-        city?: string;
-        town?: string;
-        village?: string;
-        state?: string;
-        ISO3166_2_lvl4?: string;
-        postcode?: string;
-        country?: string;
-        country_code?: string;
-      };
-      boundingbox: [
-        string, // south latitude
-        string, // north latitude
-        string, // west longitude
-        string, // east longitude
-      ];
-    }[],
-    unknown,
-    ["osmAddresses", GeoCoordinates[]] | null
-  >(
-    data
-      ? [
-          "osmAddresses",
-          data?.content.map((cvm) => ({
-            latitude: cvm.latitude,
-            longitude: cvm.longitude,
-          })) || [],
-        ]
-      : null,
-    (key) =>
-      Promise.all(key[1].map(fetchOsmAddress)).then((responses) =>
-        responses.map((res) => res.data),
-      ),
-    {
-      revalidateOnFocus: false,
-      dedupingInterval: 1000 * 60 * 60 * 24, // 24h
-    },
-  );
-
-  const formattedAddresses = useMemo(() => {
-    return osmAddresses?.map((addr) => {
-      const { road, city, town, village, postcode } = addr.address ?? {};
-      return [road, postcode, city || town || village]
-        .filter(Boolean)
-        .join(", ");
-    });
-  }, [osmAddresses]);
+  const formattedAddresses = useOsmAddresses({
+    cvms: data?.content || null,
+  });
 
   const handleSelect = useCallback((key: string) => {
     setSelected(key);
@@ -236,6 +123,7 @@ export function RegionCvmList(props: RegionCvmListProps) {
           >
             {data?.content.map((cvm, index) => {
               const formattedAddress = formattedAddresses?.[index];
+              console.log("formattedAddress", formattedAddress);
 
               return (
                 <ListBoxItem id={`cvm-list-item-${cvm.id}`} key={cvm.id}>
