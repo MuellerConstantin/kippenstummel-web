@@ -54,6 +54,26 @@ body {
   box-shadow: none !important;
 }
 
+.maplibregl-control-container {
+  @apply z-[50000]!;
+}
+
+.maplibregl-ctrl-bottom-left {
+  @apply z-[50000]!;
+}
+
+.maplibregl-ctrl-bottom-right {
+  @apply z-[50000]!;
+}
+
+.maplibregl-ctrl-top-left {
+  @apply z-[50000]!;
+}
+
+.maplibregl-ctrl-top-right {
+  @apply z-[50000]!;
+}
+
 .maplibregl-ctrl-group {
   @apply !rounded-md !bg-transparent;
 }
