@@ -78,7 +78,7 @@ export function CvmMapDefaultOverlay({
               onIsOpenChange={closeMapSettingsDialog}
             />
           )}
-          <div className="pointer-events-none absolute z-[50000] flex h-full w-full">
+          <div className="pointer-events-none absolute z-[40000] flex h-full w-full">
             <div className="relative grow">
               <div className="pointer-events-auto absolute bottom-14 left-1/2 block h-fit w-fit -translate-x-1/2 px-2 lg:hidden">
                 <FloatingMenuBottomNavigation
@@ -118,7 +118,7 @@ export function CvmMapDefaultOverlay({
               onReport={openReportDialog}
             />
           </AnimatedDialogModal>
-          <div className="pointer-events-none absolute z-[50000] flex h-full w-full">
+          <div className="pointer-events-none absolute z-[40000] flex h-full w-full">
             <div className="relative grow">
               <div className="pointer-events-auto absolute bottom-9 left-1/2 block h-fit w-fit -translate-x-1/2 px-2">
                 <FloatingMenuBottomNavigation
@@ -146,7 +146,7 @@ export function CvmMapDefaultOverlay({
           >
             <MapSettingsDialog />
           </AnimatedDialogModal>
-          <div className="pointer-events-none absolute z-[50000] flex h-full w-full">
+          <div className="pointer-events-none absolute z-[40000] flex h-full w-full">
             <div className="pointer-events-auto h-full shrink-0 pt-3 pb-3 pl-3">
               <AnimatePresence>
                 {!!selectedCvm && (
