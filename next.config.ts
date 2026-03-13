@@ -5,18 +5,7 @@ import withSerwistInit from "@serwist/next";
 const isStandalone = process.env.NEXT_OUTPUT_MODE === "standalone";
 const isProduction = process.env.NODE_ENV === "production";
 const openFreeMapOrigin = "https://tiles.openfreemap.org";
-
-function toOrigin(url: string | undefined) {
-  if (!url) {
-    return undefined;
-  }
-
-  try {
-    return new URL(url).origin;
-  } catch {
-    return undefined;
-  }
-}
+const ackeeOrigin = "https://ackee.kippenstummel.de";
 
 function isHttpsUrl(url: string | undefined) {
   if (!url) {
@@ -30,8 +19,6 @@ function isHttpsUrl(url: string | undefined) {
   }
 }
 
-const ackeeOrigin = toOrigin(process.env.NEXT_PUBLIC_ACKEE_SERVER);
-
 const csp = [
   "default-src 'self'",
   "base-uri 'self'",
@@ -42,7 +29,7 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   `img-src 'self' data: blob: ${openFreeMapOrigin}`,
   "font-src 'self' data:",
-  `connect-src 'self' ${openFreeMapOrigin}${ackeeOrigin ? ` ${ackeeOrigin}` : ""}`,
+  `connect-src 'self' ${openFreeMapOrigin} ${ackeeOrigin}`,
   "worker-src 'self' blob:",
   "child-src 'self' blob:",
   "manifest-src 'self'",
