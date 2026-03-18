@@ -9,7 +9,6 @@ import { Spinner } from "@/components/atoms/Spinner";
 import useApi from "@/hooks/useApi";
 import { useAppDispatch } from "@/store";
 import identSlice from "@/store/slices/ident";
-import { solveChallenge } from "@/api/pow";
 
 interface RequestIdentDialogContentProps {
   onConfirm?: () => void;
@@ -59,19 +58,11 @@ export function RequestIdentDialogContent({
     setSubmitting(true);
 
     try {
-      const powRes = await api.get("/pow", {
-        params: { scope: "registration" },
-      });
-      const pow = powRes.headers["x-pow"];
-
-      const powSolution = await solveChallenge(pow);
-
       const identityRes = await api.get<{ identity: string; secret: string }>(
         "/ident",
         {
           headers: {
             "x-captcha": `${captcha!.id}:${captchaSolution}`,
-            "x-pow": `${pow}:${powSolution}`,
           },
         },
       );
