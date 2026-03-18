@@ -59,7 +59,7 @@ export function RequestIdentDialogContent({
 
     try {
       const identityRes = await api.get<{ identity: string; secret: string }>(
-        "/ident",
+        "/auth/register",
         {
           headers: {
             "x-captcha": `${captcha!.id}:${captchaSolution}`,
@@ -75,7 +75,7 @@ export function RequestIdentDialogContent({
       );
 
       const tokenRes = await api.post<{ identity: string; token: string }>(
-        "/ident",
+        "/auth/login",
         {
           identity: identityRes.data.identity,
           secret: identityRes.data.secret,

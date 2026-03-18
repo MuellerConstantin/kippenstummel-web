@@ -119,7 +119,7 @@ export function RequireIdentInterceptor({
           try {
             if (!refreshPromiseRef.current) {
               refreshPromiseRef.current = api
-                .post("/ident", {
+                .post("/auth/login", {
                   identity: state.ident.identity,
                   secret: state.ident.secret,
                 })
