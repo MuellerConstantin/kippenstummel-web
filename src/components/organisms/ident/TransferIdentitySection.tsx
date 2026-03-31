@@ -12,7 +12,7 @@ import { Form } from "@/components/atoms/Form";
 import { Spinner } from "@/components/atoms/Spinner";
 import { encryptWithPassword } from "@/lib/encrypt";
 import useApi from "@/hooks/useApi";
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import Image from "next/image";
 
 interface CopyButtonProps {
@@ -113,8 +113,19 @@ export function TransferIdentitySection() {
         );
 
         setToken(res.data.token);
-      } catch {
-        setSubmitError(t("form.error"));
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          if (
+            err.response?.status === 403 &&
+            err.response.data.code === "INVALID_CAPTCHA_STAMP_ERROR"
+          ) {
+            setSubmitError(t("form.incorrectCaptcha"));
+          } else {
+            setSubmitError(t("form.error"));
+          }
+        } else {
+          setSubmitError(t("form.error"));
+        }
       } finally {
         setSubmitting(false);
       }

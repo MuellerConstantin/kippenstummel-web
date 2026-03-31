@@ -586,6 +586,7 @@
         "description": "Your identity will be transmitted encrypted. For this, you must choose a transport password, which must be re-entered on the target device.",
         "transportPassword": "Transport password",
         "captcha": "CAPTCHA",
+        "incorrectCaptcha": "The CAPTCHA you entered is incorrect. Please try again.",
         "error": "An unexpected error occurred. Please try again.",
         "submit": "Transfer now"
       },

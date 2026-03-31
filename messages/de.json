@@ -587,6 +587,7 @@
         "transportPassword": "Transportpasswort",
         "captcha": "Captcha",
         "error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
+        "incorrectCaptcha": "Das CAPTCHA, das du eingegeben hast, ist falsch. Bitte versuche es erneut.",
         "submit": "Jetzt übertragen"
       },
       "share": "Auf andere Geräte übertragen",
