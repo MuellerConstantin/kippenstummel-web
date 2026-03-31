@@ -237,9 +237,17 @@ export function TransferIdentitySection() {
           </div>
         </>
       ) : (
-        <div className="flex flex-col gap-8">
-          <div className="text-sm font-semibold">{t("share")}</div>
-          <div className="flex gap-2">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <div className="text-sm font-semibold">{t("share")}</div>
+            <div className="text-sm">{t("shareDescription")}</div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="font-semibold">Token:</span>
+            <span>{token}</span>
+            <CopyButton text={token} disabled={isLoading} />
+          </div>
+          <div className="flex items-center gap-2">
             <TextField
               className="grow"
               isReadOnly

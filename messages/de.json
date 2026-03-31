@@ -589,7 +589,8 @@
         "error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
         "submit": "Jetzt übertragen"
       },
-      "share": "Auf andere Geräte übertragen"
+      "share": "Auf andere Geräte übertragen",
+      "shareDescription": "Um deine Identität jetzt auf ein anderes Gerät oder in einen anderen Browser zu übertragen kannst du folgendes Einmaltoken nutzen. Entweder du gibst das Token manuell ein oder du folgst automatisch dem Link bzw. dem QR-Code."
     },
     "karma": {
       "title": "Mein Karma",

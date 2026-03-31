@@ -589,7 +589,8 @@
         "error": "An unexpected error occurred. Please try again.",
         "submit": "Transfer now"
       },
-      "share": "Transfer to other devices"
+      "share": "Transfer to other devices",
+      "shareDescription": "To transfer your identity to another device or browser, you can use the following one-time token. You can either enter the token manually or automatically follow the link or QR code."
     },
     "karma": {
       "title": "My Karma",
