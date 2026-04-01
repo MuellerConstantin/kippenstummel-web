@@ -330,6 +330,7 @@
       "cancel": "Cancel"
     },
     "error": "An unexpected error occurred. Please try again.",
+    "invalidToken": "The transfer link or token is invalid or expired. Please request a new transfer to receive a new link.",
     "alreadyUsed": "This transfer link has already been used and is no longer valid. Please request a new transfer to receive a new link.",
     "wrongPassword": "The transport password you entered is incorrect. Please try again."
   },
@@ -343,6 +344,7 @@
     "options": {
       "identity": "My identity",
       "new-identity": "Create identity",
+      "import-identity": "Import identity",
       "about": "About Kippenstummel"
     },
     "languages": {
@@ -368,6 +370,14 @@
     "disclaimer": "By confirming, you agree to our <tos>Terms of Service</tos> and <pp>Privacy Policy</pp>.",
     "error": "Unexpected error occurred. Please try again.",
     "wrongSolution": "The CAPTCHA you entered is incorrect. Please try again."
+  },
+  "ImportIdentDialog": {
+    "title": "Import Identity",
+    "description": "If you already have an identity, you can import it manually here. Simply enter the transfer token that was issued to you when you transferred your identity, along with the URL and QR code.",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "tokenPlaceholder": "Enter transfer token",
+    "disclaimer": "By confirming, you agree to our <tos>Terms of Service</tos> and <pp>Privacy Policy</pp>."
   },
   "ConfirmCvmReportDialog": {
     "title": "Report Cigarette Vending Machine",

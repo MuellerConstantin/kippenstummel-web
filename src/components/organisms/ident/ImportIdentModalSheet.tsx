@@ -1,18 +1,17 @@
 import { useTranslations } from "next-intl";
 import { chain } from "react-aria";
 import { ModalSheet } from "@/components/molecules/ModalSheet";
-import { RequestIdentDialogContent } from "./RequestIdentDialogContent";
+import { ImportIdentDialogContent } from "./ImportIdentDialogContent";
 
-interface RequestIdentModalSheetProps {
+interface ImportIdentModalSheetProps {
   isOpen: boolean;
   onIsOpenChange?: (isOpen: boolean) => void;
   onConfirm?: () => void;
   onCancel?: () => void;
-  formerIdentityRejected?: boolean;
 }
 
-export function RequestIdentModalSheet(props: RequestIdentModalSheetProps) {
-  const t = useTranslations("RequestIdentDialog");
+export function ImportIdentModalSheet(props: ImportIdentModalSheetProps) {
+  const t = useTranslations("ImportIdentDialog");
 
   return (
     <ModalSheet isOpen={props.isOpen} onIsOpenChange={props.onIsOpenChange}>
@@ -23,13 +22,12 @@ export function RequestIdentModalSheet(props: RequestIdentModalSheetProps) {
         >
           {t("title")}
         </h4>
-        <RequestIdentDialogContent
+        <ImportIdentDialogContent
           onConfirm={chain(
             () => props.onIsOpenChange?.(false),
             props.onConfirm,
           )}
           onCancel={chain(() => props.onIsOpenChange?.(false), props.onCancel)}
-          formerIdentityRejected={props.formerIdentityRejected}
         />
       </div>
     </ModalSheet>

@@ -330,6 +330,7 @@
       "cancel": "Abbrechen"
     },
     "error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
+    "invalidToken": "Der Übertragungslink bzw. das Token ist ungültig oder abgelaufen. Bitte fordere eine neue Übertragung an, um einen neuen Link zu erhalten.",
     "alreadyUsed": "Dieser Übertragungslink wurde bereits verwendet und ist nicht mehr gültig. Bitte fordere eine neue Übertragung an, um einen neuen Link zu erhalten.",
     "wrongPassword": "Das Transportpasswort ist falsch. Bitte versuche es erneut."
   },
@@ -343,6 +344,7 @@
     "options": {
       "identity": "Meine Identität",
       "new-identity": "Identität anlegen",
+      "import-identity": "Identität importieren",
       "about": "Über Kippenstummel"
     },
     "languages": {
@@ -368,6 +370,14 @@
     "disclaimer": "Durch die Bestätigung akzeptierst du unsere <tos>Nutzungsbedingungen</tos> und unsere <pp>Datenschutzerklärung</pp>.",
     "error": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
     "wrongSolution": "Das CAPTCHA, das du eingegeben hast, ist falsch. Bitte versuche es erneut."
+  },
+  "ImportIdentDialog": {
+    "title": "Identität importieren",
+    "description": "Wenn du bereits eine Identität hast kannst du diese hier manuell importieren. Gib hierzu einfach das Übertragungstoken ein, das dir beim Übertragen deiner Identität neben der URL und dem QR-Code ausgestellt wurde.",
+    "confirm": "Bestätigen",
+    "cancel": "Abbrechen",
+    "tokenPlaceholder": "Übertragungstoken eingeben",
+    "disclaimer": "Durch die Bestätigung akzeptierst du unsere <tos>Nutzungsbedingungen</tos> und unsere <pp>Datenschutzerklärung</pp>."
   },
   "ConfirmCvmReportDialog": {
     "title": "Zigarettenautomat melden",

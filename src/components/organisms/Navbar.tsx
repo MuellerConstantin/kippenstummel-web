@@ -11,6 +11,7 @@ import {
   Signature,
   User,
   Info,
+  Import,
 } from "lucide-react";
 import { MenuTrigger } from "react-aria-components";
 import { Button } from "@/components/atoms/Button";
@@ -36,6 +37,8 @@ import { useBreakpointDown } from "@/hooks/useBreakpointDown";
 import { IdentityModalSheet } from "./ident/IdentityModalSheet";
 import { AboutModalSheet } from "./navigation/AboutModalSheet";
 import { RequestIdentModalSheet } from "./ident/RequestIdentModalSheet";
+import { ImportIdentModalSheet } from "./ident/ImportIdentModalSheet";
+import { ImportIdentDialog } from "./ident/ImportIdentDialog";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
@@ -121,6 +124,8 @@ export function NavbarUnauthenticatedOptionsMenu() {
   const darkMode = useAppSelector((state) => state.usability.darkMode);
 
   const [showNewIdentityDialog, setShowNewIdentityDialog] = useState(false);
+  const [showImportIdentityDialog, setShowImportIdentityDialog] =
+    useState(false);
   const [showAboutDialog, setShowAboutDialog] = useState(false);
 
   return (
@@ -146,6 +151,12 @@ export function NavbarUnauthenticatedOptionsMenu() {
                 <span>{t("options.new-identity")}</span>
               </div>
             </ListBoxItem>
+            <ListBoxItem onAction={() => setShowImportIdentityDialog(true)}>
+              <div className="flex w-full items-center gap-2">
+                <Import className="h-4 w-4" />
+                <span>{t("options.import-identity")}</span>
+              </div>
+            </ListBoxItem>
             <ListBoxItem onAction={() => setShowAboutDialog(true)}>
               <div className="flex w-full items-center gap-2">
                 <Info className="h-4 w-4" />
@@ -165,6 +176,20 @@ export function NavbarUnauthenticatedOptionsMenu() {
             <RequestIdentModalSheet
               isOpen={showNewIdentityDialog}
               onIsOpenChange={setShowNewIdentityDialog}
+            />
+          )}
+          {!isSmDown && (
+            <AnimatedDialogModal
+              isOpen={showImportIdentityDialog}
+              onOpenChange={setShowImportIdentityDialog}
+            >
+              <ImportIdentDialog />
+            </AnimatedDialogModal>
+          )}
+          {isSmDown && showImportIdentityDialog && (
+            <ImportIdentModalSheet
+              isOpen={showImportIdentityDialog}
+              onIsOpenChange={setShowImportIdentityDialog}
             />
           )}
           {!isSmDown && (

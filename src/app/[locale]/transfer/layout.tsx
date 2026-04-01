@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function TransferLayout({
+export default async function TransferLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
