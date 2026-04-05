@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { routing } from "@/i18n/routing";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kippenstummel.de";
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kippenstummel.de";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -40,7 +42,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [`${BASE_URL}/og-image.png`],
     },
     alternates: {
-      canonical: `${BASE_URL}/${locale}/map`,
+      canonical: `${BASE_URL}/${locale}/home`,
+      languages: {
+        ...Object.fromEntries(
+          routing.locales.map((l) => [l, `${BASE_URL}/${l}/home`]),
+        ),
+        "x-default": `${BASE_URL}/de/home`,
+      },
     },
   };
 }

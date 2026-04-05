@@ -1,11 +1,15 @@
 import { Link } from "@/components/atoms/Link";
 import { RegionCvmList } from "@/components/organisms/cvm/RegionCvmList";
+import { routing } from "@/i18n/routing";
 import { REGIONS } from "@/lib/regions";
 import { Cvm } from "@/lib/types/cvm";
 import { Page } from "@/lib/types/pagination";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kippenstummel.de";
 
 type Props = {
   params: Promise<{ locale: string; region: string }>;
@@ -25,8 +29,8 @@ export async function generateMetadata({
   if (!region) notFound();
 
   const pageNumber = Number(page ?? "1");
-
   const isPaginated = pageNumber > 1;
+  const pageSuffix = pageNumber > 1 ? `?page=${pageNumber}` : "";
 
   return {
     title: t("meta.title", { region: region.name }),
@@ -41,7 +45,16 @@ export async function generateMetadata({
           follow: true,
         },
     alternates: {
-      canonical: `https://kippenstummel.de/cvms/region/${regionSlug}`,
+      canonical: `${BASE_URL}/${locale}/cvms/region/${region.slug}${pageSuffix}`,
+      languages: {
+        ...Object.fromEntries(
+          routing.locales.map((l) => [
+            l,
+            `${BASE_URL}/${l}/cvms/region/${region.slug}${pageSuffix}`,
+          ]),
+        ),
+        "x-default": `${BASE_URL}/de/cvms/region/${region.slug}${pageSuffix}`,
+      },
     },
   };
 }

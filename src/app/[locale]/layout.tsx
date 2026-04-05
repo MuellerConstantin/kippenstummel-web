@@ -16,7 +16,8 @@ import { InstallRequestNotificationHandler } from "@/components/organisms/Instal
 
 import "./globals.css";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kippenstummel.de";
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kippenstummel.de";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -38,15 +39,6 @@ export async function generateMetadata({
       template: `%s · ${t("title")}`,
     },
     description: t("description"),
-    alternates: {
-      canonical: `${BASE_URL}/${locale}`,
-      languages: {
-        ...Object.fromEntries(
-          routing.locales.map((l) => [l, `${BASE_URL}/${l}`]),
-        ),
-        "x-default": `${BASE_URL}/de`,
-      },
-    },
     openGraph: {
       type: "website",
       siteName: t("title"),

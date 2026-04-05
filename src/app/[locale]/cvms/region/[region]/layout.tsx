@@ -1,6 +1,6 @@
 import { StackTemplate } from "@/components/templates/StackTemplate";
 
-export default function LeaderboardLayout({
+export default function CvmRegionLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
