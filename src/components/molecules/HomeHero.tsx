@@ -59,7 +59,7 @@ export function HomeHero({ slogan }: HomeHeroProps) {
           animate={contentAnimate}
           transition={contentTransition}
         >
-          <div className="space-y-2">
+          <div className="space-y-4">
             <div className="flex flex-col items-center gap-2 text-center text-slate-600 md:flex-row md:gap-8 dark:text-slate-200">
               <div className="relative h-20 w-20 -rotate-16">
                 <Image
@@ -73,9 +73,9 @@ export function HomeHero({ slogan }: HomeHeroProps) {
                 Kippenstummel
               </div>
             </div>
-            <div className="text-center text-xl text-slate-500 drop-shadow-lg md:text-2xl dark:text-slate-400">
-              &ldquo;{slogan}&rdquo;
-            </div>
+            <h1 className="text-center text-xl text-slate-500 drop-shadow-lg md:text-2xl dark:text-slate-400">
+              {slogan}
+            </h1>
           </div>
           <JumbotronCta />
         </motion.div>
