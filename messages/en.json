@@ -77,6 +77,14 @@
         "8": {
           "question": "What is my personal identity?",
           "answer": "Fundamentally, we want to offer Kippenstummel anonymously. However, certain interactions must be attributable to a user. Therefore, instead of a user account, you will be issued an anonymous but personalized identity. All your interactions and achievements will be linked to this identity. The trustworthiness of your identity also determines the influence your interactions have. If you lose access to your devices, your identity will be irretrievably lost unless previously transferred or secured."
+        },
+        "9": {
+          "question": "Can I financially support the project?",
+          "answer": "Yes. The app remains free to use, but donations are welcome to help fund operations and further development. Donations are voluntary and not required. Funds are used, among other things, for server and hosting costs, development and maintenance of the web app, as well as general infrastructure and operating expenses. The goal is to ensure long-term operation and enable new features.<br></br><br></br>Donation link: <link>https://ko-fi.com/muellerconstantin/tip</link>"
+        },
+        "10": {
+          "question": "Can I support the project without donating money?",
+          "answer": "Yes. You can support the project in several non-financial ways. This includes helping with content maintenance, reporting new cigarette machines, voting on existing entries, and submitting corrections. You can also contribute to the open-source development by reporting issues, suggesting improvements, or contributing code. Community participation helps improve data quality and supports the long-term development of the project."
         }
       }
     },

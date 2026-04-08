@@ -224,6 +224,26 @@ export default function Home() {
               question={t("faq.items.8.question")}
               answer={t("faq.items.8.answer")}
             />
+            <FaqItem
+              id="faq-9"
+              question={t("faq.items.9.question")}
+              answer={t.rich("faq.items.9.answer", {
+                link: (chunks) => (
+                  <Link
+                    target="_blank"
+                    href="https://ko-fi.com/muellerconstantin/tip"
+                  >
+                    {chunks}
+                  </Link>
+                ),
+                br: () => <br />,
+              })}
+            />
+            <FaqItem
+              id="faq-10"
+              question={t("faq.items.10.question")}
+              answer={t("faq.items.10.answer")}
+            />
           </div>
         </section>
         <section className="flex w-full flex-col items-center gap-10 p-4 text-slate-800 dark:text-white">

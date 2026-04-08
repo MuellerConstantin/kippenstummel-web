@@ -77,6 +77,14 @@
         "8": {
           "question": "Was ist meine persönliche Identität?",
           "answer": "Grundsätzlich wollen wir Kippenstummel anonym anbieten. Trotzdem müssen bestimmt Interaktionen einem Benutzer zugeordnet werden können. Daher wird dir anstelle eines Benutzerkontos eine anonyme aber personalisierte Identität ausgestellt. Mit dieser werden all deine Interaktionen und Errungenschaften verknüpft. Die ermittelte Vertrauenswürdigkeit deiner Identität regelt außerdem wie viel Einfluss deine Interaktionen haben. Verlierst du Zugriff auf deine Geräte ist deine Identität, falls zuvor nicht übertragen oder gesichert, unwideruflich verloren."
+        },
+        "9": {
+          "question": "Kann ich das Projekt monetär unterstützen?",
+          "answer": "Ja. Die Nutzung bleibt kostenlos, Spenden sind jedoch willkommen, um Betrieb und Weiterentwicklung zu finanzieren. Spenden sind freiwillig und nicht erforderlich. Die Mittel fließen unter anderem in Server- und Hostingkosten, Entwicklung und Wartung der Web-App sowie allgemeine Infrastruktur- und Betriebskosten. Ziel ist es, den langfristigen Betrieb sicherzustellen und neue Funktionen zu ermöglichen.<br></br><br></br>Spendenlink: <link>https://ko-fi.com/muellerconstantin/tip</link>"
+        },
+        "10": {
+          "question": "Kann ich das Projekt ohne Geld unterstützen?",
+          "answer": "Ja. Du kannst das Projekt auf verschiedene nicht-finanzielle Weise unterstützen. Dazu gehört die Pflege von Inhalten, das Melden neuer Zigarettenautomaten, das Abstimmen über bestehende Einträge sowie das Einreichen von Korrekturen. Außerdem kannst du dich an der Open-Source-Entwicklung beteiligen, indem du Fehler meldest, Verbesserungen vorschlägst oder Code beiträgst. Die Mitarbeit der Community verbessert die Datenqualität und unterstützt die langfristige Weiterentwicklung des Projekts."
         }
       }
     },
