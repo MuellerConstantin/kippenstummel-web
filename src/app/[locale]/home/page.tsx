@@ -13,6 +13,7 @@ import { FaqItem } from "@/components/molecules/FaqItem";
 import { Leaderboard } from "@/components/organisms/Leaderboard";
 import { HomeHero } from "@/components/molecules/HomeHero";
 import { getTopRegionsGeoBalanced, REGIONS } from "@/lib/regions";
+import { DonateButton } from "@/components/molecules/DonateButton";
 
 interface FeatureItemProps {
   title: string;
@@ -114,6 +115,9 @@ export default function Home() {
               ),
             })}
           </div>
+        </section>
+        <section className="flex flex-col items-center gap-10 p-4 text-slate-800 dark:text-white">
+          <DonateButton />
         </section>
         <section className="flex w-full flex-col items-center gap-10 p-4 text-slate-800 dark:text-white">
           <div className="flex max-w-[40rem] flex-col items-center space-y-4">
