@@ -14,7 +14,7 @@ import { SelectedMarker } from "@/components/molecules/map/SelectedMarker";
 import { useBreakpointUp } from "@/hooks/useBreakpointUp";
 import { CvmInfoDialog } from "../../cvm/CvmInfoDialog";
 import { useBreakpointDown } from "@/hooks/useBreakpointDown";
-import { useCvmMapDefaultView } from "@/contexts/CvmMapViewContext";
+import { useCvmMapDefaultView } from "@/contexts/CvmMapViewProvider";
 import { HelpModalSheet } from "../../navigation/HelpModalSheet";
 import { MapSettingsModalSheet } from "../../navigation/MapSettingsModalSheet";
 

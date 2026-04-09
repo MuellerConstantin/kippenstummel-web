@@ -10,7 +10,7 @@ import { useCvmMapSelection } from "@/hooks/cvm/useCvmMapSelection";
 import { CvmMapRegisterOverlay } from "./CvmMapRegisterOverlay";
 import { CvmMapRepositionOverlay } from "./CvmMapRepositionOverlay";
 import { CvmMapTemplate } from "@/components/templates/map/CvmMapTemplate";
-import { useCvmMapView } from "@/contexts/CvmMapViewContext";
+import { useCvmMapView } from "@/contexts/CvmMapViewProvider";
 import { useCvmMapViewport } from "@/hooks/cvm/useMapCvmViewport";
 import { useAppSelector } from "@/store";
 

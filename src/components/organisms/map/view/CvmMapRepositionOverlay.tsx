@@ -2,7 +2,7 @@ import { AdjustableLocationMarker } from "@/components/molecules/map/AdjustableL
 import { ConfirmBottomNavigation } from "../../navigation/ConfirmBottomNavigation";
 import { GeoCoordinates } from "@/lib/types/geo";
 import { useTranslations } from "next-intl";
-import { useCvmMapRepositionView } from "@/contexts/CvmMapViewContext";
+import { useCvmMapRepositionView } from "@/contexts/CvmMapViewProvider";
 import { MapPinned } from "lucide-react";
 
 export interface CvmMapRepositionOverlayProps {

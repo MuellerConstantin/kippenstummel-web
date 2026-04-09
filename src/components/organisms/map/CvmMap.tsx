@@ -1,7 +1,7 @@
 "use client";
 
 import { GeoCoordinates } from "@/lib/types/geo";
-import { CvmMapViewProvider } from "@/contexts/CvmMapViewContext";
+import { CvmMapViewProvider } from "@/contexts/CvmMapViewProvider";
 import { CvmMapView } from "./view/CvmMapView";
 import { Button } from "@/components/atoms/Button";
 import { Link } from "@/components/atoms/Link";
