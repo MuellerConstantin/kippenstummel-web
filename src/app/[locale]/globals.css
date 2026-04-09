@@ -87,7 +87,7 @@ body {
 }
 
 .maplibregl-ctrl button {
-  @apply !bg-white/70 !text-slate-900 !backdrop-blur-md hover:!bg-slate-100;
+  @apply !h-9 !w-9 !bg-white/70 !text-slate-900 !backdrop-blur-md hover:!bg-slate-100;
 }
 
 .maplibregl-ctrl-group button:first-of-type:not(:only-of-type) {
