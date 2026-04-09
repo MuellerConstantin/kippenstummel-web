@@ -145,7 +145,7 @@ function cvmMapViewReducer(
   }
 }
 
-export interface CvmMapController {
+export interface CvmMapViewController {
   state: CvmMapViewState & { mode: CvmMapViewMode };
   dispatch: React.Dispatch<CvmMapViewAction>;
   goToDefaultMode: () => void;
@@ -156,7 +156,7 @@ export interface CvmMapController {
   ) => void;
 }
 
-const cvmMapViewContext = createContext<CvmMapController | null>(null);
+const cvmMapViewContext = createContext<CvmMapViewController | null>(null);
 
 export function CvmMapViewProvider({
   children,
