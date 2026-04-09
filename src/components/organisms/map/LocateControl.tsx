@@ -1,46 +1,45 @@
-import useLocate from "@/hooks/useLocate";
-import useLocateWatcher from "@/hooks/useLocateWatcher";
+import { useCvmMapFollow } from "@/contexts/CvmMapFollowProvider";
 import {
-  Navigation as NavigationIcon,
+  Locate as LocateIcon,
+  LocateFixed as LocateFixedIcon,
   LoaderCircle as LoaderCircleIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import { createPortal } from "react-dom";
-import { useControl, useMap } from "react-map-gl/maplibre";
+import { useControl } from "react-map-gl/maplibre";
 
 export function LocateControlComponent() {
   const t = useTranslations();
-  const { current: map } = useMap();
-  const locate = useLocate();
-  const { startWatching, stopWatching, isWatching } = useLocateWatcher();
 
-  const [locating, setLocating] = useState(false);
+  const {
+    isWatching,
+    isFollowing,
+    locating,
+    startTrackingAndFollow,
+    stopTracking,
+    resumeFollowing,
+  } = useCvmMapFollow();
 
   const onClick = useCallback(() => {
-    if (isWatching) {
-      stopWatching();
+    if (!isWatching) {
+      startTrackingAndFollow();
       return;
     }
 
-    if (locating) {
+    if (isWatching && !isFollowing) {
+      resumeFollowing();
       return;
     }
 
-    setLocating(true);
-
-    locate()
-      .then((position) =>
-        map?.flyTo({
-          center: [position.longitude, position.latitude],
-          zoom: 15,
-        }),
-      )
-      .then(() => startWatching())
-      .finally(() => {
-        setLocating(false);
-      });
-  }, [locate, map, locating, startWatching, isWatching, stopWatching]);
+    stopTracking();
+  }, [
+    isWatching,
+    isFollowing,
+    startTrackingAndFollow,
+    resumeFollowing,
+    stopTracking,
+  ]);
 
   return (
     <button
@@ -52,10 +51,15 @@ export function LocateControlComponent() {
     >
       {locating ? (
         <LoaderCircleIcon className="h-5 w-5 animate-spin" />
+      ) : !isWatching ? (
+        // No tracking/watching
+        <LocateIcon className="h-5 w-5" />
+      ) : isFollowing ? (
+        // Tracking/Watching + follow
+        <LocateFixedIcon className="h-5 w-5 text-green-600" />
       ) : (
-        <NavigationIcon
-          className={`h-5 w-5 ${isWatching ? "text-green-600" : ""}`}
-        />
+        // Tracking/Watching without follow
+        <LocateIcon className="h-5 w-5 text-green-600 opacity-80" />
       )}
     </button>
   );

@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 import { useAppDispatch, useAppSelector } from "@/store";
 import privacySlice from "@/store/slices/privacy";
 import usabilitySlice from "@/store/slices/usability";
+import { CvmMapFollowProvider } from "@/contexts/CvmMapFollowProvider";
 
 export interface CvmMapProps {
   onRegister?: (position: GeoCoordinates) => void;
@@ -68,7 +69,9 @@ export function CvmMap(props: CvmMapProps) {
   return (
     <div className="relative flex h-0 grow flex-col overflow-auto">
       <CvmMapViewProvider>
-        <CvmMapView {...props} />
+        <CvmMapFollowProvider>
+          <CvmMapView {...props} />
+        </CvmMapFollowProvider>
       </CvmMapViewProvider>
     </div>
   );

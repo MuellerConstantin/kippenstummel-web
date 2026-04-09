@@ -13,6 +13,7 @@ import { CvmMapTemplate } from "@/components/templates/map/CvmMapTemplate";
 import { useCvmMapView } from "@/contexts/CvmMapViewProvider";
 import { useCvmMapViewport } from "@/hooks/cvm/useMapCvmViewport";
 import { useAppSelector } from "@/store";
+import { useCvmMapFollow } from "@/contexts/CvmMapFollowProvider";
 
 export interface CvmMapViewProps {
   onRegister?: (position: GeoCoordinates) => void;
@@ -39,10 +40,11 @@ export function CvmMapView({
   const t = useTranslations();
   const { enqueue } = useNotifications();
 
-  const autoLocateDoneRef = useRef(false);
-  const userInteractedRef = useRef(false);
+  const autoFollowRef = useRef(false);
   const autoLocation = useAppSelector((state) => state.usability.autoLocation);
   const location = useAppSelector((state) => state.location.location);
+  const { pauseFollowing, isFollowing, isWatching, startTrackingAndFollow } =
+    useCvmMapFollow();
 
   const { state, goToDefaultMode, goToRegisterMode, goToRepositionMode } =
     useCvmMapView();
@@ -110,8 +112,7 @@ export function CvmMapView({
 
     const handleUserInteraction = (event: { originalEvent?: unknown }) => {
       if (!event.originalEvent) return;
-
-      userInteractedRef.current = true;
+      pauseFollowing();
     };
 
     map.on("movestart", handleUserInteraction);
@@ -125,10 +126,12 @@ export function CvmMapView({
       map.off("rotatestart", handleUserInteraction);
       map.off("pitchstart", handleUserInteraction);
     };
-  }, [map]);
+  }, [map, pauseFollowing]);
 
   const onRegisterStart = useCallback(
     (position: GeoCoordinates) => {
+      pauseFollowing();
+
       goToRegisterMode(position);
 
       map?.flyTo({
@@ -136,11 +139,13 @@ export function CvmMapView({
         zoom: 18,
       });
     },
-    [map, goToRegisterMode],
+    [map, goToRegisterMode, pauseFollowing],
   );
 
   const onRepositionStart = useCallback(
     (editorPosition: GeoCoordinates) => {
+      pauseFollowing();
+
       goToRepositionMode(selectedCvmPosition!, editorPosition);
 
       map?.flyTo({
@@ -148,7 +153,7 @@ export function CvmMapView({
         zoom: 18,
       });
     },
-    [selectedCvm, map, goToRepositionMode, selectedCvmPosition],
+    [selectedCvm, map, goToRepositionMode, selectedCvmPosition, pauseFollowing],
   );
 
   const onRegisterEnd = useCallback(
@@ -159,22 +164,6 @@ export function CvmMapView({
     [onRegister, goToDefaultMode],
   );
 
-  useEffect(() => {
-    if (!map) return;
-    if (!autoLocation) return;
-    if (autoLocateDoneRef.current) return;
-    if (userInteractedRef.current) return;
-    if (!location) return;
-    if (props.sharedCvmId) return;
-
-    autoLocateDoneRef.current = true;
-
-    map?.flyTo({
-      center: [location.longitude, location.latitude],
-      zoom: 15,
-    });
-  }, [map, autoLocation, location, props.sharedCvmId]);
-
   const onRepositionEnd = useCallback(
     (newPosition: GeoCoordinates, editorPosition: GeoCoordinates) => {
       onReposition?.(selectedCvm!.id, newPosition, editorPosition!);
@@ -182,6 +171,25 @@ export function CvmMapView({
     },
     [selectedCvm, onReposition, goToDefaultMode],
   );
+
+  useEffect(() => {
+    if (autoFollowRef.current) return;
+    if (!autoLocation) return;
+
+    autoFollowRef.current = true;
+    startTrackingAndFollow();
+  }, [autoLocation, startTrackingAndFollow]);
+
+  useEffect(() => {
+    if (!map) return;
+    if (!location) return;
+    if (!isWatching) return;
+    if (!isFollowing) return;
+
+    map.easeTo({
+      center: [location.longitude, location.latitude],
+    });
+  }, [map, location, isWatching, isFollowing]);
 
   return (
     <CvmMapTemplate onLoad={onLoad} onViewChange={onViewStateChanged}>
