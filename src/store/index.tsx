@@ -178,6 +178,14 @@ export function StoreProvider({
   if (!storeRef.current) {
     storeRef.current = makeStore();
     injectStore(storeRef.current[0]);
+
+    if (
+      process.env.NODE_ENV !== "production" &&
+      typeof window !== "undefined"
+    ) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (window as any).__getState__ = () => storeRef.current?.[0].getState();
+    }
   }
 
   return (

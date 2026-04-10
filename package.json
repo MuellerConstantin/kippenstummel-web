@@ -21,8 +21,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "generate:regions": "tsx scripts/generate-regions.ts",
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui"
+    "test:e2e": "cross-env NODE_ENV=test playwright test",
+    "test:e2e:ui": "cross-env NODE_ENV=test playwright test --ui"
   },
   "dependencies": {
     "@lglab/react-qr-code": "^1.4.9",
@@ -31,6 +31,7 @@
     "@turf/turf": "^7.2.0",
     "ackee-tracker": "^5.1.0",
     "axios": "^1.8.4",
+    "cross-env": "^10.1.0",
     "formik": "^2.4.6",
     "ioredis": "^5.6.1",
     "jdenticon": "^3.3.0",
