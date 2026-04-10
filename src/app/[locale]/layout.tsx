@@ -84,9 +84,11 @@ export function generateStaticParams() {
 
 export default async function RootLayout({
   children,
+  modal,
   params,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
@@ -131,6 +133,7 @@ export default async function RootLayout({
                 <RequireIdentInterceptor>
                   <RuntimeConfigProvider>
                     {children}
+                    {modal}
                     <NotificationView />
                     <AckeeTracker />
                     <OfflineHandler />

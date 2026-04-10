@@ -21,7 +21,6 @@ import { Menu, MenuItem } from "@/components/molecules/Menu";
 import { Popover } from "@/components/atoms/Popover";
 import { IdentIcon } from "@/components/atoms/IdentIcon";
 import { ListBox, ListBoxItem } from "@/components/atoms/ListBox";
-import { IdentityDialog } from "./ident/IdentityDialog";
 import { useAppSelector, useAppDispatch } from "@/store";
 import usabilitySlice from "@/store/slices/usability";
 import { useRouter, usePathname } from "@/i18n/navigation";
@@ -34,7 +33,6 @@ import useApi from "@/hooks/useApi";
 import { AnimatedDialogModal } from "../molecules/AnimatedDialogModal";
 import { AboutDialog } from "./navigation/AboutDialog";
 import { useBreakpointDown } from "@/hooks/useBreakpointDown";
-import { IdentityModalSheet } from "./ident/IdentityModalSheet";
 import { AboutModalSheet } from "./navigation/AboutModalSheet";
 import { RequestIdentModalSheet } from "./ident/RequestIdentModalSheet";
 import { ImportIdentModalSheet } from "./ident/ImportIdentModalSheet";
@@ -217,13 +215,13 @@ function NavbarAuthenticatedOptionsMenu() {
   const t = useTranslations("Navbar");
   const dispatch = useAppDispatch();
   const api = useApi();
+  const router = useRouter();
 
   const isSmDown = useBreakpointDown("sm");
 
   const darkMode = useAppSelector((state) => state.usability.darkMode);
   const identity = useAppSelector((state) => state.ident.identity);
 
-  const [showIdentityDialog, setShowIdentityDialog] = useState(false);
   const [showAboutDialog, setShowAboutDialog] = useState(false);
 
   const { data, error, isLoading } = useSWR<
@@ -285,7 +283,7 @@ function NavbarAuthenticatedOptionsMenu() {
             Dark Mode
           </Switch>
           <ListBox>
-            <ListBoxItem onAction={() => setShowIdentityDialog(true)}>
+            <ListBoxItem onAction={() => router.push("/dialog/identity")}>
               <div className="flex w-full items-center gap-2">
                 <IdCard className="h-4 w-4" />
                 <span>{t("options.identity")}</span>
@@ -299,21 +297,6 @@ function NavbarAuthenticatedOptionsMenu() {
             </ListBoxItem>
           </ListBox>
         </div>
-        {!isSmDown && (
-          <AnimatedDialogModal
-            isOpen={showIdentityDialog}
-            onOpenChange={setShowIdentityDialog}
-            className="!max-w-4xl"
-          >
-            <IdentityDialog />
-          </AnimatedDialogModal>
-        )}
-        {isSmDown && showIdentityDialog && (
-          <IdentityModalSheet
-            isOpen={showIdentityDialog}
-            onIsOpenChange={setShowIdentityDialog}
-          />
-        )}
         {!isSmDown && (
           <AnimatedDialogModal
             isOpen={showAboutDialog}
