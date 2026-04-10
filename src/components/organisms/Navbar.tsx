@@ -141,7 +141,7 @@ export function NavbarUnauthenticatedOptionsMenu() {
           </Switch>
         </div>
         <div className="flex flex-col gap-2">
-          <div className="text-xs">{t("no-identity")}</div>
+          <div className="text-xs">{t("noIdentity")}</div>
           <ListBox>
             <ListBoxItem onAction={() => setShowNewIdentityDialog(true)}>
               <div className="flex w-full items-center gap-2">
@@ -259,8 +259,8 @@ function NavbarAuthenticatedOptionsMenu() {
         <div className="h-8" />
       </div>
       <div className="flex w-[15rem] flex-col gap-4 overflow-hidden px-2 pb-2">
-        {data?.displayName && (
-          <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2">
+          {data?.displayName ? (
             <div className="flex items-center overflow-hidden">
               <span className="truncate font-semibold text-slate-800 dark:text-white">
                 {data.displayName.split("#")[0]}
@@ -269,9 +269,22 @@ function NavbarAuthenticatedOptionsMenu() {
                 #{data.displayName.split("#")[1]}
               </span>
             </div>
-            <hr className="border-slate-200 dark:border-slate-800" />
-          </div>
-        )}
+          ) : (
+            <div className="flex items-center gap-1 overflow-hidden">
+              <span className="truncate font-semibold text-slate-800 dark:text-white">
+                Anonymous
+              </span>
+              <span className="text-xs text-slate-400 dark:text-slate-400">
+                (
+                <Link onClick={() => router.push("/dialog/identity")}>
+                  {t("noDisplayName")}
+                </Link>
+                )
+              </span>
+            </div>
+          )}
+          <hr className="border-slate-200 dark:border-slate-800" />
+        </div>
         <div className="flex flex-col gap-4">
           <Switch
             isSelected={darkMode}

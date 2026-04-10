@@ -348,7 +348,8 @@
     "leaderboard": "Leaderboard",
     "darkMode": "Dark Mode",
     "myKarma": "My Karma",
-    "no-identity": "No identity? Create one now!",
+    "noIdentity": "No identity? Create one now!",
+    "noDisplayName": "Choose name",
     "options": {
       "identity": "My identity",
       "new-identity": "Create identity",

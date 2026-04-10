@@ -348,7 +348,8 @@
     "leaderboard": "Leaderboard",
     "darkMode": "Dunkler Modus",
     "myKarma": "Mein Karma",
-    "no-identity": "Noch keine Identität? Jetzt anlegen!",
+    "noIdentity": "Noch keine Identität? Jetzt anlegen!",
+    "noDisplayName": "Name festlegen",
     "options": {
       "identity": "Meine Identität",
       "new-identity": "Identität anlegen",
