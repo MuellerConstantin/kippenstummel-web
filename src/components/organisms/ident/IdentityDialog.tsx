@@ -20,7 +20,7 @@ export function IdentityDialog(props: IdentityDialogProps) {
           >
             {t("title")}
           </Heading>
-          <IdentityDialogContent />
+          <IdentityDialogContent close={close} />
           <div className="flex w-full shrink-0 justify-end gap-4">
             <Button onPress={close} className="md:w-fit">
               {t("close")}

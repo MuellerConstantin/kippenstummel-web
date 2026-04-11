@@ -58,7 +58,11 @@ function KarmaTab() {
   );
 }
 
-export function IdentityDialogContent() {
+export interface IdentityDialogContentProps {
+  close: () => void;
+}
+
+export function IdentityDialogContent({ close }: IdentityDialogContentProps) {
   const t = useTranslations("IdentityDialog");
   const isSmDown = useBreakpointDown("sm");
 
