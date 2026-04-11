@@ -119,11 +119,12 @@ export function RequestIdentDialogContent({
       <div className="text-sm">{t("description")}</div>
       <div className="flex justify-center">
         {loading ? (
-          <div>
-            <Spinner size={32} />
-          </div>
+          <div className="h-32 w-[80%] animate-pulse rounded-md bg-slate-200 dark:bg-slate-700" />
         ) : error || submitError ? (
-          <span className="text-red-500">{error || submitError}</span>
+          <div className="flex w-full flex-col items-center gap-2 text-center">
+            <div className="h-32 w-[80%] rounded-md bg-red-300 dark:bg-red-800" />
+            <span className="text-red-500">{error || submitError}</span>
+          </div>
         ) : (
           <div className="flex w-full flex-col items-center gap-2">
             {captcha && (
