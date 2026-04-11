@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import {
@@ -24,19 +24,11 @@ import { ListBox, ListBoxItem } from "@/components/atoms/ListBox";
 import { useAppSelector, useAppDispatch } from "@/store";
 import usabilitySlice from "@/store/slices/usability";
 import { useRouter, usePathname } from "@/i18n/navigation";
-import { RequestIdentDialog } from "./ident/RequestIdentDialog";
 import { IdentInfo } from "@/lib/types/ident";
 import { AxiosError } from "axios";
 import { ApiError } from "next/dist/server/api-utils";
 import useSWR from "swr";
 import useApi from "@/hooks/useApi";
-import { AnimatedDialogModal } from "../molecules/AnimatedDialogModal";
-import { AboutDialog } from "./navigation/AboutDialog";
-import { useBreakpointDown } from "@/hooks/useBreakpointDown";
-import { AboutModalSheet } from "./navigation/AboutModalSheet";
-import { RequestIdentModalSheet } from "./ident/RequestIdentModalSheet";
-import { ImportIdentModalSheet } from "./ident/ImportIdentModalSheet";
-import { ImportIdentDialog } from "./ident/ImportIdentDialog";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
@@ -115,16 +107,10 @@ export function Navbar() {
 
 export function NavbarUnauthenticatedOptionsMenu() {
   const t = useTranslations("Navbar");
-
-  const isSmDown = useBreakpointDown("sm");
+  const router = useRouter();
 
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector((state) => state.usability.darkMode);
-
-  const [showNewIdentityDialog, setShowNewIdentityDialog] = useState(false);
-  const [showImportIdentityDialog, setShowImportIdentityDialog] =
-    useState(false);
-  const [showAboutDialog, setShowAboutDialog] = useState(false);
 
   return (
     <Popover className="entering:animate-in entering:fade-in entering:placement-bottom:slide-in-from-top-1 entering:placement-top:slide-in-from-bottom-1 exiting:animate-out exiting:fade-out exiting:placement-bottom:slide-out-to-top-1 exiting:placement-top:slide-out-to-bottom-1 fill-mode-forwards origin-top-left overflow-auto rounded-lg bg-white p-2 shadow-lg ring-1 ring-black/10 outline-hidden dark:bg-slate-950 dark:ring-white/15">
@@ -143,68 +129,27 @@ export function NavbarUnauthenticatedOptionsMenu() {
         <div className="flex flex-col gap-2">
           <div className="text-xs">{t("noIdentity")}</div>
           <ListBox>
-            <ListBoxItem onAction={() => setShowNewIdentityDialog(true)}>
+            <ListBoxItem onAction={() => router.push("/dialog/identity/new")}>
               <div className="flex w-full items-center gap-2">
                 <Signature className="h-4 w-4" />
                 <span>{t("options.new-identity")}</span>
               </div>
             </ListBoxItem>
-            <ListBoxItem onAction={() => setShowImportIdentityDialog(true)}>
+            <ListBoxItem
+              onAction={() => router.push("/dialog/identity/import")}
+            >
               <div className="flex w-full items-center gap-2">
                 <Import className="h-4 w-4" />
                 <span>{t("options.import-identity")}</span>
               </div>
             </ListBoxItem>
-            <ListBoxItem onAction={() => setShowAboutDialog(true)}>
+            <ListBoxItem onAction={() => router.push("/dialog/about")}>
               <div className="flex w-full items-center gap-2">
                 <Info className="h-4 w-4" />
                 <span>{t("options.about")}</span>
               </div>
             </ListBoxItem>
           </ListBox>
-          {!isSmDown && (
-            <AnimatedDialogModal
-              isOpen={showNewIdentityDialog}
-              onOpenChange={setShowNewIdentityDialog}
-            >
-              <RequestIdentDialog />
-            </AnimatedDialogModal>
-          )}
-          {isSmDown && showNewIdentityDialog && (
-            <RequestIdentModalSheet
-              isOpen={showNewIdentityDialog}
-              onIsOpenChange={setShowNewIdentityDialog}
-            />
-          )}
-          {!isSmDown && (
-            <AnimatedDialogModal
-              isOpen={showImportIdentityDialog}
-              onOpenChange={setShowImportIdentityDialog}
-            >
-              <ImportIdentDialog />
-            </AnimatedDialogModal>
-          )}
-          {isSmDown && showImportIdentityDialog && (
-            <ImportIdentModalSheet
-              isOpen={showImportIdentityDialog}
-              onIsOpenChange={setShowImportIdentityDialog}
-            />
-          )}
-          {!isSmDown && (
-            <AnimatedDialogModal
-              isOpen={showAboutDialog}
-              onOpenChange={setShowAboutDialog}
-              className="max-w-xl"
-            >
-              <AboutDialog />
-            </AnimatedDialogModal>
-          )}
-          {isSmDown && showAboutDialog && (
-            <AboutModalSheet
-              isOpen={showAboutDialog}
-              onIsOpenChange={setShowAboutDialog}
-            />
-          )}
         </div>
       </div>
     </Popover>
@@ -217,12 +162,8 @@ function NavbarAuthenticatedOptionsMenu() {
   const api = useApi();
   const router = useRouter();
 
-  const isSmDown = useBreakpointDown("sm");
-
   const darkMode = useAppSelector((state) => state.usability.darkMode);
   const identity = useAppSelector((state) => state.ident.identity);
-
-  const [showAboutDialog, setShowAboutDialog] = useState(false);
 
   const { data, error, isLoading } = useSWR<
     IdentInfo,
@@ -302,7 +243,7 @@ function NavbarAuthenticatedOptionsMenu() {
                 <span>{t("options.identity")}</span>
               </div>
             </ListBoxItem>
-            <ListBoxItem onAction={() => setShowAboutDialog(true)}>
+            <ListBoxItem onAction={() => router.push("/dialog/about")}>
               <div className="flex w-full items-center gap-2">
                 <Info className="h-4 w-4" />
                 <span>{t("options.about")}</span>
@@ -310,21 +251,6 @@ function NavbarAuthenticatedOptionsMenu() {
             </ListBoxItem>
           </ListBox>
         </div>
-        {!isSmDown && (
-          <AnimatedDialogModal
-            isOpen={showAboutDialog}
-            onOpenChange={setShowAboutDialog}
-            className="max-w-xl"
-          >
-            <AboutDialog />
-          </AnimatedDialogModal>
-        )}
-        {isSmDown && showAboutDialog && (
-          <AboutModalSheet
-            isOpen={showAboutDialog}
-            onIsOpenChange={setShowAboutDialog}
-          />
-        )}
       </div>
     </Popover>
   );
