@@ -5,8 +5,6 @@ type CvmMapViewMode = "default" | "register" | "reposition";
 
 const initialDefaultViewState: DefaultViewState = {
   mode: "default",
-  showHelpDialog: false,
-  showMapSettingsDialog: false,
   showReportDialog: false,
   reporterPosition: null,
 };
@@ -26,17 +24,11 @@ const initialCvmMapRepositionViewState: RepositionViewState = {
 
 export interface DefaultViewState {
   mode: "default";
-  showHelpDialog: boolean;
-  showMapSettingsDialog: boolean;
   showReportDialog: boolean;
   reporterPosition: GeoCoordinates | null;
 }
 
 type DefaultViewStateAction =
-  | { type: "OPEN_HELP_DIALOG" }
-  | { type: "CLOSE_HELP_DIALOG" }
-  | { type: "OPEN_MAP_SETTINGS_DIALOG" }
-  | { type: "CLOSE_MAP_SETTINGS_DIALOG" }
   | { type: "OPEN_REPORT_DIALOG"; reporterPosition: GeoCoordinates }
   | { type: "CLOSE_REPORT_DIALOG" };
 
@@ -102,22 +94,6 @@ function cvmMapViewReducer(
         editorPosition: action.editorPosition,
         originalPosition: action.originalPosition,
       };
-    }
-    case "OPEN_HELP_DIALOG": {
-      if (state.mode !== "default") return state;
-      return { ...state, showHelpDialog: true };
-    }
-    case "CLOSE_HELP_DIALOG": {
-      if (state.mode !== "default") return state;
-      return { ...state, showHelpDialog: false };
-    }
-    case "OPEN_MAP_SETTINGS_DIALOG": {
-      if (state.mode !== "default") return state;
-      return { ...state, showMapSettingsDialog: true };
-    }
-    case "CLOSE_MAP_SETTINGS_DIALOG": {
-      if (state.mode !== "default") return state;
-      return { ...state, showMapSettingsDialog: false };
     }
     case "OPEN_REPORT_DIALOG": {
       if (state.mode !== "default") return state;
@@ -219,22 +195,6 @@ export function useCvmMapDefaultView() {
     throw new Error("useDefaultMapView can only be used in default view");
   }
 
-  const openHelpDialog = useCallback(() => {
-    dispatch({ type: "OPEN_HELP_DIALOG" });
-  }, [dispatch]);
-
-  const closeHelpDialog = useCallback(() => {
-    dispatch({ type: "CLOSE_HELP_DIALOG" });
-  }, [dispatch]);
-
-  const openMapSettingsDialog = useCallback(() => {
-    dispatch({ type: "OPEN_MAP_SETTINGS_DIALOG" });
-  }, [dispatch]);
-
-  const closeMapSettingsDialog = useCallback(() => {
-    dispatch({ type: "CLOSE_MAP_SETTINGS_DIALOG" });
-  }, [dispatch]);
-
   const openReportDialog = useCallback(
     (reporterPosition: GeoCoordinates) => {
       dispatch({ type: "OPEN_REPORT_DIALOG", reporterPosition });
@@ -248,10 +208,6 @@ export function useCvmMapDefaultView() {
 
   return {
     state: state as DefaultViewState & { mode: "default" },
-    openHelpDialog,
-    closeHelpDialog,
-    openMapSettingsDialog,
-    closeMapSettingsDialog,
     openReportDialog,
     closeReportDialog,
   };

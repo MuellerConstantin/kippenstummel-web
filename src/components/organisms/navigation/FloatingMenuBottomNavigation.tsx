@@ -8,18 +8,18 @@ import {
 import useLocate from "@/hooks/useLocate";
 import { useAppSelector } from "@/store";
 import { GeoCoordinates } from "@/lib/types/geo";
+import { useRouter } from "@/i18n/navigation";
 
 interface FloatingMenuBottomNavigationProps {
   onRegister?: (position: GeoCoordinates) => void;
-  onHelp?: () => void;
-  onSettings?: () => void;
 }
 
 export function FloatingMenuBottomNavigation(
   props: FloatingMenuBottomNavigationProps,
 ) {
-  const { onRegister, onHelp, onSettings } = props;
+  const { onRegister } = props;
   const locate = useLocate();
+  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const numberOfActiveFilters = useAppSelector((state) => {
@@ -48,7 +48,7 @@ export function FloatingMenuBottomNavigation(
       >
         <button
           type="button"
-          onClick={() => onHelp?.()}
+          onClick={() => router.push("/dialog/map/help")}
           className="flex cursor-pointer flex-col items-center justify-center rounded-l-md px-5 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-green-600 dark:hover:bg-slate-800"
         >
           <HelpCircle className="h-6 w-6" />
@@ -68,7 +68,7 @@ export function FloatingMenuBottomNavigation(
         </div>
         <button
           type="button"
-          onClick={() => onSettings?.()}
+          onClick={() => router.push("/dialog/map/settings")}
           className="flex cursor-pointer flex-col items-center justify-center rounded-r-md px-5 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-green-600 dark:hover:bg-slate-800"
         >
           <div className="relative">

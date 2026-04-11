@@ -5,8 +5,6 @@ import { Cvm, CvmCluster } from "@/lib/types/cvm";
 import { GeoCoordinates } from "@/lib/types/geo";
 import { FloatingMenuBottomNavigation } from "../../navigation/FloatingMenuBottomNavigation";
 import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
-import { HelpDialog } from "../../navigation/HelpDialog";
-import { MapSettingsDialog } from "../../navigation/MapSettingsDialog";
 import { CvmReportDialog } from "../../cvm/CvmReportDialog";
 import { ClusterMarker } from "@/components/molecules/map/ClusterMarker";
 import { LocationMarker } from "@/components/molecules/map/LocationMarker";
@@ -15,8 +13,6 @@ import { useBreakpointUp } from "@/hooks/useBreakpointUp";
 import { CvmInfoDialog } from "../../cvm/CvmInfoDialog";
 import { useBreakpointDown } from "@/hooks/useBreakpointDown";
 import { useCvmMapDefaultView } from "@/contexts/CvmMapViewProvider";
-import { HelpModalSheet } from "../../navigation/HelpModalSheet";
-import { MapSettingsModalSheet } from "../../navigation/MapSettingsModalSheet";
 
 export interface CvmMapDefaultOverlayProps {
   selectedCvm: Cvm | null;
@@ -43,15 +39,7 @@ export function CvmMapDefaultOverlay({
   const isLgUp = useBreakpointUp("lg");
   const isSmDown = useBreakpointDown("sm");
 
-  const {
-    state,
-    openHelpDialog,
-    closeHelpDialog,
-    openMapSettingsDialog,
-    closeMapSettingsDialog,
-    openReportDialog,
-    closeReportDialog,
-  } = useCvmMapDefaultView();
+  const { state, openReportDialog, closeReportDialog } = useCvmMapDefaultView();
 
   return (
     <>
@@ -66,26 +54,10 @@ export function CvmMapDefaultOverlay({
               onReport={openReportDialog}
             />
           )}
-          {state.showHelpDialog && (
-            <HelpModalSheet
-              isOpen={state.showHelpDialog}
-              onIsOpenChange={closeHelpDialog}
-            />
-          )}
-          {state.showMapSettingsDialog && (
-            <MapSettingsModalSheet
-              isOpen={state.showMapSettingsDialog}
-              onIsOpenChange={closeMapSettingsDialog}
-            />
-          )}
           <div className="pointer-events-none absolute z-[40000] flex h-full w-full">
             <div className="relative grow">
               <div className="pointer-events-auto absolute bottom-14 left-1/2 block h-fit w-fit -translate-x-1/2 px-2 lg:hidden">
-                <FloatingMenuBottomNavigation
-                  onHelp={openHelpDialog}
-                  onSettings={openMapSettingsDialog}
-                  onRegister={props.onRegister}
-                />
+                <FloatingMenuBottomNavigation onRegister={props.onRegister} />
               </div>
             </div>
           </div>
@@ -93,19 +65,6 @@ export function CvmMapDefaultOverlay({
       )}
       {!isSmDown && !isLgUp && (
         <>
-          <AnimatedDialogModal
-            className="!max-w-2xl"
-            isOpen={state.showHelpDialog}
-            onOpenChange={closeHelpDialog}
-          >
-            <HelpDialog />
-          </AnimatedDialogModal>
-          <AnimatedDialogModal
-            isOpen={state.showMapSettingsDialog}
-            onOpenChange={closeMapSettingsDialog}
-          >
-            <MapSettingsDialog />
-          </AnimatedDialogModal>
           <AnimatedDialogModal
             isOpen={!!selectedCvm}
             onOpenChange={() => props.onDeselect?.()}
@@ -121,11 +80,7 @@ export function CvmMapDefaultOverlay({
           <div className="pointer-events-none absolute z-[40000] flex h-full w-full">
             <div className="relative grow">
               <div className="pointer-events-auto absolute bottom-9 left-1/2 block h-fit w-fit -translate-x-1/2 px-2">
-                <FloatingMenuBottomNavigation
-                  onHelp={openHelpDialog}
-                  onSettings={openMapSettingsDialog}
-                  onRegister={props.onRegister}
-                />
+                <FloatingMenuBottomNavigation onRegister={props.onRegister} />
               </div>
             </div>
           </div>
@@ -133,19 +88,6 @@ export function CvmMapDefaultOverlay({
       )}
       {isLgUp && (
         <>
-          <AnimatedDialogModal
-            className="!max-w-2xl"
-            isOpen={state.showHelpDialog}
-            onOpenChange={closeHelpDialog}
-          >
-            <HelpDialog />
-          </AnimatedDialogModal>
-          <AnimatedDialogModal
-            isOpen={state.showMapSettingsDialog}
-            onOpenChange={closeMapSettingsDialog}
-          >
-            <MapSettingsDialog />
-          </AnimatedDialogModal>
           <div className="pointer-events-none absolute z-[40000] flex h-full w-full">
             <div className="pointer-events-auto h-full shrink-0 pt-3 pb-3 pl-3">
               <AnimatePresence>
@@ -173,11 +115,7 @@ export function CvmMapDefaultOverlay({
                 layout
                 transition={{ duration: 0.3, ease: "easeInOut" }}
               >
-                <FloatingMenuBottomNavigation
-                  onHelp={openHelpDialog}
-                  onSettings={openMapSettingsDialog}
-                  onRegister={props.onRegister}
-                />
+                <FloatingMenuBottomNavigation onRegister={props.onRegister} />
               </motion.div>
             </div>
           </div>
