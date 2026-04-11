@@ -340,7 +340,7 @@ export function CvmInfoDialogContent(props: CvmInfoDialogContentProps) {
           </div>
           <div className="flex justify-end gap-2">
             <button
-              className="flex cursor-pointer items-center gap-1 text-xs text-slate-500 hover:underline focus-visible:outline-2 focus-visible:outline-green-600 disabled:cursor-not-allowed disabled:text-slate-300 dark:text-slate-400 dark:hover:text-slate-200"
+              className="flex cursor-pointer items-center gap-1 text-sm text-slate-500 hover:underline focus-visible:outline-2 focus-visible:outline-green-600 disabled:cursor-not-allowed disabled:text-slate-300 dark:text-slate-400 dark:hover:text-slate-200"
               onClick={onReportRequest}
               disabled={isReporting || isRepositioning || voting !== false}
             >
@@ -348,7 +348,7 @@ export function CvmInfoDialogContent(props: CvmInfoDialogContentProps) {
               {isReporting && <Spinner size={14} />}
             </button>
             <button
-              className="flex cursor-pointer items-center gap-1 text-xs text-slate-500 hover:underline focus-visible:outline-2 focus-visible:outline-green-600 disabled:cursor-not-allowed disabled:text-slate-300 dark:text-slate-400 dark:hover:text-slate-200"
+              className="flex cursor-pointer items-center gap-1 text-sm text-slate-500 hover:underline focus-visible:outline-2 focus-visible:outline-green-600 disabled:cursor-not-allowed disabled:text-slate-300 dark:text-slate-400 dark:hover:text-slate-200"
               onClick={onRepositionRequest}
               disabled={isRepositioning || voting !== false}
             >
