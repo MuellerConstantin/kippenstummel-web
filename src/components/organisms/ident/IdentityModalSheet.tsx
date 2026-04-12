@@ -19,7 +19,11 @@ export function IdentityModalSheet(props: IdentityModalSheetProps) {
         >
           {t("title")}
         </h4>
-        <IdentityDialogContent />
+        <IdentityDialogContent
+          close={() => {
+            props.onIsOpenChange?.(false);
+          }}
+        />
       </div>
     </ModalSheet>
   );
