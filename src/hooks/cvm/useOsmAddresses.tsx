@@ -2,11 +2,6 @@ import { GeoCoordinates } from "@/lib/types/geo";
 import { useCallback, useMemo } from "react";
 import useSWR from "swr";
 import axios from "axios";
-import { Cvm } from "@/lib/types/cvm";
-
-interface UseOsmAddressesProps {
-  cvms: Cvm[] | null;
-}
 
 type OsmAddress = {
   place_id: number;
@@ -44,7 +39,7 @@ type OsmAddress = {
   ];
 };
 
-export function useOsmAddresses({ cvms }: UseOsmAddressesProps) {
+export function useOsmAddresses(coordinates: GeoCoordinates[] | null) {
   const fetchOsmAddress = useCallback(async (key: GeoCoordinates) => {
     const url = "/api/geocoding/reverse";
 
@@ -65,12 +60,12 @@ export function useOsmAddresses({ cvms }: UseOsmAddressesProps) {
     unknown,
     ["osmAddresses", GeoCoordinates[]] | null
   >(
-    cvms
+    coordinates
       ? [
           "osmAddresses",
-          cvms.map((cvm) => ({
-            latitude: cvm.latitude,
-            longitude: cvm.longitude,
+          coordinates.map((coord) => ({
+            latitude: coord.latitude,
+            longitude: coord.longitude,
           })) || [],
         ]
       : null,

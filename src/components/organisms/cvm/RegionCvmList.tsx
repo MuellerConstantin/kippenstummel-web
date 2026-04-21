@@ -3,7 +3,7 @@
 import { Link } from "@/components/atoms/Link";
 import { ListBox, ListBoxItem } from "@/components/atoms/ListBox";
 import { Pagination } from "@/components/molecules/Pagination";
-import { useOsmAddresses } from "@/hooks/cvm/useOsmAddresses";
+import { useOsmAddress } from "@/hooks/cvm/useOsmAddress";
 import useApi from "@/hooks/useApi";
 import { useRouter } from "@/i18n/navigation";
 import {
@@ -13,12 +13,35 @@ import {
 } from "@/lib/constants";
 import { Region } from "@/lib/regions";
 import { Cvm } from "@/lib/types/cvm";
+import { GeoCoordinates } from "@/lib/types/geo";
 import { Page } from "@/lib/types/pagination";
 import { ChevronDown, ChevronUp, Equal, MapPin, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import useSWR from "swr";
+
+interface CvmAddressProps {
+  coordinates: GeoCoordinates;
+}
+
+function CvmAddress({ coordinates }: CvmAddressProps) {
+  const { address, isLoading, error } = useOsmAddress(coordinates);
+
+  return (
+    <div>
+      {isLoading ? (
+        <div className="h-3 w-[12rem] animate-pulse truncate rounded-md bg-slate-300 dark:bg-slate-700" />
+      ) : error ? (
+        <div className="truncate text-xs">
+          {coordinates.latitude} / {coordinates.longitude} (lat/lng)
+        </div>
+      ) : (
+        <div className="truncate text-xs">{address}</div>
+      )}
+    </div>
+  );
+}
 
 export interface RegionCvmListProps {
   region: Region;
@@ -65,10 +88,6 @@ export function RegionCvmList(props: RegionCvmListProps) {
     url,
     (url) => api.get(url).then((res) => res.data),
   );
-
-  const formattedAddresses = useOsmAddresses({
-    cvms: data?.content || null,
-  });
 
   const handleSelect = useCallback((key: string) => {
     setSelected(key);
@@ -121,66 +140,59 @@ export function RegionCvmList(props: RegionCvmListProps) {
               handleSelect([...(keys as Set<string>)][0])
             }
           >
-            {data?.content.map((cvm, index) => {
-              const formattedAddress = formattedAddresses?.[index];
-
-              return (
-                <ListBoxItem id={`cvm-list-item-${cvm.id}`} key={cvm.id}>
-                  <div className="flex h-full w-full justify-between gap-2">
-                    <div className="flex cursor-pointer gap-2 overflow-hidden">
-                      <div className="relative z-[50] h-fit w-fit">
-                        {cvm.score <= SCORING_DELETION_UPPER_LIMIT ? (
-                          <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-800">
-                            <X className="h-2.5 w-2.5 text-white" />
-                          </div>
-                        ) : cvm.score < SCORING_NEUTRAL_LOWER_LIMIT ? (
-                          <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-500">
-                            <ChevronDown className="h-2.5 w-2.5 text-white" />
-                          </div>
-                        ) : cvm.score >= SCORING_GOOD_LOWER_LIMIT ? (
-                          <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-green-600">
-                            <ChevronUp className="h-2.5 w-2.5 text-white" />
-                          </div>
-                        ) : (
-                          <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-slate-500">
-                            <Equal className="h-2.5 w-2.5 text-white" />
-                          </div>
-                        )}
-                        <MapPin className="h-8 w-8 fill-green-600 text-white" />
+            {data?.content.map((cvm) => (
+              <ListBoxItem id={`cvm-list-item-${cvm.id}`} key={cvm.id}>
+                <div className="flex h-full w-full justify-between gap-2">
+                  <div className="flex cursor-pointer gap-2 overflow-hidden">
+                    <div className="relative z-[50] h-fit w-fit">
+                      {cvm.score <= SCORING_DELETION_UPPER_LIMIT ? (
+                        <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-800">
+                          <X className="h-2.5 w-2.5 text-white" />
+                        </div>
+                      ) : cvm.score < SCORING_NEUTRAL_LOWER_LIMIT ? (
+                        <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-red-500">
+                          <ChevronDown className="h-2.5 w-2.5 text-white" />
+                        </div>
+                      ) : cvm.score >= SCORING_GOOD_LOWER_LIMIT ? (
+                        <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-green-600">
+                          <ChevronUp className="h-2.5 w-2.5 text-white" />
+                        </div>
+                      ) : (
+                        <div className="absolute top-1 right-1 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-slate-500">
+                          <Equal className="h-2.5 w-2.5 text-white" />
+                        </div>
+                      )}
+                      <MapPin className="h-8 w-8 fill-green-600 text-white" />
+                    </div>
+                    <div className="flex flex-col gap-1 overflow-hidden">
+                      <div className="truncate text-sm font-semibold text-nowrap">
+                        {t("cvm")}
                       </div>
-                      <div className="flex flex-col gap-1 overflow-hidden">
-                        <div className="truncate text-sm font-semibold text-nowrap">
-                          {t("cvm")}
-                        </div>
-                        <div>
-                          {formattedAddress ? (
-                            <div className="truncate text-xs">
-                              {formattedAddress}
-                            </div>
-                          ) : (
-                            <div className="truncate text-xs">
-                              {cvm.latitude} / {cvm.longitude} (lat/lng)
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-1 text-xs">
-                          <div>Score:</div>
-                          <div>{cvm.score}</div>
-                        </div>
+                      <div>
+                        <CvmAddress
+                          coordinates={{
+                            latitude: cvm.latitude,
+                            longitude: cvm.longitude,
+                          }}
+                        />
+                      </div>
+                      <div className="flex items-center gap-1 text-xs">
+                        <div>Score:</div>
+                        <div>{cvm.score}</div>
                       </div>
                     </div>
-                    {selected === `cvm-list-item-${cvm.id}` && (
-                      <Link
-                        href={`/map/share/${cvm.id}`}
-                        className="pressed:bg-gray-300 dark:pressed:bg-slate-400 h-fit w-fit cursor-pointer self-center rounded-lg border border-black/10 bg-gray-100 px-5 py-2 text-center text-sm text-gray-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] transition hover:bg-gray-200 hover:no-underline dark:border-white/10 dark:bg-slate-600 dark:text-slate-100 dark:shadow-none dark:hover:bg-slate-500"
-                      >
-                        {t("show")}
-                      </Link>
-                    )}
                   </div>
-                </ListBoxItem>
-              );
-            })}
+                  {selected === `cvm-list-item-${cvm.id}` && (
+                    <Link
+                      href={`/map/share/${cvm.id}`}
+                      className="pressed:bg-gray-300 dark:pressed:bg-slate-400 h-fit w-fit cursor-pointer self-center rounded-lg border border-black/10 bg-gray-100 px-5 py-2 text-center text-sm text-gray-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] transition hover:bg-gray-200 hover:no-underline dark:border-white/10 dark:bg-slate-600 dark:text-slate-100 dark:shadow-none dark:hover:bg-slate-500"
+                    >
+                      {t("show")}
+                    </Link>
+                  )}
+                </div>
+              </ListBoxItem>
+            ))}
           </ListBox>
           <div className="flex flex-col gap-2">
             <Pagination
