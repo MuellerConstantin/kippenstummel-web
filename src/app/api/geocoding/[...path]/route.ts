@@ -10,7 +10,7 @@ export const runtime = "nodejs";
 const BASE_URL = "https://nominatim.openstreetmap.org";
 const USER_AGENT = "Kippenstummel/1.0 (info@mueller-constantin.de)";
 
-const throttledFetchQueue = new ThrottledQueue<Response>(1000, 10);
+const throttledFetchQueue = new ThrottledQueue<Response>(1000, 100);
 
 const geocodeCache = new LRUCache<
   string,
