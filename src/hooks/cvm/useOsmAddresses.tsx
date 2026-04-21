@@ -2,7 +2,6 @@ import { GeoCoordinates } from "@/lib/types/geo";
 import { useCallback, useMemo } from "react";
 import useSWR from "swr";
 import axios from "axios";
-import pLimit from "p-limit";
 import { Cvm } from "@/lib/types/cvm";
 
 interface UseOsmAddressesProps {
@@ -46,8 +45,6 @@ type OsmAddress = {
 };
 
 export function useOsmAddresses({ cvms }: UseOsmAddressesProps) {
-  const limit = pLimit(3);
-
   const fetchOsmAddress = useCallback(async (key: GeoCoordinates) => {
     const url = "/api/geocoding/reverse";
 
@@ -78,12 +75,11 @@ export function useOsmAddresses({ cvms }: UseOsmAddressesProps) {
         ]
       : null,
     (key) =>
-      Promise.allSettled(
-        key[1].map((coords) => limit(() => fetchOsmAddress(coords))),
-      ).then((responses) =>
-        responses.map((res) =>
-          res.status === "fulfilled" ? res.value.data : null,
-        ),
+      Promise.allSettled(key[1].map((coords) => fetchOsmAddress(coords))).then(
+        (responses) =>
+          responses.map((res) =>
+            res.status === "fulfilled" ? res.value.data : null,
+          ),
       ),
     {
       revalidateOnFocus: false,

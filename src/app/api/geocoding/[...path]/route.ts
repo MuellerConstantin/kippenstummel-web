@@ -1,10 +1,16 @@
 import { type NextRequest } from "next/server";
 import { LRUCache } from "lru-cache";
+import {
+  ThrottledQueue,
+  ThrottleOverflowError,
+} from "@/lib/utils/throttled-queue";
 
 export const runtime = "nodejs";
 
 const BASE_URL = "https://nominatim.openstreetmap.org";
 const USER_AGENT = "Kippenstummel/1.0 (info@mueller-constantin.de)";
+
+const throttledFetchQueue = new ThrottledQueue<Response>(1000, 10);
 
 const geocodeCache = new LRUCache<
   string,
@@ -103,7 +109,9 @@ async function proxyRequest(
   };
 
   try {
-    const upstream = await fetch(targetUrl, fetchOptions);
+    const upstream = await throttledFetchQueue.enqueue(() =>
+      fetch(targetUrl, fetchOptions),
+    );
     const upstreamHeaders = new Headers(upstream.headers);
 
     upstreamHeaders.delete("content-encoding");
@@ -137,6 +145,24 @@ async function proxyRequest(
       headers: upstreamHeaders,
     });
   } catch (error) {
+    if (error instanceof ThrottleOverflowError) {
+      return new Response(
+        JSON.stringify({
+          code: "GEOCODING_PROXY_THROTTLED",
+          timestamp: new Date().toISOString(),
+          path: targetUrl.pathname,
+          message: `Too many requests. Retry after ${error.retryAfterSecs}s.`,
+        }),
+        {
+          status: 429,
+          headers: {
+            "Content-Type": "application/json",
+            "Retry-After": String(error.retryAfterSecs),
+          },
+        },
+      );
+    }
+
     console.error("Proxy-Error:", error);
 
     return new Response(
