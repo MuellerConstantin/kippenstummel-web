@@ -1,13 +1,14 @@
 {
   "Seo": {
     "title": "Kippenstummel",
-    "ogTitle": "Kippenstummel - Zigarettenautomaten finden",
-    "ogDescription": "Finde Zigarettenautomaten in deiner Nähe - überall und jederzeit.",
+    "ogTitle": "Kippenstummel - Zigarettenautomaten in der Nähe finden",
+    "ogDescription": "Finde Zigarettenautomaten in deiner Nähe - kostenlos, auf allen Geräten, Community-aktualisiert.",
     "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
   },
   "HomePage": {
     "meta": {
-      "title": "Startseite"
+      "title": "Zigarettenautomaten in der Nähe finden",
+      "description": "Finde den nächsten Zigarettenautomaten in deiner Nähe - dieser Service hilft Rauchern, Zigarettenautomaten in der Nähe zu finden."
     },
     "slogan": "Zigarettenautomaten in deiner Nähe finden.",
     "features": {
@@ -94,8 +95,9 @@
   },
   "MapPage": {
     "meta": {
-      "title": "Karte"
-    }
+      "title": "Zigarettenautomaten finden - Karte"
+    },
+    "headline": "Zigarettenautomaten in deiner Nähe finden"
   },
   "SharePage": {
     "meta": {
@@ -230,10 +232,10 @@
   },
   "CvmRegionPage": {
     "meta": {
-      "title": "Zigarettenautomaten in {region}",
-      "description": "Alle bekannten CVM-Standorte in {region}, interaktive Karte und Standortdetails."
+      "title": "Zigarettenautomaten in {region} finden",
+      "description": "Finde alle Zigarettenautomaten in {region} und Umgebung. Interaktive Karte, aktuelle Standorte, Community-verifiziert. Kostenlos & ohne Anmeldung."
     },
-    "headline": "Zigarettenautomaten in {region}",
+    "headline": "Zigarettenautomaten in {region} finden",
     "description": "Finde Zigarettenautomaten in {region} und Umgebung. Auf der interaktiven Karte siehst du bekannte Standorte in {region} sowie angrenzenden Regionen. Die Daten werden regelmäßig aktualisiert und von der Community ergänzt.<br></br><br></br>Für den Standort {region} und Umgebung wurden {amount} Zigarettenautomaten gefunden.",
     "openMap": "Karte öffnen"
   },

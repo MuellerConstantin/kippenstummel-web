@@ -28,10 +28,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function MapLayout({
+export default async function MapLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
-  return <MapTemplate>{children}</MapTemplate>;
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "MapPage" });
+
+  return (
+    <MapTemplate>
+      <h1 className="sr-only">{t("headline")}</h1>
+      {children}
+    </MapTemplate>
+  );
 }

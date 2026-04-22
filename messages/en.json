@@ -7,7 +7,8 @@
   },
   "HomePage": {
     "meta": {
-      "title": "Homepage"
+      "title": "Find Cigarette Vending Machines Nearby",
+      "description": "Find the nearest cigarette vending machine near you - this service helps smokers find nearby cigarette vending machines."
     },
     "slogan": "Find nearby cigarette vending machines.",
     "features": {
@@ -94,8 +95,9 @@
   },
   "MapPage": {
     "meta": {
-      "title": "Map"
-    }
+      "title": "Find cigarette vending machines - Map"
+    },
+    "headline": "Find cigarette vending machines near you"
   },
   "SharePage": {
     "meta": {
@@ -231,7 +233,7 @@
   "CvmRegionPage": {
     "meta": {
       "title": "Cigarette vending machines in {region}",
-      "description": "All known CVM locations in {region}, interactive map and location details."
+      "description": "Find all cigarette vending machines in {region} and the surrounding area. Interactive map, current locations, community-verified. Free & no registration required."
     },
     "headline": "Cigarette vending machines in {region}",
     "description": "Find cigarette vending machines in {region} and the surrounding area. The interactive map shows known locations in {region} and neighboring regions. The data is regularly updated and supplemented by the community.<br></br><br></br>{amount} cigarette vending machines were found for the location {region} and surrounding area.",

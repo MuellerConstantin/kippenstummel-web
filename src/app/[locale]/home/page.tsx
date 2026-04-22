@@ -69,8 +69,50 @@ export default function Home() {
 
   const TOP_REGIONS = getTopRegionsGeoBalanced(REGIONS, 8);
 
+  const faqItemsJsonLd = Array.from({ length: 10 }, (_, i) => {
+    const key = `faq.items.${i + 1}.answer`;
+    const text = t.markup(key, {
+      br: () => "\n",
+      link: (chunks) => chunks,
+      link1: (chunks) => chunks,
+      link2: (chunks) => chunks,
+    });
+
+    return {
+      "@type": "Question",
+      name: t(`faq.items.${i + 1}.question`),
+      acceptedAnswer: {
+        "@type": "Answer",
+        text,
+      },
+    };
+  });
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        name: "Kippenstummel",
+        url: "https://www.kippenstummel.de",
+        description: t("meta.description"),
+        inLanguage: ["de", "en"],
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: faqItemsJsonLd,
+      },
+    ],
+  };
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <HomeHero slogan={t("slogan")} />
       <div className="mx-auto my-8 flex max-w-[80rem] flex-col items-center gap-12 p-4">
         <section className="flex flex-col items-center gap-10 p-4 text-slate-800 dark:text-white">
