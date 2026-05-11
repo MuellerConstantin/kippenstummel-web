@@ -1,11 +1,11 @@
-FROM node:20-alpine AS builder
+FROM node:24-alpine AS builder
 
 RUN mkdir -p /usr/local/src/kippenstummel/web
 WORKDIR /usr/local/src/kippenstummel/web
 
 RUN apk add --no-cache libc6-compat
 
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json .npmrc ./
 RUN npm ci
 
 COPY src ./src
@@ -23,7 +23,7 @@ ENV NEXT_OUTPUT_MODE=standalone
 
 RUN npm run build
 
-FROM node:20-alpine
+FROM node:24-alpine
 
 RUN mkdir -p /usr/local/bin/kippenstummel/web
 WORKDIR /usr/local/bin/kippenstummel/web
