@@ -95,7 +95,8 @@
   },
   "MapPage": {
     "meta": {
-      "title": "Zigarettenautomaten finden - Karte"
+      "title": "Zigarettenautomaten finden - Karte",
+      "description": "Interaktive Karte aller bekannten Zigarettenautomaten in deiner Nähe. Standorte werden von der Community gepflegt und regelmäßig aktualisiert - kostenlos, ohne Anmeldung."
     },
     "headline": "Zigarettenautomaten in deiner Nähe finden"
   },

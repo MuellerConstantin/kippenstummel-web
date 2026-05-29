@@ -16,6 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: t("meta.title"),
+    description: t("meta.description"),
     alternates: {
       canonical: `${BASE_URL}/${locale}/map`,
       languages: {

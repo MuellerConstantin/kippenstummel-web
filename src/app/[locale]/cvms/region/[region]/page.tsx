@@ -30,7 +30,6 @@ export async function generateMetadata({
 
   const pageNumber = Number(page ?? "1");
   const isPaginated = pageNumber > 1;
-  const pageSuffix = pageNumber > 1 ? `?page=${pageNumber}` : "";
 
   return {
     title: t("meta.title", { region: region.name }),
@@ -45,15 +44,15 @@ export async function generateMetadata({
           follow: true,
         },
     alternates: {
-      canonical: `${BASE_URL}/${locale}/cvms/region/${region.slug}${pageSuffix}`,
+      canonical: `${BASE_URL}/${locale}/cvms/region/${region.slug}`,
       languages: {
         ...Object.fromEntries(
           routing.locales.map((l) => [
             l,
-            `${BASE_URL}/${l}/cvms/region/${region.slug}${pageSuffix}`,
+            `${BASE_URL}/${l}/cvms/region/${region.slug}`,
           ]),
         ),
-        "x-default": `${BASE_URL}/de/cvms/region/${region.slug}${pageSuffix}`,
+        "x-default": `${BASE_URL}/de/cvms/region/${region.slug}`,
       },
     },
   };
@@ -65,9 +64,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function CvmRegionPage({ params, searchParams }: Props) {
+export default async function CvmRegionPage({ params }: Props) {
   const { region: regionSlug, locale } = await params;
-  const { page } = await searchParams;
   const t = await getTranslations("CvmRegionPage");
 
   const region = REGIONS.find((region) => region.slug === regionSlug);
@@ -76,14 +74,11 @@ export default async function CvmRegionPage({ params, searchParams }: Props) {
     notFound();
   }
 
-  const pageNumber = Number(page ?? "1");
-  const pageSuffix = pageNumber > 1 ? `?page=${pageNumber}` : "";
-
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: t("meta.title", { region: region.name }),
-    url: `${BASE_URL}/${locale}/cvms/region/${region.slug}${pageSuffix}`,
+    url: `${BASE_URL}/${locale}/cvms/region/${region.slug}`,
     inLanguage: locale,
     about: {
       "@type": "Place",

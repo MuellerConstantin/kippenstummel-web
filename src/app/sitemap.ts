@@ -2,12 +2,15 @@ import type { MetadataRoute } from "next";
 import { REGIONS } from "@/lib/regions";
 
 const BASE_URL = "https://www.kippenstummel.de";
+const BUILD_DATE = new Date();
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: `${BASE_URL}/de/home`,
-      lastModified: new Date(),
+      lastModified: BUILD_DATE,
+      changeFrequency: "monthly",
+      priority: 1.0,
       alternates: {
         languages: {
           de: `${BASE_URL}/de/home`,
@@ -18,7 +21,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/en/home`,
-      lastModified: new Date(),
+      lastModified: BUILD_DATE,
+      changeFrequency: "monthly",
+      priority: 1.0,
       alternates: {
         languages: {
           de: `${BASE_URL}/de/home`,
@@ -29,7 +34,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/de/map`,
-      lastModified: new Date(),
+      lastModified: BUILD_DATE,
+      changeFrequency: "daily",
+      priority: 0.9,
       alternates: {
         languages: {
           de: `${BASE_URL}/de/map`,
@@ -40,7 +47,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/en/map`,
-      lastModified: new Date(),
+      lastModified: BUILD_DATE,
+      changeFrequency: "daily",
+      priority: 0.9,
       alternates: {
         languages: {
           de: `${BASE_URL}/de/map`,
@@ -50,8 +59,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     },
     {
+      url: `${BASE_URL}/de/leaderboard`,
+      lastModified: BUILD_DATE,
+      changeFrequency: "daily",
+      priority: 0.5,
+      alternates: {
+        languages: {
+          de: `${BASE_URL}/de/leaderboard`,
+          en: `${BASE_URL}/en/leaderboard`,
+          "x-default": `${BASE_URL}/de/leaderboard`,
+        },
+      },
+    },
+    {
+      url: `${BASE_URL}/en/leaderboard`,
+      lastModified: BUILD_DATE,
+      changeFrequency: "daily",
+      priority: 0.5,
+      alternates: {
+        languages: {
+          de: `${BASE_URL}/de/leaderboard`,
+          en: `${BASE_URL}/en/leaderboard`,
+          "x-default": `${BASE_URL}/de/leaderboard`,
+        },
+      },
+    },
+    {
       url: `${BASE_URL}/de/privacy-policy`,
-      lastModified: new Date(),
+      lastModified: BUILD_DATE,
+      changeFrequency: "yearly",
+      priority: 0.3,
       alternates: {
         languages: {
           de: `${BASE_URL}/de/privacy-policy`,
@@ -62,7 +99,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/en/privacy-policy`,
-      lastModified: new Date(),
+      lastModified: BUILD_DATE,
+      changeFrequency: "yearly",
+      priority: 0.3,
       alternates: {
         languages: {
           de: `${BASE_URL}/de/privacy-policy`,
@@ -73,7 +112,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/de/imprint`,
-      lastModified: new Date(),
+      lastModified: BUILD_DATE,
+      changeFrequency: "yearly",
+      priority: 0.3,
       alternates: {
         languages: {
           de: `${BASE_URL}/de/imprint`,
@@ -84,7 +125,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/en/imprint`,
-      lastModified: new Date(),
+      lastModified: BUILD_DATE,
+      changeFrequency: "yearly",
+      priority: 0.3,
       alternates: {
         languages: {
           de: `${BASE_URL}/de/imprint`,
@@ -95,7 +138,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/de/terms-of-service`,
-      lastModified: new Date(),
+      lastModified: BUILD_DATE,
+      changeFrequency: "yearly",
+      priority: 0.3,
       alternates: {
         languages: {
           de: `${BASE_URL}/de/terms-of-service`,
@@ -106,7 +151,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/en/terms-of-service`,
-      lastModified: new Date(),
+      lastModified: BUILD_DATE,
+      changeFrequency: "yearly",
+      priority: 0.3,
       alternates: {
         languages: {
           de: `${BASE_URL}/de/terms-of-service`,
@@ -119,7 +166,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const regionDePages: MetadataRoute.Sitemap = REGIONS.map((region) => ({
     url: `${BASE_URL}/de/cvms/region/${region.slug}`,
-    lastModified: new Date(),
+    lastModified: BUILD_DATE,
+    changeFrequency: "weekly",
+    priority: 0.7,
     alternates: {
       languages: {
         de: `${BASE_URL}/de/cvms/region/${region.slug}`,
@@ -130,7 +179,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const regionEnPages: MetadataRoute.Sitemap = REGIONS.map((region) => ({
     url: `${BASE_URL}/en/cvms/region/${region.slug}`,
-    lastModified: new Date(),
+    lastModified: BUILD_DATE,
+    changeFrequency: "weekly",
+    priority: 0.7,
     alternates: {
       languages: {
         de: `${BASE_URL}/de/cvms/region/${region.slug}`,

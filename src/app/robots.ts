@@ -5,6 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      disallow: ["/*?page=", "/*?perPage=", "/*?shared="],
     },
     sitemap: "https://www.kippenstummel.de/sitemap.xml",
   };

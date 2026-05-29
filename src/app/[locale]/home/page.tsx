@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
 import {
   Coins,
   RefreshCw,
@@ -12,8 +14,35 @@ import { Link } from "@/components/atoms/Link";
 import { FaqItem } from "@/components/molecules/FaqItem";
 import { Leaderboard } from "@/components/organisms/Leaderboard";
 import { HomeHero } from "@/components/molecules/HomeHero";
+import { routing } from "@/i18n/routing";
 import { getTopRegionsGeoBalanced, REGIONS } from "@/lib/regions";
 import { DonateButton } from "@/components/molecules/DonateButton";
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kippenstummel.de";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "HomePage" });
+
+  return {
+    title: t("meta.title"),
+    description: t("meta.description"),
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/home`,
+      languages: {
+        ...Object.fromEntries(
+          routing.locales.map((l) => [l, `${BASE_URL}/${l}/home`]),
+        ),
+        "x-default": `${BASE_URL}/de/home`,
+      },
+    },
+  };
+}
 
 interface FeatureItemProps {
   title: string;

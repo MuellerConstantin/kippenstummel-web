@@ -95,7 +95,8 @@
   },
   "MapPage": {
     "meta": {
-      "title": "Find cigarette vending machines - Map"
+      "title": "Find cigarette vending machines - Map",
+      "description": "Interactive map of all known cigarette vending machines near you. Locations are maintained by the community and updated regularly - free, no registration required."
     },
     "headline": "Find cigarette vending machines near you"
   },
