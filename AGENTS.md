@@ -185,3 +185,12 @@ fall outside what swarm intelligence alone can resolve reliably.
 - **Immutability by Default**: Use `const`, `readonly`, and spread operators. Avoid mutation unless there's a clear performance reason.
 - **Explicit over Implicit**: Prefer explicit parameters and return types over hidden assumptions or side effects.
 - **No Comment Spam**: Document _why_, not _what_. Docstrings on public APIs are welcome; `// increment counter` before `counter += 1` is not.
+
+## General Instructions
+
+- Never dig into node_modules – if you need to understand a dependency, read its docs or types, not its source. If something seems broken, check imports,
+  versions, and your own code first. If you need still additional information just ask me.
+- Prefer reading before writing – understand the existing structure before generating new files or refactoring. Don't assume conventions; verify them.
+- Don't fix what you didn't break – scope changes strictly to what was asked. No opportunistic refactors, formatting fixes, or "while I'm here" changes. But if
+  you find something feel free to tell me.
+- One task at a time – complete and verify the current task before moving to the next. Don't batch unrelated changes in one go.
