@@ -5,7 +5,7 @@ import { Medal } from "lucide-react";
 import useApi from "@/hooks/useApi";
 import useSWR from "swr";
 import { Page } from "@/lib/types/pagination";
-import { LeaderboardMember } from "@/lib/types/ident";
+import { IdentProfile } from "@/lib/types/ident";
 import { AxiosError } from "axios";
 import { ApiError } from "@/lib/types/error";
 import { IdentIcon } from "@/components/atoms/IdentIcon";
@@ -14,7 +14,7 @@ export function Leaderboard() {
   const api = useApi();
 
   const { data, error, isLoading } = useSWR<
-    Page<LeaderboardMember>,
+    Page<IdentProfile>,
     AxiosError<ApiError>,
     string
   >(
