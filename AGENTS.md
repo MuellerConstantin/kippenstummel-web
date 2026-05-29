@@ -173,3 +173,15 @@ fall outside what swarm intelligence alone can resolve reliably.
 - **i18n from the start**: All user-facing strings are externalized into
   `messages/` via `next-intl`. No hardcoded UI strings exist in component
   code.
+
+## Coding Principles
+
+- **KISS**: Prefer the simplest solution that works. Avoid unnecessary abstractions – extract only after the third repetition (Rule of Three).
+- **DRY**: Define logic once, import everywhere. Duplicated code is a maintenance liability.
+- **YAGNI**: Don't build features or abstractions on speculation. Implement what's needed now.
+- **Single Responsibility**: Each function, component, and module has one clear purpose.
+- **Fail Fast**: Validate inputs early, throw meaningful errors immediately. Never swallow exceptions silently.
+- **Guard Clauses over Nesting**: Prefer early returns over deeply nested `if/else` blocks.
+- **Immutability by Default**: Use `const`, `readonly`, and spread operators. Avoid mutation unless there's a clear performance reason.
+- **Explicit over Implicit**: Prefer explicit parameters and return types over hidden assumptions or side effects.
+- **No Comment Spam**: Document _why_, not _what_. Docstrings on public APIs are welcome; `// increment counter` before `counter += 1` is not.
