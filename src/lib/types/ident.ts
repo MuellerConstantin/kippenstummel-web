@@ -3,6 +3,7 @@ export interface IdentInfo {
   displayName?: string;
   createdAt: string;
   updatedAt: string;
+  trusted: boolean;
   credibility: number;
   karma: number;
 }
@@ -21,8 +22,9 @@ export interface KarmaEvent {
   cvmId: string;
 }
 
-export interface LeaderboardMember {
+export interface IdentProfile {
   identity: string;
   displayName?: string;
   karma: number;
+  trusted: boolean;
 }

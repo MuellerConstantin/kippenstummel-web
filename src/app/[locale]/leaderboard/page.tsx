@@ -1,11 +1,12 @@
 "use client";
 
 import { IdentIcon } from "@/components/atoms/IdentIcon";
+import { TrustedBadge } from "@/components/atoms/TrustedBadge";
 import { Pagination } from "@/components/molecules/Pagination";
 import useApi from "@/hooks/useApi";
 import { useRouter } from "@/i18n/navigation";
 import { ApiError } from "@/lib/types/error";
-import { LeaderboardMember } from "@/lib/types/ident";
+import { IdentProfile } from "@/lib/types/ident";
 import { Page } from "@/lib/types/pagination";
 import { AxiosError } from "axios";
 import { Medal } from "lucide-react";
@@ -16,16 +17,16 @@ import { useMemo } from "react";
 import useSWR from "swr";
 
 interface VictoryPodiumProps {
-  firstPlace: LeaderboardMember | null;
-  secondPlace: LeaderboardMember | null;
-  thirdPlace: LeaderboardMember | null;
+  firstPlace: IdentProfile | null;
+  secondPlace: IdentProfile | null;
+  thirdPlace: IdentProfile | null;
   isLoading: boolean;
   error?: AxiosError<ApiError>;
 }
 
 interface PodiumCardProps {
   place: 1 | 2 | 3;
-  member: LeaderboardMember | null;
+  member: IdentProfile | null;
   isLoading: boolean;
   error?: AxiosError<ApiError>;
 }
@@ -78,7 +79,7 @@ function PodiumCard({ place, member, isLoading, error }: PodiumCardProps) {
           </div>
         </div>
         {/* Name */}
-        <div className="font-semibold text-slate-800 dark:text-white">
+        <div className="flex items-center gap-1 font-semibold text-slate-800 dark:text-white">
           {isLoading ? (
             <div className="h-4 w-24 animate-pulse rounded-md bg-slate-200 dark:bg-slate-700" />
           ) : error ? (
@@ -86,6 +87,7 @@ function PodiumCard({ place, member, isLoading, error }: PodiumCardProps) {
           ) : (
             member?.displayName || "Anonymous"
           )}
+          {member?.trusted && <TrustedBadge size={16} />}
         </div>
         {/* Karma Badge */}
         <div>
@@ -185,7 +187,7 @@ export default function Leaderboard() {
   }, [page, perPage, locale]);
 
   const { data, error, isLoading } = useSWR<
-    Page<LeaderboardMember>,
+    Page<IdentProfile>,
     AxiosError<ApiError>,
     string
   >(url, (url) => api.get(url).then((res) => res.data), {
@@ -294,8 +296,9 @@ export default function Leaderboard() {
                   <div className="h-6 w-6 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
                     <IdentIcon value={member.identity} />
                   </div>
-                  <span className="flex-1 truncate text-slate-700 dark:text-slate-300">
+                  <span className="flex flex-1 items-center gap-1 truncate text-slate-700 dark:text-slate-300">
                     {member.displayName || "Anonymous"}
+                    {member.trusted && <TrustedBadge size={16} />}
                   </span>
                   <span className="text-slate-600 dark:text-slate-400">
                     {member.karma}

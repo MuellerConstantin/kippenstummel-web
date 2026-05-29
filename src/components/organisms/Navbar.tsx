@@ -29,6 +29,7 @@ import { AxiosError } from "axios";
 import { ApiError } from "next/dist/server/api-utils";
 import useSWR from "swr";
 import useApi from "@/hooks/useApi";
+import { TrustedBadge } from "../atoms/TrustedBadge";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
@@ -202,13 +203,16 @@ function NavbarAuthenticatedOptionsMenu() {
       <div className="flex w-[15rem] flex-col gap-4 overflow-hidden px-2 pb-2">
         <div className="flex flex-col gap-2">
           {data?.displayName ? (
-            <div className="flex items-center overflow-hidden">
-              <span className="truncate font-semibold text-slate-800 dark:text-white">
-                {data.displayName.split("#")[0]}
-              </span>
-              <span className="text-slate-400 dark:text-slate-400">
-                #{data.displayName.split("#")[1]}
-              </span>
+            <div className="flex items-center gap-1 overflow-hidden">
+              <div className="flex items-center overflow-hidden">
+                <span className="truncate font-semibold text-slate-800 dark:text-white">
+                  {data.displayName.split("#")[0]}
+                </span>
+                <span className="text-slate-400 dark:text-slate-400">
+                  #{data.displayName.split("#")[1]}
+                </span>
+              </div>
+              {data?.trusted && <TrustedBadge size={16} />}
             </div>
           ) : (
             <div className="flex items-center gap-1 overflow-hidden">
@@ -222,6 +226,7 @@ function NavbarAuthenticatedOptionsMenu() {
                 </Link>
                 )
               </span>
+              {data?.trusted && <TrustedBadge size={16} />}
             </div>
           )}
           <hr className="border-slate-200 dark:border-slate-800" />
