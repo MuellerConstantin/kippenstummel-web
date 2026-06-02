@@ -124,6 +124,14 @@ export default function PrivacyPolicy() {
         </h3>
         <div>{t("dataCollection.tracking.description")}</div>
         <h3 className="text-xl font-bold">
+          {t("dataCollection.usageStatistics.title")}
+        </h3>
+        <div>
+          {t.rich("dataCollection.usageStatistics.description", {
+            br: () => <br />,
+          })}
+        </div>
+        <h3 className="text-xl font-bold">
           {t("dataCollection.contact.title")}
         </h3>
         <p>
