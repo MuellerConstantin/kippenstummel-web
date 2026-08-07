@@ -5,8 +5,10 @@ import { Button } from "@/components/atoms/Button";
 import { X as XIcon } from "lucide-react";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface IOSInstallInstructionsDialogProps
-  extends Omit<DialogProps, "children"> {}
+interface IOSInstallInstructionsDialogProps extends Omit<
+  DialogProps,
+  "children"
+> {}
 
 export function IOSInstallInstructionsDialog(
   props: IOSInstallInstructionsDialogProps,
