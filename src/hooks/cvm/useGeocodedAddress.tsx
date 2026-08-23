@@ -33,8 +33,12 @@ export function useGeocodedAddress(coords: GeoCoordinates | null) {
       return null;
     }
 
-    const { road, city, town, village, postcode } = data.address ?? {};
-    return [road, postcode, city || town || village].filter(Boolean).join(", ");
+    const { road, city, town, village, hamlet, municipality, postcode } =
+      data.address ?? {};
+
+    const locality = city || town || village || hamlet || municipality;
+
+    return [road, postcode, locality].filter(Boolean).join(", ");
   }, [data]);
 
   return { address: formatted, isLoading, error };

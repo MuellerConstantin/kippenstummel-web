@@ -52,10 +52,12 @@ export function useGeocodedAddresses(coordinates: GeoCoordinates[] | null) {
     return geocodedAddresses?.map((addr) => {
       if (!addr) return null;
 
-      const { road, city, town, village, postcode } = addr.address ?? {};
-      return [road, postcode, city || town || village]
-        .filter(Boolean)
-        .join(", ");
+      const { road, city, town, village, hamlet, municipality, postcode } =
+        addr.address ?? {};
+
+      const locality = city || town || village || hamlet || municipality;
+
+      return [road, postcode, locality].filter(Boolean).join(", ");
     });
   }, [geocodedAddresses]);
 
