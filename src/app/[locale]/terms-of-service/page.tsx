@@ -63,6 +63,34 @@ export default function TermsOfService() {
       </section>
       <section className="flex flex-col gap-4">
         <h2 className="text-2xl font-bold text-green-600">
+          {t("dataRights.title")}
+        </h2>
+        <div>
+          {t.rich("dataRights.description", {
+            br: () => <br />,
+            b: (chunks) => <b className="font-semibold">{chunks}</b>,
+            "agpl-link": (chunks) => (
+              <Link
+                href="https://www.gnu.org/licenses/agpl-3.0.en.html"
+                target="_blank"
+              >
+                {chunks}
+              </Link>
+            ),
+            "odbl-link": (chunks) => (
+              <Link
+                href="https://opendatacommons.org/licenses/odbl/1-0/"
+                target="_blank"
+              >
+                {chunks}
+              </Link>
+            ),
+            "imprint-link": (chunks) => <Link href="/imprint">{chunks}</Link>,
+          })}
+        </div>
+      </section>
+      <section className="flex flex-col gap-4">
+        <h2 className="text-2xl font-bold text-green-600">
           {t("facilitation.title")}
         </h2>
         <div>

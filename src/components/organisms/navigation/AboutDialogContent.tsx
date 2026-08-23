@@ -64,6 +64,34 @@ export function AboutDialogContent() {
         })}
       </div>
       <div className="flex flex-col gap-4 text-sm">
+        <h4 className="font-semibold">{t("dataLicense.title")}</h4>
+        <div>
+          {t.rich("dataLicense.description", {
+            br: () => <br />,
+            "osm-link": (chunks) => (
+              <Link
+                href="https://www.openstreetmap.org/copyright"
+                target="_blank"
+              >
+                {chunks}
+              </Link>
+            ),
+            "odbl-link": (chunks) => (
+              <Link
+                href="https://opendatacommons.org/licenses/odbl/1-0/"
+                target="_blank"
+              >
+                {chunks}
+              </Link>
+            ),
+            "imprint-link": (chunks) => <Link href="/imprint">{chunks}</Link>,
+            "terms-link": (chunks) => (
+              <Link href="/terms-of-service">{chunks}</Link>
+            ),
+          })}
+        </div>
+      </div>
+      <div className="flex flex-col gap-4 text-sm">
         <h4 className="font-semibold">{t("thirdParty.title")}</h4>
         <div>{t("thirdParty.description")}</div>
         <div className="flex w-fit items-center gap-4 rounded-md border border-slate-400 p-2">
