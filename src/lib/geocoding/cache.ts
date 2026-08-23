@@ -1,6 +1,7 @@
 import { LRUCache } from "lru-cache";
 import { getRedisClient } from "@/lib/redis";
 import { GeoCoordinates } from "@/lib/types/geo";
+import { GeocodedAddress } from "@/lib/types/geocoding";
 
 /*
  * Addresses at a fixed coordinate barely change, and the key space is bounded
@@ -15,31 +16,35 @@ const REDIS_KEY_PREFIX = "geocoding:";
  * In-process cache, avoids a Redis roundtrip for recently requested
  * coordinates. Kept small on purpose, Redis is the authoritative layer.
  */
-const memoryCache = new LRUCache<string, string>({
+const memoryCache = new LRUCache<string, GeocodedAddress>({
   max: 1000,
   ttl: TTL_MS,
 });
 
 /**
  * Keys are derived from the coordinates instead of the upstream request, so
- * the cache stays usable from anywhere a coordinate needs to be resolved.
- * The language is part of the key because place names are localised, and the
+ * the cache stays usable from anywhere a coordinate needs to be resolved. The
  * coordinates are normalised to shield the key space from differing textual
  * representations of the same point.
+ *
+ * Names are resolved in the local language of the place, which makes a
+ * coordinate resolve to one result rather than one per language — a single
+ * entry per CVM serves every visitor.
  */
-function cacheKey(coordinates: GeoCoordinates, language: string): string {
-  return `${language}:${coordinates.latitude},${coordinates.longitude}`;
+function cacheKey(coordinates: GeoCoordinates): string {
+  return `${coordinates.latitude},${coordinates.longitude}`;
 }
 
 /**
- * Returns the cached geocoding document for the given coordinates and
- * language as raw JSON, or `undefined` if it is not cached.
+ * Returns the cached address for the given coordinates, or `undefined` if it
+ * is not cached. An entry that cannot be read back into the current shape is
+ * reported as a miss rather than served, so a changed model cannot leak stale
+ * documents to callers.
  */
 export async function getCachedAddress(
   coordinates: GeoCoordinates,
-  language: string,
-): Promise<string | undefined> {
-  const key = cacheKey(coordinates, language);
+): Promise<GeocodedAddress | undefined> {
+  const key = cacheKey(coordinates);
   const cached = memoryCache.get(key);
 
   if (cached) {
@@ -53,9 +58,15 @@ export async function getCachedAddress(
   }
 
   try {
-    const address = await redis.get(`${REDIS_KEY_PREFIX}${key}`);
+    const serialized = await redis.get(`${REDIS_KEY_PREFIX}${key}`);
 
-    if (!address) {
+    if (!serialized) {
+      return undefined;
+    }
+
+    const address = JSON.parse(serialized) as GeocodedAddress;
+
+    if (!address?.displayName || !address.address) {
       return undefined;
     }
 
@@ -70,10 +81,9 @@ export async function getCachedAddress(
 
 export async function setCachedAddress(
   coordinates: GeoCoordinates,
-  language: string,
-  address: string,
+  address: GeocodedAddress,
 ): Promise<void> {
-  const key = cacheKey(coordinates, language);
+  const key = cacheKey(coordinates);
 
   memoryCache.set(key, address);
 
@@ -84,7 +94,12 @@ export async function setCachedAddress(
   }
 
   try {
-    await redis.set(`${REDIS_KEY_PREFIX}${key}`, address, "PX", TTL_MS);
+    await redis.set(
+      `${REDIS_KEY_PREFIX}${key}`,
+      JSON.stringify(address),
+      "PX",
+      TTL_MS,
+    );
   } catch (error) {
     console.error("Geocoding-Cache-Write-Error:", error);
   }

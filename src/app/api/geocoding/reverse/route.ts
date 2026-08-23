@@ -4,7 +4,7 @@ import {
   ThrottleOverflowError,
 } from "@/lib/utils/throttled-queue";
 import { getCachedAddress, setCachedAddress } from "@/lib/geocoding/cache";
-import { routing } from "@/i18n/routing";
+import { toGeocodedAddress } from "@/lib/geocoding/nominatim";
 import { GeoCoordinates } from "@/lib/types/geo";
 
 export const runtime = "nodejs";
@@ -32,25 +32,6 @@ function parseCoordinates(
   }
 
   return { latitude, longitude };
-}
-
-/**
- * Nominatim localises place names, so the requested language is part of the
- * result. Reducing it to a supported locale keeps the upstream request
- * deterministic and prevents the cache from fragmenting over the many shapes
- * a browser's `Accept-Language` header can take.
- */
-function resolveLanguage(req: NextRequest): string {
-  const requested = req.headers
-    .get("accept-language")
-    ?.split(",")[0]
-    ?.split("-")[0]
-    ?.trim()
-    .toLowerCase();
-
-  return routing.locales.find((locale) => locale === requested)
-    ? requested!
-    : routing.defaultLocale;
 }
 
 function errorResponse(
@@ -84,11 +65,10 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const language = resolveLanguage(req);
-  const cached = await getCachedAddress(coordinates, language);
+  const cached = await getCachedAddress(coordinates);
 
   if (cached) {
-    return new Response(cached, {
+    return new Response(JSON.stringify(cached), {
       status: 200,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
@@ -110,7 +90,6 @@ export async function GET(req: NextRequest) {
         headers: {
           "User-Agent": USER_AGENT,
           Accept: "application/json",
-          "Accept-Language": language,
           "Accept-Encoding": "identity",
         },
         redirect: "manual",
@@ -118,7 +97,7 @@ export async function GET(req: NextRequest) {
       }),
     );
 
-    const body = await upstream.text();
+    const upstreamBody = await upstream.text();
 
     if (!upstream.ok) {
       return errorResponse(
@@ -128,9 +107,19 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    await setCachedAddress(coordinates, language, body);
+    const address = toGeocodedAddress(upstreamBody);
 
-    return new Response(body, {
+    if (!address) {
+      return errorResponse(
+        404,
+        "GEOCODING_NOT_FOUND",
+        "No address could be resolved for the given coordinates",
+      );
+    }
+
+    await setCachedAddress(coordinates, address);
+
+    return new Response(JSON.stringify(address), {
       status: 200,
       headers: {
         "Content-Type": "application/json; charset=utf-8",

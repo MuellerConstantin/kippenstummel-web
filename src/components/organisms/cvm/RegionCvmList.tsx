@@ -3,7 +3,7 @@
 import { Link } from "@/components/atoms/Link";
 import { ListBox, ListBoxItem } from "@/components/atoms/ListBox";
 import { Pagination } from "@/components/molecules/Pagination";
-import { useOsmAddress } from "@/hooks/cvm/useOsmAddress";
+import { useGeocodedAddress } from "@/hooks/cvm/useGeocodedAddress";
 import useApi from "@/hooks/useApi";
 import { useRouter } from "@/i18n/navigation";
 import {
@@ -26,7 +26,7 @@ interface CvmAddressProps {
 }
 
 function CvmAddress({ coordinates }: CvmAddressProps) {
-  const { address, isLoading, error } = useOsmAddress(coordinates);
+  const { address, isLoading, error } = useGeocodedAddress(coordinates);
 
   return (
     <div>
