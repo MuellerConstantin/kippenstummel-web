@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { routing } from "@/i18n/routing";
-
-const BASE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kippenstummel.de";
+import { BASE_URL, buildPageMetadata } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -14,11 +11,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: "SharePage" });
 
   return {
-    title: t("meta.title"),
-    robots: {
-      index: false,
-      follow: true,
-    },
+    ...(await buildPageMetadata({
+      locale,
+      namespace: "SharePage",
+      path: "/home",
+      robots: { index: false, follow: true },
+    })),
     openGraph: {
       type: "website",
       siteName: t("meta.title"),
@@ -40,15 +38,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: t("meta.ogTitle"),
       description: t("meta.ogDescription"),
       images: [`${BASE_URL}/og-image.png`],
-    },
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/home`,
-      languages: {
-        ...Object.fromEntries(
-          routing.locales.map((l) => [l, `${BASE_URL}/${l}/home`]),
-        ),
-        "x-default": `${BASE_URL}/de/home`,
-      },
     },
   };
 }

@@ -1,15 +1,12 @@
 import { Link } from "@/components/atoms/Link";
 import { RegionCvmList } from "@/components/organisms/cvm/RegionCvmList";
-import { routing } from "@/i18n/routing";
 import { REGIONS } from "@/lib/regions";
+import { BASE_URL, buildPageMetadata } from "@/lib/seo";
 import { Cvm } from "@/lib/types/cvm";
 import { Page } from "@/lib/types/pagination";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
-
-const BASE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kippenstummel.de";
 
 type Props = {
   params: Promise<{ locale: string; region: string }>;
@@ -23,39 +20,23 @@ export async function generateMetadata({
   const { locale, region: regionSlug } = await params;
   const { page } = await searchParams;
 
-  const t = await getTranslations({ locale, namespace: "CvmRegionPage" });
   const region = REGIONS.find((r) => r.slug === regionSlug);
 
   if (!region) notFound();
 
-  const pageNumber = Number(page ?? "1");
-  const isPaginated = pageNumber > 1;
+  const isPaginated = Number(page ?? "1") > 1;
 
-  return {
-    title: t("meta.title", { region: region.name }),
-    description: t("meta.description", { region: region.name }),
-    robots: isPaginated
-      ? {
-          index: false,
-          follow: true,
-        }
-      : {
-          index: true,
-          follow: true,
-        },
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/cvms/region/${region.slug}`,
-      languages: {
-        ...Object.fromEntries(
-          routing.locales.map((l) => [
-            l,
-            `${BASE_URL}/${l}/cvms/region/${region.slug}`,
-          ]),
-        ),
-        "x-default": `${BASE_URL}/de/cvms/region/${region.slug}`,
-      },
+  return buildPageMetadata({
+    locale,
+    namespace: "CvmRegionPage",
+    path: `/cvms/region/${region.slug}`,
+    values: { region: region.name },
+    withDescription: true,
+    robots: {
+      index: !isPaginated,
+      follow: true,
     },
-  };
+  });
 }
 
 export async function generateStaticParams() {

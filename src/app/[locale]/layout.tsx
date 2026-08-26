@@ -13,11 +13,9 @@ import { RuntimeConfigProvider } from "@/contexts/RuntimeConfigProvider";
 import { PWAInstallProvider } from "@/contexts/PWAInstallProvider";
 import { OfflineHandler } from "@/components/organisms/OfflineHandler";
 import { InstallRequestNotificationHandler } from "@/components/organisms/InstallRequestNotificationHandler";
+import { BASE_URL } from "@/lib/seo";
 
 import "./globals.css";
-
-const BASE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kippenstummel.de";
 
 const outfit = Outfit({
   variable: "--font-outfit",
