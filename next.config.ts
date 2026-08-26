@@ -35,8 +35,34 @@ const csp = [
   "manifest-src 'self'",
 ].join("; ");
 
+/**
+ * Dialog routes only make sense as an overlay above the app. A hard visit gets
+ * sent to the page the dialog belongs to instead of rendering nothing. Client
+ * side navigations carry the RSC header and are left alone, so the intercepted
+ * modal keeps working.
+ */
+const dialogFallbacks: Array<{ source: string; destination: string }> = [
+  {
+    source: "/:locale/dialog/map/:slug(help|settings)",
+    destination: "/:locale/map",
+  },
+  {
+    source: "/:locale/dialog/identity/:slug(new|import)",
+    destination: "/:locale/home",
+  },
+  { source: "/:locale/dialog/identity", destination: "/:locale/home" },
+];
+
 const nextConfig: NextConfig = {
   output: isStandalone ? "standalone" : undefined,
+  async redirects() {
+    return dialogFallbacks.map(({ source, destination }) => ({
+      source,
+      destination,
+      missing: [{ type: "header" as const, key: "rsc" }],
+      permanent: false,
+    }));
+  },
   async headers() {
     const headers: Array<{ key: string; value: string }> = [
       {

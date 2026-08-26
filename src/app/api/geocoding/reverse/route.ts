@@ -3,7 +3,10 @@ import {
   ThrottledQueue,
   ThrottleOverflowError,
 } from "@/lib/shared/throttled-queue";
-import { getCachedAddress, setCachedAddress } from "@/lib/server/geocoding/cache";
+import {
+  getCachedAddress,
+  setCachedAddress,
+} from "@/lib/server/geocoding/cache";
 import { toGeocodedAddress } from "@/lib/server/geocoding/nominatim";
 import { GeoCoordinates } from "@/lib/shared/types/geo";
 
