@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { REGIONS } from "@/lib/regions";
+import { REGIONS } from "@/lib/shared/regions";
 
 const BASE_URL = "https://www.kippenstummel.de";
 const BUILD_DATE = new Date();

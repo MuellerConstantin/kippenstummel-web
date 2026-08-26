@@ -1,5 +1,5 @@
 import { type NextRequest } from "next/server";
-import { forward } from "@/lib/bff/proxy";
+import { forward } from "@/lib/server/bff/proxy";
 
 export async function GET(
   req: NextRequest,

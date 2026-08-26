@@ -108,12 +108,19 @@ fall outside what swarm intelligence alone can resolve reliably.
 │   ├── store/                        # Redux store and slices
 │   │   └── slices/                   # ident, session, location, privacy, usability
 │   ├── lib/                          # Utilities and shared logic
-│   │   ├── bff/                      # BFF proxy helper (server-side)
-│   │   ├── types/                    # Shared TypeScript types
-│   │   ├── utils/                    # General utility functions
-│   │   ├── constants.ts
-│   │   ├── geo.ts                    # Geospatial helpers
-│   │   └── encrypt.ts                # Client-side encryption utilities
+│   │   ├── server/                   # Server-only (guarded by `server-only`)
+│   │   │   ├── bff/                  # BFF proxy helper
+│   │   │   ├── geocoding/            # Nominatim client and Redis-backed cache
+│   │   │   ├── redis.ts
+│   │   │   └── seo.ts                # Page metadata, canonical and hreflang
+│   │   ├── client/                   # Browser-only (guarded by `client-only`)
+│   │   │   └── encrypt.ts            # Client-side encryption utilities
+│   │   └── shared/                   # Environment-agnostic, safe anywhere
+│   │       ├── types/                # Shared TypeScript types
+│   │       ├── constants.ts
+│   │       ├── geo.ts                # Geospatial helpers
+│   │       ├── regions.ts
+│   │       └── throttled-queue.ts
 │   ├── api/                          # Typed API client
 │   ├── i18n/                         # next-intl routing and config
 │   ├── middleware.ts                  # next-intl i18n middleware

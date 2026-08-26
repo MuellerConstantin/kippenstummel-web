@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { MapTemplate } from "@/components/templates/MapTemplate";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata } from "@/lib/server/seo";
 
 type Props = {
   params: Promise<{ locale: string }>;

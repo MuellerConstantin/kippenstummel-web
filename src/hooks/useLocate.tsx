@@ -3,8 +3,8 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import locationSlice from "@/store/slices/location";
 import { useTranslations } from "next-intl";
 import { useNotifications } from "@/contexts/NotificationProvider";
-import { LOCATION_TTL, LOCATION_COOLDOWN } from "@/lib/constants";
-import { GeoCoordinates } from "@/lib/types/geo";
+import { LOCATION_TTL, LOCATION_COOLDOWN } from "@/lib/shared/constants";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 
 export default function useLocate() {
   const dispatch = useAppDispatch();

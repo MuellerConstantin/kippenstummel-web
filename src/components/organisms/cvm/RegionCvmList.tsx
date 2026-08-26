@@ -10,11 +10,11 @@ import {
   SCORING_DELETION_UPPER_LIMIT,
   SCORING_GOOD_LOWER_LIMIT,
   SCORING_NEUTRAL_LOWER_LIMIT,
-} from "@/lib/constants";
-import { Region } from "@/lib/regions";
-import { Cvm } from "@/lib/types/cvm";
-import { GeoCoordinates } from "@/lib/types/geo";
-import { Page } from "@/lib/types/pagination";
+} from "@/lib/shared/constants";
+import { Region } from "@/lib/shared/regions";
+import { Cvm } from "@/lib/shared/types/cvm";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
+import { Page } from "@/lib/shared/types/pagination";
 import { ChevronDown, ChevronUp, Equal, MapPin, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";

@@ -1,9 +1,9 @@
 import { Link } from "@/components/atoms/Link";
 import { RegionCvmList } from "@/components/organisms/cvm/RegionCvmList";
-import { REGIONS } from "@/lib/regions";
-import { BASE_URL, buildPageMetadata } from "@/lib/seo";
-import { Cvm } from "@/lib/types/cvm";
-import { Page } from "@/lib/types/pagination";
+import { REGIONS } from "@/lib/shared/regions";
+import { BASE_URL, buildPageMetadata } from "@/lib/server/seo";
+import { Cvm } from "@/lib/shared/types/cvm";
+import { Page } from "@/lib/shared/types/pagination";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";

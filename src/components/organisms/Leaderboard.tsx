@@ -4,10 +4,10 @@ import { useMemo } from "react";
 import { Medal } from "lucide-react";
 import useApi from "@/hooks/useApi";
 import useSWR from "swr";
-import { Page } from "@/lib/types/pagination";
-import { IdentProfile } from "@/lib/types/ident";
+import { Page } from "@/lib/shared/types/pagination";
+import { IdentProfile } from "@/lib/shared/types/ident";
 import { AxiosError } from "axios";
-import { ApiError } from "@/lib/types/error";
+import { ApiError } from "@/lib/shared/types/error";
 import { IdentIcon } from "@/components/atoms/IdentIcon";
 
 export function Leaderboard() {

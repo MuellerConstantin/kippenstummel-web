@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 import useSWR, { SWRConfiguration } from "swr";
 import { AxiosError } from "axios";
-import { latLonToTile, tileToLatLon } from "@/lib/geo";
+import { latLonToTile, tileToLatLon } from "@/lib/shared/geo";
 import useApi from "../useApi";
 import { useAppSelector } from "@/store";
-import { CvmCluster, Cvm } from "@/lib/types/cvm";
-import { ApiError } from "@/lib/types/error";
-import { GeoCoordinates } from "@/lib/types/geo";
+import { CvmCluster, Cvm } from "@/lib/shared/types/cvm";
+import { ApiError } from "@/lib/shared/types/error";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 
 export interface UseCvmMapViewportDataProps {
   zoom: number;

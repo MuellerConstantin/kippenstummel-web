@@ -1,3 +1,5 @@
+import "client-only";
+
 async function deriveKeyFromPassword(
   password: string,
   salt: ArrayBuffer,

@@ -1,3 +1,5 @@
+import "server-only";
+
 import type { Metadata } from "next";
 import type { TranslationValues } from "next-intl";
 import { getTranslations } from "next-intl/server";

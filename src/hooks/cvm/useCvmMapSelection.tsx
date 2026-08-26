@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import useSWR from "swr";
 import { AxiosError } from "axios";
-import { Cvm } from "@/lib/types/cvm";
-import { ApiError } from "@/lib/types/error";
+import { Cvm } from "@/lib/shared/types/cvm";
+import { ApiError } from "@/lib/shared/types/error";
 import useApi from "@/hooks/useApi";
 
 interface UseCvmMapSelectionProps {

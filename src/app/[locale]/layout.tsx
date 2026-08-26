@@ -13,7 +13,7 @@ import { RuntimeConfigProvider } from "@/contexts/RuntimeConfigProvider";
 import { PWAInstallProvider } from "@/contexts/PWAInstallProvider";
 import { OfflineHandler } from "@/components/organisms/OfflineHandler";
 import { InstallRequestNotificationHandler } from "@/components/organisms/InstallRequestNotificationHandler";
-import { BASE_URL } from "@/lib/seo";
+import { BASE_URL } from "@/lib/server/seo";
 
 import "./globals.css";
 

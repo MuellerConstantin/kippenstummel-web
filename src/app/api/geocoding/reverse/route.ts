@@ -2,10 +2,10 @@ import { type NextRequest } from "next/server";
 import {
   ThrottledQueue,
   ThrottleOverflowError,
-} from "@/lib/utils/throttled-queue";
-import { getCachedAddress, setCachedAddress } from "@/lib/geocoding/cache";
-import { toGeocodedAddress } from "@/lib/geocoding/nominatim";
-import { GeoCoordinates } from "@/lib/types/geo";
+} from "@/lib/shared/throttled-queue";
+import { getCachedAddress, setCachedAddress } from "@/lib/server/geocoding/cache";
+import { toGeocodedAddress } from "@/lib/server/geocoding/nominatim";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 
 export const runtime = "nodejs";
 

@@ -1,4 +1,4 @@
-import de from "../../data/regions/de/cities.json";
+import de from "../../../data/regions/de/cities.json";
 
 export interface Region {
   slug: string;

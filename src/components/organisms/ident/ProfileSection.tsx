@@ -10,9 +10,9 @@ import { TextField } from "@/components/atoms/TextField";
 import { Form } from "@/components/atoms/Form";
 import { Spinner } from "@/components/atoms/Spinner";
 import useApi from "@/hooks/useApi";
-import { IdentInfo } from "@/lib/types/ident";
+import { IdentInfo } from "@/lib/shared/types/ident";
 import { AxiosError } from "axios";
-import { ApiError } from "@/lib/types/error";
+import { ApiError } from "@/lib/shared/types/error";
 import useSWR from "swr";
 
 interface CopyButtonProps {

@@ -1,3 +1,5 @@
+import "server-only";
+
 import { NextRequest } from "next/server";
 
 const backendUrl = process.env.KIPPENSTUMMEL_API_URL!;

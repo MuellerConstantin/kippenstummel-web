@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/components/atoms/Link";
 import useApi from "@/hooks/useApi";
-import { Page } from "@/lib/types/pagination";
-import { IdentInfo, KarmaEvent } from "@/lib/types/ident";
+import { Page } from "@/lib/shared/types/pagination";
+import { IdentInfo, KarmaEvent } from "@/lib/shared/types/ident";
 import { AxiosError } from "axios";
-import { ApiError } from "@/lib/types/error";
+import { ApiError } from "@/lib/shared/types/error";
 import useSWR from "swr";
 import { Pagination } from "@/components/molecules/Pagination";
 

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { LOCATION_TTL } from "@/lib/constants";
-import { GeoCoordinates } from "@/lib/types/geo";
+import { LOCATION_TTL } from "@/lib/shared/constants";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 import { Marker } from "react-map-gl/maplibre";
 
 interface LocateMarkerProps {

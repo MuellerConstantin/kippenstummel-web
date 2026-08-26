@@ -1,4 +1,4 @@
-import { GeoCoordinates } from "@/lib/types/geo";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface LocationState {

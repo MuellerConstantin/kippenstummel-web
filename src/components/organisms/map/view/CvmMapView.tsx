@@ -2,7 +2,7 @@
 
 import { useCvmMapViewportData } from "@/hooks/cvm/useCvmMapViewportData";
 import { useCallback, useEffect, useMemo, useRef } from "react";
-import { GeoCoordinates } from "@/lib/types/geo";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 import { CvmMapDefaultOverlay } from "./CvmMapDefaultOverlay";
 import { useTranslations } from "next-intl";
 import { useNotifications } from "@/contexts/NotificationProvider";

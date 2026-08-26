@@ -10,7 +10,7 @@ import { Link } from "@/components/atoms/Link";
 import { TextField } from "@/components/atoms/TextField";
 import { Form } from "@/components/atoms/Form";
 import { Spinner } from "@/components/atoms/Spinner";
-import { encryptWithPassword } from "@/lib/encrypt";
+import { encryptWithPassword } from "@/lib/client/encrypt";
 import useApi from "@/hooks/useApi";
 import { AxiosError, AxiosResponse } from "axios";
 import Image from "next/image";

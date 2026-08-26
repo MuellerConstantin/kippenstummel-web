@@ -21,11 +21,11 @@ import {
   SCORING_DELETION_UPPER_LIMIT,
   SCORING_GOOD_LOWER_LIMIT,
   SCORING_NEUTRAL_LOWER_LIMIT,
-} from "@/lib/constants";
-import { Cvm } from "@/lib/types/cvm";
-import { GeoCoordinates } from "@/lib/types/geo";
+} from "@/lib/shared/constants";
+import { Cvm } from "@/lib/shared/types/cvm";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 import { useAppSelector } from "@/store";
-import { calculateDistanceInKm } from "@/lib/geo";
+import { calculateDistanceInKm } from "@/lib/shared/geo";
 
 interface CopyButtonProps {
   text: string;

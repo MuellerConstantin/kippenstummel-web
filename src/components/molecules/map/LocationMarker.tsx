@@ -1,11 +1,11 @@
 import { MapPin, ChevronUp, ChevronDown, Equal, X } from "lucide-react";
-import { Cvm } from "@/lib/types/cvm";
+import { Cvm } from "@/lib/shared/types/cvm";
 import { Marker } from "react-map-gl/maplibre";
 import {
   SCORING_DELETION_UPPER_LIMIT,
   SCORING_GOOD_LOWER_LIMIT,
   SCORING_NEUTRAL_LOWER_LIMIT,
-} from "@/lib/constants";
+} from "@/lib/shared/constants";
 
 interface LocationMarkerProps {
   cvm: Cvm;

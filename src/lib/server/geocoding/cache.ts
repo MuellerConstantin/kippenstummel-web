@@ -1,7 +1,9 @@
+import "server-only";
+
 import { LRUCache } from "lru-cache";
-import { getRedisClient } from "@/lib/redis";
-import { GeoCoordinates } from "@/lib/types/geo";
-import { GeocodedAddress } from "@/lib/types/geocoding";
+import { getRedisClient } from "@/lib/server/redis";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
+import { GeocodedAddress } from "@/lib/shared/types/geocoding";
 
 /*
  * Addresses at a fixed coordinate barely change, and the key space is bounded

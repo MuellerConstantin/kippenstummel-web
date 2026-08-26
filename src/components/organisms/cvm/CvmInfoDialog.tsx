@@ -1,6 +1,6 @@
 import { Dialog } from "@/components/atoms/Dialog";
-import { Cvm } from "@/lib/types/cvm";
-import { GeoCoordinates } from "@/lib/types/geo";
+import { Cvm } from "@/lib/shared/types/cvm";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 import { CvmInfoDialogContent } from "./CvmInfoDialogContent";
 import { Button } from "@/components/atoms/Button";
 import { X } from "lucide-react";

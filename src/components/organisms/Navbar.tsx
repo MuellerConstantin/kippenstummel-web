@@ -24,7 +24,7 @@ import { ListBox, ListBoxItem } from "@/components/atoms/ListBox";
 import { useAppSelector, useAppDispatch } from "@/store";
 import usabilitySlice from "@/store/slices/usability";
 import { useRouter, usePathname } from "@/i18n/navigation";
-import { IdentInfo } from "@/lib/types/ident";
+import { IdentInfo } from "@/lib/shared/types/ident";
 import { AxiosError } from "axios";
 import { ApiError } from "next/dist/server/api-utils";
 import useSWR from "swr";

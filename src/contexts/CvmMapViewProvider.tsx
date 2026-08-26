@@ -1,4 +1,4 @@
-import { GeoCoordinates } from "@/lib/types/geo";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 import { createContext, useCallback, useContext, useReducer } from "react";
 
 type CvmMapViewMode = "default" | "register" | "reposition";

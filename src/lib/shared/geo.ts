@@ -1,4 +1,4 @@
-import { GeoCoordinates } from "./types/geo";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 
 export function tileToLatLon(x: number, y: number, z: number): GeoCoordinates {
   const longitude = (x / Math.pow(2, z)) * 360 - 180;

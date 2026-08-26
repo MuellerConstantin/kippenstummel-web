@@ -1,5 +1,5 @@
-import { Cvm } from "@/lib/types/cvm";
-import { GeoCoordinates } from "@/lib/types/geo";
+import { Cvm } from "@/lib/shared/types/cvm";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 import { ModalSheet } from "@/components/molecules/ModalSheet";
 import { CvmInfoDialogContent } from "./CvmInfoDialogContent";
 

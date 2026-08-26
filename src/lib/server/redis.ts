@@ -1,3 +1,5 @@
+import "server-only";
+
 import Redis from "ioredis";
 
 const READY_TIMEOUT_MS = 2000;

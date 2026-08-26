@@ -1,6 +1,6 @@
 import { AdjustableLocationMarker } from "@/components/molecules/map/AdjustableLocationMarker";
 import { ConfirmBottomNavigation } from "../../navigation/ConfirmBottomNavigation";
-import { GeoCoordinates } from "@/lib/types/geo";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 import { useTranslations } from "next-intl";
 import { useCvmMapRepositionView } from "@/contexts/CvmMapViewProvider";
 import { MapPinned } from "lucide-react";

@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from "motion/react";
 import { CvmInfoSidebar } from "../../cvm/CvmInfoSidebar";
 import { CvmInfoModalSheet } from "../../cvm/CvmInfoModalSheet";
-import { Cvm, CvmCluster } from "@/lib/types/cvm";
-import { GeoCoordinates } from "@/lib/types/geo";
+import { Cvm, CvmCluster } from "@/lib/shared/types/cvm";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 import { FloatingMenuBottomNavigation } from "../../navigation/FloatingMenuBottomNavigation";
 import { AnimatedDialogModal } from "@/components/molecules/AnimatedDialogModal";
 import { CvmReportDialog } from "../../cvm/CvmReportDialog";

@@ -1,5 +1,5 @@
-import { GeoCoordinates } from "@/lib/types/geo";
-import { GeocodedAddress } from "@/lib/types/geocoding";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
+import { GeocodedAddress } from "@/lib/shared/types/geocoding";
 import { useCallback, useMemo } from "react";
 import useSWR from "swr";
 import axios from "axios";

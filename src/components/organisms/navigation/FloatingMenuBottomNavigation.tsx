@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 import useLocate from "@/hooks/useLocate";
 import { useAppSelector } from "@/store";
-import { GeoCoordinates } from "@/lib/types/geo";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 import { useRouter } from "@/i18n/navigation";
 
 interface FloatingMenuBottomNavigationProps {

@@ -1,4 +1,4 @@
-import { GeoCoordinates } from "@/lib/types/geo";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 import { useCallback, useState } from "react";
 import { Map, MapLibreEvent } from "maplibre-gl";
 import { ViewStateChangeEvent } from "react-map-gl/maplibre";

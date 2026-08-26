@@ -8,7 +8,7 @@ import useApi from "@/hooks/useApi";
 import { AxiosError } from "axios";
 import { useSWRConfig } from "swr";
 import { Link } from "@/components/atoms/Link";
-import { GeoCoordinates } from "@/lib/types/geo";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 import { CvmMap } from "@/components/organisms/map/CvmMap";
 
 export default function Map() {

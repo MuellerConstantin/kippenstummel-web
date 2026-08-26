@@ -11,7 +11,7 @@ import {
 import { MapPinPlusInside, Move } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as turf from "@turf/turf";
-import { GeoCoordinates } from "@/lib/types/geo";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 
 interface AdjustableLocationMarkerProps {
   onAdapt?: (position: GeoCoordinates) => void;

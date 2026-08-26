@@ -12,7 +12,7 @@ import { Link } from "@/components/atoms/Link";
 import { FaqItem } from "@/components/molecules/FaqItem";
 import { Leaderboard } from "@/components/organisms/Leaderboard";
 import { HomeHero } from "@/components/molecules/HomeHero";
-import { getTopRegionsGeoBalanced, REGIONS } from "@/lib/regions";
+import { getTopRegionsGeoBalanced, REGIONS } from "@/lib/shared/regions";
 import { DonateButton } from "@/components/molecules/DonateButton";
 
 interface FeatureItemProps {

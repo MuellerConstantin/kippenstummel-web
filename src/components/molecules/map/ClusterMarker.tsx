@@ -1,5 +1,5 @@
 import { useMemo, useCallback } from "react";
-import { GeoCoordinates } from "@/lib/types/geo";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 import { Marker, useMap } from "react-map-gl/maplibre";
 
 interface ClusterMarkerProps {

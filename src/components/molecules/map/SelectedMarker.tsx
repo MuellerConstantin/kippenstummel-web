@@ -1,5 +1,5 @@
 import { MapPin } from "lucide-react";
-import { Cvm } from "@/lib/types/cvm";
+import { Cvm } from "@/lib/shared/types/cvm";
 import { Marker } from "react-map-gl/maplibre";
 
 interface SelectedMarkerProps {

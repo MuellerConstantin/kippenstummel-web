@@ -1,7 +1,9 @@
+import "server-only";
+
 import {
   GeocodedAddress,
   GeocodedAddressComponents,
-} from "@/lib/types/geocoding";
+} from "@/lib/shared/types/geocoding";
 
 interface NominatimReverseResult {
   display_name?: string;
