@@ -11,6 +11,7 @@
 
 import fs from "fs";
 import path from "path";
+import { slugify } from "@/lib/shared/slug";
 
 type GeoJsonFeatureCollection<G, P> = {
   type: "FeatureCollection";
@@ -101,16 +102,6 @@ Optional:
     outDir: get("outDir") ?? "data/regions",
     minPopulation: Number(get("minPopulation") ?? 10_000),
   };
-}
-
-function slugify(name: string): string {
-  return name
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/ß/g, "ss")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
 }
 
 function radiusToBBox(lon: number, lat: number, radiusMeters: number) {

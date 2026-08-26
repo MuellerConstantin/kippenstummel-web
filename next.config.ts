@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 import withSerwistInit from "@serwist/next";
+import regionSlugAliases from "./data/regions/de/aliases.json";
 
 const isStandalone = process.env.NEXT_OUTPUT_MODE === "standalone";
 const isProduction = process.env.NODE_ENV === "production";
@@ -56,12 +57,23 @@ const dialogFallbacks: Array<{ source: string; destination: string }> = [
 const nextConfig: NextConfig = {
   output: isStandalone ? "standalone" : undefined,
   async redirects() {
-    return dialogFallbacks.map(({ source, destination }) => ({
-      source,
-      destination,
-      missing: [{ type: "header" as const, key: "rsc" }],
-      permanent: false,
-    }));
+    return [
+      ...dialogFallbacks.map(({ source, destination }) => ({
+        source,
+        destination,
+        missing: [{ type: "header" as const, key: "rsc" }],
+        permanent: false,
+      })),
+      /*
+       * Required following the adjustment of the slug logic for the transition phase.
+       * Can be removed afterwards.
+       */
+      ...Object.entries(regionSlugAliases).map(([from, to]) => ({
+        source: `/:locale/cvms/region/${from}`,
+        destination: `/:locale/cvms/region/${to}`,
+        permanent: true,
+      })),
+    ];
   },
   async headers() {
     const headers: Array<{ key: string; value: string }> = [

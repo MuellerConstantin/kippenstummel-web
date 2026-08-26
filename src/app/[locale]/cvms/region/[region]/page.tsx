@@ -13,6 +13,14 @@ type Props = {
   searchParams: Promise<{ page: string }>;
 };
 
+function decodeSlug(slug: string): string {
+  try {
+    return decodeURIComponent(slug);
+  } catch {
+    return slug;
+  }
+}
+
 export async function generateMetadata({
   params,
   searchParams,
@@ -20,7 +28,7 @@ export async function generateMetadata({
   const { locale, region: regionSlug } = await params;
   const { page } = await searchParams;
 
-  const region = REGIONS.find((r) => r.slug === regionSlug);
+  const region = REGIONS.find((r) => r.slug === decodeSlug(regionSlug));
 
   if (!region) notFound();
 
@@ -29,7 +37,7 @@ export async function generateMetadata({
   return buildPageMetadata({
     locale,
     namespace: "CvmRegionPage",
-    path: `/cvms/region/${region.slug}`,
+    path: `/cvms/region/${encodeURIComponent(region.slug)}`,
     values: { region: region.name },
     withDescription: true,
     robots: {
@@ -49,7 +57,9 @@ export default async function CvmRegionPage({ params }: Props) {
   const { region: regionSlug, locale } = await params;
   const t = await getTranslations("CvmRegionPage");
 
-  const region = REGIONS.find((region) => region.slug === regionSlug);
+  const region = REGIONS.find(
+    (region) => region.slug === decodeSlug(regionSlug),
+  );
 
   if (!region) {
     notFound();
@@ -59,7 +69,7 @@ export default async function CvmRegionPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: t("meta.title", { region: region.name }),
-    url: `${BASE_URL}/${locale}/cvms/region/${region.slug}`,
+    url: `${BASE_URL}/${locale}/cvms/region/${encodeURIComponent(region.slug)}`,
     inLanguage: locale,
     about: {
       "@type": "Place",

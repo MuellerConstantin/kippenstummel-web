@@ -164,31 +164,39 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const regionDePages: MetadataRoute.Sitemap = REGIONS.map((region) => ({
-    url: `${BASE_URL}/de/cvms/region/${region.slug}`,
-    lastModified: BUILD_DATE,
-    changeFrequency: "weekly",
-    priority: 0.7,
-    alternates: {
-      languages: {
-        de: `${BASE_URL}/de/cvms/region/${region.slug}`,
-        en: `${BASE_URL}/en/cvms/region/${region.slug}`,
-      },
-    },
-  }));
+  const regionDePages: MetadataRoute.Sitemap = REGIONS.map((region) => {
+    const slug = encodeURIComponent(region.slug);
 
-  const regionEnPages: MetadataRoute.Sitemap = REGIONS.map((region) => ({
-    url: `${BASE_URL}/en/cvms/region/${region.slug}`,
-    lastModified: BUILD_DATE,
-    changeFrequency: "weekly",
-    priority: 0.7,
-    alternates: {
-      languages: {
-        de: `${BASE_URL}/de/cvms/region/${region.slug}`,
-        en: `${BASE_URL}/en/cvms/region/${region.slug}`,
+    return {
+      url: `${BASE_URL}/de/cvms/region/${slug}`,
+      lastModified: BUILD_DATE,
+      changeFrequency: "weekly",
+      priority: 0.7,
+      alternates: {
+        languages: {
+          de: `${BASE_URL}/de/cvms/region/${slug}`,
+          en: `${BASE_URL}/en/cvms/region/${slug}`,
+        },
       },
-    },
-  }));
+    };
+  });
+
+  const regionEnPages: MetadataRoute.Sitemap = REGIONS.map((region) => {
+    const slug = encodeURIComponent(region.slug);
+
+    return {
+      url: `${BASE_URL}/en/cvms/region/${slug}`,
+      lastModified: BUILD_DATE,
+      changeFrequency: "weekly",
+      priority: 0.7,
+      alternates: {
+        languages: {
+          de: `${BASE_URL}/de/cvms/region/${slug}`,
+          en: `${BASE_URL}/en/cvms/region/${slug}`,
+        },
+      },
+    };
+  });
 
   return [...staticPages, ...regionDePages, ...regionEnPages];
 }
