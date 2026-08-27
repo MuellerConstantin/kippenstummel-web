@@ -91,11 +91,15 @@ fall outside what swarm intelligence alone can resolve reliably.
 │   │   │   └── runtime-config/       # Runtime config endpoint for CSR
 │   │   ├── layout.tsx
 │   │   └── [locale]/                 # Localized pages (de/en)
-│   │       ├── map/                  # Main map view
-│   │       ├── cvms/                 # CVM detail pages
-│   │       ├── leaderboard/          # Karma leaderboard
-│   │       ├── transfer/             # Identity transfer flow
-│   │       ├── home/                 # Landing/home page
+│   │       ├── (content)/            # Server rendered, no rehydration gate
+│   │       │   ├── home/             # Landing/home page
+│   │       │   ├── cvms/             # CVM region pages
+│   │       │   ├── leaderboard/      # Karma leaderboard
+│   │       │   └── imprint/, …       # Legal pages
+│   │       ├── (app)/                # Interactive, waits for rehydration
+│   │       │   ├── map/              # Main map view
+│   │       │   └── transfer/         # Identity transfer flow
+│   │       ├── dialog/               # Deep-linkable dialog routes
 │   │       ├── @modal/               # Parallel route for modal overlays
 │   │       └── globals.css           # Tailwind base styles and customizations
 │   ├── components/                   # UI components (Atomic Design)
@@ -165,6 +169,13 @@ fall outside what swarm intelligence alone can resolve reliably.
   client-side (persisted via Redux). Device-to-device transfer is handled via
   an encrypted token flow; the secret is encrypted in the browser before being
   sent to the server and decrypted only on the receiving device.
+- **Route Groups by Rendering Strategy**: Routes are split into `(content)`
+  and `(app)`. Screens in `(app)` read persisted state on their first render —
+  the map its last viewport, the transfer flow the stored identity — and wait
+  behind a `RehydrationBoundary` so they do not render on defaults and jump.
+  Everything in `(content)` renders on the server, which is what makes the
+  pages indexable. The gate must never move back to the root layout: everything
+  below it is invisible to server rendering.
 - **Parallel Routes for Modals**: Sheet/modal overlays (e.g. CVM detail,
   registration flow) use Next.js parallel routes (`@modal`) so they are
   deep-linkable, respect browser history, and don't require client-side modal

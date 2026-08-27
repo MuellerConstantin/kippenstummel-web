@@ -1,6 +1,13 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, {
+  useRef,
+  useEffect,
+  useCallback,
+  useContext,
+  useSyncExternalStore,
+  createContext,
+} from "react";
 import { Provider, useDispatch, useSelector, useStore } from "react-redux";
 import {
   configureStore,
@@ -17,6 +24,7 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
+  type Persistor,
 } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import localStorage from "redux-persist/lib/storage";
@@ -135,15 +143,68 @@ function ThemeSwitcher({
   return children;
 }
 
-export default function PrivacyCompliantPersistGate({
+const PersistorContext = createContext<Persistor | null>(null);
+
+function usePersistor(): Persistor {
+  const persistor = useContext(PersistorContext);
+
+  if (!persistor) {
+    throw new Error("usePersistor must be used below a StoreProvider");
+  }
+
+  return persistor;
+}
+
+/**
+ * Whether redux-persist has restored the persisted state. Server renders and
+ * the very first client render report `false`, so anything that would briefly
+ * show default state instead of the user's own can hold back until it is true.
+ */
+export function useRehydrated(): boolean {
+  const persistor = usePersistor();
+
+  const subscribe = useCallback(
+    (onStoreChange: () => void) => persistor.subscribe(onStoreChange),
+    [persistor],
+  );
+
+  return useSyncExternalStore(
+    subscribe,
+    () => persistor.getState().bootstrapped,
+    () => false,
+  );
+}
+
+/**
+ * Withholds its children until the persisted state is restored.
+ */
+export function RehydrationBoundary({
   children,
-  persistor,
-  loading,
 }: Readonly<{
   children: React.ReactNode;
-  persistor: ReturnType<typeof persistStore>;
-  loading: React.ReactNode;
 }>) {
+  const persistor = usePersistor();
+
+  return (
+    <PersistGate persistor={persistor} loading={null}>
+      {children}
+    </PersistGate>
+  );
+}
+
+/**
+ * Asks for cookie settings until they have been made, and starts persisting
+ * once they allow it. The dialog waits for rehydration, otherwise returning
+ * visitors would see it flash open before their stored choice arrives.
+ */
+function PrivacySettingsGuard({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  const persistor = usePersistor();
+  const rehydrated = useRehydrated();
+
   const cookieSettingsSelected = useAppSelector(
     (state) => state.privacy.cookieSettingsSelected,
   );
@@ -156,15 +217,15 @@ export default function PrivacyCompliantPersistGate({
   }, [cookieSettingsSelected, persistor]);
 
   return (
-    <PersistGate persistor={persistor} loading={loading}>
+    <>
       {children}
       <AnimatedDialogModal
-        isOpen={!cookieSettingsSelected}
+        isOpen={rehydrated && !cookieSettingsSelected}
         className="max-w-xl"
       >
         <PrivacySettingsDialog />
       </AnimatedDialogModal>
-    </PersistGate>
+    </>
   );
 }
 
@@ -190,12 +251,11 @@ export function StoreProvider({
 
   return (
     <Provider store={storeRef.current[0]}>
-      <PrivacyCompliantPersistGate
-        loading={null}
-        persistor={storeRef.current[1]}
-      >
-        <ThemeSwitcher>{children}</ThemeSwitcher>
-      </PrivacyCompliantPersistGate>
+      <PersistorContext.Provider value={storeRef.current[1]}>
+        <PrivacySettingsGuard>
+          <ThemeSwitcher>{children}</ThemeSwitcher>
+        </PrivacySettingsGuard>
+      </PersistorContext.Provider>
     </Provider>
   );
 }

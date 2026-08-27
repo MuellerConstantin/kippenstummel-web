@@ -8,6 +8,7 @@ import { Page } from "@/lib/shared/types/pagination";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 type Props = {
   params: Promise<{ locale: string; region: string }>;
@@ -126,7 +127,12 @@ export default async function CvmRegionPage({ params }: Props) {
           </div>
         </div>
         <div className="relative mx-auto flex max-w-[80rem] flex-col items-center gap-12 overflow-hidden p-4">
-          <RegionCvmList region={region} />
+          {/* Reads the page from the query string, which opts it out of
+              prerendering. Isolated so the headline, the count and the
+              structured data above still render on the server. */}
+          <Suspense>
+            <RegionCvmList region={region} />
+          </Suspense>
         </div>
       </div>
     </>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RehydrationBoundary } from "@/store";
 
 /**
  * Dialog routes exist to make overlays deep-linkable; their content is always
@@ -12,10 +13,15 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * Reached directly these routes render the identity and privacy state on their
+ * own, so they wait for rehydration. As intercepted overlays they never do:
+ * by the time one is opened the state has long been restored.
+ */
 export default function DialogLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return children;
+  return <RehydrationBoundary>{children}</RehydrationBoundary>;
 }
