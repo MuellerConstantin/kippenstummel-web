@@ -25,9 +25,7 @@ const memoryCache = new LRUCache<string, GeocodedAddress>({
 
 /**
  * Keys are derived from the coordinates instead of the upstream request, so
- * the cache stays usable from anywhere a coordinate needs to be resolved. The
- * coordinates are normalised to shield the key space from differing textual
- * representations of the same point.
+ * the cache stays usable from anywhere a coordinate needs to be resolved.
  *
  * Names are resolved in the local language of the place, which makes a
  * coordinate resolve to one result rather than one per language — a single
