@@ -660,8 +660,8 @@
         "description": "Diese Cookies werden zur Personalisierung der Website und ihrer Inhalte basierend auf dem Benutzerverhalten verwendet. Das Einschalten ermöglicht es uns beispielsweise Karteneinstellungen zu speichern."
       },
       "analytics": {
-        "title": "Analyse & Statistik",
-        "description": "Das Sammeln dieser Informationen ermöglicht uns das erstellen grundlegender Statistiken und die Analyse des Website-Traffic. Dadurch wird es uns möglich unsere Website zu verbessern und Inhalte anzupassen."
+        "title": "Erweiterte Analyse",
+        "description": "Seitenaufrufe zählen wir anonym, ohne Cookies und ohne Rückschluss auf einzelne Besucher, um zu sehen, wie unsere Website genutzt wird. Wenn Sie dies einschalten, erfassen wir zusätzlich Angaben zu Ihrem Gerät: Betriebssystem, Browser, Bildschirmgröße, Sprache und die zuvor besuchte Seite."
       }
     }
   },

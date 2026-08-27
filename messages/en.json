@@ -660,8 +660,8 @@
         "description": "These cookies are used to personalize the website and its content based on user behavior. Enabling them allows us, for example, to save map settings."
       },
       "analytics": {
-        "title": "Analytics & Statistics",
-        "description": "Collecting this information enables us to create basic statistics and analyze website traffic. This helps us improve our website and adapt content."
+        "title": "Extended analytics",
+        "description": "We count page views anonymously, without cookies and without any way to identify individual visitors, to see how our website is used. Enabling this additionally records details about your device: operating system, browser, screen size, language and the page you came from."
       }
     }
   },
