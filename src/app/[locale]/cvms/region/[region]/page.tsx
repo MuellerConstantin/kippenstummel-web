@@ -80,7 +80,7 @@ export default async function CvmRegionPage({ params }: Props) {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
   const res = await fetch(
-    `${baseUrl}/api/bff/cvms?page=0&filter=${encodeURIComponent(`bbox=="${region.bbox.bottomLeft},${region.bbox.topRight}`)}"`,
+    `${baseUrl}/api/bff/cvms?page=0&filter=${encodeURIComponent(`bbox=="${region.bbox.bottomLeft},${region.bbox.topRight}"`)}`,
     {
       cache: "no-store",
     },
