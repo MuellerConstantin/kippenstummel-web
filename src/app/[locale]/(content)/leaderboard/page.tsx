@@ -13,7 +13,7 @@ import { Medal } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import useSWR from "swr";
 
 interface VictoryPodiumProps {
@@ -215,6 +215,15 @@ export default function Leaderboard() {
     return page === 1 ? members.slice(3) : members;
   }, [members, page]);
 
+  /**
+   * The first three entries of the first page are shown on the podium, so the
+   * list below it starts at rank four there and at the page offset elsewhere.
+   */
+  const rankOf = useCallback(
+    (index: number) => (page - 1) * perPage + index + (page === 1 ? 4 : 1),
+    [page, perPage],
+  );
+
   return (
     <div className="mx-auto my-8 flex w-full max-w-[60rem] flex-col items-center gap-4 gap-12 p-4">
       <div className="flex items-center justify-center gap-1">
@@ -259,7 +268,7 @@ export default function Leaderboard() {
               {Array.from(Array(10).keys()).map((key) => (
                 <li key={key} className="flex items-center gap-4 px-4 py-4">
                   <span className="h-6 w-6 text-center text-slate-400">
-                    {key + 4}
+                    {rankOf(key)}
                   </span>
                   <span className="flex-1 truncate text-slate-700 dark:text-slate-300">
                     <div className="h-3 w-24 animate-pulse rounded-md bg-slate-200 dark:bg-slate-700" />
@@ -275,7 +284,7 @@ export default function Leaderboard() {
               {Array.from(Array(10).keys()).map((key) => (
                 <li key={key} className="flex items-center gap-4 px-4 py-4">
                   <span className="h-6 w-6 text-center text-slate-400">
-                    {key + 4}
+                    {rankOf(key)}
                   </span>
                   <span className="flex-1 truncate text-slate-700 dark:text-slate-300">
                     <div className="h-3 w-24 rounded-md bg-red-300 dark:bg-red-800" />
@@ -291,7 +300,7 @@ export default function Leaderboard() {
               {remainingPlaces.map((member, index) => (
                 <li key={index} className="flex items-center gap-4 px-4 py-4">
                   <span className="h-6 w-6 text-center text-slate-400">
-                    {(page - 1) * perPage + index + 4}
+                    {rankOf(index)}
                   </span>
                   <div className="h-6 w-6 overflow-hidden rounded-full border-2 border-slate-200 bg-slate-100 dark:border-slate-600 dark:bg-slate-900">
                     <IdentIcon value={member.identity} />
