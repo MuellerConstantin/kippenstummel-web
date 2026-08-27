@@ -133,7 +133,7 @@ export function TransferView() {
                 src="/images/logo.svg"
                 width={32}
                 height={32}
-                alt="TaskCare Logo"
+                alt="Logo"
                 className="h-12 w-12"
               />
               <h1 className="text-center text-2xl font-bold text-slate-500 lg:text-3xl lg:text-4xl dark:text-slate-400">
