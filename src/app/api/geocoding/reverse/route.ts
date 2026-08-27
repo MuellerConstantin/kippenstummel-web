@@ -15,6 +15,16 @@ export const runtime = "nodejs";
 const REVERSE_URL = "https://nominatim.openstreetmap.org/reverse";
 const USER_AGENT = "Kippenstummel/1.0 (info@mueller-constantin.de)";
 
+/**
+ * Nominatim's usage policy permits at most one request per second, counted per
+ * application rather than per visitor. The queue is therefore deliberately
+ * global and shared by everyone: raising the rate, or holding one queue per
+ * client, risks getting the whole service blocked upstream.
+ *
+ * Only requests that actually reach Nominatim pass through here. Cached
+ * addresses are answered further down before the queue is involved and are not
+ * subject to the limit.
+ */
 const throttledFetchQueue = new ThrottledQueue<Response>(1000, 100);
 
 function parseCoordinates(
