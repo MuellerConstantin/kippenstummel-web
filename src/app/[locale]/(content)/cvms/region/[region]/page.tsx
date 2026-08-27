@@ -49,17 +49,11 @@ export async function generateMetadata({
   });
 }
 
-export async function generateStaticParams() {
-  return REGIONS.map((region) => ({
-    region: region.slug,
-  }));
-}
+export const dynamic = "force-dynamic";
 
 export default async function CvmRegionPage({ params }: Props) {
   const { region: regionSlug, locale } = await params;
 
-  // Resolves the locale from the segment rather than the request headers, which
-  // would otherwise keep the route dynamic regardless of how its data is cached.
   setRequestLocale(locale);
 
   const t = await getTranslations("CvmRegionPage");
