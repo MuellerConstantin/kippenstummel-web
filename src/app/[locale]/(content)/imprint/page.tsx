@@ -1,11 +1,17 @@
-"use client";
-
 import { Link } from "@/components/atoms/Link";
-import { useTranslations } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Info } from "lucide-react";
 
-export default function Imprint() {
-  const t = useTranslations("ImprintPage");
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function Imprint({ params }: Props) {
+  const { locale } = await params;
+
+  setRequestLocale(locale);
+
+  const t = await getTranslations("ImprintPage");
 
   return (
     <div className="mx-auto my-8 flex w-full max-w-[80rem] flex-col gap-8 p-4 text-slate-800 dark:text-white">

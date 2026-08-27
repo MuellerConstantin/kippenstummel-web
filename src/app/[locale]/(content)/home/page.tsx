@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
 import {
   Coins,
   RefreshCw,
@@ -39,7 +40,7 @@ function FeatureItem({ title, description, icon: Icon }: FeatureItemProps) {
   );
 }
 
-export default function Home() {
+function HomeContent() {
   const t = useTranslations("HomePage");
 
   const features = useMemo(() => {
@@ -309,4 +310,21 @@ export default function Home() {
       </div>
     </div>
   );
+}
+
+/**
+ * Without `setRequestLocale` next-intl resolves the locale from the request
+ * headers, which opts the route out of static rendering. The content sits in
+ * its own component because it uses hooks, which an async component cannot.
+ */
+export default async function Home({
+  params,
+}: Readonly<{
+  params: Promise<{ locale: string }>;
+}>) {
+  const { locale } = await params;
+
+  setRequestLocale(locale);
+
+  return <HomeContent />;
 }

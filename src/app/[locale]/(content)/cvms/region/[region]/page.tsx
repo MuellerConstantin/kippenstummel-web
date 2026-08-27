@@ -6,7 +6,7 @@ import { BASE_URL, buildPageMetadata } from "@/lib/server/seo";
 import { Cvm } from "@/lib/shared/types/cvm";
 import { Page } from "@/lib/shared/types/pagination";
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -57,6 +57,11 @@ export async function generateStaticParams() {
 
 export default async function CvmRegionPage({ params }: Props) {
   const { region: regionSlug, locale } = await params;
+
+  // Resolves the locale from the segment rather than the request headers, which
+  // would otherwise keep the route dynamic regardless of how its data is cached.
+  setRequestLocale(locale);
+
   const t = await getTranslations("CvmRegionPage");
 
   const region = REGIONS.find(

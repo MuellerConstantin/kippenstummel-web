@@ -1,11 +1,17 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/components/atoms/Link";
 import { Info } from "lucide-react";
 
-export default function PrivacyPolicy() {
-  const t = useTranslations("PrivacyPolicyPage");
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function PrivacyPolicy({ params }: Props) {
+  const { locale } = await params;
+
+  setRequestLocale(locale);
+
+  const t = await getTranslations("PrivacyPolicyPage");
 
   return (
     <div className="mx-auto my-8 flex w-full max-w-[80rem] flex-col gap-8 p-4 text-slate-800 dark:text-white">
