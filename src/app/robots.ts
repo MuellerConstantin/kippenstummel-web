@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { BASE_URL } from "@/lib/server/seo";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/*?page=", "/*?perPage=", "/*?shared="],
     },
-    sitemap: "https://www.kippenstummel.de/sitemap.xml",
+    sitemap: `${BASE_URL}/sitemap.xml`,
   };
 }

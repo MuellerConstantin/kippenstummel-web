@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { REGIONS } from "@/lib/shared/regions";
+import { BASE_URL } from "@/lib/server/seo";
 
-const BASE_URL = "https://www.kippenstummel.de";
 const BUILD_DATE = new Date();
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -55,32 +55,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
           de: `${BASE_URL}/de/map`,
           en: `${BASE_URL}/en/map`,
           "x-default": `${BASE_URL}/de/map`,
-        },
-      },
-    },
-    {
-      url: `${BASE_URL}/de/leaderboard`,
-      lastModified: BUILD_DATE,
-      changeFrequency: "daily",
-      priority: 0.5,
-      alternates: {
-        languages: {
-          de: `${BASE_URL}/de/leaderboard`,
-          en: `${BASE_URL}/en/leaderboard`,
-          "x-default": `${BASE_URL}/de/leaderboard`,
-        },
-      },
-    },
-    {
-      url: `${BASE_URL}/en/leaderboard`,
-      lastModified: BUILD_DATE,
-      changeFrequency: "daily",
-      priority: 0.5,
-      alternates: {
-        languages: {
-          de: `${BASE_URL}/de/leaderboard`,
-          en: `${BASE_URL}/en/leaderboard`,
-          "x-default": `${BASE_URL}/de/leaderboard`,
         },
       },
     },
