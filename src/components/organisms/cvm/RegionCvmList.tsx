@@ -3,7 +3,7 @@
 import { Link } from "@/components/atoms/Link";
 import { ListBox, ListBoxItem } from "@/components/atoms/ListBox";
 import { Pagination } from "@/components/molecules/Pagination";
-import { useGeocodedAddress } from "@/hooks/cvm/useGeocodedAddress";
+import { useCvmAddress } from "@/hooks/cvm/useCvmAddress";
 import useApi from "@/hooks/useApi";
 import { useRouter } from "@/i18n/navigation";
 import {
@@ -13,7 +13,6 @@ import {
 } from "@/lib/shared/constants";
 import { Region } from "@/lib/shared/regions";
 import { Cvm } from "@/lib/shared/types/cvm";
-import { GeoCoordinates } from "@/lib/shared/types/geo";
 import { Page } from "@/lib/shared/types/pagination";
 import { ChevronDown, ChevronUp, Equal, MapPin, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -22,11 +21,11 @@ import { useCallback, useMemo, useState } from "react";
 import useSWR from "swr";
 
 interface CvmAddressProps {
-  coordinates: GeoCoordinates;
+  cvm: Cvm;
 }
 
-function CvmAddress({ coordinates }: CvmAddressProps) {
-  const { address, isLoading, error } = useGeocodedAddress(coordinates);
+function CvmAddress({ cvm }: CvmAddressProps) {
+  const { address, isLoading, error } = useCvmAddress(cvm.id);
 
   return (
     <div>
@@ -34,7 +33,7 @@ function CvmAddress({ coordinates }: CvmAddressProps) {
         <div className="h-3 w-[12rem] animate-pulse truncate rounded-md bg-slate-300 dark:bg-slate-700" />
       ) : error ? (
         <div className="truncate text-xs">
-          {coordinates.latitude} / {coordinates.longitude} (lat/lng)
+          {cvm.latitude} / {cvm.longitude} (lat/lng)
         </div>
       ) : (
         <div className="truncate text-xs">{address}</div>
@@ -169,12 +168,7 @@ export function RegionCvmList(props: RegionCvmListProps) {
                         {t("cvm")}
                       </div>
                       <div>
-                        <CvmAddress
-                          coordinates={{
-                            latitude: cvm.latitude,
-                            longitude: cvm.longitude,
-                          }}
-                        />
+                        <CvmAddress cvm={cvm} />
                       </div>
                       <div className="flex items-center gap-1 text-xs">
                         <div>Score:</div>

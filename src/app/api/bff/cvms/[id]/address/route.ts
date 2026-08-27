@@ -1,14 +1,15 @@
 import { type NextRequest } from "next/server";
-import {
-  ThrottledQueue,
-  ThrottleOverflowError,
-} from "@/lib/shared/throttled-queue";
+import { ApiRequestError, fetchFromApi } from "@/lib/server/api/client";
 import {
   getCachedAddress,
   setCachedAddress,
 } from "@/lib/server/geocoding/cache";
 import { toGeocodedAddress } from "@/lib/server/geocoding/nominatim";
-import { GeoCoordinates } from "@/lib/shared/types/geo";
+import {
+  ThrottledQueue,
+  ThrottleOverflowError,
+} from "@/lib/shared/throttled-queue";
+import { Cvm } from "@/lib/shared/types/cvm";
 
 export const runtime = "nodejs";
 
@@ -27,27 +28,8 @@ const USER_AGENT = "Kippenstummel/1.0 (info@mueller-constantin.de)";
  */
 const throttledFetchQueue = new ThrottledQueue<Response>(1000, 100);
 
-function parseCoordinates(
-  searchParams: URLSearchParams,
-): GeoCoordinates | null {
-  const lat = searchParams.get("lat");
-  const lon = searchParams.get("lon");
-
-  if (!lat || !lon) {
-    return null;
-  }
-
-  const latitude = Number(lat);
-  const longitude = Number(lon);
-
-  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
-    return null;
-  }
-
-  return { latitude, longitude };
-}
-
 function errorResponse(
+  path: string,
   status: number,
   code: string,
   message: string,
@@ -57,7 +39,7 @@ function errorResponse(
     JSON.stringify({
       code,
       timestamp: new Date().toISOString(),
-      path: "/api/geocoding/reverse",
+      path,
       message,
     }),
     {
@@ -67,16 +49,48 @@ function errorResponse(
   );
 }
 
-export async function GET(req: NextRequest) {
-  const coordinates = parseCoordinates(req.nextUrl.searchParams);
+/**
+ * Resolves the address of a registered CVM. The coordinates are looked up from
+ * the machine rather than taken from the caller, which keeps this from being a
+ * reverse geocoder for arbitrary positions: the set of resolvable coordinates,
+ * and with it the cache, is bounded by the number of registered machines.
+ */
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params;
+  const path = `/api/bff/cvms/${id}/address`;
 
-  if (!coordinates) {
+  const ident = req.headers.get("x-ident");
+
+  let cvm: Cvm;
+
+  try {
+    cvm = await fetchFromApi<Cvm>(`cvms/${encodeURIComponent(id)}`, {
+      ...(ident && { headers: { "x-ident": ident } }),
+    });
+  } catch (error) {
+    if (error instanceof ApiRequestError && error.status === 404) {
+      return errorResponse(
+        path,
+        404,
+        "GEOCODING_CVM_NOT_FOUND",
+        "No CVM exists for the given id",
+      );
+    }
+
+    console.error("Geocoding-Cvm-Lookup-Error:", error);
+
     return errorResponse(
-      400,
-      "GEOCODING_INVALID_COORDINATES",
-      "Query parameters 'lat' and 'lon' must be valid coordinates",
+      path,
+      502,
+      "GEOCODING_CVM_LOOKUP_ERROR",
+      "The CVM could not be looked up",
     );
   }
+
+  const coordinates = { latitude: cvm.latitude, longitude: cvm.longitude };
 
   const cached = await getCachedAddress(coordinates);
 
@@ -114,6 +128,7 @@ export async function GET(req: NextRequest) {
 
     if (!upstream.ok) {
       return errorResponse(
+        path,
         upstream.status,
         "GEOCODING_UPSTREAM_ERROR",
         "Upstream geocoding service returned an error",
@@ -124,9 +139,10 @@ export async function GET(req: NextRequest) {
 
     if (!address) {
       return errorResponse(
+        path,
         404,
         "GEOCODING_NOT_FOUND",
-        "No address could be resolved for the given coordinates",
+        "No address could be resolved for the given CVM",
       );
     }
 
@@ -142,6 +158,7 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     if (error instanceof ThrottleOverflowError) {
       return errorResponse(
+        path,
         429,
         "GEOCODING_PROXY_THROTTLED",
         `Too many requests. Retry after ${error.retryAfterSecs}s.`,
@@ -149,12 +166,13 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    console.error("Proxy-Error:", error);
+    console.error("Geocoding-Error:", error);
 
     return errorResponse(
+      path,
       500,
       "GEOCODING_PROXY_ERROR",
-      "Unexpected error while proxying request",
+      "Unexpected error while resolving the address",
     );
   }
 }
