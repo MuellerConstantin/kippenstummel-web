@@ -1,3 +1,5 @@
+import "client-only";
+
 import axios, { InternalAxiosRequestConfig } from "axios";
 import type { AppStore } from "@/store";
 

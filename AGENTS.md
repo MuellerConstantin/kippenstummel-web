@@ -109,11 +109,13 @@ fall outside what swarm intelligence alone can resolve reliably.
 │   │   └── slices/                   # ident, session, location, privacy, usability
 │   ├── lib/                          # Utilities and shared logic
 │   │   ├── server/                   # Server-only (guarded by `server-only`)
+│   │   │   ├── api/                  # Kippenstummel API client for server rendering
 │   │   │   ├── bff/                  # BFF proxy helper
 │   │   │   ├── geocoding/            # Nominatim client and Redis-backed cache
 │   │   │   ├── redis.ts
 │   │   │   └── seo.ts                # Page metadata, canonical and hreflang
 │   │   ├── client/                   # Browser-only (guarded by `client-only`)
+│   │   │   ├── api.ts                # Axios instance talking to the BFF
 │   │   │   └── encrypt.ts            # Client-side encryption utilities
 │   │   └── shared/                   # Environment-agnostic, safe anywhere
 │   │       ├── types/                # Shared TypeScript types
@@ -121,7 +123,6 @@ fall outside what swarm intelligence alone can resolve reliably.
 │   │       ├── geo.ts                # Geospatial helpers
 │   │       ├── regions.ts
 │   │       └── throttled-queue.ts
-│   ├── api/                          # Typed API client
 │   ├── i18n/                         # next-intl routing and config
 │   ├── middleware.ts                  # next-intl i18n middleware
 │   └── sw.ts                         # Serwist service worker

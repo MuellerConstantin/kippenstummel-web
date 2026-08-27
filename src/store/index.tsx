@@ -21,7 +21,7 @@ import {
 import { PersistGate } from "redux-persist/integration/react";
 import localStorage from "redux-persist/lib/storage";
 import sessionStorage from "redux-persist/lib/storage/session";
-import { injectStore } from "@/api";
+import { injectStore } from "@/lib/client/api";
 import usabilitySlice, {
   syncRecurringUserCookie,
 } from "@/store/slices/usability";

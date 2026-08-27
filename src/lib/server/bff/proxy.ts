@@ -1,19 +1,14 @@
 import "server-only";
 
 import { NextRequest } from "next/server";
-
-const backendUrl = process.env.KIPPENSTUMMEL_API_URL!;
+import { apiUrl } from "@/lib/server/api/client";
 
 export async function forward(
   req: NextRequest,
   path: string,
   init?: Partial<RequestInit>,
 ) {
-  const targetUrl = new URL(`${backendUrl}/${path}`);
-
-  req.nextUrl.searchParams.forEach((value, key) => {
-    targetUrl.searchParams.append(key, value);
-  });
+  const targetUrl = apiUrl(path, req.nextUrl.searchParams);
 
   const headers = new Headers(req.headers);
 

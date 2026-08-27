@@ -1,6 +1,7 @@
 import { Link } from "@/components/atoms/Link";
 import { RegionCvmList } from "@/components/organisms/cvm/RegionCvmList";
 import { REGIONS } from "@/lib/shared/regions";
+import { fetchFromApi } from "@/lib/server/api/client";
 import { BASE_URL, buildPageMetadata } from "@/lib/server/seo";
 import { Cvm } from "@/lib/shared/types/cvm";
 import { Page } from "@/lib/shared/types/pagination";
@@ -77,22 +78,12 @@ export default async function CvmRegionPage({ params }: Props) {
     },
   };
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-
-  const res = await fetch(
-    `${baseUrl}/api/bff/cvms?page=0&filter=${encodeURIComponent(`bbox=="${region.bbox.bottomLeft},${region.bbox.topRight}"`)}`,
-    {
-      cache: "no-store",
-    },
-  );
-
-  if (!res.ok) {
-    throw new Error(
-      `Failed to fetch data: ${res.statusText} (${res.status}) ${await res.text()}`,
-    );
-  }
-
-  const data = (await res.json()) as Page<Cvm>;
+  const data = await fetchFromApi<Page<Cvm>>("cvms", {
+    searchParams: new URLSearchParams({
+      page: "0",
+      filter: `bbox=="${region.bbox.bottomLeft},${region.bbox.topRight}"`,
+    }),
+  });
 
   return (
     <>
