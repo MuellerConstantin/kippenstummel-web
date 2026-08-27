@@ -10,6 +10,7 @@
  */
 
 import fs from "fs";
+import prettier from "prettier";
 import path from "path";
 import { slugify } from "@/lib/shared/slug";
 
@@ -151,7 +152,7 @@ function isValidCityFeature(
   );
 }
 
-function run(): void {
+async function run(): Promise<void> {
   const { input, country, countryName, outDir, minPopulation } = parseArgs();
 
   const raw = fs.readFileSync(input, "utf8");
@@ -191,9 +192,17 @@ function run(): void {
 
   const outFile = path.join(countryDir, "cities.json");
 
-  fs.writeFileSync(outFile, JSON.stringify(regions, null, 2));
+  const formatted = await prettier.format(JSON.stringify(regions), {
+    ...(await prettier.resolveConfig(outFile)),
+    parser: "json",
+  });
+
+  fs.writeFileSync(outFile, formatted);
 
   console.log(`✓ ${regions.length} cities written to ${outFile}`);
 }
 
-run();
+run().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});
