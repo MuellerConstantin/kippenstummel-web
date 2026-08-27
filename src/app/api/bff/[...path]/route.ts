@@ -54,7 +54,7 @@ async function proxyRequest(
    * Prevent exposure of Kippenstummel's internal management API. These
    * endpoints are not meant for public consumption.
    */
-  if (cleanPath.startsWith("kmc")) {
+  if (cleanPath.toLowerCase().startsWith("kmc")) {
     return new Response(
       JSON.stringify({
         code: "BFF_PROXY_BLOCKED",
