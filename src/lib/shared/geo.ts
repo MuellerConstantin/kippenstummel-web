@@ -57,3 +57,23 @@ export function calculateDistanceInKm(
 
   return distance;
 }
+
+/**
+ * Parses a pair of coordinates coming from a URL. Returns `null` for anything
+ * that is not a well formed position, so a hand-edited link falls back to the
+ * view the user left behind instead of an unusable one.
+ */
+export function parseGeoCoordinates(
+  latitude: string | null,
+  longitude: string | null,
+): GeoCoordinates | null {
+  if (!latitude || !longitude) return null;
+
+  const lat = Number(latitude);
+  const lon = Number(longitude);
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+  if (Math.abs(lat) > 90 || Math.abs(lon) > 180) return null;
+
+  return { latitude: lat, longitude: lon };
+}

@@ -13,16 +13,28 @@ import { LocateMarker } from "@/components/molecules/map/LocateMarker";
 import { LegalAndAttributionControl } from "./LegalAndAttributionControl";
 import { useAppDispatch, useAppSelector } from "@/store";
 import usabilitySlice from "@/store/slices/usability";
+import { DEFAULT_MAP_ZOOM } from "@/lib/shared/constants";
+import { GeoCoordinates } from "@/lib/shared/types/geo";
 
 import "maplibre-gl/dist/maplibre-gl.css";
 
 export interface BaseMapProps {
   onLoad?: (event: MapLibreEvent) => void;
   onViewChange?: (event: ViewStateChangeEvent) => void;
+  /**
+   * Opens the map on this position instead of the view the user left behind,
+   * e.g. when the map is entered from a region page. Only read on mount.
+   */
+  initialCenter?: GeoCoordinates;
   children?: React.ReactNode;
 }
 
-export function BaseMap({ onLoad, onViewChange, children }: BaseMapProps) {
+export function BaseMap({
+  onLoad,
+  onViewChange,
+  initialCenter,
+  children,
+}: BaseMapProps) {
   const mapRef = useRef<MapRef>(null);
   const dispatch = useAppDispatch();
   const t = useTranslations();
@@ -86,11 +98,22 @@ export function BaseMap({ onLoad, onViewChange, children }: BaseMapProps) {
 
   const handleLoad = useCallback(
     (event: MapLibreEvent) => {
-      if (mapRef.current) {
-        onLoad?.(event);
+      if (!mapRef.current) return;
+
+      // Starting somewhere else emits no move event, so the position has to be
+      // persisted here to survive the next visit.
+      if (initialCenter) {
+        dispatch(
+          usabilitySlice.actions.setMapView({
+            center: initialCenter,
+            zoom: DEFAULT_MAP_ZOOM,
+          }),
+        );
       }
+
+      onLoad?.(event);
     },
-    [onLoad],
+    [onLoad, initialCenter, dispatch],
   );
 
   const handleViewStateChanged = useCallback(
@@ -117,9 +140,9 @@ export function BaseMap({ onLoad, onViewChange, children }: BaseMapProps) {
     <Map
       ref={mapRef}
       initialViewState={{
-        longitude: mapView.center.longitude,
-        latitude: mapView.center.latitude,
-        zoom: mapView.zoom,
+        longitude: (initialCenter ?? mapView.center).longitude,
+        latitude: (initialCenter ?? mapView.center).latitude,
+        zoom: initialCenter ? DEFAULT_MAP_ZOOM : mapView.zoom,
       }}
       mapStyle={"/tiles/default.json"}
       style={{ width: "100%", height: "100%" }}

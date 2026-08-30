@@ -1,6 +1,6 @@
 import { Link } from "@/components/atoms/Link";
 import { RegionCvmList } from "@/components/organisms/cvm/RegionCvmList";
-import { REGIONS } from "@/lib/shared/regions";
+import { getRegionCenter, REGIONS } from "@/lib/shared/regions";
 import { fetchFromApi } from "@/lib/server/api/client";
 import { BASE_URL, buildPageMetadata } from "@/lib/server/seo";
 import { Cvm } from "@/lib/shared/types/cvm";
@@ -66,6 +66,8 @@ export default async function CvmRegionPage({ params }: Props) {
     notFound();
   }
 
+  const center = getRegionCenter(region);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -115,7 +117,7 @@ export default async function CvmRegionPage({ params }: Props) {
                 <div className="absolute inset-0 z-10 bg-white/40 backdrop-blur-sm dark:bg-black/40" />
                 <div className="relative z-20 flex h-full items-center">
                   <Link
-                    href="/map"
+                    href={`/map?lat=${center.latitude.toFixed(5)}&lng=${center.longitude.toFixed(5)}`}
                     className="pressed:bg-green-800 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-black/10 bg-green-600 px-5 py-2 text-center text-sm text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] transition hover:bg-green-700 hover:no-underline dark:border-white/10 dark:text-white dark:shadow-none"
                   >
                     {t("openMap")}

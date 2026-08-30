@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useNotifications } from "@/contexts/NotificationProvider";
@@ -10,6 +10,7 @@ import { useSWRConfig } from "swr";
 import { Link } from "@/components/atoms/Link";
 import { GeoCoordinates } from "@/lib/shared/types/geo";
 import { CvmMap } from "@/components/organisms/map/CvmMap";
+import { parseGeoCoordinates } from "@/lib/shared/geo";
 
 export default function Map() {
   const t = useTranslations();
@@ -19,6 +20,10 @@ export default function Map() {
 
   const searchParams = useSearchParams();
   const shared = searchParams.get("shared");
+  const initialCenter = useMemo(
+    () => parseGeoCoordinates(searchParams.get("lat"), searchParams.get("lng")),
+    [searchParams],
+  );
 
   const onRegister = useCallback(
     async (position: GeoCoordinates) => {
@@ -329,6 +334,7 @@ export default function Map() {
         onReposition={onReposition}
         onReport={onReport}
         sharedCvmId={shared}
+        initialCenter={initialCenter ?? undefined}
       />
     </div>
   );

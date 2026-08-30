@@ -30,6 +30,7 @@ export interface CvmMapViewProps {
   onUpvote?: (id: string, position: GeoCoordinates) => void;
   onDownvote?: (id: string, position: GeoCoordinates) => void;
   sharedCvmId: string | null;
+  initialCenter?: GeoCoordinates;
 }
 
 export function CvmMapView({
@@ -192,7 +193,11 @@ export function CvmMapView({
   }, [map, location, isWatching, isFollowing]);
 
   return (
-    <CvmMapTemplate onLoad={onLoad} onViewChange={onViewStateChanged}>
+    <CvmMapTemplate
+      onLoad={onLoad}
+      onViewChange={onViewStateChanged}
+      initialCenter={props.initialCenter}
+    >
       {state.mode === "default" && (
         <CvmMapDefaultOverlay
           onSelect={(cvmId) => selectCvmId(cvmId)}

@@ -26,6 +26,7 @@ export interface CvmMapProps {
   onUpvote?: (id: string, position: GeoCoordinates) => void;
   onDownvote?: (id: string, position: GeoCoordinates) => void;
   sharedCvmId: string | null;
+  initialCenter?: GeoCoordinates;
   enableOptIn?: boolean;
 }
 

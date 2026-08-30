@@ -2,6 +2,8 @@ export const LOCATION_TTL = 30 * 1000;
 export const LOCATION_COOLDOWN = 10 * 1000;
 export const REPORT_THRESHOLD = 3;
 
+export const DEFAULT_MAP_ZOOM = 14;
+
 export const SCORING_GOOD_UPPER_LIMIT = 10;
 export const SCORING_GOOD_LOWER_LIMIT = 5;
 export const SCORING_NEUTRAL_UPPER_LIMIT = 4;

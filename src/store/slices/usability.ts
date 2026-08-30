@@ -1,3 +1,4 @@
+import { DEFAULT_MAP_ZOOM } from "@/lib/shared/constants";
 import { GeoCoordinates } from "@/lib/shared/types/geo";
 import Cookies from "js-cookie";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -35,7 +36,10 @@ interface UsabilityState {
 const initialState: UsabilityState = {
   darkMode: prefersDarkMode(),
   recurringUser: false,
-  mapView: { center: { latitude: 49.006889, longitude: 8.403653 }, zoom: 14 },
+  mapView: {
+    center: { latitude: 49.006889, longitude: 8.403653 },
+    zoom: DEFAULT_MAP_ZOOM,
+  },
   mapFilters: {},
 };
 
