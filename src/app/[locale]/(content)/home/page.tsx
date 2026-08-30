@@ -71,7 +71,7 @@ function HomeContent() {
 
   const TOP_REGIONS = getTopRegionsGeoBalanced(REGIONS, 8);
 
-  const faqItemsJsonLd = Array.from({ length: 10 }, (_, i) => {
+  const faqItemsJsonLd = Array.from({ length: 11 }, (_, i) => {
     const key = `faq.items.${i + 1}.answer`;
     const text = t.markup(key, {
       br: () => "\n",
@@ -287,6 +287,11 @@ function HomeContent() {
               id="faq-10"
               question={t("faq.items.10.question")}
               answer={t("faq.items.10.answer")}
+            />
+            <FaqItem
+              id="faq-11"
+              question={t("faq.items.11.question")}
+              answer={t("faq.items.11.answer")}
             />
           </div>
         </section>

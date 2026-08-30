@@ -86,6 +86,10 @@
         "10": {
           "question": "Kann ich das Projekt ohne Geld unterstützen?",
           "answer": "Ja. Du kannst das Projekt auf verschiedene nicht-finanzielle Weise unterstützen. Dazu gehört die Pflege von Inhalten, das Melden neuer Zigarettenautomaten, das Abstimmen über bestehende Einträge sowie das Einreichen von Korrekturen. Außerdem kannst du dich an der Open-Source-Entwicklung beteiligen, indem du Fehler meldest, Verbesserungen vorschlägst oder Code beiträgst. Die Mitarbeit der Community verbessert die Datenqualität und unterstützt die langfristige Weiterentwicklung des Projekts."
+        },
+        "11": {
+          "question": "In welchen Ländern kann ich Kippenstummel nutzen?",
+          "answer": "Kippenstummel deckt Deutschland, Österreich und die Schweiz ab. Standorte außerhalb dieser Länder lassen sich nicht melden. Zigarettenautomaten im öffentlichen Raum gibt es fast ausschließlich im deutschsprachigen Raum, und die Anwendung steht derzeit nur auf Deutsch und Englisch zur Verfügung."
         }
       }
     },

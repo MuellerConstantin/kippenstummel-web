@@ -86,6 +86,10 @@
         "10": {
           "question": "Can I support the project without donating money?",
           "answer": "Yes. You can support the project in several non-financial ways. This includes helping with content maintenance, reporting new cigarette machines, voting on existing entries, and submitting corrections. You can also contribute to the open-source development by reporting issues, suggesting improvements, or contributing code. Community participation helps improve data quality and supports the long-term development of the project."
+        },
+        "11": {
+          "question": "In which countries can I use Kippenstummel?",
+          "answer": "Kippenstummel covers Germany, Austria and Switzerland. Locations outside these countries cannot be reported. Cigarette vending machines in public spaces are almost exclusive to German-speaking countries, and the application is currently only available in German and English."
         }
       }
     },

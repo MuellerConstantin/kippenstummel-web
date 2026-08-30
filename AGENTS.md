@@ -26,6 +26,14 @@ Kippenstummel is a crowd-sourced map of cigarette vending machines (CVMs). The
 core use case is simple: users report CVM locations, and the community
 collectively verifies and maintains their accuracy over time.
 
+**Coverage**
+The platform serves the DACH region only — Germany, Austria and Switzerland.
+This is a business decision, not a technical limit. The API rejects coordinates
+outside that area, so anything that submits a location has to surface that
+rejection to the user rather than treating it as a generic failure. Treat the
+covered area as given and do not widen or narrow it on your own; if a change
+seems warranted, raise it rather than acting on it.
+
 **Map & Discovery**
 The map displays all registered CVMs, clustered at lower zoom levels for
 clarity. Each machine is represented by a badge-coded marker reflecting its
