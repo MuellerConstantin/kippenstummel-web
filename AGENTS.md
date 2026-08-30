@@ -142,7 +142,9 @@ fall outside what swarm intelligence alone can resolve reliably.
 ├── data/                             # Static data (e.g. region definitions)
 ├── scripts/                          # Code generation scripts
 ├── public/                           # Static assets
-├── tests/                            # Playwright e2e tests
+├── tests/
+│   ├── unit/                         # Vitest unit tests
+│   └── e2e/                          # Playwright e2e tests
 ├── .storybook/                       # Storybook configuration
 ├── next.config.ts
 ├── tailwind.config.mjs
