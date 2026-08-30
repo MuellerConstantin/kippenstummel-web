@@ -40,6 +40,27 @@ export default function Map() {
       } catch (err) {
         if (err instanceof AxiosError) {
           if (
+            err.response?.status === 422 &&
+            err.response.data.code === "INVALID_PAYLOAD_ERROR" &&
+            err.response.data.details?.some(
+              (detail: { constraint?: string }) =>
+                detail.constraint === "IsWithinServiceArea",
+            )
+          ) {
+            enqueue(
+              {
+                title: t("Notifications.cvmOutsideServiceArea.title"),
+                description: t(
+                  "Notifications.cvmOutsideServiceArea.description",
+                ),
+                variant: "info",
+              },
+              { timeout: 10000 },
+            );
+            return;
+          }
+
+          if (
             err.response?.status === 429 &&
             err.response.data.code === "THROTTLED_ERROR"
           ) {
@@ -103,6 +124,27 @@ export default function Map() {
         mutate("/ident/me");
       } catch (err) {
         if (err instanceof AxiosError) {
+          if (
+            err.response?.status === 422 &&
+            err.response.data.code === "INVALID_PAYLOAD_ERROR" &&
+            err.response.data.details?.some(
+              (detail: { constraint?: string }) =>
+                detail.constraint === "IsWithinServiceArea",
+            )
+          ) {
+            enqueue(
+              {
+                title: t("Notifications.cvmOutsideServiceArea.title"),
+                description: t(
+                  "Notifications.cvmOutsideServiceArea.description",
+                ),
+                variant: "info",
+              },
+              { timeout: 10000 },
+            );
+            return;
+          }
+
           if (
             err.response?.status === 403 &&
             err.response.data.code === "OUT_OF_REACH_ERROR"

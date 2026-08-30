@@ -502,6 +502,10 @@
       "title": "Interaktion nicht möglich",
       "description": "Der Standort befindet sich zu weit weg von dir."
     },
+    "cvmOutsideServiceArea": {
+      "title": "Außerhalb des Gebiets",
+      "description": "Kippenstummel deckt nur Deutschland, Österreich und die Schweiz ab."
+    },
     "canceledIdentityCreation": {
       "title": "Identitätserstellung abgebrochen",
       "description": "Die Identitätserstellung wurde abgebrochen. Ohne Identität kann die Aktion nicht ausgeführt werden."

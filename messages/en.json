@@ -502,6 +502,10 @@
       "title": "Interaction not possible",
       "description": "The location is too far away from you."
     },
+    "cvmOutsideServiceArea": {
+      "title": "Outside the covered area",
+      "description": "Kippenstummel only covers Germany, Austria and Switzerland."
+    },
     "canceledIdentityCreation": {
       "title": "Identity creation canceled",
       "description": "Identity creation was canceled. Without an identity, you won't be able to participate."
