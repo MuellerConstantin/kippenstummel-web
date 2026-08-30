@@ -49,3 +49,4 @@ requires a restart of the web server.
 | --------------------- | -------------------------------------------------------------------------------------------------------- | -------- |
 | KIPPENSTUMMEL_API_URL | Url of the Kippenstummel API. Including the api prefix and version. (e.g. `http://<HOST>:<PORT>/api/v1`) | Yes      |
 | REDIS_URL             | Url of a Redis instance used to cache geocoding lookups across restarts. (e.g. `redis://<HOST>:<PORT>`)  | No       |
+| NEXT_PUBLIC_SITE_URL  | Url of the web client.                                                                                   | Yes      |

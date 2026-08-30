@@ -14,6 +14,7 @@ import { FaqItem } from "@/components/molecules/FaqItem";
 import { Leaderboard } from "@/components/organisms/Leaderboard";
 import { HomeHero } from "@/components/molecules/HomeHero";
 import { getTopRegionsGeoBalanced, REGIONS } from "@/lib/shared/regions";
+import { BASE_URL } from "@/lib/server/seo";
 import { DonateButton } from "@/components/molecules/DonateButton";
 
 interface FeatureItemProps {
@@ -95,7 +96,7 @@ function HomeContent() {
       {
         "@type": "WebSite",
         name: "Kippenstummel",
-        url: "https://www.kippenstummel.de",
+        url: BASE_URL,
         description: t("meta.description"),
         inLanguage: ["de", "en"],
       },

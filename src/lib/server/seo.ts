@@ -5,8 +5,13 @@ import type { TranslationValues } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 
-export const BASE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kippenstummel.de";
+/**
+ * Public origin of the site, without a trailing slash. Paths are appended
+ * directly, so a stray slash would turn every canonical into a second URL.
+ */
+export const BASE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kippenstummel.de"
+).replace(/\/+$/, "");
 
 /**
  * Builds the canonical URL and the full set of hreflang alternates for a
