@@ -5280,8 +5280,8 @@
     }
   },
   {
-    "slug": "senden",
-    "name": "Senden",
+    "slug": "senden-westfalen",
+    "name": "Senden (Westfalen)",
     "country": "de",
     "countryName": "Deutschland",
     "population": 20000,
@@ -5940,8 +5940,8 @@
     }
   },
   {
-    "slug": "senden",
-    "name": "Senden",
+    "slug": "senden-bayern",
+    "name": "Senden (Bayern)",
     "country": "de",
     "countryName": "Deutschland",
     "population": 22332,
@@ -6743,8 +6743,8 @@
     }
   },
   {
-    "slug": "bruehl",
-    "name": "Brühl",
+    "slug": "bruehl-baden",
+    "name": "Brühl (Baden)",
     "country": "de",
     "countryName": "Deutschland",
     "population": 14375,
@@ -7029,17 +7029,6 @@
     }
   },
   {
-    "slug": "rheinfelden",
-    "name": "Rheinfelden",
-    "country": "de",
-    "countryName": "Deutschland",
-    "population": 13360,
-    "bbox": {
-      "bottomLeft": [7.73904857425435, 47.51845345300036],
-      "topRight": [7.84553242574565, 47.59031834699964]
-    }
-  },
-  {
     "slug": "hemer",
     "name": "Hemer",
     "country": "de",
@@ -7293,8 +7282,8 @@
     }
   },
   {
-    "slug": "bruehl",
-    "name": "Brühl",
+    "slug": "bruehl-rheinland",
+    "name": "Brühl (Rheinland)",
     "country": "de",
     "countryName": "Deutschland",
     "population": 44029,
@@ -8074,8 +8063,8 @@
     }
   },
   {
-    "slug": "burgdorf",
-    "name": "Burgdorf",
+    "slug": "burgdorf-region-hannover",
+    "name": "Burgdorf (Region Hannover)",
     "country": "de",
     "countryName": "Deutschland",
     "population": 31615,
@@ -9284,8 +9273,8 @@
     }
   },
   {
-    "slug": "muensingen",
-    "name": "Münsingen",
+    "slug": "muensingen-wuerttemberg",
+    "name": "Münsingen (Württemberg)",
     "country": "de",
     "countryName": "Deutschland",
     "population": 14497,
@@ -11272,17 +11261,6 @@
     "bbox": {
       "bottomLeft": [12.163266364349749, 51.357929953000365],
       "topRight": [12.278441235650252, 51.42979484699964]
-    }
-  },
-  {
-    "slug": "riehen",
-    "name": "Riehen",
-    "country": "de",
-    "countryName": "Deutschland",
-    "population": 20970,
-    "bbox": {
-      "bottomLeft": [7.581386586525375, 47.53677714125045],
-      "topRight": [7.714560813474624, 47.62660825874955]
     }
   },
   {

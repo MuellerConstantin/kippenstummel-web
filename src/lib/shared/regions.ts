@@ -1,4 +1,6 @@
 import { GeoCoordinates } from "@/lib/shared/types/geo";
+import at from "../../../data/regions/at/cities.json";
+import ch from "../../../data/regions/ch/cities.json";
 import de from "../../../data/regions/de/cities.json";
 
 export interface Region {
@@ -13,7 +15,7 @@ export interface Region {
   };
 }
 
-export const REGIONS: Region[] = [...de];
+export const REGIONS: Region[] = [...de, ...at, ...ch];
 
 export function getRegion(country: string, slug: string) {
   return REGIONS.find((r) => r.country === country && r.slug === slug);

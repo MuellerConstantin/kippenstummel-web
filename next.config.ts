@@ -65,8 +65,8 @@ const nextConfig: NextConfig = {
         permanent: false,
       })),
       /*
-       * Required following the adjustment of the slug logic for the transition phase.
-       * Can be removed afterwards.
+       * Keeps region slugs reachable after they changed: once for the adjusted
+       * slug logic, and again where a city had to be qualified to stay unique.
        */
       ...Object.entries(regionSlugAliases).map(([from, to]) => ({
         source: `/:locale/cvms/region/${from}`,

@@ -1,0 +1,1597 @@
+[
+  {
+    "slug": "burgdorf-bern",
+    "name": "Burgdorf (Bern)",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 17292,
+    "bbox": {
+      "bottomLeft": [7.571003176338984, 47.02119915300036],
+      "topRight": [7.676490023661016, 47.093064046999636]
+    }
+  },
+  {
+    "slug": "bern",
+    "name": "Bern",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 128848,
+    "bbox": {
+      "bottomLeft": [7.34690238142388, 46.87660930600072],
+      "topRight": [7.55744741857612, 47.02033909399928]
+    }
+  },
+  {
+    "slug": "spiez",
+    "name": "Spiez",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 12027,
+    "bbox": {
+      "bottomLeft": [7.625079778775232, 46.656014853000364],
+      "topRight": [7.729851221224768, 46.72787974699964]
+    }
+  },
+  {
+    "slug": "schwyz",
+    "name": "Schwyz",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 14750,
+    "bbox": {
+      "bottomLeft": [8.600851898461114, 46.98525235300036],
+      "topRight": [8.706267701538886, 47.05711724699964]
+    }
+  },
+  {
+    "slug": "davos",
+    "name": "Davos",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11211,
+    "bbox": {
+      "bottomLeft": [9.771202077002227, 46.76026555300036],
+      "topRight": [9.876176322997773, 46.832130446999635]
+    }
+  },
+  {
+    "slug": "duebendorf",
+    "name": "Dübendorf",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 32469,
+    "bbox": {
+      "bottomLeft": [8.552213237655149, 47.35207864125045],
+      "topRight": [8.68491996234485, 47.44190975874955]
+    }
+  },
+  {
+    "slug": "basel",
+    "name": "Basel",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 174491,
+    "bbox": {
+      "bottomLeft": [7.4813346848289815, 47.48624280600072],
+      "topRight": [7.694317515171019, 47.629972593999284]
+    }
+  },
+  {
+    "slug": "liestal",
+    "name": "Liestal",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 13807,
+    "bbox": {
+      "bottomLeft": [7.681607780435314, 47.44803985300036],
+      "topRight": [7.787948819564686, 47.519904746999636]
+    }
+  },
+  {
+    "slug": "weinfelden",
+    "name": "Weinfelden",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 12504,
+    "bbox": {
+      "bottomLeft": [9.05649923623828, 47.530986253000364],
+      "topRight": [9.16300856376172, 47.60285114699964]
+    }
+  },
+  {
+    "slug": "neuhausen-am-rheinfall",
+    "name": "Neuhausen am Rheinfall",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11834,
+    "bbox": {
+      "bottomLeft": [8.56636352028825, 47.64523195300036],
+      "topRight": [8.67310587971175, 47.71709684699964]
+    }
+  },
+  {
+    "slug": "schaffhausen",
+    "name": "Schaffhausen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 35927,
+    "bbox": {
+      "bottomLeft": [8.56777998326285, 47.65113354125045],
+      "topRight": [8.70124601673715, 47.740964658749554]
+    }
+  },
+  {
+    "slug": "amriswil",
+    "name": "Amriswil",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 14951,
+    "bbox": {
+      "bottomLeft": [9.244884406871204, 47.51409025300036],
+      "topRight": [9.351359393128796, 47.58595514699964]
+    }
+  },
+  {
+    "slug": "aarau",
+    "name": "Aarau",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 21191,
+    "bbox": {
+      "bottomLeft": [7.978096826225657, 47.34779904125045],
+      "topRight": [8.110792773774346, 47.43763015874955]
+    }
+  },
+  {
+    "slug": "adliswil",
+    "name": "Adliswil",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 15822,
+    "bbox": {
+      "bottomLeft": [8.47191297710263, 47.27582995300036],
+      "topRight": [8.57790702289737, 47.34769484699964]
+    }
+  },
+  {
+    "slug": "schlieren",
+    "name": "Schlieren",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 18414,
+    "bbox": {
+      "bottomLeft": [8.391403893175752, 47.36058225300036],
+      "topRight": [8.497568306824249, 47.432447146999635]
+    }
+  },
+  {
+    "slug": "thalwil",
+    "name": "Thalwil",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 17729,
+    "bbox": {
+      "bottomLeft": [8.510596547339702, 47.25850005300036],
+      "topRight": [8.616555852660298, 47.33036494699964]
+    }
+  },
+  {
+    "slug": "waedenswil",
+    "name": "Wädenswil",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 24341,
+    "bbox": {
+      "bottomLeft": [8.603995106670096, 47.18298324125045],
+      "topRight": [8.736277893329904, 47.27281435874955]
+    }
+  },
+  {
+    "slug": "kreuzlingen",
+    "name": "Kreuzlingen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 23407,
+    "bbox": {
+      "bottomLeft": [9.10589249366783, 47.601520641250445],
+      "topRight": [9.239231706332172, 47.69135175874955]
+    }
+  },
+  {
+    "slug": "staefa",
+    "name": "Stäfa",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11567,
+    "bbox": {
+      "bottomLeft": [8.681948167589221, 47.20540245300036],
+      "topRight": [8.78780123241078, 47.277267346999636]
+    }
+  },
+  {
+    "slug": "maennedorf",
+    "name": "Männedorf",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10588,
+    "bbox": {
+      "bottomLeft": [8.638876936606591, 47.21724155300036],
+      "topRight": [8.744753663393409, 47.28910644699964]
+    }
+  },
+  {
+    "slug": "meilen",
+    "name": "Meilen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 14848,
+    "bbox": {
+      "bottomLeft": [8.588269280912337, 47.234495553000365],
+      "topRight": [8.694180519087661, 47.30636044699964]
+    }
+  },
+  {
+    "slug": "kuesnacht-zh",
+    "name": "Küsnacht ZH",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 15162,
+    "bbox": {
+      "bottomLeft": [8.530082994572227, 47.28169515300036],
+      "topRight": [8.636088805427773, 47.35356004699964]
+    }
+  },
+  {
+    "slug": "muri-bei-bern",
+    "name": "Muri bei Bern",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 13712,
+    "bbox": {
+      "bottomLeft": [7.434473734484368, 46.89311525300036],
+      "topRight": [7.539708065515632, 46.964980146999636]
+    }
+  },
+  {
+    "slug": "ittigen",
+    "name": "Ittigen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11067,
+    "bbox": {
+      "bottomLeft": [7.4288549259827175, 46.943140153000364],
+      "topRight": [7.534187674017282, 47.01500504699964]
+    }
+  },
+  {
+    "slug": "muensingen-bern",
+    "name": "Münsingen (Bern)",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 13113,
+    "bbox": {
+      "bottomLeft": [7.510631153434035, 46.838045053000364],
+      "topRight": [7.615757446565965, 46.90990994699964]
+    }
+  },
+  {
+    "slug": "ostermundigen",
+    "name": "Ostermundigen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 16185,
+    "bbox": {
+      "bottomLeft": [7.4384782973643455, 46.92234545300036],
+      "topRight": [7.543770102635654, 46.99421034699964]
+    }
+  },
+  {
+    "slug": "zollikofen",
+    "name": "Zollikofen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10041,
+    "bbox": {
+      "bottomLeft": [7.404958697830656, 46.96001385300036],
+      "topRight": [7.510324702169344, 47.03187874699964]
+    }
+  },
+  {
+    "slug": "lyss",
+    "name": "Lyss",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 14080,
+    "bbox": {
+      "bottomLeft": [7.252503728096744, 47.036204353000365],
+      "topRight": [7.358020271903256, 47.10806924699964]
+    }
+  },
+  {
+    "slug": "worb",
+    "name": "Worb",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11449,
+    "bbox": {
+      "bottomLeft": [7.511933252297834, 46.894929353000364],
+      "topRight": [7.617171147702165, 46.96679424699964]
+    }
+  },
+  {
+    "slug": "versoix",
+    "name": "Versoix",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 13846,
+    "bbox": {
+      "bottomLeft": [6.116974046018829, 46.24137395300036],
+      "topRight": [6.220949953981171, 46.31323884699964]
+    }
+  },
+  {
+    "slug": "geneve",
+    "name": "Genève",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 191557,
+    "bbox": {
+      "bottomLeft": [6.042768561002149, 46.12989100600072],
+      "topRight": [6.25043423899785, 46.273620793999285]
+    }
+  },
+  {
+    "slug": "lausanne",
+    "name": "Lausanne",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 133521,
+    "bbox": {
+      "bottomLeft": [6.528259582491592, 46.44996200600072],
+      "topRight": [6.737145417508407, 46.593691793999284]
+    }
+  },
+  {
+    "slug": "payerne",
+    "name": "Payerne",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10545,
+    "bbox": {
+      "bottomLeft": [6.886614860071754, 46.78487225300036],
+      "topRight": [6.991637139928246, 46.856737146999635]
+    }
+  },
+  {
+    "slug": "meyrin",
+    "name": "Meyrin",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 21866,
+    "bbox": {
+      "bottomLeft": [6.00627467343208, 46.18340704125045],
+      "topRight": [6.13612852656792, 46.27323815874955]
+    }
+  },
+  {
+    "slug": "thonex",
+    "name": "Thônex",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 16690,
+    "bbox": {
+      "bottomLeft": [6.146481967886192, 46.15249795300036],
+      "topRight": [6.250289632113807, 46.22436284699964]
+    }
+  },
+  {
+    "slug": "vernier",
+    "name": "Vernier",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 34477,
+    "bbox": {
+      "bottomLeft": [6.016666572538914, 46.16826874125045],
+      "topRight": [6.146484627461086, 46.25809985874955]
+    }
+  },
+  {
+    "slug": "le-grand-saconnex",
+    "name": "Le Grand-Saconnex",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11911,
+    "bbox": {
+      "bottomLeft": [6.074582877914566, 46.20039965300036],
+      "topRight": [6.178481122085434, 46.27226454699964]
+    }
+  },
+  {
+    "slug": "brig",
+    "name": "Brig",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 12823,
+    "bbox": {
+      "bottomLeft": [7.935922269134677, 46.28041325300036],
+      "topRight": [8.039972330865323, 46.35227814699964]
+    }
+  },
+  {
+    "slug": "plan-les-ouates",
+    "name": "Plan-les-Ouates",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10657,
+    "bbox": {
+      "bottomLeft": [6.066002155689803, 46.13237885300036],
+      "topRight": [6.169771844310196, 46.20424374699964]
+    }
+  },
+  {
+    "slug": "sierre",
+    "name": "Sierre",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 16711,
+    "bbox": {
+      "bottomLeft": [7.480317360606704, 46.25631975300036],
+      "topRight": [7.584321639393296, 46.32818464699964]
+    }
+  },
+  {
+    "slug": "zug",
+    "name": "Zug",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 29251,
+    "bbox": {
+      "bottomLeft": [8.451298443074034, 47.12307424125045],
+      "topRight": [8.583431956925967, 47.21290535874955]
+    }
+  },
+  {
+    "slug": "wittenbach",
+    "name": "Wittenbach",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10142,
+    "bbox": {
+      "bottomLeft": [9.328885595184254, 47.42647475300036],
+      "topRight": [9.435183004815748, 47.49833964699964]
+    }
+  },
+  {
+    "slug": "rorschach",
+    "name": "Rorschach",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10274,
+    "bbox": {
+      "bottomLeft": [9.438238056192407, 47.44203615300036],
+      "topRight": [9.544566943807592, 47.513901046999635]
+    }
+  },
+  {
+    "slug": "baden-aargau",
+    "name": "Baden (Aargau)",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 23853,
+    "bbox": {
+      "bottomLeft": [8.24223206540733, 47.42876714125045],
+      "topRight": [8.375132334592669, 47.51859825874955]
+    }
+  },
+  {
+    "slug": "wettingen",
+    "name": "Wettingen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 21856,
+    "bbox": {
+      "bottomLeft": [8.260171181696732, 47.42092344125045],
+      "topRight": [8.39305161830327, 47.510754558749554]
+    }
+  },
+  {
+    "slug": "romanshorn",
+    "name": "Romanshorn",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11487,
+    "bbox": {
+      "bottomLeft": [9.32435043431419, 47.52951275300036],
+      "topRight": [9.43085676568581, 47.60137764699964]
+    }
+  },
+  {
+    "slug": "volketswil",
+    "name": "Volketswil",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 18437,
+    "bbox": {
+      "bottomLeft": [8.637427494163497, 47.35392925300036],
+      "topRight": [8.743578505836503, 47.425794146999635]
+    }
+  },
+  {
+    "slug": "spreitenbach",
+    "name": "Spreitenbach",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 12482,
+    "bbox": {
+      "bottomLeft": [8.310930089957283, 47.38231195300036],
+      "topRight": [8.417138310042718, 47.45417684699964]
+    }
+  },
+  {
+    "slug": "urdorf",
+    "name": "Urdorf",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10503,
+    "bbox": {
+      "bottomLeft": [8.372830083382299, 47.348775553000365],
+      "topRight": [8.4789707166177, 47.42064044699964]
+    }
+  },
+  {
+    "slug": "pratteln",
+    "name": "Pratteln",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 15323,
+    "bbox": {
+      "bottomLeft": [7.641267888834591, 47.48326885300036],
+      "topRight": [7.747680311165409, 47.55513374699964]
+    }
+  },
+  {
+    "slug": "martigny",
+    "name": "Martigny",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 21759,
+    "bbox": {
+      "bottomLeft": [7.007956083501854, 46.05819944125045],
+      "topRight": [7.137514716498146, 46.148030558749554]
+    }
+  },
+  {
+    "slug": "thun",
+    "name": "Thun",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 43905,
+    "bbox": {
+      "bottomLeft": [7.562523277066832, 46.71336714125045],
+      "topRight": [7.693648722933167, 46.80319825874955]
+    }
+  },
+  {
+    "slug": "steffisburg",
+    "name": "Steffisburg",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 15816,
+    "bbox": {
+      "bottomLeft": [7.582950631228401, 46.741541353000365],
+      "topRight": [7.687888368771599, 46.81340624699964]
+    }
+  },
+  {
+    "slug": "sion",
+    "name": "Sion",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 34599,
+    "bbox": {
+      "bottomLeft": [7.293949199338718, 46.18625934125045],
+      "topRight": [7.423809800661281, 46.27609045874955]
+    }
+  },
+  {
+    "slug": "monthey",
+    "name": "Monthey",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 18178,
+    "bbox": {
+      "bottomLeft": [6.895861539541758, 46.216911553000365],
+      "topRight": [6.999791060458242, 46.28877644699964]
+    }
+  },
+  {
+    "slug": "aigle",
+    "name": "Aigle",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11412,
+    "bbox": {
+      "bottomLeft": [6.916866390800466, 46.28196815300036],
+      "topRight": [7.020919409199534, 46.35383304699964]
+    }
+  },
+  {
+    "slug": "montreux",
+    "name": "Montreux",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 26208,
+    "bbox": {
+      "bottomLeft": [6.8478240402784225, 46.38616754125045],
+      "topRight": [6.978160159721578, 46.47599865874955]
+    }
+  },
+  {
+    "slug": "langenthal",
+    "name": "Langenthal",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 14000,
+    "bbox": {
+      "bottomLeft": [7.7358891469449835, 47.17566945300036],
+      "topRight": [7.8416828530550164, 47.247534346999636]
+    }
+  },
+  {
+    "slug": "pully",
+    "name": "Pully",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 17624,
+    "bbox": {
+      "bottomLeft": [6.609537695807672, 46.47386945300036],
+      "topRight": [6.713957504192328, 46.54573434699964]
+    }
+  },
+  {
+    "slug": "reinach",
+    "name": "Reinach",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 18839,
+    "bbox": {
+      "bottomLeft": [7.537908896964613, 47.457604453000364],
+      "topRight": [7.6442693030353865, 47.52946934699964]
+    }
+  },
+  {
+    "slug": "zuerich",
+    "name": "Zürich",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 443037,
+    "bbox": {
+      "bottomLeft": [8.408392222223934, 47.284617782500895],
+      "topRight": [8.673692177776065, 47.4642800174991]
+    }
+  },
+  {
+    "slug": "brugg",
+    "name": "Brugg",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11092,
+    "bbox": {
+      "bottomLeft": [8.155397207732085, 47.44653085300036],
+      "topRight": [8.261735192267915, 47.51839574699964]
+    }
+  },
+  {
+    "slug": "bassersdorf",
+    "name": "Bassersdorf",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11561,
+    "bbox": {
+      "bottomLeft": [8.576783429049527, 47.40763815300036],
+      "topRight": [8.683042770950472, 47.47950304699964]
+    }
+  },
+  {
+    "slug": "horw",
+    "name": "Horw",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 12648,
+    "bbox": {
+      "bottomLeft": [8.258074448000478, 46.98256835300036],
+      "topRight": [8.36348495199952, 47.054433246999636]
+    }
+  },
+  {
+    "slug": "nyon",
+    "name": "Nyon",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 19738,
+    "bbox": {
+      "bottomLeft": [6.188191485326065, 46.34612605300036],
+      "topRight": [6.2923667146739355, 46.41799094699964]
+    }
+  },
+  {
+    "slug": "la-chaux-de-fonds",
+    "name": "La Chaux-de-Fonds",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 39027,
+    "bbox": {
+      "bottomLeft": [6.766591573824638, 47.05821654125045],
+      "topRight": [6.898564026175363, 47.148047658749555]
+    }
+  },
+  {
+    "slug": "muttenz",
+    "name": "Muttenz",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 17370,
+    "bbox": {
+      "bottomLeft": [7.594527892839227, 47.48918055300036],
+      "topRight": [7.700952307160773, 47.561045446999636]
+    }
+  },
+  {
+    "slug": "altstaetten-sg",
+    "name": "Altstätten SG",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11891,
+    "bbox": {
+      "bottomLeft": [9.488332615151027, 47.34228645300036],
+      "topRight": [9.594460184848973, 47.41415134699964]
+    }
+  },
+  {
+    "slug": "carouge",
+    "name": "Carouge",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 20910,
+    "bbox": {
+      "bottomLeft": [6.074808549038689, 46.13975354125045],
+      "topRight": [6.20455925096131, 46.22958465874955]
+    }
+  },
+  {
+    "slug": "moehlin",
+    "name": "Möhlin",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11006,
+    "bbox": {
+      "bottomLeft": [7.789881262077449, 47.52505855300036],
+      "topRight": [7.896378537922551, 47.59692344699964]
+    }
+  },
+  {
+    "slug": "renens-vd",
+    "name": "Renens VD",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 21408,
+    "bbox": {
+      "bottomLeft": [6.5275516527842194, 46.48999374125045],
+      "topRight": [6.658136747215781, 46.579824858749554]
+    }
+  },
+  {
+    "slug": "kloten",
+    "name": "Kloten",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 18412,
+    "bbox": {
+      "bottomLeft": [8.533008995113747, 47.41658085300036],
+      "topRight": [8.639286404886253, 47.48844574699964]
+    }
+  },
+  {
+    "slug": "binningen",
+    "name": "Binningen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 14905,
+    "bbox": {
+      "bottomLeft": [7.516853177161804, 47.50062755300036],
+      "topRight": [7.623300822838197, 47.57249244699964]
+    }
+  },
+  {
+    "slug": "suhr",
+    "name": "Suhr",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10130,
+    "bbox": {
+      "bottomLeft": [8.026475299691521, 47.33723355300036],
+      "topRight": [8.13259270030848, 47.409098446999636]
+    }
+  },
+  {
+    "slug": "oftringen",
+    "name": "Oftringen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 15120,
+    "bbox": {
+      "bottomLeft": [7.867992077472453, 47.276727053000364],
+      "topRight": [7.973987922527546, 47.34859194699964]
+    }
+  },
+  {
+    "slug": "prilly",
+    "name": "Prilly",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11609,
+    "bbox": {
+      "bottomLeft": [6.553348992430178, 46.49863355300036],
+      "topRight": [6.657816407569823, 46.570498446999636]
+    }
+  },
+  {
+    "slug": "rapperswil",
+    "name": "Rapperswil",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 26354,
+    "bbox": {
+      "bottomLeft": [8.750264360928377, 47.18173764125045],
+      "topRight": [8.882544039071622, 47.27156875874955]
+    }
+  },
+  {
+    "slug": "st-gallen",
+    "name": "St. Gallen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 78213,
+    "bbox": {
+      "bottomLeft": [9.29657237744848, 47.371719329500536],
+      "topRight": [9.455907022551518, 47.479516670499464]
+    }
+  },
+  {
+    "slug": "effretikon",
+    "name": "Effretikon",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 17756,
+    "bbox": {
+      "bottomLeft": [8.63385713152986, 47.39238125300036],
+      "topRight": [8.740085668470138, 47.464246146999635]
+    }
+  },
+  {
+    "slug": "rheinfelden",
+    "name": "Rheinfelden",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 13360,
+    "bbox": {
+      "bottomLeft": [7.73904857425435, 47.51845345300036],
+      "topRight": [7.84553242574565, 47.59031834699964]
+    }
+  },
+  {
+    "slug": "einsiedeln",
+    "name": "Einsiedeln",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 12622,
+    "bbox": {
+      "bottomLeft": [8.697215638598962, 47.092677053000365],
+      "topRight": [8.802844161401037, 47.16454194699964]
+    }
+  },
+  {
+    "slug": "wetzikon-zh",
+    "name": "Wetzikon ZH",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 26462,
+    "bbox": {
+      "bottomLeft": [8.731833916510844, 47.27777694125045],
+      "topRight": [8.864353883489155, 47.36760805874955]
+    }
+  },
+  {
+    "slug": "zofingen",
+    "name": "Zofingen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11543,
+    "bbox": {
+      "bottomLeft": [7.892852198932931, 47.25255855300036],
+      "topRight": [7.998799601067069, 47.32442344699964]
+    }
+  },
+  {
+    "slug": "buchs-sg",
+    "name": "Buchs SG",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 12187,
+    "bbox": {
+      "bottomLeft": [9.423560394293084, 47.126830953000365],
+      "topRight": [9.529256805706915, 47.19869584699964]
+    }
+  },
+  {
+    "slug": "rueti-zh",
+    "name": "Rüti ZH",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10804,
+    "bbox": {
+      "bottomLeft": [8.799752880541774, 47.22199875300036],
+      "topRight": [8.905639119458225, 47.29386364699964]
+    }
+  },
+  {
+    "slug": "le-locle",
+    "name": "Le Locle",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10529,
+    "bbox": {
+      "bottomLeft": [6.692712100442849, 47.019658253000365],
+      "topRight": [6.79819589955715, 47.09152314699964]
+    }
+  },
+  {
+    "slug": "aesch-bl",
+    "name": "Aesch BL",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10211,
+    "bbox": {
+      "bottomLeft": [7.544884892616633, 47.43231225300036],
+      "topRight": [7.6511941073833665, 47.50417714699964]
+    }
+  },
+  {
+    "slug": "altdorf-ur",
+    "name": "Altdorf UR",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10459,
+    "bbox": {
+      "bottomLeft": [8.588821122274634, 46.84614075300036],
+      "topRight": [8.693963277725366, 46.91800564699964]
+    }
+  },
+  {
+    "slug": "la-tour-de-peilz",
+    "name": "La Tour-de-Peilz",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10974,
+    "bbox": {
+      "bottomLeft": [6.804750154880317, 46.41781995300036],
+      "topRight": [6.909062445119684, 46.48968484699964]
+    }
+  },
+  {
+    "slug": "birsfelden",
+    "name": "Birsfelden",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10277,
+    "bbox": {
+      "bottomLeft": [7.5772321476897995, 47.51828275300036],
+      "topRight": [7.683715652310201, 47.59014764699964]
+    }
+  },
+  {
+    "slug": "biel-bienne",
+    "name": "Biel/Bienne",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 56378,
+    "bbox": {
+      "bottomLeft": [7.164664227854389, 47.08630902950053],
+      "topRight": [7.3231415721456115, 47.19410637049946]
+    }
+  },
+  {
+    "slug": "yverdon-les-bains",
+    "name": "Yverdon-les-Bains",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 29406,
+    "bbox": {
+      "bottomLeft": [6.575328377469036, 46.73365554125045],
+      "topRight": [6.706503222530964, 46.82348665874955]
+    }
+  },
+  {
+    "slug": "wohlen",
+    "name": "Wohlen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 17816,
+    "bbox": {
+      "bottomLeft": [8.225654696092374, 47.314562053000365],
+      "topRight": [8.331726503907625, 47.38642694699964]
+    }
+  },
+  {
+    "slug": "zollikon",
+    "name": "Zollikon",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 12744,
+    "bbox": {
+      "bottomLeft": [8.522550194204653, 47.30202105300036],
+      "topRight": [8.628596805795349, 47.373885946999636]
+    }
+  },
+  {
+    "slug": "belp",
+    "name": "Belp",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11548,
+    "bbox": {
+      "bottomLeft": [7.44580936891157, 46.853847553000364],
+      "topRight": [7.55096663108843, 46.92571244699964]
+    }
+  },
+  {
+    "slug": "kriens",
+    "name": "Kriens",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 25932,
+    "bbox": {
+      "bottomLeft": [8.21489852286856, 46.98923044125045],
+      "topRight": [8.346700277131438, 47.07906155874955]
+    }
+  },
+  {
+    "slug": "muenchenstein",
+    "name": "Münchenstein",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11688,
+    "bbox": {
+      "bottomLeft": [7.56424570501533, 47.48285845300036],
+      "topRight": [7.670657294984669, 47.55472334699964]
+    }
+  },
+  {
+    "slug": "wil-sg",
+    "name": "Wil SG",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 24980,
+    "bbox": {
+      "bottomLeft": [8.97510830593927, 47.42035044125045],
+      "topRight": [9.107987294060731, 47.51018155874955]
+    }
+  },
+  {
+    "slug": "sarnen",
+    "name": "Sarnen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10192,
+    "bbox": {
+      "bottomLeft": [8.193564791228594, 46.85974045300036],
+      "topRight": [8.298733608771405, 46.93160534699964]
+    }
+  },
+  {
+    "slug": "therwil",
+    "name": "Therwil",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10007,
+    "bbox": {
+      "bottomLeft": [7.504281262961243, 47.46336445300036],
+      "topRight": [7.610653337038757, 47.535229346999635]
+    }
+  },
+  {
+    "slug": "opfikon",
+    "name": "Opfikon",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 18482,
+    "bbox": {
+      "bottomLeft": [8.52488004162559, 47.39633465300036],
+      "topRight": [8.631116558374412, 47.468199546999635]
+    }
+  },
+  {
+    "slug": "allschwil",
+    "name": "Allschwil",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 20249,
+    "bbox": {
+      "bottomLeft": [7.47001289118456, 47.50616434125045],
+      "topRight": [7.603109308815441, 47.59599545874955]
+    }
+  },
+  {
+    "slug": "oberwil-bl",
+    "name": "Oberwil BL",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11105,
+    "bbox": {
+      "bottomLeft": [7.499584672735658, 47.477761753000365],
+      "topRight": [7.605985927264342, 47.54962664699964]
+    }
+  },
+  {
+    "slug": "wald-zh",
+    "name": "Wald ZH",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10620,
+    "bbox": {
+      "bottomLeft": [8.860275816587661, 47.23815745300036],
+      "topRight": [8.966194383412338, 47.31002234699964]
+    }
+  },
+  {
+    "slug": "ecublens-vd",
+    "name": "Ecublens VD",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 13364,
+    "bbox": {
+      "bottomLeft": [6.509888421950337, 46.48986755300036],
+      "topRight": [6.6143389780496635, 46.561732446999635]
+    }
+  },
+  {
+    "slug": "chene-bougeries",
+    "name": "Chêne-Bougeries",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10642,
+    "bbox": {
+      "bottomLeft": [6.133495874905496, 46.16043145300036],
+      "topRight": [6.237318525094504, 46.23229634699964]
+    }
+  },
+  {
+    "slug": "regensdorf",
+    "name": "Regensdorf",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 18010,
+    "bbox": {
+      "bottomLeft": [8.414925748913708, 47.39583205300036],
+      "topRight": [8.521161251086292, 47.46769694699964]
+    }
+  },
+  {
+    "slug": "mendrisio",
+    "name": "Mendrisio",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 15562,
+    "bbox": {
+      "bottomLeft": [8.93592273077027, 45.83503365300036],
+      "topRight": [9.03913586922973, 45.906898546999635]
+    }
+  },
+  {
+    "slug": "morges",
+    "name": "Morges",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 15228,
+    "bbox": {
+      "bottomLeft": [6.446107552168746, 46.47339435300036],
+      "topRight": [6.550526447831254, 46.545259246999635]
+    }
+  },
+  {
+    "slug": "richterswil",
+    "name": "Richterswil",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 13022,
+    "bbox": {
+      "bottomLeft": [8.648810734284885, 47.17317545300036],
+      "topRight": [8.754599465715115, 47.24504034699964]
+    }
+  },
+  {
+    "slug": "dietikon",
+    "name": "Dietikon",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 27904,
+    "bbox": {
+      "bottomLeft": [8.336712959988818, 47.36015904125045],
+      "topRight": [8.46944004001118, 47.44999015874955]
+    }
+  },
+  {
+    "slug": "illnau",
+    "name": "Illnau",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 17756,
+    "bbox": {
+      "bottomLeft": [8.672448576339827, 47.37290385300036],
+      "topRight": [8.778637823660175, 47.444768746999635]
+    }
+  },
+  {
+    "slug": "luzern",
+    "name": "Luzern",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 86234,
+    "bbox": {
+      "bottomLeft": [8.226704563674257, 46.998245329500534],
+      "topRight": [8.384920036325742, 47.10604267049946]
+    }
+  },
+  {
+    "slug": "jona",
+    "name": "Jona",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 17799,
+    "bbox": {
+      "bottomLeft": [8.784742821492197, 47.19403365300036],
+      "topRight": [8.890573178507802, 47.26589854699964]
+    }
+  },
+  {
+    "slug": "herisau",
+    "name": "Herisau",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 15943,
+    "bbox": {
+      "bottomLeft": [9.22568593567801, 47.349617553000364],
+      "topRight": [9.33182826432199, 47.42148244699964]
+    }
+  },
+  {
+    "slug": "bellinzona",
+    "name": "Bellinzona",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 43785,
+    "bbox": {
+      "bottomLeft": [8.955704732590846, 46.147138241250445],
+      "topRight": [9.085472867409155, 46.23696935874955]
+    }
+  },
+  {
+    "slug": "lugano",
+    "name": "Lugano",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 67000,
+    "bbox": {
+      "bottomLeft": [8.873631986072892, 45.949902029500535],
+      "topRight": [9.028823013927108, 46.05769937049946]
+    }
+  },
+  {
+    "slug": "affoltern-am-albis",
+    "name": "Affoltern am Albis",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11363,
+    "bbox": {
+      "bottomLeft": [8.3991883561585, 47.24231425300036],
+      "topRight": [8.505115243841498, 47.314179146999635]
+    }
+  },
+  {
+    "slug": "horgen",
+    "name": "Horgen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 22514,
+    "bbox": {
+      "bottomLeft": [8.531500749801594, 47.21577644125045],
+      "topRight": [8.663865450198404, 47.30560755874955]
+    }
+  },
+  {
+    "slug": "uster",
+    "name": "Uster",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 33097,
+    "bbox": {
+      "bottomLeft": [8.651626325742592, 47.30629094125045],
+      "topRight": [8.784217874257406, 47.396122058749555]
+    }
+  },
+  {
+    "slug": "winterthur",
+    "name": "Winterthur",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 108044,
+    "bbox": {
+      "bottomLeft": [8.622777978362626, 47.427307406000715],
+      "topRight": [8.835521621637374, 47.57103719399928]
+    }
+  },
+  {
+    "slug": "buelach",
+    "name": "Bülach",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 19342,
+    "bbox": {
+      "bottomLeft": [8.487507585687798, 47.48129965300036],
+      "topRight": [8.593916014312203, 47.55316454699964]
+    }
+  },
+  {
+    "slug": "delemont",
+    "name": "Delémont",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11809,
+    "bbox": {
+      "bottomLeft": [7.301397944761163, 47.32565575300036],
+      "topRight": [7.407492055238837, 47.39752064699964]
+    }
+  },
+  {
+    "slug": "solothurn",
+    "name": "Solothurn",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 16599,
+    "bbox": {
+      "bottomLeft": [7.485511103997606, 47.17220305300036],
+      "topRight": [7.591297896002395, 47.244067946999635]
+    }
+  },
+  {
+    "slug": "grenchen",
+    "name": "Grenchen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 16401,
+    "bbox": {
+      "bottomLeft": [7.343843434866428, 47.155217053000364],
+      "topRight": [7.449596365133572, 47.22708194699964]
+    }
+  },
+  {
+    "slug": "olten",
+    "name": "Olten",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 17280,
+    "bbox": {
+      "bottomLeft": [7.850751937571624, 47.313724653000364],
+      "topRight": [7.956822062428377, 47.38558954699964]
+    }
+  },
+  {
+    "slug": "villars-sur-glane",
+    "name": "Villars-sur-Glâne",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 12507,
+    "bbox": {
+      "bottomLeft": [7.063706833353509, 46.755388553000365],
+      "topRight": [7.168671566646491, 46.82725344699964]
+    }
+  },
+  {
+    "slug": "bulle",
+    "name": "Bulle",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 27101,
+    "bbox": {
+      "bottomLeft": [6.992721204318231, 46.57418134125045],
+      "topRight": [7.123509195681768, 46.66401245874955]
+    }
+  },
+  {
+    "slug": "arbon",
+    "name": "Arbon",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 16354,
+    "bbox": {
+      "bottomLeft": [9.377200724205782, 47.47899325300036],
+      "topRight": [9.48360447579422, 47.55085814699964]
+    }
+  },
+  {
+    "slug": "ebikon",
+    "name": "Ebikon",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11322,
+    "bbox": {
+      "bottomLeft": [8.285753747260088, 47.045274253000365],
+      "topRight": [8.391288252739912, 47.11713914699964]
+    }
+  },
+  {
+    "slug": "arth",
+    "name": "Arth",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10794,
+    "bbox": {
+      "bottomLeft": [8.471116630940692, 47.028522653000365],
+      "topRight": [8.576617969059306, 47.10038754699964]
+    }
+  },
+  {
+    "slug": "koeniz",
+    "name": "Köniz",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 39794,
+    "bbox": {
+      "bottomLeft": [7.347295102937855, 46.87732294125045],
+      "topRight": [7.4788212970621455, 46.96715405874955]
+    }
+  },
+  {
+    "slug": "chur",
+    "name": "Chur",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 37082,
+    "bbox": {
+      "bottomLeft": [9.46080999911277, 46.80983144125045],
+      "topRight": [9.59217080088723, 46.899662558749554]
+    }
+  },
+  {
+    "slug": "frauenfeld",
+    "name": "Frauenfeld",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 27099,
+    "bbox": {
+      "bottomLeft": [8.829779999527087, 47.511275941250446],
+      "topRight": [8.962889400472914, 47.60110705874955]
+    }
+  },
+  {
+    "slug": "wallisellen",
+    "name": "Wallisellen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 15603,
+    "bbox": {
+      "bottomLeft": [8.538896028722148, 47.380687053000365],
+      "topRight": [8.645100971277854, 47.45255194699964]
+    }
+  },
+  {
+    "slug": "riehen",
+    "name": "Riehen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 20970,
+    "bbox": {
+      "bottomLeft": [7.581386586525375, 47.53677714125045],
+      "topRight": [7.714560813474624, 47.62660825874955]
+    }
+  },
+  {
+    "slug": "fribourg",
+    "name": "Fribourg",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 37485,
+    "bbox": {
+      "bottomLeft": [7.095646572068753, 46.76065004125045],
+      "topRight": [7.226887227931248, 46.85048115874955]
+    }
+  },
+  {
+    "slug": "locarno",
+    "name": "Locarno",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 16000,
+    "bbox": {
+      "bottomLeft": [8.743599864682466, 46.133641453000365],
+      "topRight": [8.847371935317533, 46.20550634699964]
+    }
+  },
+  {
+    "slug": "gland",
+    "name": "Gland",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 11947,
+    "bbox": {
+      "bottomLeft": [6.213383881238055, 46.388010053000365],
+      "topRight": [6.317639118761944, 46.45987494699964]
+    }
+  },
+  {
+    "slug": "lenzburg",
+    "name": "Lenzburg",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10179,
+    "bbox": {
+      "bottomLeft": [8.129114360005254, 47.35138115300036],
+      "topRight": [8.235260239994748, 47.42324604699964]
+    }
+  },
+  {
+    "slug": "emmen",
+    "name": "Emmen",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 29721,
+    "bbox": {
+      "bottomLeft": [8.21799391623833, 47.03032734125045],
+      "topRight": [8.349897283761669, 47.12015845874955]
+    }
+  },
+  {
+    "slug": "gossau-sg",
+    "name": "Gossau SG",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 17827,
+    "bbox": {
+      "bottomLeft": [9.19625756632711, 47.37965815300036],
+      "topRight": [9.30246043367289, 47.45152304699964]
+    }
+  },
+  {
+    "slug": "gossau-zh",
+    "name": "Gossau ZH",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 10569,
+    "bbox": {
+      "bottomLeft": [8.707222771759305, 47.27005055300036],
+      "topRight": [8.813205228240694, 47.341915446999636]
+    }
+  },
+  {
+    "slug": "neuchatel",
+    "name": "Neuchâtel",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 33641,
+    "bbox": {
+      "bottomLeft": [6.86341818812249, 46.94466724125045],
+      "topRight": [6.99511001187751, 47.03449835874955]
+    }
+  },
+  {
+    "slug": "baar",
+    "name": "Baar",
+    "country": "ch",
+    "countryName": "Schweiz",
+    "population": 23557,
+    "bbox": {
+      "bottomLeft": [8.459297876638649, 47.15028204125045],
+      "topRight": [8.59149912336135, 47.24011315874955]
+    }
+  }
+]

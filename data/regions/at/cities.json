@@ -1,0 +1,695 @@
+[
+  {
+    "slug": "wien",
+    "name": "Wien",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 2042036,
+    "bbox": {
+      "bottomLeft": [16.170310518305847, 48.07360702375135],
+      "topRight": [16.574697881694156, 48.34310037624866]
+    }
+  },
+  {
+    "slug": "graz",
+    "name": "Graz",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 331359,
+    "bbox": {
+      "bottomLeft": [15.306386060716004, 46.9810366825009],
+      "topRight": [15.570171139283996, 47.160698917499104]
+    }
+  },
+  {
+    "slug": "linz",
+    "name": "Linz",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 207812,
+    "bbox": {
+      "bottomLeft": [14.178155407421363, 48.23404290600072],
+      "topRight": [14.394240592578639, 48.37777269399928]
+    }
+  },
+  {
+    "slug": "zell-am-see",
+    "name": "Zell am See",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 10131,
+    "bbox": {
+      "bottomLeft": [12.743307237758973, 47.28803115300036],
+      "topRight": [12.849325762241026, 47.35989604699964]
+    }
+  },
+  {
+    "slug": "wels",
+    "name": "Wels",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 59853,
+    "bbox": {
+      "bottomLeft": [13.943579425893956, 48.102648529500534],
+      "topRight": [14.105170974106043, 48.21044587049946]
+    }
+  },
+  {
+    "slug": "leoben",
+    "name": "Leoben",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 24645,
+    "bbox": {
+      "bottomLeft": [15.028442983036404, 47.33559724125045],
+      "topRight": [15.161108216963596, 47.42542835874955]
+    }
+  },
+  {
+    "slug": "wiener-neustadt",
+    "name": "Wiener Neustadt",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 38481,
+    "bbox": {
+      "bottomLeft": [16.177233192888703, 47.76826914125045],
+      "topRight": [16.3110000071113, 47.85810025874955]
+    }
+  },
+  {
+    "slug": "woergl",
+    "name": "Wörgl",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 13811,
+    "bbox": {
+      "bottomLeft": [12.01058944049436, 47.451339353000364],
+      "topRight": [12.116937159505639, 47.52320424699964]
+    }
+  },
+  {
+    "slug": "kufstein",
+    "name": "Kufstein",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 19223,
+    "bbox": {
+      "bottomLeft": [12.11594238302303, 47.54706355300036],
+      "topRight": [12.22248441697697, 47.61892844699964]
+    }
+  },
+  {
+    "slug": "stockerau",
+    "name": "Stockerau",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 16858,
+    "bbox": {
+      "bottomLeft": [16.153525519006354, 48.348679953000364],
+      "topRight": [16.26173508099365, 48.42054484699964]
+    }
+  },
+  {
+    "slug": "villach",
+    "name": "Villach",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 61221,
+    "bbox": {
+      "bottomLeft": [13.77155743760294, 46.562829729500535],
+      "topRight": [13.92849616239706, 46.670627070499464]
+    }
+  },
+  {
+    "slug": "klagenfurt",
+    "name": "Klagenfurt",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 100316,
+    "bbox": {
+      "bottomLeft": [14.20295784117157, 46.552078106000714],
+      "topRight": [14.41223735882843, 46.69580789399928]
+    }
+  },
+  {
+    "slug": "gmunden",
+    "name": "Gmunden",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 13104,
+    "bbox": {
+      "bottomLeft": [13.746689158664234, 47.88265305300036],
+      "topRight": [13.853920441335765, 47.95451794699964]
+    }
+  },
+  {
+    "slug": "spittal-an-der-drau",
+    "name": "Spittal an der Drau",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 15549,
+    "bbox": {
+      "bottomLeft": [13.44384170358569, 46.76228865300036],
+      "topRight": [13.548819896414312, 46.83415354699964]
+    }
+  },
+  {
+    "slug": "feldkirch",
+    "name": "Feldkirch",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 35793,
+    "bbox": {
+      "bottomLeft": [9.532018939028418, 47.19265154125045],
+      "topRight": [9.66432586097158, 47.28248265874955]
+    }
+  },
+  {
+    "slug": "bad-voeslau",
+    "name": "Bad Vöslau",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 11190,
+    "bbox": {
+      "bottomLeft": [16.16114292454775, 47.92961945300036],
+      "topRight": [16.26847167545225, 48.00148434699964]
+    }
+  },
+  {
+    "slug": "baden-niederoesterreich",
+    "name": "Baden (Niederösterreich)",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 25000,
+    "bbox": {
+      "bottomLeft": [16.1672340671615, 47.96275574125045],
+      "topRight": [16.301504532838504, 48.05258685874955]
+    }
+  },
+  {
+    "slug": "innsbruck",
+    "name": "Innsbruck",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 130585,
+    "bbox": {
+      "bottomLeft": [11.286867262908997, 47.193564706000714],
+      "topRight": [11.498669737091005, 47.33729449399928]
+    }
+  },
+  {
+    "slug": "gleisdorf",
+    "name": "Gleisdorf",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 11072,
+    "bbox": {
+      "bottomLeft": [15.65702495968202, 47.06947805300036],
+      "topRight": [15.76260744031798, 47.141342946999636]
+    }
+  },
+  {
+    "slug": "kapfenberg",
+    "name": "Kapfenberg",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 23004,
+    "bbox": {
+      "bottomLeft": [15.223758626748465, 47.39563254125045],
+      "topRight": [15.356575173251533, 47.48546365874955]
+    }
+  },
+  {
+    "slug": "salzburg",
+    "name": "Salzburg",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 152083,
+    "bbox": {
+      "bottomLeft": [12.939498150887532, 47.726269706000714],
+      "topRight": [13.153463049112469, 47.86999949399928]
+    }
+  },
+  {
+    "slug": "ried-im-innkreis",
+    "name": "Ried im Innkreis",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 11404,
+    "bbox": {
+      "bottomLeft": [13.434471439468025, 48.17265435300036],
+      "topRight": [13.542308560531977, 48.24451924699964]
+    }
+  },
+  {
+    "slug": "mistelbach",
+    "name": "Mistelbach",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 10643,
+    "bbox": {
+      "bottomLeft": [16.51773042922672, 48.533521053000364],
+      "topRight": [16.626334970773282, 48.60538594699964]
+    }
+  },
+  {
+    "slug": "tulln-an-der-donau",
+    "name": "Tulln an der Donau",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 12357,
+    "bbox": {
+      "bottomLeft": [15.997741946206895, 48.295237753000364],
+      "topRight": [16.105838053793104, 48.36710264699964]
+    }
+  },
+  {
+    "slug": "amstetten",
+    "name": "Amstetten",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 13878,
+    "bbox": {
+      "bottomLeft": [14.821416539377282, 48.08439375300036],
+      "topRight": [14.929068260622717, 48.15625864699964]
+    }
+  },
+  {
+    "slug": "imst",
+    "name": "Imst",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 10504,
+    "bbox": {
+      "bottomLeft": [10.687774845421512, 47.20222115300036],
+      "topRight": [10.79362155457849, 47.274086046999635]
+    }
+  },
+  {
+    "slug": "telfs",
+    "name": "Telfs",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 15920,
+    "bbox": {
+      "bottomLeft": [11.018525106919208, 47.26871865300036],
+      "topRight": [11.124504893080791, 47.34058354699964]
+    }
+  },
+  {
+    "slug": "dornbirn",
+    "name": "Dornbirn",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 51222,
+    "bbox": {
+      "bottomLeft": [9.662727007318862, 47.359736429500536],
+      "topRight": [9.82202539268114, 47.467533770499465]
+    }
+  },
+  {
+    "slug": "goetzis",
+    "name": "Götzis",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 12041,
+    "bbox": {
+      "bottomLeft": [9.590988730290976, 47.299196653000365],
+      "topRight": [9.697029669709023, 47.37106154699964]
+    }
+  },
+  {
+    "slug": "lienz",
+    "name": "Lienz",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 12077,
+    "bbox": {
+      "bottomLeft": [12.71560690777707, 46.79393375300036],
+      "topRight": [12.82064689222293, 46.865798646999636]
+    }
+  },
+  {
+    "slug": "braunau-am-inn",
+    "name": "Braunau am Inn",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 16380,
+    "bbox": {
+      "bottomLeft": [12.985820384086567, 48.21748345300036],
+      "topRight": [13.093752015913433, 48.28934834699964]
+    }
+  },
+  {
+    "slug": "ternitz",
+    "name": "Ternitz",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 14823,
+    "bbox": {
+      "bottomLeft": [15.966071580171878, 47.670668253000365],
+      "topRight": [16.07286601982812, 47.74253314699964]
+    }
+  },
+  {
+    "slug": "rankweil",
+    "name": "Rankweil",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 12150,
+    "bbox": {
+      "bottomLeft": [9.589736728138869, 47.23444835300036],
+      "topRight": [9.695647871861132, 47.306313246999636]
+    }
+  },
+  {
+    "slug": "st-poelten",
+    "name": "St. Pölten",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 59767,
+    "bbox": {
+      "bottomLeft": [15.542040572808382, 48.15049982950054],
+      "topRight": [15.70378302719162, 48.25829717049947]
+    }
+  },
+  {
+    "slug": "traiskirchen",
+    "name": "Traiskirchen",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 18000,
+    "bbox": {
+      "bottomLeft": [16.241516441154342, 47.97795335300036],
+      "topRight": [16.348945758845655, 48.049818246999635]
+    }
+  },
+  {
+    "slug": "zwettl",
+    "name": "Zwettl",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 10908,
+    "bbox": {
+      "bottomLeft": [15.11382363124513, 48.56933585300036],
+      "topRight": [15.22250516875487, 48.64120074699964]
+    }
+  },
+  {
+    "slug": "moedling",
+    "name": "Mödling",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 20619,
+    "bbox": {
+      "bottomLeft": [16.216115722639117, 48.04067664125045],
+      "topRight": [16.350589477360884, 48.13050775874955]
+    }
+  },
+  {
+    "slug": "ansfelden",
+    "name": "Ansfelden",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 17748,
+    "bbox": {
+      "bottomLeft": [14.235341726100385, 48.17314195300036],
+      "topRight": [14.343179873899613, 48.24500684699964]
+    }
+  },
+  {
+    "slug": "seekirchen-am-wallersee",
+    "name": "Seekirchen am Wallersee",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 11708,
+    "bbox": {
+      "bottomLeft": [13.07248736311636, 47.85831565300036],
+      "topRight": [13.179668236883638, 47.93018054699964]
+    }
+  },
+  {
+    "slug": "sankt-veit-an-der-glan",
+    "name": "Sankt Veit an der Glan",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 12255,
+    "bbox": {
+      "bottomLeft": [14.305239160110897, 46.731348953000364],
+      "topRight": [14.410157039889103, 46.80321384699964]
+    }
+  },
+  {
+    "slug": "sankt-johann-im-pongau",
+    "name": "Sankt Johann im Pongau",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 10566,
+    "bbox": {
+      "bottomLeft": [13.14942935525404, 47.31191565300036],
+      "topRight": [13.25549584474596, 47.38378054699964]
+    }
+  },
+  {
+    "slug": "traun",
+    "name": "Traun",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 10627,
+    "bbox": {
+      "bottomLeft": [14.182875705721692, 48.18550445300036],
+      "topRight": [14.290739894278307, 48.25736934699964]
+    }
+  },
+  {
+    "slug": "lauterach",
+    "name": "Lauterach",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 10433,
+    "bbox": {
+      "bottomLeft": [9.678171936687924, 47.43879375300036],
+      "topRight": [9.784494263312077, 47.51065864699964]
+    }
+  },
+  {
+    "slug": "hohenems",
+    "name": "Hohenems",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 16720,
+    "bbox": {
+      "bottomLeft": [9.63622152226338, 47.32806485300036],
+      "topRight": [9.74232047773662, 47.39992974699964]
+    }
+  },
+  {
+    "slug": "steyr",
+    "name": "Steyr",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 38344,
+    "bbox": {
+      "bottomLeft": [14.35195154609437, 47.99408904125045],
+      "topRight": [14.48630365390563, 48.08392015874955]
+    }
+  },
+  {
+    "slug": "gaenserndorf",
+    "name": "Gänserndorf",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 11404,
+    "bbox": {
+      "bottomLeft": [16.664647275029473, 48.304454253000365],
+      "topRight": [16.77276292497053, 48.37631914699964]
+    }
+  },
+  {
+    "slug": "leonding",
+    "name": "Leonding",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 24416,
+    "bbox": {
+      "bottomLeft": [14.181254216344321, 48.234415841250446],
+      "topRight": [14.31623718365568, 48.32424695874955]
+    }
+  },
+  {
+    "slug": "voecklabruck",
+    "name": "Vöcklabruck",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 11972,
+    "bbox": {
+      "bottomLeft": [13.592329418578927, 47.97192625300036],
+      "topRight": [13.699746181421073, 48.04379114699964]
+    }
+  },
+  {
+    "slug": "bludenz",
+    "name": "Bludenz",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 15029,
+    "bbox": {
+      "bottomLeft": [9.769092867359578, 47.11710455300036],
+      "topRight": [9.874769932640422, 47.188969446999636]
+    }
+  },
+  {
+    "slug": "lustenau",
+    "name": "Lustenau",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 24688,
+    "bbox": {
+      "bottomLeft": [9.593548596800174, 47.38273824125045],
+      "topRight": [9.726332603199827, 47.47256935874955]
+    }
+  },
+  {
+    "slug": "bad-ischl",
+    "name": "Bad Ischl",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 14088,
+    "bbox": {
+      "bottomLeft": [13.570531029803524, 47.675597453000364],
+      "topRight": [13.677335570196474, 47.74746234699964]
+    }
+  },
+  {
+    "slug": "feldkirchen",
+    "name": "Feldkirchen",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 14434,
+    "bbox": {
+      "bottomLeft": [14.044080713672217, 46.68698535300036],
+      "topRight": [14.148912286327784, 46.758850246999636]
+    }
+  },
+  {
+    "slug": "wolfsberg",
+    "name": "Wolfsberg",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 25045,
+    "bbox": {
+      "bottomLeft": [14.779544879381197, 46.79414274125045],
+      "topRight": [14.910867320618804, 46.88397385874955]
+    }
+  },
+  {
+    "slug": "marchtrenk",
+    "name": "Marchtrenk",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 12951,
+    "bbox": {
+      "bottomLeft": [14.057862657720289, 48.15486675300036],
+      "topRight": [14.16566234227971, 48.22673164699964]
+    }
+  },
+  {
+    "slug": "krems-an-der-donau",
+    "name": "Krems an der Donau",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 25500,
+    "bbox": {
+      "bottomLeft": [15.53270585041821, 48.36592264125045],
+      "topRight": [15.66803754958179, 48.45575375874955]
+    }
+  },
+  {
+    "slug": "klosterneuburg",
+    "name": "Klosterneuburg",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 26816,
+    "bbox": {
+      "bottomLeft": [16.256230593915504, 48.260074441250445],
+      "topRight": [16.391281406084495, 48.34990555874955]
+    }
+  },
+  {
+    "slug": "saalfelden-am-steinernen-meer",
+    "name": "Saalfelden am Steinernen Meer",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 17299,
+    "bbox": {
+      "bottomLeft": [12.794992244038827, 47.390684153000365],
+      "topRight": [12.901217355961172, 47.46254904699964]
+    }
+  },
+  {
+    "slug": "hall-in-tirol",
+    "name": "Hall in Tirol",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 14418,
+    "bbox": {
+      "bottomLeft": [11.454566834375596, 47.24573235300036],
+      "topRight": [11.560500565624404, 47.31759724699964]
+    }
+  },
+  {
+    "slug": "hallein",
+    "name": "Hallein",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 20768,
+    "bbox": {
+      "bottomLeft": [13.028916062265118, 47.63723654125045],
+      "topRight": [13.162346537734884, 47.727067658749554]
+    }
+  },
+  {
+    "slug": "bregenz",
+    "name": "Bregenz",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 29620,
+    "bbox": {
+      "bottomLeft": [9.680805698743756, 47.45766234125045],
+      "topRight": [9.813779101256243, 47.54749345874955]
+    }
+  },
+  {
+    "slug": "schwaz",
+    "name": "Schwaz",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 13058,
+    "bbox": {
+      "bottomLeft": [11.655394963980488, 47.309020453000365],
+      "topRight": [11.761455636019512, 47.38088534699964]
+    }
+  },
+  {
+    "slug": "feldbach",
+    "name": "Feldbach",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 13369,
+    "bbox": {
+      "bottomLeft": [15.83596860379992, 46.91684975300036],
+      "topRight": [15.94124959620008, 46.98871464699964]
+    }
+  },
+  {
+    "slug": "knittelfeld",
+    "name": "Knittelfeld",
+    "country": "at",
+    "countryName": "Österreich",
+    "population": 12574,
+    "bbox": {
+      "bottomLeft": [14.776823316850086, 47.17880745300036],
+      "topRight": [14.882623283149913, 47.250672346999636]
+    }
+  }
+]

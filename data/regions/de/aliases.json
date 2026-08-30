@@ -83,7 +83,7 @@
   "worth-am-rhein": "woerth-am-rhein",
   "mullheim-im-markgraflerland": "muellheim-im-markgraeflerland",
   "osnabruck": "osnabrueck",
-  "bruhl": "bruehl",
+  "bruhl": "bruehl-baden",
   "boblingen": "boeblingen",
   "monchengladbach": "moenchengladbach",
   "konigsbrunn": "koenigsbrunn",
@@ -107,7 +107,7 @@
   "bonen": "boenen",
   "bad-durrenberg": "bad-duerrenberg",
   "frondenberg-ruhr": "froendenberg-ruhr",
-  "munsingen": "muensingen",
+  "munsingen": "muensingen-wuerttemberg",
   "bruckmuhl": "bruckmuehl",
   "buhl": "buehl",
   "bad-wunnenberg": "bad-wuennenberg",
@@ -160,5 +160,9 @@
   "markgroningen": "markgroeningen",
   "brunsbuttel": "brunsbuettel",
   "puttlingen": "puettlingen",
-  "lubbecke": "luebbecke"
+  "lubbecke": "luebbecke",
+  "senden": "senden-westfalen",
+  "bruehl": "bruehl-baden",
+  "burgdorf": "burgdorf-region-hannover",
+  "muensingen": "muensingen-wuerttemberg"
 }
