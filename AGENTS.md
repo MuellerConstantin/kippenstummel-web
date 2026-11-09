@@ -84,7 +84,7 @@ fall outside what swarm intelligence alone can resolve reliably.
 - **i18n**: `next-intl` (currently `de` and `en`)
 - **PWA**: Serwist (service worker, offline fallback, map tile caching)
 - **Animation**: Motion
-- **Analytics**: Ackee (privacy-friendly, self-hosted)
+- **Analytics**: Umami (privacy-friendly, self-hosted)
 - **Testing**: Vitest (unit), Playwright (e2e), Storybook + Chromatic (UI)
 
 ## Project Structure

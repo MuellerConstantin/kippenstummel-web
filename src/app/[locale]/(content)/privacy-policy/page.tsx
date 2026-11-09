@@ -128,7 +128,11 @@ export default async function PrivacyPolicy({ params }: Props) {
         <h3 className="text-xl font-bold">
           {t("dataCollection.tracking.title")}
         </h3>
-        <div>{t("dataCollection.tracking.description")}</div>
+        <div>
+          {t.rich("dataCollection.tracking.description", {
+            br: () => <br />,
+          })}
+        </div>
         <h3 className="text-xl font-bold">
           {t("dataCollection.usageStatistics.title")}
         </h3>

@@ -213,7 +213,7 @@
       },
       "tracking": {
         "title": "Tracking und Analyse",
-        "description": "Zur Analyse des Nutzerverhaltens auf unserer Website setzen wir die Open-Source-Software Ackee ein. Dieses Analysetool ermöglicht uns die Erfassung allgemeiner Nutzungsstatistiken, ohne personenbezogene Daten einzelner Nutzer zu erheben oder zu speichern. Ackee verzichtet auf das Tracking individueller Besucher und anonymisiert die IP-Adressen vollständig. Zudem werden keine Cookies eingesetzt. Die erhobenen anonymen Daten verbleiben außerdem vollständig auf unseren eigenen Server."
+        "description": "Zur Analyse der Nutzung unserer Website setzen wir die Open-Source-Software Umami ein, die wir selbst auf unserer eigenen Infrastruktur betreiben. Es werden keine Cookies gesetzt und keine Daten an Dritte übermittelt.<br></br><br></br>Bei jedem Seitenaufruf erfassen wir die aufgerufene Seite, ihren Titel und den Zeitpunkt. Aus den Angaben, die Ihr Browser ohnehin mit jeder Anfrage übermittelt, ermittelt Umami außerdem Browser, Betriebssystem und Gerätetyp sowie Ihren ungefähren Standort (Land, Region und Stadt). Ihre IP-Adresse wird dafür nur kurzzeitig verarbeitet und nicht gespeichert. Um Seitenaufrufe zu Besuchen zusammenzufassen, bildet Umami aus IP-Adresse, User-Agent und einem geheimen, täglich wechselnden Schlüssel einen nicht umkehrbaren Hashwert. Eine Wiedererkennung über den jeweiligen Tag hinaus ist damit nicht möglich.<br></br><br></br>Rechtsgrundlage hierfür ist Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse besteht darin, die Nutzung unseres Angebots nachzuvollziehen und es bedarfsgerecht weiterzuentwickeln. Sie können dieser Verarbeitung jederzeit widersprechen.<br></br><br></br>Nur wenn Sie in den Datenschutzeinstellungen der erweiterten Analyse zustimmen, erfassen wir zusätzlich Ihre Bildschirmgröße, Ihre Browsersprache und die zuvor besuchte Seite (Referrer). Diese Angaben werden auf Ihrem Endgerät ausgelesen. Rechtsgrundlage ist Ihre Einwilligung nach § 25 Abs. 1 TDDDG und Art. 6 Abs. 1 lit. a DSGVO, die Sie jederzeit in den Datenschutzeinstellungen widerrufen können."
       },
       "usageStatistics": {
         "title": "Nutzungsstatistiken",
@@ -669,7 +669,7 @@
       },
       "analytics": {
         "title": "Extended analytics",
-        "description": "We count page views anonymously, without cookies and without any way to identify individual visitors, to see how our website is used. Enabling this additionally records details about your device: operating system, browser, screen size, language and the page you came from."
+        "description": "We record page views without cookies and without recognising you beyond the current day, to see how our website is used. Browser, operating system, device type and approximate location are derived from the details your browser sends anyway. Enabling this additionally records your screen size, language and the page you came from."
       }
     }
   },

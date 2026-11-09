@@ -6,7 +6,7 @@ import regionSlugAliases from "./data/regions/de/aliases.json";
 const isStandalone = process.env.NEXT_OUTPUT_MODE === "standalone";
 const isProduction = process.env.NODE_ENV === "production";
 const openFreeMapOrigin = "https://tiles.openfreemap.org";
-const ackeeOrigin = "https://ackee.kippenstummel.de";
+const productionUmamiOrigin = "https://analytics.mueller-constantin.de";
 
 function isHttpsUrl(url: string | undefined) {
   if (!url) {
@@ -20,17 +20,43 @@ function isHttpsUrl(url: string | undefined) {
   }
 }
 
+function toOrigin(url: string | undefined) {
+  if (!url) {
+    return null;
+  }
+
+  try {
+    return new URL(url).origin;
+  } catch {
+    return null;
+  }
+}
+
+/*
+ * The CSP is fixed when the config is loaded, the Umami server is only read at
+ * runtime. The production server is always allowed; a server already known at
+ * this point, e.g. from a local env file, is allowed as well.
+ */
+const umamiOrigins = [
+  ...new Set(
+    [
+      productionUmamiOrigin,
+      toOrigin(process.env.NEXT_PUBLIC_UMAMI_SERVER),
+    ].filter((origin): origin is string => origin !== null),
+  ),
+].join(" ");
+
 const csp = [
   "default-src 'self'",
   "base-uri 'self'",
   "object-src 'none'",
   "frame-ancestors 'none'",
   "form-action 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  `script-src 'self' 'unsafe-inline' ${umamiOrigins}`,
   "style-src 'self' 'unsafe-inline'",
   `img-src 'self' data: blob: ${openFreeMapOrigin}`,
   "font-src 'self' data:",
-  `connect-src 'self' ${openFreeMapOrigin} ${ackeeOrigin}`,
+  `connect-src 'self' ${openFreeMapOrigin} ${umamiOrigins}`,
   "worker-src 'self' blob:",
   "child-src 'self' blob:",
   "manifest-src 'self'",

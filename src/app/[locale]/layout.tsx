@@ -8,7 +8,7 @@ import { StoreProvider } from "@/store";
 import { NotificationProvider } from "@/contexts/NotificationProvider";
 import { NotificationView } from "@/components/organisms/NotificationView";
 import { RequireIdentInterceptor } from "@/components/organisms/ident/RequireIdentInterceptor";
-import { AckeeTracker } from "@/components/organisms/AckeeTracker";
+import { UmamiTracker } from "@/components/organisms/UmamiTracker";
 import { RuntimeConfigProvider } from "@/contexts/RuntimeConfigProvider";
 import { PWAInstallProvider } from "@/contexts/PWAInstallProvider";
 import { OfflineHandler } from "@/components/organisms/OfflineHandler";
@@ -133,7 +133,7 @@ export default async function RootLayout({
                     {children}
                     {modal}
                     <NotificationView />
-                    <AckeeTracker />
+                    <UmamiTracker />
                     <OfflineHandler />
                     <InstallRequestNotificationHandler />
                   </RuntimeConfigProvider>

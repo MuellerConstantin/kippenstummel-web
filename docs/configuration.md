@@ -32,13 +32,13 @@ here for the sake of completeness.
 Build time configuration variables are in general prefixed with `NEXT_PUBLIC_`. Changing these variables
 requires a rebuild of the web client. These variables are loaded and hardcoded at build time.
 
-| Environment Variable       | Description                                                                  | Required |
-| -------------------------- | ---------------------------------------------------------------------------- | -------- |
-| NEXT_PUBLIC_ACKEE_SERVER   | Url of the Ackee analytics server.                                           | Yes      |
-| NEXT_PUBLIC_ACKEE_DOMAIN   | Domain of the Ackee analytics server.                                        | Yes      |
-| NEXT_PUBLIC_IS_TEST_SYSTEM | Indicates if the web client is running in a test system. Default is `false`. | No       |
-| NEXT_PUBLIC_IS_PRE_RELEASE | Indicates if the web client is a pre-release. Default is `false`.            | No       |
-| NEXT_PUBLIC_SITE_URL       | Url of the web client.                                                       | Yes      |
+| Environment Variable         | Description                                                                  | Required |
+| ---------------------------- | ---------------------------------------------------------------------------- | -------- |
+| NEXT_PUBLIC_UMAMI_SERVER     | Url of the Umami analytics server. Analytics is disabled if not set.         | No       |
+| NEXT_PUBLIC_UMAMI_WEBSITE_ID | Website id of the web client in Umami. Analytics is disabled if not set.     | No       |
+| NEXT_PUBLIC_IS_TEST_SYSTEM   | Indicates if the web client is running in a test system. Default is `false`. | No       |
+| NEXT_PUBLIC_IS_PRE_RELEASE   | Indicates if the web client is a pre-release. Default is `false`.            | No       |
+| NEXT_PUBLIC_SITE_URL         | Url of the web client.                                                       | Yes      |
 
 ### Runtime configuration
 
