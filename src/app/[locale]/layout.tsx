@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit } from "next/font/google";
+import localFont from "next/font/local";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -17,10 +17,25 @@ import { BASE_URL } from "@/lib/server/seo";
 
 import "./globals.css";
 
-const outfit = Outfit({
+/*
+ * Loaded from the package instead of `next/font/google`: Google sometimes
+ * serves font URLs without an extension, which breaks the Next 15 font loader
+ * and fails the build at random (vercel/next.js#99114).
+ */
+const outfit = localFont({
   variable: "--font-outfit",
-  weight: ["400", "700"],
-  subsets: ["latin"],
+  src: [
+    {
+      path: "../../../node_modules/@fontsource/outfit/files/outfit-latin-400-normal.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../../node_modules/@fontsource/outfit/files/outfit-latin-700-normal.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
 });
 
 export async function generateMetadata({
