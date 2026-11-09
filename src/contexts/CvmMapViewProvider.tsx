@@ -56,9 +56,7 @@ type RepositionViewStateAction = {
 };
 
 export type CvmMapViewState =
-  | DefaultViewState
-  | RegisterViewState
-  | RepositionViewState;
+  DefaultViewState | RegisterViewState | RepositionViewState;
 
 type CvmMapViewAction =
   | { type: "GOTO_DEFAULT_MODE" }
